@@ -7,6 +7,7 @@ interface SettingsMenuProps {
   onClose: () => void;
   view: 'hub' | 'quiz' | 'log' | 'glossary';
   randomMode?: boolean;
+  anchorBottom?: boolean; // When true, menu opens above (for mobile bottom bar)
   onToggleRandomMode?: () => void;
   onShowGlossary?: () => void;
   onShowIdSearch?: () => void;
@@ -23,6 +24,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onClose,
   view,
   randomMode = false,
+  anchorBottom = false,
   onToggleRandomMode,
   onShowGlossary,
   onShowIdSearch,
@@ -152,8 +154,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         onClick={onClose}
       />
       
-      {/* Menu */}
-      <div className="absolute top-full right-0 mt-2 z-50 min-w-[200px]">
+      {/* Menu - anchored above on mobile (bottom bar), below on desktop */}
+      <div className={`z-50 min-w-[200px] ${anchorBottom ? 'fixed bottom-24 right-4' : 'absolute top-full right-0 mt-2'}`}>
         <div className="glass rounded-2xl p-2 shadow-2xl border border-white/10 animate-in slide-in-from-top-2 duration-200">
           {menuItems.map((item, index) => (
             <button
