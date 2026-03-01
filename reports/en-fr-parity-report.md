@@ -1,6 +1,6 @@
 # EN-FR Parity Report
 
-Generated: 2026-03-01T01:27:33.717Z
+Generated: 2026-03-01T01:35:23.007Z
 
 ## 1) UI translation keys parity (`src/translations.ts`)
 
@@ -24,8 +24,8 @@ Generated: 2026-03-01T01:27:33.717Z
 ## 4) Glossary parity
 
 - EN glossary entries: 71
-- FR glossary entries: 28
-- Delta (FR - EN): -43
+- FR glossary entries: 71
+- Delta (FR - EN): 0
 
 ## 5) Operations & Math parity
 
@@ -36,12 +36,12 @@ Generated: 2026-03-01T01:27:33.717Z
 
 ## 6) French quality heuristics
 
-- Detailed FR entries with English-leading opening pattern (`The|When|If|In`): 353
+- Detailed FR entries with English-leading opening pattern (`The|When|If|In`): 0
 
 ## Summary
 
 - UI parity status: PASS
 - Short explanation coverage status: PASS
 - Detailed explanation coverage status: PASS
-- Glossary parity status: WARN
+- Glossary parity status: PASS
 - Operations parity status: PASS

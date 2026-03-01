@@ -22810,11 +22810,11 @@ Usages courants :
 
 Exemple : Si class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() si hasattr(obj, 'get_x') else obj._MyClass__x, alors il retourne 2 car setter methods can modify mangled attributes from within the class.
 `,
-  861: `The @property decorator fournit controlled read access to attributes. Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property converts the method x() into a property, allowing you to access it like an attribute (obj.x instead of obj.x()). The property getter retourne the value of the protected attribute _x, providing controlled access while keeping _x protected. C'est a cleaner interface than using getter methods like get_x().
+  861: `Le @property decorator fournit controlled read access to attributes. Si classe MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property converts the méthode x() into a property, allowing you to access it like an attribute (obj.x instead of obj.x()). The property getter retourne the valeur of the protected attribute _x, providing controlled access while keeping _x protected. C'est a cleaner interface than using getter méthodes like get_x().
 
 Propriété fournit controlled access:
 • obj.x retourne 1
-• @property makes method accessible as attribute
+• @property makes méthode accessible as attribute
 • Propriété getter retourne self._x
 • Clean interface: obj.x (not obj.get_x())
 • Retourne : 1
@@ -22823,11 +22823,11 @@ Comment ça fonctionne :
 • obj.x accesses property
 • Python appelle property getter: @property def x(self)
 • Getter executes: retourne self._x
-• Retourne protected attribute value
+• Retourne protected attribute valeur
 • Retourne : 1
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1  # Protected attribute
     @property
@@ -22842,7 +22842,7 @@ Usages courants :
 • Properties
 • Encapsulation
 
-Exemple : Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property fournit controlled read access, making the method accessible as an attribute.
+Exemple : Si classe MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car @property fournit controlled read access, making the méthode accessible as an attribute.
 `,
   862: `Propriété setters can validate or transform values before storing them. Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car the setter multiplies the value by 2 before storing it (self._x = val * 2 = 5 * 2 = 10). Quand you assign obj.x = 5, the setter est appelé, transforms the value (5 * 2 = 10), and stores 10. Cela permet properties to enforce business rules, validate input, or transform data before storage.
 
@@ -22954,9 +22954,9 @@ Usages courants :
 
 Exemple : Si class MyClass: @property; def x(self): retourne 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 1 car a setter that ne stocke pas the value ne change pas the property, so the getter still retourne 1.
 `,
-  865: `The property() function peut être created with getter and setter functions as arguments. Si class MyClass: def __init__(self): self._x = 1; def get_x(self): retourne self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car property(get_x, set_x) crée a property where get_x is the getter and set_x is the setter. C'est an alternative syntax to using @property and @x.setter decorators. Quand you assign obj.x = 5, it calls set_x(5), qui définit self._x = 5. Quand you access obj.x, it calls get_x(), which retourne self._x = 5.
+  865: `Le property() fonction peut être created avec getter and setter fonctions as arguments. Si classe MyClass: def __init__(self): self._x = 1; def get_x(self): retourne self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car property(get_x, set_x) crée a property where get_x is the getter and set_x is the setter. C'est an alternative syntax to using @property and @x.setter decorators. Quand you assign obj.x = 5, it calls set_x(5), qui définit self._x = 5. Quand you access obj.x, it calls get_x(), which retourne self._x = 5.
 
-property() with getter and setter:
+property() avec getter and setter:
 • obj.x = 5 calls set_x(5)
 • set_x sets self._x = 5
 • obj.x calls get_x()
@@ -22965,15 +22965,15 @@ property() with getter and setter:
 
 Comment ça fonctionne :
 • property(get_x, set_x) crée property
-• get_x is getter function
-• set_x is setter function
+• get_x is getter fonction
+• set_x is setter fonction
 • obj.x = 5 calls set_x(5)
 • set_x sets self._x = 5
 • obj.x calls get_x()
 • Retourne : 5
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1
     def get_x(self):
@@ -22987,13 +22987,13 @@ obj.x                        # 5 (calls get_x())
 
 Usages courants :
 • Propriété creation: x = property(getter, setter) (alternative syntax)
-• Functional style: property() function instead of decorators
+• Functional style: property() fonction instead of decorators
 • Properties
 • Encapsulation
 
-Exemple : Si class MyClass: def __init__(self): self._x = 1; def get_x(self): retourne self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car property() peut être created with getter and setter functions, and the setter stocke le value.
+Exemple : Si classe MyClass: def __init__(self): self._x = 1; def get_x(self): retourne self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 5 car property() peut être created avec getter and setter fonctions, and the setter stocke le valeur.
 `,
-  866: `The @x.deleter decorator defines a property deleter that fournit controlled deletion. Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines what happens quand you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This fournit controlled deletion of attributes, allowing you to add cleanup logic or validation before deletion.
+  866: `Le @x.deleter decorator defines a property deleter that fournit controlled deletion. Si classe MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines what happens quand you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This fournit controlled deletion of attributes, allowing you to add cleanup logic or validation avant deletion.
 
 Propriété deleter:
 • del obj.x calls deleter
@@ -23011,7 +23011,7 @@ Comment ça fonctionne :
 • Retourne : False
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1
     @property
@@ -23030,7 +23030,7 @@ Usages courants :
 • Properties
 • Encapsulation
 
-Exemple : Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter fournit controlled deletion, and del obj.x appelle le deleter, qui supprime self._x.
+Exemple : Si classe MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter fournit controlled deletion, and del obj.x appelle le deleter, qui supprime self._x.
 `,
   867: `A property without a setter is read-only - you ne peut pas assign to it. Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): retourne self._x; obj = MyClass(); obj.x = 2, alors obj.x = 2 lève an AttributeError car the property only a un getter (defined by @property), but no setter. To make a property writable, you need to define a setter using @x.setter. Without a setter, the property is read-only, and any attempt to assign to it lève an AttributeError.
 
@@ -23316,37 +23316,37 @@ Usages courants :
 
 Exemple : Si from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), alors Child() lève a TypeError car a child keeping the method abstract still ne peut pas be instantiated - the method must be implemented (not just marked abstract) for the class to be concrete.
 `,
-  875: `The __abstractmethods__ attribute contains a frozenset of abstract method names. Si from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, alors MyClass.__abstractmethods__ retourne frozenset({'method'}) car __abstractmethods__ stocke le names of all abstract methods in the class. C'est used internally by Python to determine si a class is abstract and peut être instantiated. Quand all methods in __abstractmethods__ are implemented, the class becomes concrete.
+  875: `Le __abstractmethods__ attribute contains a frozenset of abstract méthode names. Si from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, alors MyClass.__abstractmethods__ retourne frozenset({'méthode'}) car __abstractmethods__ stocke le names of all abstract méthodes in the classe. C'est used internally by Python to determine si a classe is abstract and peut être instantiated. Quand all méthodes in __abstractmethods__ are implemented, the classe becomes concrete.
 
 __abstractmethods__ attribute:
-• MyClass.__abstractmethods__ retourne frozenset({'method'})
-• Contains names of abstract methods
-• Used to check si class is abstract
-• Empty quand all methods implemented
-• Retourne : frozenset({'method'})
+• MyClass.__abstractmethods__ retourne frozenset({'méthode'})
+• Contains names of abstract méthodes
+• Used to check si classe is abstract
+• Empty quand all méthodes implemented
+• Retourne : frozenset({'méthode'})
 
 Comment ça fonctionne :
-• @abstractmethod def method(self) marks method as abstract
-• Python adds 'method' to __abstractmethods__
-• __abstractmethods__ is frozenset of abstract method names
-• Contains: {'method'}
-• Retourne : frozenset({'method'})
+• @abstractmethod def méthode(self) marks méthode as abstract
+• Python adds 'méthode' to __abstractmethods__
+• __abstractmethods__ is frozenset of abstract méthode names
+• Contains: {'méthode'}
+• Retourne : frozenset({'méthode'})
 
 Exemple :
 from abc import ABC, abstractmethod
-class MyClass(ABC):
+classe MyClass(ABC):
     @abstractmethod
-    def method(self):
+    def méthode(self):
         pass
-MyClass.__abstractmethods__  # frozenset({'method'}) (abstract methods)
+MyClass.__abstractmethods__  # frozenset({'méthode'}) (abstract méthodes)
 
 Usages courants :
-• Abstrait method inspection: Class.__abstractmethods__ (see abstract methods)
-• Introspection: check which methods are abstract
+• Abstrait méthode inspection: Class.__abstractmethods__ (see abstract méthodes)
+• Introspection: check which méthodes are abstract
 • Abstrait base classes
 • Type system
 
-Exemple : Si from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, alors MyClass.__abstractmethods__ retourne frozenset({'method'}) car __abstractmethods__ contains a set of abstract method names.
+Exemple : Si from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, alors MyClass.__abstractmethods__ retourne frozenset({'méthode'}) car __abstractmethods__ contains a set of abstract méthode names.
 `,
   876: `A child class that implements all abstract methods has an empty __abstractmethods__ set. Si from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): retourne 1; Child.__abstractmethods__, alors Child.__abstractmethods__ retourne frozenset() car Child implements the abstract method method(), so it's no longer abstract. Quand a class implements all abstract methods, Python removes them from __abstractmethods__, making it empty. Cela indique the class is concrete and peut être instantiated.
 
@@ -23520,9 +23520,9 @@ Usages courants :
 
 Exemple : Si from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), alors it lève a TypeError car you can't create an instance of an abstract class to test isinstance() - abstract classes ne peut pas be instantiated.
 `,
-  881: `The isinstance() function retourne True si an instance is of a class or any of its parent classes. Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), alors isinstance(Child(), Parent) retourne True car isinstance() checks the entire inheritance chain. Since Child inherits from Parent, an instance of Child is also considered an instance of Parent. C'est different from type() ==, which only checks the exact type.
+  881: `Le isinstance() fonction retourne True si an instance is of a classe or any of its parent classes. Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), alors isinstance(Child(), Parent) retourne True car isinstance() checks the entire inheritance chain. Since Child inherits from Parent, an instance of Child is also considered an instance of Parent. C'est different from type() ==, which only checks the exact type.
 
-isinstance() with inheritance:
+isinstance() avec inheritance:
 • isinstance(Child(), Parent) retourne True
 • isinstance() checks inheritance chain
 • Child() is instance of Child
@@ -23538,51 +23538,51 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Child(), Parent)   # True (Child inherits from Parent)
 isinstance(Child(), Child)    # True (Child() is instance of Child)
 
 Usages courants :
 • Type checking: si isinstance(obj, Parent): ... (fonctionne avec inheritance)
 • Polymorphism: isinstance(obj, BaseClass) (checks base classes)
-• isinstance() function
+• isinstance() fonction
 • Type system
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), alors isinstance(Child(), Parent) retourne True car isinstance() retourne True for parent classes - it checks the entire inheritance chain.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), alors isinstance(Child(), Parent) retourne True car isinstance() retourne True for parent classes - it checks the entire inheritance chain.
 `,
-  882: `The isinstance() function retourne True si an instance is of its own class. Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), alors isinstance(Child(), Child) retourne True car Child() crée an instance of Child, and isinstance() checks si the instance is of the specified class. An instance is always an instance of its own class, so this always retourne True.
+  882: `Le isinstance() fonction retourne True si an instance is of its own classe. Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), alors isinstance(Child(), Child) retourne True car Child() crée an instance of Child, and isinstance() checks si the instance is of the specified classe. An instance is always an instance of its own classe, so this always retourne True.
 
-isinstance() with own class:
+isinstance() avec own classe:
 • isinstance(Child(), Child) retourne True
 • Child() crée instance of Child
 • isinstance() checks si instance is of Child
-• Instance is of its own class
+• Instance is of its own classe
 • Retourne : True
 
 Comment ça fonctionne :
 • Child() crée instance of Child
 • isinstance(instance, Child) checks si instance is of Child
-• Instance is indeed of Child class
+• Instance is indeed of Child classe
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
-isinstance(Child(), Child)    # True (instance is of its own class)
-isinstance(Child(), Parent)    # True (also of parent class)
+classe Parent: pass
+classe Child(Parent): pass
+isinstance(Child(), Child)    # True (instance is of its own classe)
+isinstance(Child(), Parent)    # True (also of parent classe)
 
 Usages courants :
-• Type checking: si isinstance(obj, Class): ... (check own class)
-• Instance validation: isinstance(instance, Class) (always True for own class)
-• isinstance() function
+• Type checking: si isinstance(obj, Class): ... (check own classe)
+• Instance validation: isinstance(instance, Class) (always True for own classe)
+• isinstance() fonction
 • Type system
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), alors isinstance(Child(), Child) retourne True car isinstance() retourne True for the instance's own class - an instance is always an instance of its own class.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), alors isinstance(Child(), Child) retourne True car isinstance() retourne True for the instance's own classe - an instance is always an instance of its own classe.
 `,
-  883: `The isinstance() function can check si an instance is of any type in a tuple. Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), alors isinstance(Child(), (Parent, str)) retourne True car isinstance() checks si the instance is of any type in the tuple. Since Child() is an instance of Parent (through inheritance), it matches Parent in the tuple, so il retourne True. C'est useful for checking si an object is one of several types.
+  883: `Le isinstance() fonction can check si an instance is of any type in a tuple. Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), alors isinstance(Child(), (Parent, str)) retourne True car isinstance() checks si the instance is of any type in the tuple. Since Child() is an instance of Parent (through inheritance), it matches Parent in the tuple, so il retourne True. C'est useful for checking si an objet is one of several types.
 
-isinstance() with tuple:
+isinstance() avec tuple:
 • isinstance(Child(), (Parent, str)) retourne True
 • isinstance() checks si instance is of any type in tuple
 • Child() is instance of Parent (inheritance)
@@ -23597,20 +23597,20 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Child(), (Parent, str))  # True (matches Parent)
 isinstance(Child(), (str, int))     # False (matches neither)
 
 Usages courants :
 • Multiple type checking: isinstance(obj, (Type1, Type2, Type3))
-• Type validation: check si object is one of several types
-• isinstance() function
+• Type validation: check si objet is one of several types
+• isinstance() fonction
 • Type system
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), alors isinstance(Child(), (Parent, str)) retourne True car isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), alors isinstance(Child(), (Parent, str)) retourne True car isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
 `,
-  884: `The isinstance() function ne fonctionne pas backwards - a parent instance is not an instance of a child class. Si class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), alors isinstance(Parent(), Child) retourne False car Parent() crée an instance of Parent, not Child. Héritage only works one way - a child is an instance of the parent, but a parent is not an instance of the child. isinstance() checks si the instance is of the specified class or any of its ancestors, not descendants.
+  884: `Le isinstance() fonction ne fonctionne pas backwards - a parent instance is not an instance of a child classe. Si classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), alors isinstance(Parent(), Child) retourne False car Parent() crée an instance of Parent, not Child. Héritage only works one way - a child is an instance of the parent, but a parent is not an instance of the child. isinstance() checks si the instance is of the specified classe or any of its ancestors, not descendants.
 
 isinstance() ne fonctionne pas backwards:
 • isinstance(Parent(), Child) retourne False
@@ -23627,22 +23627,22 @@ Comment ça fonctionne :
 • Retourne : False
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Parent(), Child)    # False (parent not instance of child)
 isinstance(Child(), Parent)    # True (child is instance of parent)
 
 Usages courants :
 • Understanding inheritance: isinstance() only works forward (child -> parent)
 • Type checking: parent instances are not instances of child classes
-• isinstance() function
+• isinstance() fonction
 • Héritage
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), alors isinstance(Parent(), Child) retourne False car isinstance() ne fonctionne pas backwards - a parent instance is not an instance of a child class.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), alors isinstance(Parent(), Child) retourne False car isinstance() ne fonctionne pas backwards - a parent instance is not an instance of a child classe.
 `,
-  885: `The issubclass() function checks si the first class is a subclass of the second class. Si class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), alors issubclass(Child, Parent) retourne True car Child inherits from Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship between classes, returning True si the first class inherits from (or is le même que) the second class.
+  885: `Le issubclass() fonction checks si the first classe is a subclass of the second classe. Si classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), alors issubclass(Child, Parent) retourne True car Child inherits from Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship entre classes, returning True si the first classe inherits from (or is le même que) the second classe.
 
-issubclass() function:
+issubclass() fonction:
 • issubclass(Child, Parent) retourne True
 • issubclass() checks si Child is subclass of Parent
 • Child inherits from Parent
@@ -23650,25 +23650,25 @@ issubclass() function:
 • Retourne : True
 
 Comment ça fonctionne :
-• class Child(Parent): crée child inheriting from Parent
+• classe Child(Parent): crée child inheriting from Parent
 • issubclass(Child, Parent) checks inheritance
 • Child is indeed a subclass of Parent
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Child, Parent)     # True (Child is subclass of Parent)
 
 Usages courants :
 • Héritage check: issubclass(Child, Parent) (check si subclass)
 • Type checking: si issubclass(cls, Parent): ...
-• issubclass() function
+• issubclass() fonction
 • Héritage
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), alors issubclass(Child, Parent) retourne True car issubclass() checks si the first class is a subclass of the second class, and Child inherits from Parent.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), alors issubclass(Child, Parent) retourne True car issubclass() checks si the first classe is a subclass of the second classe, and Child inherits from Parent.
 `,
-  886: `The issubclass() function ne fonctionne pas backwards - a parent is not a subclass of a child. Si class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), alors issubclass(Parent, Child) retourne False car Parent n'hérite pas from Child - inheritance only works one way. Child is a subclass of Parent, but Parent is not a subclass of Child. issubclass() checks si the first class inherits from the second class, not the other way around.
+  886: `Le issubclass() fonction ne fonctionne pas backwards - a parent is not a subclass of a child. Si classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), alors issubclass(Parent, Child) retourne False car Parent n'hérite pas from Child - inheritance only works one way. Child is a subclass of Parent, but Parent is not a subclass of Child. issubclass() checks si the first classe inherits from the second classe, not the other way around.
 
 issubclass() ne fonctionne pas backwards:
 • issubclass(Parent, Child) retourne False
@@ -23685,24 +23685,24 @@ Comment ça fonctionne :
 • Retourne : False
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Parent, Child)     # False (parent not subclass of child)
 issubclass(Child, Parent)     # True (child is subclass of parent)
 
 Usages courants :
 • Understanding inheritance: issubclass() only works forward (child -> parent)
 • Type checking: parent classes are not subclasses of child classes
-• issubclass() function
+• issubclass() fonction
 • Héritage
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), alors issubclass(Parent, Child) retourne False car issubclass() ne fonctionne pas backwards - a parent is not a subclass of a child.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), alors issubclass(Parent, Child) retourne False car issubclass() ne fonctionne pas backwards - a parent is not a subclass of a child.
 `,
-  887: `The issubclass() function can check si a class is a subclass of any class in a tuple. Si class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), alors issubclass(Child, (Parent, str)) retourne True car issubclass() checks si Child is a subclass of any class in the tuple. Since Child inherits from Parent, it matches Parent in the tuple, so il retourne True. C'est useful for checking si a class inherits from one of several base classes.
+  887: `Le issubclass() fonction can check si a classe is a subclass of any classe in a tuple. Si classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), alors issubclass(Child, (Parent, str)) retourne True car issubclass() checks si Child is a subclass of any classe in the tuple. Since Child inherits from Parent, it matches Parent in the tuple, so il retourne True. C'est useful for checking si a classe inherits from one of several base classes.
 
-issubclass() with tuple:
+issubclass() avec tuple:
 • issubclass(Child, (Parent, str)) retourne True
-• issubclass() checks si Child is subclass of any class in tuple
+• issubclass() checks si Child is subclass of any classe in tuple
 • Child inherits from Parent
 • Matches Parent in tuple
 • Retourne : True
@@ -23711,24 +23711,24 @@ Comment ça fonctionne :
 • issubclass(Child, (Parent, str)) checks multiple base classes
 • Checks si Child is subclass of Parent (True)
 • Or subclass of str (False)
-• Retourne True si matches any class in tuple
+• Retourne True si matches any classe in tuple
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Child, (Parent, str))  # True (Child is subclass of Parent)
 issubclass(Child, (str, int))      # False (Child is not subclass of str or int)
 
 Usages courants :
-• Multiple base class checking: issubclass(Class, (Base1, Base2, Base3))
-• Type validation: check si class inherits from one of several bases
-• issubclass() function
+• Multiple base classe checking: issubclass(Class, (Base1, Base2, Base3))
+• Type validation: check si classe inherits from one of several bases
+• issubclass() fonction
 • Héritage
 
-Exemple : Si class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), alors issubclass(Child, (Parent, str)) retourne True car issubclass() can check multiple base classes using a tuple, and Child is a subclass of Parent.
+Exemple : Si classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), alors issubclass(Child, (Parent, str)) retourne True car issubclass() can check multiple base classes using a tuple, and Child is a subclass of Parent.
 `,
-  888: `The issubclass() function checks the entire inheritance chain, not just direct parents. Si class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), alors issubclass(C, A) retourne True car issubclass() checks si C is a subclass of A through the entire inheritance chain. Even though C directly inherits from B (not A), C is still a subclass of A car B inherits from A, creating a chain: C -> B -> A. issubclass() follows this entire chain.
+  888: `Le issubclass() fonction checks the entire inheritance chain, not just direct parents. Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), alors issubclass(C, A) retourne True car issubclass() checks si C is a subclass of A through the entire inheritance chain. Even though C directly inherits from B (not A), C is still a subclass of A car B inherits from A, creating a chain: C -> B -> A. issubclass() follows this entire chain.
 
 issubclass() checks entire chain:
 • issubclass(C, A) retourne True
@@ -23746,21 +23746,21 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class A: pass
-class B(A): pass
-class C(B): pass
+classe A: pass
+classe B(A): pass
+classe C(B): pass
 issubclass(C, A)              # True (C is subclass of A through B)
 issubclass(C, B)              # True (C directly inherits from B)
 
 Usages courants :
 • Héritage chain: issubclass() checks entire chain, not just direct parent
-• Type checking: check si class inherits from ancestor
-• issubclass() function
+• Type checking: check si classe inherits from ancestor
+• issubclass() fonction
 • Héritage
 
-Exemple : Si class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), alors issubclass(C, A) retourne True car issubclass() checks the entire inheritance chain, and C is a subclass of A through B.
+Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), alors issubclass(C, A) retourne True car issubclass() checks the entire inheritance chain, and C is a subclass of A through B.
 `,
-  889: `The isinstance() function checks the entire inheritance chain, not just the direct class. Si class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), alors isinstance(C(), A) retourne True car isinstance() checks si the instance is of A through the entire inheritance chain. Even though C() is an instance of C (not directly A), it's also an instance of A car C inherits from B, which inherits from A, creating a chain: C -> B -> A. isinstance() follows this entire chain.
+  889: `Le isinstance() fonction checks the entire inheritance chain, not just the direct classe. Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), alors isinstance(C(), A) retourne True car isinstance() checks si the instance is of A through the entire inheritance chain. Even though C() is an instance of C (not directly A), it's also an instance of A car C inherits from B, which inherits from A, creating a chain: C -> B -> A. isinstance() follows this entire chain.
 
 isinstance() checks entire chain:
 • isinstance(C(), A) retourne True
@@ -23779,22 +23779,22 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class A: pass
-class B(A): pass
-class C(B): pass
+classe A: pass
+classe B(A): pass
+classe C(B): pass
 isinstance(C(), A)             # True (C() is instance of A through B)
 isinstance(C(), B)             # True (C() is instance of B)
 isinstance(C(), C)             # True (C() is instance of C)
 
 Usages courants :
-• Héritage chain: isinstance() checks entire chain, not just direct class
-• Type checking: check si instance is of ancestor class
-• isinstance() function
+• Héritage chain: isinstance() checks entire chain, not just direct classe
+• Type checking: check si instance is of ancestor classe
+• isinstance() fonction
 • Héritage
 
-Exemple : Si class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), alors isinstance(C(), A) retourne True car isinstance() checks the entire inheritance chain, and C() is an instance of A through B.
+Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), alors isinstance(C(), A) retourne True car isinstance() checks the entire inheritance chain, and C() is an instance of A through B.
 `,
-  890: `In multiple inheritance, a child class is a subclass of all its parent classes. Si class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), alors issubclass(C, A) and issubclass(C, B) retourne True car C inherits from both A and B, making C a subclass of both. In multiple inheritance, the child inherits from all parents, so it's a subclass of all of them. Both issubclass(C, A) and issubclass(C, B) retourne True, so the and expression retourne True.
+  890: `Dans multiple inheritance, a child classe is a subclass of all its parent classes. Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), alors issubclass(C, A) and issubclass(C, B) retourne True car C inherits from both A and B, making C a subclass of both. In multiple inheritance, the child inherits from all parents, so it's a subclass of all of them. Both issubclass(C, A) and issubclass(C, B) retourne True, so the and expression retourne True.
 
 Multiple inheritance:
 • issubclass(C, A) and issubclass(C, B) retourne True
@@ -23805,7 +23805,7 @@ Multiple inheritance:
 • Retourne : True
 
 Comment ça fonctionne :
-• class C(A, B): crée child with multiple parents
+• classe C(A, B): crée child avec multiple parents
 • issubclass(C, A) checks si C is subclass of A (True)
 • issubclass(C, B) checks si C is subclass of B (True)
 • Both retourne True
@@ -23813,22 +23813,22 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class A: pass
-class B: pass
-class C(A, B): pass  # Multiple inheritance
+classe A: pass
+classe B: pass
+classe C(A, B): pass  # Multiple inheritance
 issubclass(C, A)              # True (C is subclass of A)
 issubclass(C, B)              # True (C is subclass of B)
 issubclass(C, A) and issubclass(C, B)  # True (both True)
 
 Usages courants :
 • Multiple inheritance: child is subclass of all parents
-• Type checking: check si class inherits from multiple bases
-• issubclass() function
+• Type checking: check si classe inherits from multiple bases
+• issubclass() fonction
 • Multiple inheritance
 
-Exemple : Si class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), alors il retourne True car in multiple inheritance, the child is a subclass of all parents - C inherits from both A and B, so it's a subclass of both.
+Exemple : Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), alors il retourne True car in multiple inheritance, the child is a subclass of all parents - C inherits from both A and B, so it's a subclass of both.
 `,
-  891: `The super().__init__() call initializes parent attributes in the child class. Si class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], alors [obj.x, obj.y] retourne [1, 2] car super().__init__() appelle le __init__ du parent, qui définit self.x = 1. Alors the child's __init__ sets self.y = 2. Cela assure both parent and child attributes are initialized correctly. Without super().__init__(), only self.y would be set, and obj.x would raise an AttributeError.
+  891: `Le super().__init__() call initializes parent attributes in the child classe. Si classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], alors [obj.x, obj.y] retourne [1, 2] car super().__init__() appelle le __init__ du parent, qui définit self.x = 1. Alors the child's __init__ sets self.y = 2. Cela assure both parent and child attributes are initialized correctly. Without super().__init__(), only self.y would be set, and obj.x would raise an AttributeError.
 
 super().__init__() initializes parent:
 • [obj.x, obj.y] retourne [1, 2]
@@ -23848,10 +23848,10 @@ Comment ça fonctionne :
 • Retourne : [1, 2]
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self.x = 1
-class Child(MyClass):
+classe Child(MyClass):
     def __init__(self):
         super().__init__()  # Initializes parent
         self.y = 2
@@ -23859,16 +23859,16 @@ obj = Child()
 [obj.x, obj.y]              # [1, 2] (both initialized)
 
 Usages courants :
-• Parent initialization: def __init__(self): super().__init__(); self.child_attr = value
+• Parent initialization: def __init__(self): super().__init__(); self.child_attr = valeur
 • Constructor chaining: ensure parent attributes are initialized
-• super() function
+• super() fonction
 • Object initialization
 
-Exemple : Si class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], alors [obj.x, obj.y] retourne [1, 2] car super().__init__() initializes parent attributes, ensuring both parent and child attributes are set.
+Exemple : Si classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], alors [obj.x, obj.y] retourne [1, 2] car super().__init__() initializes parent attributes, ensuring both parent and child attributes are set.
 `,
-  892: `The super().__init__() call can pass arguments to the parent's __init__ method. Si class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, alors Child(1, 2).x retourne 1 car Child.__init__ receives arguments (1, 2), calls super().__init__(1) qui passe x = 1 to MyClass.__init__, setting self.x = 1. Alors Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes with specific values passé à the child's constructor.
+  892: `Le super().__init__() call can pass arguments to the parent's __init__ méthode. Si classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, alors Child(1, 2).x retourne 1 car Child.__init__ receives arguments (1, 2), calls super().__init__(1) qui passe x = 1 to MyClass.__init__, setting self.x = 1. Alors Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes avec specific valeurs passé à the child's constructor.
 
-super().__init__() with arguments:
+super().__init__() avec arguments:
 • Child(1, 2).x retourne 1
 • Child(1, 2) calls Child.__init__(1, 2)
 • Child.__init__ calls super().__init__(1) (passes x)
@@ -23885,22 +23885,22 @@ Comment ça fonctionne :
 • Child(1, 2).x retourne 1
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self, x):
         self.x = x
-class Child(MyClass):
+classe Child(MyClass):
     def __init__(self, x, y):
         super().__init__(x)  # Passes x to parent
         self.y = y
-Child(1, 2).x                # 1 (parent __init__ sets with x=1)
+Child(1, 2).x                # 1 (parent __init__ sets avec x=1)
 
 Usages courants :
 • Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y
 • Constructor chaining: pass arguments to parent __init__
-• super() function
+• super() fonction
 • Object initialization
 
-Exemple : Si class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, alors Child(1, 2).x retourne 1 car super().__init__() passes arguments to the parent, so x = 1 est passé to MyClass.__init__, setting self.x = 1.
+Exemple : Si classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, alors Child(1, 2).x retourne 1 car super().__init__() passes arguments to the parent, so x = 1 est passé to MyClass.__init__, setting self.x = 1.
 `,
   893: `A grandchild class inherits de sa immediate parent, not from the grandparent quand there's an override. Si class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, alors GrandChild.x retourne 2 car GrandChild inherits from Child (its immediate parent), and Child has x = 2. The inheritance chain is GrandChild -> Child -> MyClass, and quand searching for x, Python finds it in Child first (x = 2), so it uses that value, not MyClass's x = 1.
 
@@ -24252,18 +24252,18 @@ Avantages :
 • Easier debugging
 
 Exemple : try: 1/0; except ZeroDivisionError: pass catches only ZeroDivisionError, letting other exceptions (like ValueError, TypeError) propagate uncaught.`,
-  904: `The 'as variable' syntax in except clauses captures the exception object, allowing access to exception details. Quand vous écrivez except ZeroDivisionError as e, the exception object is assigned to variable e, and you can access its attributes and methods. The type(e) retourne the class of the exception object, which is ZeroDivisionError in this case.
+  904: `Le 'as variable' syntax in except clauses captures the exception objet, allowing access to exception details. Quand vous écrivez except ZeroDivisionError as e, the exception objet is assigned to variable e, and you can access its attributes and méthodes. The type(e) retourne the classe of the exception objet, which is ZeroDivisionError in this case.
 
 Capture de l'objet exception :
 • except ExceptionType as variable: captures exception
-• Exception object assigned to variable
+• Exception objet assigned to variable
 • Can access exception attributes
-• type(e) retourne exception class
+• type(e) retourne exception classe
 • str(e) retourne error message
 
 Comment ça fonctionne :
 • Exception occurs in try block
-• Exception object created
+• Exception objet created
 • Object assigned to variable 'e'
 • Can inspect exception details
 • type(e) shows exception type
@@ -24272,16 +24272,16 @@ Exemple :
 try:
     result = 1 / 0
 except ZeroDivisionError as e:
-    print(type(e))  # <class 'ZeroDivisionError'>
+    print(type(e))  # <classe 'ZeroDivisionError'>
     print(str(e))   # "division by zero"
 
-Exception object attributes:
+Exception objet attributes:
 • __class__: exception type
 • args: exception arguments
 • __str__(): string representation
 • Custom attributes for custom exceptions
 
-Exemple : try: 1/0; except ZeroDivisionError as e: type(e) retourne <class 'ZeroDivisionError'> car the exception object captured in variable e is an instance of ZeroDivisionError.`,
+Exemple : try: 1/0; except ZeroDivisionError as e: type(e) retourne <classe 'ZeroDivisionError'> car the exception objet captured in variable e is an instance of ZeroDivisionError.`,
   905: `You can catch multiple exception types in a single except clause by using a tuple of exception types. except (ZeroDivisionError, ValueError) va catch either ZeroDivisionError or ValueError exceptions. C'est useful quand multiple different exceptions require le même handling logic, avoiding code duplication.
 
 Multiple exception types in tuple:
@@ -24477,29 +24477,29 @@ Avantages :
 • Consistent cleanup behavior
 
 Exemple : finally executes even with exceptions, so try: 1/0; except: pass; finally: x = 1; x retourne 1 car finally always runs, setting x = 1.`,
-  911: `The raise statement explicitly lève an exception en Python. raise ValueError('error') crée a ValueError exception with the message 'error' and lève it, causing the program to stop normal execution and jump to the nearest exception handler. C'est how you intentionally trigger error conditions.
+  911: `Le raise instruction explicitly lève an exception en Python. raise ValueError('error') crée a ValueError exception avec the message 'error' and lève it, causing the program to stop normal execution and jump to the nearest exception handler. C'est how you intentionally trigger error conditions.
 
-raise statement syntax:
+raise instruction syntax:
 • raise ExceptionType(message)
-• Crée exception object with message
+• Crée exception objet avec message
 • Immediately stops execution
 • Jumps to nearest except block
 • Can raise built-in or custom exceptions
 
 Comment ça fonctionne :
-• Exception object created: ValueError('error')
+• Exception objet created: ValueError('error')
 • Execution stops immediately
 • Python looks for except block to handle it
-• Si no handler, program crashes with traceback
+• Si no handler, program crashes avec traceback
 • Stack unwinds until handler found
 
 Exemple :
 def validate_age(age):
     if age < 0:
         raise ValueError("Age cannot be negative")
-    return age
+    renvoyer age
 
-validate_age(-5)  # Lève ValueError with message
+validate_age(-5)  # Lève ValueError avec message
 
 Usages courants :
 • Input validation: raise ValueError for invalid input
@@ -24507,7 +24507,7 @@ Usages courants :
 • Custom errors: raise custom exception classes
 • Re-raising: raise to re-raise caught exception
 
-Exemple : raise ValueError('error') crée and lève a ValueError exception with message 'error', stopping execution and jumping to exception handler.`,
+Exemple : raise ValueError('error') crée and lève a ValueError exception avec message 'error', stopping execution and jumping to exception handler.`,
   912: `You can raise an exception without providing a message by just using the exception class name. raise ValueError crée a ValueError exception with no custom message. The exception va still ont un default representation, but no descriptive error message. C'est less common than raising with a message.
 
 raise without message:
@@ -24785,10 +24785,10 @@ Avantages :
 • More readable code
 
 Exemple : except (ValueError, TypeError) catches either ValueError or TypeError with a single except clause, grouping related type errors.`,
-  921: `The with statement fournit a syntaxe claire pour travailler avec context managers. with open('file') as f crée a context manager that automatically handles resource management. The open() function retourne a file object that is a context manager - it automatically closes the file quand the with block exits, even si an exception occurs.
+  921: `Le avec instruction fournit a syntaxe claire pour travailler avec context managers. avec open('file') as f crée a context manager that automatically handles resource management. The open() fonction retourne a file objet that is a context manager - it automatically closes the file quand the avec block exits, even si an exception occurs.
 
-with statement and context managers:
-• with expression as variable: context_manager_syntax
+avec instruction and context managers:
+• avec expression as variable: context_manager_syntax
 • Context managers handle resource management automatically
 • Automatic setup and cleanup of resources
 • Exception-safe resource handling
@@ -24796,13 +24796,13 @@ with statement and context managers:
 
 Comment ça fonctionne :
 • Expression evaluated (open('file'))
-• __enter__() method called automatically
+• __enter__() méthode appelé automatically
 • Résultat assigned to variable (f)
-• Code in with block executes normally
-• __exit__() always called for cleanup (closes file)
+• Code in avec block executes normally
+• __exit__() always appelé for cleanup (closes file)
 
 Exemple :
-with open('data.txt', 'r') as f:
+avec open('data.txt', 'r') as f:
     content = f.read()  # File is open here
 # File automatically closed here, even si exception occurs
 
@@ -24813,7 +24813,7 @@ Avantages :
 • Prevents resource leaks
 • Readable and maintainable code
 
-Exemple : with open('file') as f uses the file object's context manager to ensure the file is automatically closed après le with block, regardless of how the block exits.`,
+Exemple : avec open('file') as f uses the file objet's context manager to ensure the file is automatically closed après le avec block, regardless of how the block exits.`,
   922: `Pour créer un gestionnaire de contexte personnalisé, une classe doit implémenter les deux __enter__ and __exit__ methods. __enter__ est appelé quand entering the with block and retourne the object to be used. __exit__ est appelé quand exiting the with block and handles cleanup. C'est the context manager protocol that makes objects fonctionner avec the with statement.
 
 Protocole de gestionnaire de contexte :
@@ -24852,40 +24852,40 @@ Avantages :
 • Clean API for resource management
 
 Exemple : Custom context manager class must implement __enter__ and __exit__ methods to fonctionner avec the with statement. The __enter__ method retourne self, which is assigned to ctx.`,
-  923: `The value returned by __enter__ is assigned to the variable after 'as' in the with statement. Si __enter__ retourne 1, alors x va be assigned the value 1 inside the with block. Cela permet context managers to provide different objects than themselves for use in the with block.
+  923: `Le valeur returned by __enter__ is assigned to the variable après 'as' in the avec instruction. Si __enter__ retourne 1, alors x va be assigned the valeur 1 dans the avec block. Cela permet context managers to provide different objets than themselves for use in the avec block.
 
-__enter__ retourne value assignment:
-• with ContextManager() as variable:
-• __enter__() retourne value assigned to variable
-• Can retourne self (common) or different object
-• Variable available throughout with block
-• Variable goes out of scope after with block
+__enter__ retourne valeur assignment:
+• avec ContextManager() as variable:
+• __enter__() retourne valeur assigned to variable
+• Can retourne self (common) or different objet
+• Variable available throughout avec block
+• Variable goes out of scope après avec block
 
 Comment ça fonctionne :
 • Context manager created: MyContext()
-• __enter__() called, retourne 1
+• __enter__() appelé, retourne 1
 • Value 1 assigned to variable x
-• x = 1 inside with block
-• __exit__() called quand block exits
+• x = 1 dans avec block
+• __exit__() appelé quand block exits
 
 Exemple :
-class NumberContext:
+classe NumberContext:
     def __enter__(self):
         retourne 42  # Return number, not self
 
     def __exit__(self, *args):
         pass
 
-with NumberContext() as x:
-    print(x)  # 42 (not the context manager object)
+avec NumberContext() as x:
+    print(x)  # 42 (not the context manager objet)
 
 Common patterns:
 • Return self: standard resource management (files, connections)
-• Return different object: factory pattern, configuration objects
-• Return None: quand no specific object needed
+• Return different objet: factory pattern, configuration objets
+• Return None: quand no specific objet needed
 • Return wrapper: decorator pattern
 
-Exemple : __enter__ retourne value (1) is assigned to variable x, so x equals 1 inside the with block. The context manager can retourne any value it wants.`,
+Exemple : __enter__ retourne valeur (1) is assigned to variable x, so x equals 1 dans the avec block. The context manager can retourne any valeur it wants.`,
   924: `__exit__ peut contrôler la gestion des exceptions en retournant True pour supprimer exceptions that occur in the with block. Quand __exit__ retourne True, any exception is caught and suppressed - it ne se propage pas outside the with statement. C'est useful for context managers that handle errors internally.
 
 Exception suppression in __exit__:
@@ -25104,39 +25104,39 @@ Usages courants :
 • Recherche : for x in items: if x == target: break; else: print("not found")
 • Validation : vérifier si un élément a été trouvé
 • Boucles avec condition de sortie prématurée`,
-  931: `The import statement loads a module and makes it available in the current namespace. Quand vous écrivez import module, Python searches for a file named module.py (or a package named module) in the module search path, loads it, and crée a module object. The module is alors accessible via the module name (e.g., module.function()). Importing a module executes all top-level code in the module file, but subsequent imports of le même module reuse the cached module object.
+  931: `Le import instruction loads a module and makes it available in the current namespace. Quand vous écrivez import module, Python searches for a file named module.py (or a package named module) in the module search path, loads it, and crée a module objet. The module is alors accessible via the module name (e.g., module.fonction()). Importing a module executes all top-level code in the module file, but subsequent imports of le même module reuse the cached module objet.
 
-import statement:
+import instruction:
 • import module loads the module
 • Searches for module.py or package module
 • Executes module code on first import
-• Crée module object in namespace
+• Crée module objet in namespace
 • Access via module.name
 
 Comment ça fonctionne :
 • Python searches for module in sys.path
 • Loads module file (module.py)
 • Executes top-level code in module
-• Crée module object
+• Crée module objet
 • Adds module to current namespace
 • Subsequent imports reuse cached module
 
 Exemple :
 import math  # Imports math module
 math.pi      # 3.14159... (access module attributes)
-math.sqrt(4) # 2 (use module functions)
+math.sqrt(4) # 2 (use module fonctions)
 
 Usages courants :
 • Importing standard library: import os, import sys, import math
 • Importing custom modules: import mymodule
-• Module access: module.function(), module.attribute
+• Module access: module.fonction(), module.attribute
 • Modules and imports
 
-Exemple : import module loads a module and makes it available in the current namespace, allowing you to access its attributes and functions via module.name.
+Exemple : import module loads a module and makes it available in the current namespace, allowing you to access its attributes and fonctions via module.name.
 `,
-  932: `The from...import statement imports a specific name (function, class, or variable) from a module directly into the current namespace. Quand vous écrivez from module import name, Python importe le module, alors copies the specified name into the current namespace, so you can use it directly without the module prefix. C'est more concise than import module; module.name, but can cause namespace pollution si many names are imported.
+  932: `Le from...import instruction imports a specific name (fonction, classe, or variable) from a module directly into the current namespace. Quand vous écrivez from module import name, Python importe le module, alors copies the specified name into the current namespace, so you can use it directly sans the module prefix. C'est more concise than import module; module.name, but can cause namespace pollution si many names are imported.
 
-from...import statement:
+from...import instruction:
 • from module import name imports specific name
 • Loads module and copies name to current namespace
 • Use name directly (no module prefix)
@@ -25157,12 +25157,12 @@ from os import path
 path.join('a', 'b')  # 'a/b' (use directly)
 
 Usages courants :
-• Importing specific names: from module import function, from module import Class
-• Cleaner syntax: use name directly without module prefix
+• Importing specific names: from module import fonction, from module import Class
+• Cleaner syntax: use name directly sans module prefix
 • Selective imports: import only what you need
 • Modules and imports
 
-Exemple : from module import name imports a specific name from a module directly into the current namespace, permettant d'utiliser it directly without the module prefix.
+Exemple : from module import name imports a specific name from a module directly into the current namespace, permettant d'utiliser it directly sans the module prefix.
 `,
   933: `Le mot-clé as crée an alias for an imported name, permettant d'utiliser un nom différent dans l'espace de noms courant. Quand vous écrivez from module import name as alias, Python imports name from the module but makes it available as alias in the current namespace. C'est useful quand l'originale name conflicts with an existing name, or quand you want a shorter or more descriptive name.
 
@@ -25224,18 +25224,18 @@ Usages courants :
 
 Exemple : import module as alias imports a module with an alias, allowing you to access it via alias.name instead of module.name.
 `,
-  935: `The asterisk (*) in from module import * importe tous les noms publics (les noms ne commençant pas par un underscore) from the module into the current namespace. Cela permet you to use all public names directly without the module prefix. However, this is generally discouraged car it causes namespace pollution, makes it unclear where names come from, and can cause name conflicts. Si the module defines __all__, only names in __all__ are imported.
+  935: `Le asterisk (*) in from module import * importe tous les noms publics (les noms ne commençant pas par un underscore) from the module into the current namespace. Cela permet you to use all public names directly sans the module prefix. However, this is generally discouraged car it causes namespace pollution, makes it unclear where names come from, and can cause name conflicts. Si the module defines __all__, only names in __all__ are imported.
 
 Wildcard import:
 • from module import * importe tous les noms publics
-• Imports all names not starting with _
+• Imports all names not starting avec _
 • Si __all__ defined, imports only names in __all__
 • Names available directly (no module prefix)
 • Causes namespace pollution (discouraged)
 
 Comment ça fonctionne :
 • Python importe tous les noms publics from module
-• Names not starting with _ are imported
+• Names not starting avec _ are imported
 • Si __all__ exists, imports only names in __all__
 • All names copied to current namespace
 • Use names directly
@@ -25286,7 +25286,7 @@ Usages courants :
 
 Exemple : __name__ == '__main__' checks si a script is run directly (not imported), allowing conditional execution of code.
 `,
-  937: `The pattern si __name__ == '__main__': is a common Python idiom that permet code to run only quand a script is executed directly, not quand it's imported as a module. Ce pattern is typically utilisé pour place code that should only run quand the script is the main entry point (like main() function calls, tests, or script-specific logic) inside the si block.
+  937: `Le pattern si __name__ == '__main__': is a common Python idiom that permet code to run only quand a script is executed directly, not quand it's imported as a module. Ce pattern is typically utilisé pour place code that should only run quand the script is the main entry point (like main() fonction calls, tests, or script-specific logic) dans the si block.
 
 __name__ == '__main__' pattern:
 • si __name__ == '__main__': checks si script is main
@@ -25304,12 +25304,12 @@ Comment ça fonctionne :
 
 Exemple :
 def main():
-    print("Main function")
+    print("Main fonction")
     # Script logic here
 
 if __name__ == '__main__':
     main()  # Runs only quand script is executed directly
-# Can import this module without running main()
+# Can import this module sans running main()
 
 Usages courants :
 • Script entry points: si __name__ == '__main__': main()
@@ -25449,38 +25449,38 @@ Usages courants :
 
 Exemple : Si def gen(): yield 1; type(gen()), alors type(gen()) retourne <class 'generator'> car a function with yield retourne a generator object, not a regular function.
 `,
-  942: `The next() function gets the next value from a generator. Si def gen(): yield 1; next(gen()), alors next(gen()) retourne 1 car next() advances the generator to the next yield statement and retourne the yielded value. Each call to next() on a generator consumes one value. Note that each gen() call crée a new generator, so this retourne 1 each time, but si you reuse le même generator object, it va raise StopIteration after yielding all values.
+  942: `Le next() fonction gets the next valeur from a generator. Si def gen(): yield 1; next(gen()), alors next(gen()) retourne 1 car next() advances the generator to the next yield instruction and retourne the yielded valeur. Each call to next() on a generator consumes one valeur. Note that each gen() call crée a new generator, so this retourne 1 each time, but si you reuse le même generator objet, it va raise StopIteration après yielding all valeurs.
 
-next() with generator:
+next() avec generator:
 • next(gen()) retourne 1
 • next() advances generator to next yield
-• Retourne yielded value (1)
+• Retourne yielded valeur (1)
 • Generator state advances
 • Retourne : 1
 
 Comment ça fonctionne :
-• gen() crée new generator object
+• gen() crée new generator objet
 • next(gen()) starts generator execution
 • Generator executes until yield 1
-• next() retourne yielded value: 1
+• next() retourne yielded valeur: 1
 • Generator pauses at yield
 • Retourne : 1
 
 Exemple :
 def gen():
     yield 1
-next(gen())              # 1 (first value)
+next(gen())              # 1 (first valeur)
 g = gen()                # Reuse same generator
 next(g)                  # 1
 next(g)                  # StopIteration (exhausted)
 
 Usages courants :
-• Generator iteration: next(generator) (get next value)
+• Generator iteration: next(generator) (get next valeur)
 • Manual iteration: next() for explicit control
-• Generator values: consume values one at a time
+• Generator valeurs: consume valeurs one at a time
 • Generators and iterators
 
-Exemple : Si def gen(): yield 1; next(gen()), alors next(gen()) retourne 1 car next() gets the next value from the generator, advancing it to the next yield statement.
+Exemple : Si def gen(): yield 1; next(gen()), alors next(gen()) retourne 1 car next() gets the next valeur from the generator, advancing it to the next yield instruction.
 `,
   943: `A generator can yield multiple values. Si def gen(): yield 1; yield 2; list(gen()), alors list(gen()) retourne [1, 2] car the generator yields both values (1, alors 2), and list() consumes all values from the generator, creating a list with all yielded values. Each yield statement produces one value, and the generator continues until it reaches the end (or a retourne statement).
 
@@ -25586,22 +25586,22 @@ Usages courants :
 
 Exemple : Si def gen(): yield 1; retourne 'done'; g = gen(); next(g); g.send(None), alors g.send(None) lève StopIteration with value 'done' car the retourne value becomes the StopIteration exception's value attribute.
 `,
-  946: `The send() method sends a value to a generator, and that value becomes the value of the yield expression. Si def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), alors g.send(2) retourne 2 car send() sends 2 to the generator, which becomes the value of x = yield 1 (x = 2), alors the generator yields x (2). The first next(g) is needed to start the generator and reach the first yield before you can send values. After that, send() peut être utilisé pour send values into the generator.
+  946: `Le send() méthode sends a valeur to a generator, and that valeur becomes the valeur of the yield expression. Si def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), alors g.send(2) retourne 2 car send() sends 2 to the generator, which becomes the valeur of x = yield 1 (x = 2), alors the generator yields x (2). The first next(g) is needed to start the generator and reach the first yield avant you can send valeurs. After that, send() peut être utilisé pour send valeurs into the generator.
 
-send() method:
+send() méthode:
 • g.send(2) retourne 2
-• send() sends value to generator
-• Value becomes yield expression value
+• send() sends valeur to generator
+• Value becomes yield expression valeur
 • x = yield 1 becomes x = 2
 • Generator yields x (2)
 • Retourne : 2
 
 Comment ça fonctionne :
 • g = gen() crée generator
-• next(g) starts generator, yields 1 (returns 1)
+• next(g) starts generator, yields 1 (retourne 1)
 • Generator pauses at x = yield 1
 • g.send(2) sends 2 to generator
-• x = 2 (value of yield expression)
+• x = 2 (valeur of yield expression)
 • Generator continues, yields x (2)
 • Retourne : 2
 
@@ -25614,12 +25614,12 @@ next(g)                  # 1 (starts generator)
 g.send(2)                # 2 (sends 2, yields x=2)
 
 Usages courants :
-• Two-way communication: send() sends values to generator
-• Coroutines: generators that receive values
-• Generator communication: yield receives values via send()
+• Two-way communication: send() sends valeurs to generator
+• Coroutines: generators that receive valeurs
+• Generator communication: yield receives valeurs via send()
 • Generators and iterators
 
-Exemple : Si def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), alors g.send(2) retourne 2 car send() sends a value to the generator, which becomes the value of the yield expression (x = 2), and alors the generator yields x.
+Exemple : Si def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), alors g.send(2) retourne 2 car send() sends a valeur to the generator, which becomes the valeur of the yield expression (x = 2), and alors the generator yields x.
 `,
   947: `Une expression génératrice est une façon concise de créer a generator, similaire à une compréhension de liste mais avec des parenthèses au lieu of square brackets. Si (x**2 for x in [1, 2, 3]), alors il retourne a generator expression object, which is a generator that va produce values quand iterated over. Generator expressions are lazy - they ne calcule pas all values at once, making them memory-efficient for large sequences.
 
@@ -25652,56 +25652,56 @@ Usages courants :
 
 Exemple : (x**2 for x in [1, 2, 3]) crée a generator expression, which is a generator object that produces values quand iterated over.
 `,
-  948: `The list() function can consume a generator expression, converting all its values into a list. Si list(x**2 for x in [1, 2, 3]), alors list() retourne [1, 4, 9] car list() itère sur the generator expression, consuming all values (1**2=1, 2**2=4, 3**2=9) and creating a list with those values. C'est equivalent to [x**2 for x in [1, 2, 3]], but using a generator expression inside list() peut être more memory-efficient si you need to process values first.
+  948: `Le liste() fonction can consume a generator expression, converting all its valeurs into a liste. Si liste(x**2 for x in [1, 2, 3]), alors liste() retourne [1, 4, 9] car liste() itère sur the generator expression, consuming all valeurs (1**2=1, 2**2=4, 3**2=9) and creating a liste avec those valeurs. C'est equivalent to [x**2 for x in [1, 2, 3]], but using a generator expression dans liste() peut être more memory-efficient si you need to process valeurs first.
 
-list() consumes generator:
-• list(x**2 for x in [1, 2, 3]) retourne [1, 4, 9]
-• list() itère sur generator expression
-• Consumes all values: 1, 4, 9
-• Crée list with all values
+liste() consumes generator:
+• liste(x**2 for x in [1, 2, 3]) retourne [1, 4, 9]
+• liste() itère sur generator expression
+• Consumes all valeurs: 1, 4, 9
+• Crée liste avec all valeurs
 • Retourne : [1, 4, 9]
 
 Comment ça fonctionne :
 • (x**2 for x in [1, 2, 3]) crée generator
-• list() itère sur generator
+• liste() itère sur generator
 • Generator yields: 1 (1**2), 4 (2**2), 9 (3**2)
-• list() collects all values: [1, 4, 9]
+• liste() collects all valeurs: [1, 4, 9]
 • Retourne : [1, 4, 9]
 
 Exemple :
-list(x**2 for x in [1, 2, 3])    # [1, 4, 9] (consumes generator)
+liste(x**2 for x in [1, 2, 3])    # [1, 4, 9] (consumes generator)
 # Equivalent to:
-[x**2 for x in [1, 2, 3]]        # [1, 4, 9] (list comprehension)
+[x**2 for x in [1, 2, 3]]        # [1, 4, 9] (liste comprehension)
 
 Usages courants :
-• List creation: list(generator) (convert generator to list)
-• Memory efficiency: generator for processing, list() for final result
-• Value consumption: consume all generator values
+• List creation: liste(generator) (convert generator to liste)
+• Memory efficiency: generator for processing, liste() for final result
+• Value consumption: consume all generator valeurs
 • Generators and iterators
 
-Exemple : Si list(x**2 for x in [1, 2, 3]), alors list() retourne [1, 4, 9] car list() consumes the generator expression, converting all its values into a list.
+Exemple : Si liste(x**2 for x in [1, 2, 3]), alors liste() retourne [1, 4, 9] car liste() consumes the generator expression, converting all its valeurs into a liste.
 `,
-  949: `The yield from statement delegates iteration to another iterable. Si def gen(): yield from [1, 2, 3]; list(gen()), alors list(gen()) retourne [1, 2, 3] car yield from [1, 2, 3] delegates to the list, yielding each value from the list. C'est equivalent to for item in [1, 2, 3]: yield item, but more concise. yield from is useful for delegating to another generator or iterable, allowing composition of generators.
+  949: `Le yield from instruction delegates iteration to another iterable. Si def gen(): yield from [1, 2, 3]; liste(gen()), alors liste(gen()) retourne [1, 2, 3] car yield from [1, 2, 3] delegates to the liste, yielding each valeur from the liste. C'est equivalent to for item in [1, 2, 3]: yield item, but more concise. yield from is useful for delegating to another generator or iterable, allowing composition of generators.
 
-yield from statement:
-• yield from [1, 2, 3] delegates to list
-• Yields each value from list
+yield from instruction:
+• yield from [1, 2, 3] delegates to liste
+• Yields each valeur from liste
 • Equivalent to for item in [1, 2, 3]: yield item
-• list(gen()) collects all values: [1, 2, 3]
+• liste(gen()) collects all valeurs: [1, 2, 3]
 • Retourne : [1, 2, 3]
 
 Comment ça fonctionne :
 • gen() crée generator
-• list() itère sur generator
+• liste() itère sur generator
 • Generator executes: yield from [1, 2, 3]
-• yield from yields each value: 1, 2, 3
-• list() collects: [1, 2, 3]
+• yield from yields each valeur: 1, 2, 3
+• liste() collects: [1, 2, 3]
 • Retourne : [1, 2, 3]
 
 Exemple :
 def gen():
-    yield from [1, 2, 3]  # Delegates to list
-list(gen())              # [1, 2, 3]
+    yield from [1, 2, 3]  # Delegates to liste
+liste(gen())              # [1, 2, 3]
 # Equivalent to:
 def gen():
     for item in [1, 2, 3]:
@@ -25713,7 +25713,7 @@ Usages courants :
 • Concise syntax: yield from instead of for loop
 • Generators and iterators
 
-Exemple : Si def gen(): yield from [1, 2, 3]; list(gen()), alors list(gen()) retourne [1, 2, 3] car yield from delegates to the iterable, yielding each value from it.
+Exemple : Si def gen(): yield from [1, 2, 3]; liste(gen()), alors liste(gen()) retourne [1, 2, 3] car yield from delegates to the iterable, yielding each valeur from it.
 `,
   950: `An iterator class implements __iter__ (returns self) and __next__ (returns next value) methods. Si class MyIter: def __iter__(self): retourne self; def __next__(self): retourne 1; type(MyIter()), alors type(MyIter()) retourne <class '__main__.MyIter'> car MyIter() crée an instance of MyIter, not a generator. The class is an iterator car it implements __iter__ and __next__, but it's still a regular class instance. Generators are a specific type of iterator, but custom iterator classes are also iterators.
 
@@ -26157,25 +26157,25 @@ Avantages :
 • Clean separation of concerns
 
 Exemple : Multiple decorators are applied bottom-to-top, so @decorator1 @decorator2 means decorator1(decorator2(func)).`,
-  961: `The Singleton pattern ensures only one instance of a class exists. By overriding __new__, we control object creation and retourne le même instance every time. obj1 is obj2 retourne True car they reference le même object.
+  961: `Le Singleton pattern ensures only one instance of a classe exists. By overriding __new__, we control objet creation and retourne le même instance every time. obj1 is obj2 retourne True car they reference le même objet.
 
 Singleton pattern implementation:
-• class Singleton: defines singleton class
-• _instance = None: class variable to store single instance
+• classe Singleton: defines singleton classe
+• _instance = None: classe variable to store single instance
 • __new__(cls): controls instance creation
 • si cls._instance is None: crée instance only once
 • retourne cls._instance: retourne same instance always
-• obj1 is obj2: True (same object identity)
+• obj1 is obj2: True (same objet identity)
 
 Comment ça fonctionne :
 • First Singleton() call crée new instance
 • Instance stored in cls._instance
 • Subsequent calls retourne existing instance
 • All instances are identical (obj1 is obj2)
-• Only one object exists in memory
+• Only one objet exists in memory
 
 Exemple :
-class Singleton:
+classe Singleton:
     _instance = None
 
     def __new__(cls):
@@ -26194,58 +26194,58 @@ Avantages :
 • Controlled instantiation
 
 Exemple : Singleton.__new__ ensures only one instance exists, so obj1 is obj2 retourne True.`,
-  962: `The Factory pattern fournit a way to create objects without specifying the exact class. The create method takes a type and instantiates it, returning the created object. Factory.create(list) retourne [] car list() crée an empty list.
+  962: `Le Factory pattern fournit a way to create objets sans specifying the exact classe. The create méthode takes a type and instantiates it, returning the created objet. Factory.create(liste) retourne [] car liste() crée an empty liste.
 
 Factory pattern implementation:
-• class Factory: defines factory class
-• @staticmethod def create(type): static factory method
+• classe Factory: defines factory classe
+• @staticmethod def create(type): static factory méthode
 • retourne type(): instantiates the passed type
-• obj = Factory.create(list): crée list instance
-• Factory.create(list) retourne [] (empty list)
+• obj = Factory.create(liste): crée liste instance
+• Factory.create(liste) retourne [] (empty liste)
 
 Comment ça fonctionne :
-• Factory.create(list) calls create method
-• type parameter is list class
-• retourne type() crée list() → []
-• obj assigned the created object
+• Factory.create(liste) calls create méthode
+• type parameter is liste classe
+• retourne type() crée liste() → []
+• obj assigned the created objet
 • Retourne new instance each time
 
 Exemple :
-class Factory:
+classe Factory:
     @staticmethod
     def create(obj_type):
         retourne obj_type()
 
 # Create different types
-my_list = Factory.create(list)      # []
+my_list = Factory.create(liste)      # []
 my_dict = Factory.create(dict)      # {}
 my_set = Factory.create(set)        # set()
 
 Avantages :
-• Centralized object creation
+• Centralized objet creation
 • Decouples client from specific classes
-• Easy to extend with new types
+• Easy to extend avec new types
 • Consistent creation interface
 
-Exemple : Factory.create(list) retourne [] car the factory instantiates the list type, creating an empty list.`,
-  963: `The Observer pattern permet objects to be notified quand another object changes. A subject maintains a list of observers and notifies them quand its state changes. [o.update() for o in self._observers] itère sur all observers and calls their update method.
+Exemple : Factory.create(liste) retourne [] car the factory instantiates the liste type, creating an empty liste.`,
+  963: `Le Observer pattern permet objets to be notified quand another objet changes. A subject maintains a liste of observers and notifies them quand its state changes. [o.update() for o in self._observers] itère sur all observers and calls their update méthode.
 
 Observer pattern structure:
-• class Observer: defines observer class
-• self._observers = []: list to store observers
-• attach(observer): adds observer to list
+• classe Observer: defines observer classe
+• self._observers = []: liste to store observers
+• attach(observer): adds observer to liste
 • notify(): itère sur observers
 • [o.update() for o in self._observers]: calls update on each
 
 Comment ça fonctionne :
-• Subject maintains list of observers
-• attach() adds observers to list
+• Subject maintains liste of observers
+• attach() adds observers to liste
 • Quand subject changes, notify() est appelé
 • notify() calls update() on each observer
 • Observers react to the change
 
 Exemple :
-class NewsPublisher:
+classe NewsPublisher:
     def __init__(self):
         self._subscribers = []
 
@@ -26256,44 +26256,44 @@ class NewsPublisher:
         for subscriber in self._subscribers:
             subscriber.update(news)
 
-class Subscriber:
+classe Subscriber:
     def update(self, news):
         print(f"Received news: {news}")
 
 Avantages :
-• Loose coupling between objects
+• Loose coupling entre objets
 • Automatic notifications
 • Extensible observer system
 • Event-driven architecture
 
 Exemple : Observer pattern where notify() itère sur observers and calls o.update() on each one.`,
-  964: `The Strategy pattern defines a family of algorithms and makes them interchangeable. StrategyA and StrategyB implement different versions of the execute method, allowing clients to choose different algorithms at runtime.
+  964: `Le Strategy pattern defines a family of algorithms and makes them interchangeable. StrategyA and StrategyB implement different versions of the execute méthode, allowing clients to choose different algorithms at runtime.
 
 Strategy pattern structure:
-• class Strategy: defines strategy interface
-• def execute(self): pass: abstract method
-• class StrategyA(Strategy): implements strategy A
-• class StrategyB(Strategy): implements strategy B
+• classe Strategy: defines strategy interface
+• def execute(self): pass: abstract méthode
+• classe StrategyA(Strategy): implements strategy A
+• classe StrategyB(Strategy): implements strategy B
 • execute() retourne different results for each strategy
 
 Comment ça fonctionne :
-• Base Strategy class defines interface
+• Base Strategy classe defines interface
 • Concrete strategies implement execute differently
 • Client can switch strategies at runtime
 • Each strategy encapsulates different algorithm
 • Polymorphism permet interchangeable use
 
 Exemple :
-class SortStrategy:
+classe SortStrategy:
     def sort(self, data):
         pass
 
-class BubbleSort(SortStrategy):
+classe BubbleSort(SortStrategy):
     def sort(self, data):
         # Bubble sort implementation
         retourne sorted(data)  # simplified
 
-class QuickSort(SortStrategy):
+classe QuickSort(SortStrategy):
     def sort(self, data):
         # Quick sort implementation
         retourne sorted(data)  # simplified
@@ -26304,29 +26304,29 @@ Avantages :
 • Clean separation of concerns
 • Easy to add new strategies
 
-Exemple : Strategy pattern with StrategyA.execute() returning 'A' and StrategyB.execute() returning 'B' - different algorithms for same interface.`,
-  965: `The Adapter pattern permet classes with incompatible interfaces to work together. The Adapter wraps an object and fournit the expected interface by calling the wrapped object's methods. method() calls self.obj.other_method(), adapting the interface.
+Exemple : Strategy pattern avec StrategyA.execute() returning 'A' and StrategyB.execute() returning 'B' - different algorithms for same interface.`,
+  965: `Le Adapter pattern permet classes avec incompatible interfaces to work together. The Adapter wraps an objet and fournit the expected interface by calling the wrapped objet's méthodes. méthode() calls self.obj.other_method(), adapting the interface.
 
 Adapter pattern structure:
-• class Adapter: adapts incompatible interfaces
-• def __init__(self, obj): stores wrapped object
-• def method(self): fournit expected interface
-• retourne self.obj.other_method(): calls wrapped object's method
+• classe Adapter: adapts incompatible interfaces
+• def __init__(self, obj): stores wrapped objet
+• def méthode(self): fournit expected interface
+• retourne self.obj.other_method(): calls wrapped objet's méthode
 • Translates interface calls
 
 Comment ça fonctionne :
-• Adapter wraps incompatible object
+• Adapter wraps incompatible objet
 • Fournit expected interface to client
-• Translates method calls to wrapped object
-• method() → other_method() translation
+• Translates méthode calls to wrapped objet
+• méthode() → other_method() translation
 • Client uses adapter as si it were compatible
 
 Exemple :
-class OldSystem:
+classe OldSystem:
     def old_method(self):
         retourne "old result"
 
-class Adapter:
+classe Adapter:
     def __init__(self, old_system):
         self.old_system = old_system
 
@@ -26335,7 +26335,7 @@ class Adapter:
 
 old = OldSystem()
 adapter = Adapter(old)
-result = adapter.new_method()  # Works with new interface
+result = adapter.new_method()  # Works avec new interface
 
 Avantages :
 • Interface compatibility
@@ -26343,7 +26343,7 @@ Avantages :
 • Clean API adaptation
 • Third-party library integration
 
-Exemple : Adapter adapts interfaces by wrapping objects and translating method calls - method() calls self.obj.other_method().`,
+Exemple : Adapter adapts interfaces by wrapping objets and translating méthode calls - méthode() calls self.obj.other_method().`,
   966: `Les compréhensions de liste peuvent utiliser des expressions conditionnelles (opérateurs ternaires) dans la partie expression. [x if x % 2 == 0 else x * 2 for x in range(3)] crée [0, 2, 2] car elle itère sur range(3) (0, 1, 2) et utilise une logique conditionnelle pour transformer les éléments. Pour x pair, la valeur est conservée ; pour x impair, elle est doublée. Le résultat est [0, 2, 2].
 
 Compréhension avec condition :
@@ -26410,24 +26410,24 @@ Avantages :
 • Simplified cloning logic
 
 Exemple : Prototype.clone() crée new instance using type(self)(), cloning the object's structure and initial values.`,
-  968: `The Facade pattern fournit a simplified interface to a complex system. The facade hides the complexity of multiple subsystems and fournit a single operation() method that coordinates calls to subsystem1.method() and subsystem2.method().
+  968: `Le Facade pattern fournit a simplified interface to a complex system. The facade hides the complexity of multiple subsystems and fournit a single operation() méthode that coordinates calls to subsystem1.méthode() and subsystem2.méthode().
 
 Facade pattern structure:
-• class Facade: fournit simplified interface
+• classe Facade: fournit simplified interface
 • self.subsystem1 = Subsystem1(): initializes subsystems
 • self.subsystem2 = Subsystem2(): initializes more subsystems
-• def operation(self): single method for complex operations
-• retourne self.subsystem1.method() + self.subsystem2.method(): coordinates subsystems
+• def operation(self): single méthode for complex operations
+• retourne self.subsystem1.méthode() + self.subsystem2.méthode(): coordinates subsystems
 
 Comment ça fonctionne :
 • Facade wraps multiple complex subsystems
-• Fournit single operation() method
-• operation() calls multiple subsystem methods
+• Fournit single operation() méthode
+• operation() calls multiple subsystem méthodes
 • Client uses simple facade interface
 • Complexity hidden behind facade
 
 Exemple :
-class DatabaseFacade:
+classe DatabaseFacade:
     def __init__(self):
         self.connection = DatabaseConnection()
         self.query_builder = QueryBuilder()
@@ -26449,7 +26449,7 @@ Avantages :
 • Easier to use and maintain
 • Encapsulates system complexity
 
-Exemple : Facade fournit simplified operation() that coordinates self.subsystem1.method() + self.subsystem2.method().`,
+Exemple : Facade fournit simplified operation() that coordinates self.subsystem1.méthode() + self.subsystem2.méthode().`,
   969: `Le pattern Command encapsulates requests as objects, allowing parameterization and queuing of operations. L'Invoker stocke a command and calls its execute() method quand nécessaire. Cela découple the requester de l'opération réelle.
 
 Command pattern structure:
@@ -26540,36 +26540,36 @@ Avantages :
 • Complex hierarchies simplified
 
 Exemple : Composite.operation() calls [c.operation() for c in self.children], recursively processing all components in the composition.`,
-  971: `The metaclass parameter permet you to specify a custom metaclass for a class. Si class Meta(type): pass; class MyClass(metaclass=Meta): pass; type(MyClass), alors type(MyClass) retourne <class '__main__.Meta'> car MyClass was created using Meta as its metaclass, so type(MyClass) retourne Meta (the class's metaclass), not the default type. Classes are instances of their metaclass, so MyClass is an instance of Meta, making type(MyClass) retourne Meta.
+  971: `Le metaclass parameter permet you to specify a custom metaclass for a classe. Si classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), alors type(MyClass) retourne <classe '__main__.Meta'> car MyClass was created using Meta as its metaclass, so type(MyClass) retourne Meta (the classe's metaclass), not the default type. Classes are instances of their metaclass, so MyClass is an instance of Meta, making type(MyClass) retourne Meta.
 
 Custom metaclass:
-• type(MyClass) retourne <class '__main__.Meta'>
-• MyClass created with metaclass=Meta
+• type(MyClass) retourne <classe '__main__.Meta'>
+• MyClass created avec metaclass=Meta
 • Classes are instances of their metaclass
 • MyClass is instance of Meta
-• type() retourne class's metaclass
-• Retourne : <class '__main__.Meta'>
+• type() retourne classe's metaclass
+• Retourne : <classe '__main__.Meta'>
 
 Comment ça fonctionne :
-• class MyClass(metaclass=Meta): specifies metaclass
-• Python uses Meta instead of type to create class
+• classe MyClass(metaclass=Meta): specifies metaclass
+• Python uses Meta instead of type to create classe
 • MyClass created as instance of Meta
-• type(MyClass) checks class's metaclass
+• type(MyClass) checks classe's metaclass
 • Retourne : Meta (not type)
 
 Exemple :
-class Meta(type): pass
-class MyClass(metaclass=Meta): pass
-type(MyClass)              # <class '__main__.Meta'> (metaclass)
-type(MyClass())            # <class '__main__.MyClass'> (class)
+classe Meta(type): pass
+classe MyClass(metaclass=Meta): pass
+type(MyClass)              # <classe '__main__.Meta'> (metaclass)
+type(MyClass())            # <classe '__main__.MyClass'> (classe)
 
 Usages courants :
-• Custom metaclasses: class MyClass(metaclass=Meta): (custom class creation)
+• Custom metaclasses: classe MyClass(metaclass=Meta): (custom classe creation)
 • Metaprogramming: control how classes are created
 • Metaclasses
 • Advanced Python
 
-Exemple : Si class Meta(type): pass; class MyClass(metaclass=Meta): pass; type(MyClass), alors type(MyClass) retourne <class '__main__.Meta'> car the metaclass parameter sets the class's metaclass, making MyClass an instance of Meta.
+Exemple : Si classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), alors type(MyClass) retourne <classe '__main__.Meta'> car the metaclass parameter sets the classe's metaclass, making MyClass an instance of Meta.
 `,
   972: `A metaclass's __new__ method controls class creation. Si class Meta(type): def __new__(cls, name, bases, dct): retourne super().__new__(cls, name, bases, dct); class MyClass(metaclass=Meta): pass, alors MyClass est créé using the custom metaclass car Meta.__new__ est appelé quand MyClass is being created. The __new__ method reçoit le class name, base classes, and class dictionary, and retourne the created class. Cela permet you to modify or validate the class during creation.
 
@@ -26707,7 +26707,7 @@ Usages courants :
 
 Exemple : Si class SingletonMeta(type): _instances = {}; def __call__(cls, *args, **kwargs): si cls not in cls._instances: cls._instances[cls] = super().__call__(*args, **kwargs); retourne cls._instances[cls]; class MyClass(metaclass=SingletonMeta): pass; MyClass() is MyClass(), alors MyClass() is MyClass() retourne True car the metaclass implements the Singleton pattern, ensuring only one instance exists.
 `,
-  976: `The __slots__ attribute restricts which attributes peut être set on instances. Si class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, alors obj.y = 2 lève an AttributeError car __slots__ only permet 'x' as an instance attribute. Toute tentative de définir an attribute absent de __slots__ lève an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
+  976: `Le __slots__ attribute restricts which attributes peut être set on instances. Si classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, alors obj.y = 2 lève an AttributeError car __slots__ only permet 'x' as an instance attribute. Toute tentative de définir an attribute absent de __slots__ lève an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
 
 __slots__ restriction:
 • obj.y = 2 lève AttributeError
@@ -26721,10 +26721,10 @@ Comment ça fonctionne :
 • obj.y = 2 attempts to set 'y'
 • 'y' absent de __slots__ = ['x']
 • Attribute not allowed
-• Lève AttributeError: 'MyClass' object n'a pas attribute 'y'
+• Lève AttributeError: 'MyClass' objet n'a pas attribute 'y'
 
 Exemple :
-class MyClass:
+classe MyClass:
     __slots__ = ['x', 'y']
 obj = MyClass()
 obj.x = 1                    # Works (x in __slots__)
@@ -26737,7 +26737,7 @@ Usages courants :
 • Class optimization
 • Memory efficiency
 
-Exemple : Si class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, alors obj.y = 2 lève an AttributeError car __slots__ restricts instance attributes to only those listed, and 'y' is absent de __slots__.
+Exemple : Si classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, alors obj.y = 2 lève an AttributeError car __slots__ restricts instance attributes to only those listed, and 'y' is absent de __slots__.
 `,
   977: `Using __slots__ removes the __dict__ attribute from instances, saving memory. Si class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), alors '__dict__' in dir(obj) retourne False car __slots__ prevents the creation of __dict__ for instances. dir() lists all attributes, and since instances with __slots__ n'a pas __dict__, it's not in the list. C'est the memory-saving benefit of __slots__ - instances n'a pas besoin a dictionary to store attributes.
 
@@ -26775,11 +26775,11 @@ Usages courants :
 
 Exemple : Si class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), alors '__dict__' in dir(obj) retourne False car __slots__ removes __dict__ from instances, preventing dynamic attribute creation and saving memory.
 `,
-  978: `The __getattribute__ method intercepts all attribute access (both existing and missing attributes). Si class MyClass: def __getattribute__(self, name): retourne super().__getattribute__(name); obj = MyClass(); obj.x, alors obj.x lève an AttributeError car __getattribute__ est appelé for all attribute access, even si the attribute n'existe pas. In this case, it calls super().__getattribute__(name), which uses the default behavior and lève AttributeError for missing attributes. __getattribute__ est appelé before __getattr__, so it intercepts all attribute access.
+  978: `Le __getattribute__ méthode intercepts all attribute access (both existing and missing attributes). Si classe MyClass: def __getattribute__(self, name): retourne super().__getattribute__(name); obj = MyClass(); obj.x, alors obj.x lève an AttributeError car __getattribute__ est appelé for all attribute access, even si the attribute n'existe pas. In this case, it calls super().__getattribute__(name), which uses the default behavior and lève AttributeError for missing attributes. __getattribute__ est appelé avant __getattr__, so it intercepts all attribute access.
 
 __getattribute__ intercepts all access:
 • obj.x lève AttributeError
-• __getattribute__ called for all attribute access
+• __getattribute__ appelé for all attribute access
 • Checks si attribute exists
 • obj n'a pas attribute 'x'
 • super().__getattribute__('x') lève AttributeError
@@ -26791,10 +26791,10 @@ Comment ça fonctionne :
 • __getattribute__ executes: retourne super().__getattribute__('x')
 • Default __getattribute__ searches for 'x'
 • 'x' not found on obj
-• Lève AttributeError: 'MyClass' object n'a pas attribute 'x'
+• Lève AttributeError: 'MyClass' objet n'a pas attribute 'x'
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __getattribute__(self, name):
         print(f"Accessing {name}")
         retourne super().__getattribute__(name)
@@ -26805,11 +26805,11 @@ Usages courants :
 • Attribute access control: __getattribute__ can log, validate, or modify access
 • Intercept all access: __getattribute__ catches all attribute access
 • Attribute access hooks
-• Special methods
+• Special méthodes
 
-Exemple : Si class MyClass: def __getattribute__(self, name): retourne super().__getattribute__(name); obj = MyClass(); obj.x, alors obj.x lève an AttributeError car __getattribute__ intercepts all attribute access, and since 'x' n'existe pas, it lève AttributeError.
+Exemple : Si classe MyClass: def __getattribute__(self, name): retourne super().__getattribute__(name); obj = MyClass(); obj.x, alors obj.x lève an AttributeError car __getattribute__ intercepts all attribute access, and since 'x' n'existe pas, it lève AttributeError.
 `,
-  979: `The __getattr__ method est appelé only quand an attribute is not found through the normal lookup process (not in __dict__, not a descriptor, not a class attribute). Si class MyClass: def __getattr__(self, name): retourne f'Missing: {name}'; obj = MyClass(); obj.x, alors obj.x retourne 'Missing: x' car 'x' n'existe pas, so Python appelle __getattr__('x'), which retourne the string 'Missing: x'. C'est different from __getattribute__, which est appelé for all attribute access - __getattr__ is only called as a fallback for missing attributes.
+  979: `Le __getattr__ méthode est appelé only quand an attribute is not found through the normal lookup process (not in __dict__, not a descriptor, not a classe attribute). Si classe MyClass: def __getattr__(self, name): retourne f'Missing: {name}'; obj = MyClass(); obj.x, alors obj.x retourne 'Missing: x' car 'x' n'existe pas, so Python appelle __getattr__('x'), which retourne the string 'Missing: x'. C'est different from __getattribute__, which est appelé for all attribute access - __getattr__ is only appelé as a fallback for missing attributes.
 
 __getattr__ fallback:
 • obj.x retourne 'Missing: x'
@@ -26827,7 +26827,7 @@ Comment ça fonctionne :
 • Retourne : 'Missing: x'
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __getattr__(self, name):
         retourne f'Missing: {name}'
 obj = MyClass()
@@ -26835,47 +26835,47 @@ obj.x                    # 'Missing: x' (fallback for missing attribute)
 obj.y                    # 'Missing: y' (fallback)
 
 Usages courants :
-• Default values: __getattr__ can provide defaults for missing attributes
+• Default valeurs: __getattr__ can provide defaults for missing attributes
 • Dynamic attributes: create attributes on the fly
 • Attribute fallback: handle missing attributes gracefully
-• Special methods
+• Special méthodes
 
-Exemple : Si class MyClass: def __getattr__(self, name): retourne f'Missing: {name}'; obj = MyClass(); obj.x, alors obj.x retourne 'Missing: x' car __getattr__ est appelé only quand an attribute is not found, providing a fallback value.
+Exemple : Si classe MyClass: def __getattr__(self, name): retourne f'Missing: {name}'; obj = MyClass(); obj.x, alors obj.x retourne 'Missing: x' car __getattr__ est appelé only quand an attribute is not found, providing a fallback valeur.
 `,
-  980: `The __setattr__ method intercepts all attribute assignment (setting attributes). Si class MyClass: def __setattr__(self, name, value): super().__setattr__(name, value * 2); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car __setattr__ intercepts the assignment obj.x = 5, transforms the value (value * 2 = 5 * 2 = 10), and stores 10. Every attribute assignment goes through __setattr__, allowing you to validate, transform, or log assignments.
+  980: `Le __setattr__ méthode intercepts all attribute assignment (setting attributes). Si classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car __setattr__ intercepts the assignment obj.x = 5, transforms the valeur (valeur * 2 = 5 * 2 = 10), and stores 10. Every attribute assignment goes through __setattr__, allowing you to validate, transform, or log assignments.
 
 __setattr__ intercepts assignment:
 • obj.x = 5 calls __setattr__('x', 5)
-• __setattr__ transforms: value * 2 = 5 * 2 = 10
-• Stores transformed value: obj.x = 10
+• __setattr__ transforms: valeur * 2 = 5 * 2 = 10
+• Stores transformed valeur: obj.x = 10
 • obj.x retourne 10
 • Retourne : 10
 
 Comment ça fonctionne :
 • obj.x = 5 attempts to set attribute
 • Python appelle obj.__setattr__('x', 5)
-• __setattr__ executes: super().__setattr__(name, value * 2)
+• __setattr__ executes: super().__setattr__(name, valeur * 2)
 • Evaluates: 5 * 2 = 10
 • Stores: obj.x = 10
 • obj.x retourne 10
 
 Exemple :
-class MyClass:
-    def __setattr__(self, name, value):
-        si value < 0:
+classe MyClass:
+    def __setattr__(self, name, valeur):
+        si valeur < 0:
             raise ValueError("Value must be non-negative")
-        super().__setattr__(name, value * 2)
+        super().__setattr__(name, valeur * 2)
 obj = MyClass()
 obj.x = 5                    # Stores 10 (5 * 2)
-obj.x                        # 10 (transformed value)
+obj.x                        # 10 (transformed valeur)
 
 Usages courants :
-• Value transformation: __setattr__ can transform values before storing
+• Value transformation: __setattr__ can transform valeurs avant storing
 • Validation: __setattr__ can validate assignments
 • Assignment hooks: intercept all attribute assignments
-• Special methods
+• Special méthodes
 
-Exemple : Si class MyClass: def __setattr__(self, name, value): super().__setattr__(name, value * 2); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car __setattr__ intercepts all attribute assignment, transforming the value before storing it (5 * 2 = 10).
+Exemple : Si classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car __setattr__ intercepts all attribute assignment, transforming the valeur avant storing it (5 * 2 = 10).
 `,
   981: `PEP 8 (Python Enhancement Proposal 8) is the official style guide for Python code. It fournit conventions for writing readable, consistent Python code, including naming conventions, code layout, whitespace usage, line length, comments, and more. Following PEP 8 makes code easier to read and maintain, and it's widely adopted in the Python community. While not enforced by the language, PEP 8 is considered best practice and many tools (like linters) can check code against PEP 8 standards.
 
@@ -26941,19 +26941,19 @@ Usages courants :
 
 Exemple : def func(x: int) -> int: retourne x * 2 uses type hints (PEP 484) to specify that x is an int and the function retourne an int - these are optional annotations that help with documentation and type checking.
 `,
-  983: `The typing module fournit generic types for type hints. Si from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: retourne {}, alors List[int] specifies a list containing integers, and Dict[str, int] specifies a dictionary with string keys and integer values. The typing module fournit generic versions of built-in types (like List, Dict, Tuple, Set) that allow you to specify the types of their contents, enabling more precise type hints.
+  983: `Le typing module fournit generic types for type hints. Si from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: retourne {}, alors List[int] specifies a liste containing integers, and Dict[str, int] specifies a dictionnaire avec string keys and integer valeurs. The typing module fournit generic versions of built-in types (like List, Dict, Tuple, Set) that allow you to specify the types of their contents, enabling more precise type hints.
 
 Generic type hints:
-• List[int] specifies list of integers
-• Dict[str, int] specifies dict with str keys, int values
+• List[int] specifies liste of integers
+• Dict[str, int] specifies dict avec str keys, int valeurs
 • typing module fournit generic types
 • More precise type information
 • Better type checking
 
 Comment ça fonctionne :
 • from typing import List, Dict imports generic types
-• List[int] indicates list containing ints
-• Dict[str, int] indicates dict with str keys, int values
+• List[int] indicates liste containing ints
+• Dict[str, int] indicates dict avec str keys, int valeurs
 • Generic types allow precise type hints
 • Type checkers use them for validation
 
@@ -26961,7 +26961,7 @@ Exemple :
 from typing import List, Dict
 def func(x: List[int]) -> Dict[str, int]:
     retourne {}
-func([1, 2, 3])           # Works (list of ints)
+func([1, 2, 3])           # Works (liste of ints)
 func(['1', '2'])          # Type checker would warn
 
 Usages courants :
@@ -26970,7 +26970,7 @@ Usages courants :
 • Type checking: better type validation
 • Best practices
 
-Exemple : from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: retourne {} uses generic type hints from the typing module to specify that x is a list of integers and the function retourne a dictionary with string keys and integer values.
+Exemple : from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: retourne {} uses generic type hints from the typing module to specify that x is a liste of integers and the fonction retourne a dictionnaire avec string keys and integer valeurs.
 `,
   984: `Type hints fonctionner avec default parameters - you can specify both the type and the default value. Si def func(x: int = 1) -> int: retourne x, alors x: int = 1 specifies that parameter x should be an int with a default value of 1. The type hint comes avant le default value, allowing you to document the expected type while providing a default. C'est a common pattern en Python functions.
 
@@ -27130,7 +27130,7 @@ Usages courants :
 
 Exemple : from typing import Callable; def func(f: Callable[[int], int]) -> int: retourne f(1) uses Callable[[int], int] to specify that f is a function that takes one int argument and retourne an int.
 `,
-  989: `The @dataclass decorator génère automatiquement common methods like __init__, __repr__, __eq__, and more basé sur les attributs de la classe. Si from dataclasses import dataclass; @dataclass; class Point: x: int; y: int; Point(1, 2), alors Point(1, 2) crée a Point instance car @dataclass génère automatiquement __init__ basé sur les attributs de la classe (x: int and y: int). Cela élimine boilerplate code for classes that primarily store data, les rendant plus concis and maintainable.
+  989: `Le @dataclass decorator génère automatiquement common méthodes like __init__, __repr__, __eq__, and more basé sur les attributs de la classe. Si from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2), alors Point(1, 2) crée a Point instance car @dataclass génère automatiquement __init__ basé sur les attributs de la classe (x: int and y: int). Cela élimine boilerplate code for classes that primarily store data, les rendant plus concis and maintainable.
 
 @dataclass decorator:
 • Point(1, 2) crée Point instance
@@ -27140,8 +27140,8 @@ Exemple : from typing import Callable; def func(f: Callable[[int], int]) -> int:
 • Reduces boilerplate code
 
 Comment ça fonctionne :
-• @dataclass decorates Point class
-• Analyzes class attributes (x: int, y: int)
+• @dataclass decorates Point classe
+• Analyzes classe attributes (x: int, y: int)
 • Generates __init__(self, x: int, y: int)
 • Generates __repr__, __eq__, etc.
 • Point(1, 2) uses generated __init__
@@ -27150,7 +27150,7 @@ Comment ça fonctionne :
 Exemple :
 from dataclasses import dataclass
 @dataclass
-class Point:
+classe Point:
     x: int
     y: int
 p = Point(1, 2)          # Uses generated __init__
@@ -27158,12 +27158,12 @@ print(p)                 # Point(x=1, y=2) (uses generated __repr__)
 p == Point(1, 2)         # True (uses generated __eq__)
 
 Usages courants :
-• Data classes: @dataclass class Point: x: int; y: int (automatic methods)
+• Data classes: @dataclass classe Point: x: int; y: int (automatic méthodes)
 • Reduce boilerplate: automatic __init__, __repr__, __eq__
-• Clean code: concise class definitions
+• Clean code: concise classe definitions
 • Best practices
 
-Exemple : from dataclasses import dataclass; @dataclass; class Point: x: int; y: int; Point(1, 2) uses @dataclass to automatically generate __init__ and other methods, allowing Point(1, 2) to create a Point instance with x=1 and y=2.
+Exemple : from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2) uses @dataclass to automatically generate __init__ and other méthodes, allowing Point(1, 2) to create a Point instance avec x=1 and y=2.
 `,
   990: `Enum from the enum module crée enumerations - a set of named constants. Si from enum import Enum; class Color(Enum): RED = 1; GREEN = 2; Color.RED, alors Color.RED retourne <Color.RED: 1> car Enum crée named constant objects. Each enum member (like Color.RED) is an instance of the enum class with a name and value. Enum members have both a name (RED) and a value (1), and they peut être compared by identity (is) or equality (==).
 
@@ -35871,31 +35871,30 @@ len(list(permutations([1, 2, 3, 4])))   # 24 (4!)
 len(list(permutations([1, 2])))         # 2 (2!)
 
 Exemple : len vaut 6 car 3! = 6 — il y a 6 façons d'arranger 3 éléments distincts.`,
-  1477: `The number of 2-element combinations from 4 elements is C(4,2) = 6.
+  1477: `Le nombre de combinaisons de 2 éléments à partir de 4 éléments est C(4,2) = 6.
 
-Concepts clés :
-• C(n, r) = n! / (r! × (n-r)!)
-• C(4, 2) = 4! / (2! × 2!) = 24 / 4 = 6
-• This compte unordered selections (subsets)
-• Each pair appears exactly once
+Concepts clés :
+• C(n, r) = n ! / (r ! × (n-r) !)
+• C(4, 2) = 4 ! / (2 ! × 2 !) = 24 / 4 = 6
+• Cela compte les sélections non ordonnées (sous-ensembles)
+• Chaque paire apparaît exactement une fois
 
-Les 6 combinaisons :
+Les 6 combinaisons :
 (1, 2), (1, 3), (1, 4),
 (2, 3), (2, 4),
 (3, 4)
 
-Comment ça fonctionne :
-• Element 1 pairs with: 2, 3, 4 → 3 combinations
-• Element 2 pairs with: 3, 4 → 2 combinations (1,2 already counted)
-• Element 3 pairs with: 4 → 1 combination
-• Total: 3 + 2 + 1 = 6
+Comment ça fonctionne :
+• L'élément 1 se combine avec : 2, 3, 4 → 3 combinaisons
+• L'élément 2 s'apparie avec : 3, 4 → 2 combinaisons (1,2 déjà compté)
+• Élément 3 paires avec : 4 → 1 combinaison
+• Total : 3 + 2 + 1 = 6
 
 Exemple :
 len(list(combinations([1, 2, 3, 4], 2)))  # 6
 len(list(combinations([1, 2, 3, 4], 3)))  # 4 (C(4,3))
 len(list(combinations([1, 2, 3, 4], 1)))  # 4 (C(4,1))
-
-Exemple : C(4, 2) = 6. Six unique pairs peut être formed from four elements.`,
+Exemple : C(4, 2) = 6. Six paires uniques peuvent être formées à partir de quatre éléments.`,
   1478: `itertools.accumulate retourne les totaux cumulés. L'opération par défaut est l'addition.
 
 Concepts clés :
@@ -36140,58 +36139,55 @@ Méthode non liée vs liée :
 • a.__add__(b) — bound (instance method)
 
 Exemple : list.__add__([1, 2], [3, 4]) retourne [1, 2, 3, 4] — same as [1, 2] + [3, 4].`,
-  1488: `The opérateur *= with 0 empties une liste in place. It modifie l'original list.
+  1488: `L'opérateur *= avec 0 vide une liste en place. Il modifie la liste d'origine.
 
-Concepts clés :
-• a *= 0 appelle a.__imul__(0)
-• Multiplying une liste par 0 produces an empty list
-• *= is sur place — it modifie a directly
-• After a *= 0, a is [] (same object, now empty)
+Concepts clés :
+• a *= 0 appels a.__imul__(0)
+• Multiplier une liste par 0 produit une liste vide
+• *= est en place — il modifie directement un
+• Après a *= 0, a est [] (même objet, maintenant vide)
 
-Comment ça fonctionne :
-• List repetition: [1, 2, 3] * n repeats la liste n times
-• n=0 means zero repetitions → empty list
-• *= modifie sur place (unlike * which crée a new list)
-• id(a) stays le même — same object, just emptied
+Comment ça fonctionne :
+• Répétition de la liste : [1, 2, 3] * n répète la liste n fois
+• n=0 signifie zéro répétition liste → vide
+• *= modifie en place (contrairement à * qui crée une nouvelle liste)
+• id(a) reste le même — même objet, juste vidé
 
 Exemple :
 a = [1, 2, 3]
 old_id = id(a)
-a *= 0
+A0
 a              # []
 id(a) == old_id  # True — same object!
-
-Comparaison avec * (non sur place) :
+Comparer avec * (pas en place) :
 a = [1, 2, 3]
-b = a * 0      # b = [], a inchangés
+b = a * 0      # b = [], a unchanged
 a              # [1, 2, 3] — still intact
+Exemple : a *= 0 vide la liste en place. a est maintenant [].`,
+  1489: `L'opérateur * crée une nouvelle liste. L'original n'est pas modifié.
 
-Exemple : a *= 0 empties la liste in place. a is now [].`,
-  1489: `The * operator crée a new list. The original n'est pas modified.
+Concepts clés :
+• a * 0 crée une nouvelle liste vide, affectée à b
+• a N'EST PAS modifié — encore [1, 2, 3]
+• * crée une copie ; *= modifie en place
+• b est [] (un nouvel objet distinct)
 
-Concepts clés :
-• a * 0 crée a new empty list, assigned to b
-• a is NOT modified — still [1, 2, 3]
-• * crée a copy; *= modifie in place
-• b is [] (a new, separate object)
-
-Comment ça fonctionne :
-• a * 0 appelle a.__mul__(0)
-• __mul__ retourne a nouvelle liste (ne modifie pas a)
-• b gets the new empty list
-• a retains its original contents
+Comment ça fonctionne :
+• a * 0 appels a.__mul__(0)
+• __mul__ renvoie une nouvelle liste (ne modifie pas un)
+• b obtient la nouvelle liste vide
+• a conserve son contenu original
 
 Exemple :
 a = [1, 2, 3]
 b = a * 0
-a    # [1, 2, 3] — inchangés
+a    # [1, 2, 3] — unchanged
 b    # [] — new empty list
+Distinction clé :
+• une * 0 → nouvelle liste, une liste inchangée (utilise __mul__)
+• a *= 0 → a modifié en place (utilise __imul__)
 
-Distinction clé :
-• a * 0 → new list, a inchangés (uses __mul__)
-• a *= 0 → a modified sur place (uses __imul__)
-
-Exemple : a is still [1, 2, 3] car * crée a new list; l'original is untouched.`,
+Exemple : a est toujours [1, 2, 3] car * crée une nouvelle liste ; l'original est intact.`,
   1490: `str.join() concatène an itérable of strings using the string as a separator.
 
 Concepts clés :
@@ -36296,18 +36292,18 @@ sorted([3, 1, None, 2], key=lambda x: (x is None, x or 0))
 # [1, 2, 3, None]
 
 Exemple : TypeError car Python 3 ne peut pas comparer int et NoneType avec l'opérateur <.`,
-  1494: `The constructeur tuple() crée a new tuple object from an iterable. Two separate appelle produce different objects.
+  1494: `Le constructeur tuple() crée un nouvel objet tuple à partir d'un itérable. Deux appels distincts produisent des objets différents.
 
-Concepts clés :
-• tuple([1, 2]) crée a new tuple (1, 2) chaque time
-• a and b are equal (a == b → True)
-• a and b are NOT le même objet (a is b → False)
-• 'is' checks identity (same memory address), not equality
+Concepts clés :
+• tuple([1, 2]) crée un nouveau tuple (1, 2) à chaque fois
+• a et b sont égaux (a == b → Vrai)
+• a et b NE SONT PAS le même objet (a est b → Faux)
+• 'is' vérifie l'identité (même adresse mémoire), pas l'égalité
 
-Comment ça fonctionne :
-• tuple([1, 2]) converts la liste to a new tuple
-• Each call allocates a new tuple object
-• a and b have le même values but different identities
+Comment ça fonctionne :
+• tuple([1, 2]) convertit la liste en un nouveau tuple
+• Chaque appel alloue un nouvel objet tuple
+• a et b ont les mêmes valeurs mais des identités différentes
 • id(a) ≠ id(b)
 
 Exemple :
@@ -36316,12 +36312,10 @@ b = tuple([1, 2])
 a == b     # True (same values)
 a is b     # False (different objects)
 id(a) == id(b)  # False
-
-Note : CPython may intern some tuples as a constant-folding optimization,
-but this is an implementation detail and not guaranteed. Constructor calls
-from lists always créer new objects.
-
-Exemple : a is b retourne False car tuple() crée a new tuple object chaque call — equal but not identical.`,
+Remarque : CPython peut interner certains tuples en tant qu'optimisation à pliage constant,
+mais il s'agit d'un détail de mise en œuvre et non garanti. Appels du constructeur
+from lists always create new objects.
+Exemple : a is b renvoie False parce que tuple() crée un nouvel objet tuple à chaque appel — égal mais pas identique.`,
   1495: `En Python, c'est la virgule qui crée le tuple, pas les parenthèses.
 
 Concepts clés :
@@ -36567,63 +36561,59 @@ Usages courants :
 • Constructor syntax preference
 
 Exemple : dict() retourne {} car calling the dict constructor without arguments crée an dictionnaire vide object, which est équivalent à the dictionnaire vide literal {}.`,
-  1504: `The dict() constructor can créer un dictionnaire from une liste of paires clé-valeur (tuples). dict([('a', 1), ('b', 2)]) retourne {'a': 1, 'b': 2} car dict() itère sur la liste of tuples, treating chaque tuple as a paire clé-valeur where les premiers element is la clé and the second element is the value. C'est useful for converting structured data (like pairs from another source) into a dictionary.
+  1504: `Le constructeur dict() peut créer un dictionnaire à partir d'une liste de paires clé-valeur (tuples). dict ([('a', 1), ('b', 2)]) renvoie {'a' : 1, 'b' : 2} car dict() parcourt la liste des tuples, traitant chaque tuple comme une paire clé-valeur où le premier élément est la clé et le second élément est la valeur. Ceci est utile pour convertir des données structurées (comme des paires provenant d'une autre source) dans un dictionnaire.
+dict() from list of tuples:
+• dict([('a', 1), ('b', 2)]) = {'a' : 1, 'b' : 2}
+• dict() crée un dictionnaire à partir d'une liste de tuples (clé, valeur)
+• Chaque tuple devient une paire clé-valeur
+• Le premier élément est la clé, le deuxième élément est la valeur
+• Renvoie un objet dictionnaire
 
-dict() depuis liste de tuples :
-• dict([('a', 1), ('b', 2)]) = {'a': 1, 'b': 2}
-• dict() crée dictionary from list of (key, value) tuples
-• Each tuple becomes a key-value pair
-• First element is key, second element is value
-• Retourne dictionary object
-
-Comment ça fonctionne :
+Comment ça fonctionne :
 • dict() appelé avec [('a', 1), ('b', 2)]
-• Iterates through list of tuples
-• ('a', 1) becomes key 'a' → value 1
-• ('b', 2) becomes key 'b' → value 2
-• Retourne dictionary: {'a': 1, 'b': 2}
+• Itération à travers la liste des tuples
+• ('a', 1) devient la clé 'a' → valeur 1
+• ('b', 2) devient la → valeur clé 'b' 2
+• Retourne le dictionnaire : {'a' : 1, 'b' : 2}
 
 Exemple :
 dict([('a', 1), ('b', 2)])  # {'a': 1, 'b': 2}
 dict([(1, 'a'), (2, 'b')])  # {1: 'a', 2: 'b'}
 dict([('x', 10), ('y', 20)]) # {'x': 10, 'y': 20}
+Utilisations courants :
+• Conversion des paires : mapping = dict(paires)
+• Création à partir de tuples : data = dict(tuple_list)
+• Conversion de liste en devis
+• Conversion de paire
 
-Usages courants :
-• Converting pairs: mapping = dict(pairs)
-• Creating from tuples: data = dict(tuple_list)
-• List-to-dict conversion
-• Pair conversion
+Exemple : dict([('a', 1), ('b', 2)]) renvoie {'a' : 1, 'b' : 2} car dict() crée un dictionnaire à partir de la liste des tuples, traitant chaque tuple comme une paire clé-valeur.`,
+  1505: `Le constructeur dict() peut créer un dictionnaire à partir d'arguments de mot-clé. dict(a =1, b=2) renvoie {'a' : 1, 'b' : 2} car dict() traite chaque argument de mot-clé comme une paire clé-valeur où le nom du mot-clé devient la clé (en tant que chaîne) et la valeur de l'argument devient la valeur. C'est un moyen pratique de créer des dictionnaires lorsque les clés sont des identifiants Python valides (chaînes qui peuvent être des noms de variables).
+dict() with keyword arguments:
+• dict(a=1, b=2) = {'a' : 1, 'b' : 2}
+• dict() crée un dictionnaire à partir d'arguments de mots-clés
+• Les noms de mots-clés deviennent des clés (sous forme de chaînes)
+• Les valeurs d'argument deviennent des valeurs
+• Les clés doivent être des identifiants valides
 
-Exemple : dict([('a', 1), ('b', 2)]) retourne {'a': 1, 'b': 2} car dict() crée un dictionnaire from la liste of tuples, treating chaque tuple as a paire clé-valeur.`,
-  1505: `The dict() constructor can créer un dictionnaire from keyword arguments. dict(a=1, b=2) retourne {'a': 1, 'b': 2} car dict() treats chaque keyword argument as a paire clé-valeur where the keyword name becomes la clé (as a string) and the argument value becomes the value. C'est a convenient way to créer dictionaries when keys are valid Python identifiers (strings that peut être variable names).
-
-dict() avec arguments nommés :
-• dict(a=1, b=2) = {'a': 1, 'b': 2}
-• dict() crée dictionary from keyword arguments
-• Keyword names become keys (as strings)
-• Argument values become values
-• Keys doit être valid identifiers
-
-Comment ça fonctionne :
-• dict() appelé avec keyword arguments a=1, b=2
-• Keyword 'a' becomes key 'a' (string)
-• Value 1 becomes value 1
-• Keyword 'b' becomes key 'b' (string)
-• Value 2 becomes value 2
-• Retourne dictionary: {'a': 1, 'b': 2}
+Comment ça fonctionne :
+• dict() appelé avec des arguments de mot-clé a=1, b=2
+• Le mot-clé « a » devient la clé « a » (chaîne)
+• La valeur 1 devient la valeur 1
+• Le mot-clé « b » devient la clé « b » (chaîne)
+• La valeur 2 devient la valeur 2
+• Retourne le dictionnaire : {'a' : 1, 'b' : 2}
 
 Exemple :
 dict(a=1, b=2)        # {'a': 1, 'b': 2}
 dict(x=10, y=20)      # {'x': 10, 'y': 20}
 dict(name='Alice', age=30) # {'name': 'Alice', 'age': 30}
+Utilisations courants :
+• Création de dictionnaires : data = dict(key=value)
+• Syntaxe pratique : mapping = dict(a=1, b=2)
+• Création basée sur des mots-clés
+• Dictionnaires de paramètres nommés
 
-Usages courants :
-• Creating dictionaries: data = dict(key=value)
-• Convenient syntax: mapping = dict(a=1, b=2)
-• Keyword-based creation
-• Named parameter dictionaries
-
-Exemple : dict(a=1, b=2) retourne {'a': 1, 'b': 2} car dict() crée un dictionnaire from keyword arguments, where chaque keyword name becomes a string key and its value becomes the corresponding value.`,
+Exemple : dict(a=1, b=2) renvoie {'a' : 1, 'b' : 2} car dict() crée un dictionnaire à partir d'arguments de mots-clés, où chaque nom de mot-clé devient une clé de chaîne et sa valeur devient la valeur correspondante.`,
   1506: `L'accès au dictionnaire utilise crochets with la clé pour récupérer la valeur correspondante. {'a': 1, 'b': 2}['a'] retourne 1 car ['a'] accesses la valeur associated with la clé 'a'. The key is specified in crochets après le dictionary, and Python retourne la valeur mapped to that key. If la clé ne exist, this lève a KeyError.
 
 Accès au dictionnaire :
@@ -36710,21 +36700,20 @@ Usages courants :
 • Key existence validation
 
 Exemple : Accessing a non-existent key like {'a': 1, 'b': 2}['c'] lève a KeyError car Python ne peut pas find la clé 'c' in the dictionary, and square bracket access requires la clé to exist.`,
-  1509: `The len() function retourne the number of paires clé-valeur in a dictionary. len({'a': 1, 'b': 2}) retourne 2 car le dictionnaire contains two key-value pairs: 'a': 1 and 'b': 2. len() compte pairs, not individual keys or values - chaque paire clé-valeur compte as one unit. C'est consistent with how len() works on other collections - il retourne the number of items in the collection.
-
-len() sur dictionnaire :
-• len({'a': 1, 'b': 2}) = 2 (number of pairs)
-• len() compte key-value pairs
-• Each pair compte as one
-• Retourne integer count
-• Works with any dictionary
+  1509: `La fonction len() renvoie le nombre de paires clé-valeur dans un dictionnaire. len({'a' : 1, 'b' : 2}) renvoie 2 car le dictionnaire contient deux paires clé-valeur : 'a' : 1 et 'b' : 2. len() compte les paires, pas les clés ou les valeurs individuelles - chaque paire clé-valeur compte comme une unité. Ceci est cohérent avec la façon dont len() fonctionne sur d'autres collections - il renvoie le nombre d'éléments de la collection.
+len() on dictionary:
+• len({'a' : 1, 'b' : 2}) = 2 (nombre de paires)
+• len() compte les paires clé-valeur
+• Chaque paire compte pour une
+• Renvoie le nombre d'entiers
+• Fonctionne avec n'importe quel dictionnaire
 
 Comment ça fonctionne :
-• len() appelé avec {'a': 1, 'b': 2}
-• Counts paires clé-valeur in dictionary
+• len() called with {'a': 1, 'b': 2}
+• Counts key-value pairs in dictionary
 • Finds two pairs: 'a': 1, 'b': 2
-• Retourne count: 2
-• Retourne integer: 2
+• Returns count: 2
+• Returns integer: 2
 
 Exemple :
 len({'a': 1, 'b': 2})  # 2 (two pairs)
@@ -36738,7 +36727,7 @@ Usages courants :
 • Size validation
 • Pair counting
 
-Exemple : len({'a': 1, 'b': 2}) retourne 2 car len() compte the number of paires clé-valeur in the dictionary, which is 2.`,
+Exemple : len({'a': 1, 'b': 2}) returns 2 because len() counts the number of key-value pairs in the dictionary, which is 2.`,
   1510: `An dictionnaire vide a un length of 0 car it contains no key-value pairs. len({}) retourne 0 car the dictionnaire vide {} has zero pairs. len() compte the number of paires clé-valeur in a dictionary, and an dictionnaire vide naturally has zero pairs. Empty dictionaries are falsy in boolean contexts but are still valid dictionary objects.
 
 Longueur du dictionnaire vide :
@@ -37034,177 +37023,177 @@ Usages courants :
 • Gestion par défaut : removed = items.pop(key, fallback)
 • Suppression sans erreur
 • Pop sûr avec repli`,
-  1521: `The keys() method retourne une vue object that displays all keys in the dictionary. {'a': 1, 'b': 2}.keys() retourne a dict_keys(['a', 'b']) object car keys() crée une vue of the dictionary's keys. A objet vue is a dynamic view of le dictionnaire - it reflects changes made to the dictionary. The view n'est pas a list, but it peut être converted to une liste using list(). Views are efficace en mémoire and update automatically when le dictionnaire changes.
+  1521: `Le keys() méthode retourne a view objet that displays all keys in the dictionnaire. {'a': 1, 'b': 2}.keys() retourne a dict_keys(['a', 'b']) objet car keys() creates a view of the dictionnaire's keys. A view objet is a dynamic view of the dictionnaire - it reflects changes made to the dictionnaire. The view is not a liste, but it can be converted to a liste using liste(). Views are memory-efficient and update automatically when the dictionnaire changes.
 
-Méthode keys() :
+keys() méthode:
 • {'a': 1, 'b': 2}.keys() = dict_keys(['a', 'b'])
-• keys() retourne dict_keys view object
-• La vue reflète dictionary keys
-• Pas une liste (but peut être converted)
-• Se met à jour automatiquement when dict changes
+• keys() retourne dict_keys view objet
+• View reflects dictionnaire keys
+• Not a liste (but can be converted)
+• Updates automatically when dict changes
 
 Comment ça fonctionne :
-• keys() appelé sur {'a': 1, 'b': 2}
-• Crée objet vue of keys
+• keys() appelé on {'a': 1, 'b': 2}
+• Creates view objet of keys
 • View contains: 'a', 'b'
-• Retourne dict_keys view: dict_keys(['a', 'b'])
-• View updates if dictionary changes
+• Returns dict_keys view: dict_keys(['a', 'b'])
+• View updates if dictionnaire changes
 
 Exemple :
 {'a': 1, 'b': 2}.keys()  # dict_keys(['a', 'b'])
-list({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (converted to list)
-for key in {'a': 1, 'b': 2}.keys():  # Itère : 'a', 'b'
+liste({'a': 1, 'b': 2}.keys()) # ['a', 'b'] (converted to liste)
+for key in {'a': 1, 'b': 2}.keys():  # Iterates: 'a', 'b'
     print(key)
 
 Usages courants :
-• Obtenir les clés : keys = dict.keys()
-• Itérer les clés : for key in dict.keys():
-• Itération des clés
-• Accès aux clés du dictionnaire
+• Getting keys: keys = dict.keys()
+• Iterating keys: for key in dict.keys():
+• Key iteration
+• Dictionary key access
 
-Exemple : {'a': 1, 'b': 2}.keys() retourne a dict_keys(['a', 'b']) objet vue car keys() crée a dynamic view of all keys in the dictionary, which peut être iterated or converted to a list.`,
-  1522: `The list() function can convert a dict_keys view to a list. list({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car list() consumes the objet vue created by keys() and collects all keys into a new list. The keys() method retourne une vue object, and list() itère sur that view, collecting all keys into a list. C'est how you get an actual list of keys from keys().
+Exemple : {'a': 1, 'b': 2}.keys() retourne a dict_keys(['a', 'b']) view objet car keys() creates a dynamic view of all keys in the dictionnaire, which can be iterated or converted to a liste.`,
+  1522: `Le liste() fonction can convert a dict_keys view to a liste. liste({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car liste() consumes the view objet created by keys() and collects all keys into a new liste. The keys() méthode retourne a view objet, and liste() iterates through that view, collecting all keys into a liste. This is how you get an actual liste of keys from keys().
 
-list(keys()) :
-• list({'a': 1, 'b': 2}.keys()) = ['a', 'b']
+liste(keys()):
+• liste({'a': 1, 'b': 2}.keys()) = ['a', 'b']
 • keys() retourne dict_keys view
-• list() consumes view
-• Collects keys into new list
-• Crée list of keys
+• liste() consumes view
+• Collects keys into new liste
+• Creates liste of keys
 
 Comment ça fonctionne :
-• keys() appelé sur {'a': 1, 'b': 2}
-• Retourne dict_keys view: ['a', 'b']
-• list() itère sur view
+• keys() appelé on {'a': 1, 'b': 2}
+• Returns dict_keys view: ['a', 'b']
+• liste() iterates through view
 • Collects keys: 'a', 'b'
-• Retourne new list: ['a', 'b']
+• Returns new liste: ['a', 'b']
 
 Exemple :
-list({'a': 1, 'b': 2}.keys())  # ['a', 'b'] (list of keys)
-list({'x': 10, 'y': 20}.keys()) # ['x', 'y'] (list of keys)
-list({}.keys())                 # [] (empty list)
+liste({'a': 1, 'b': 2}.keys())  # ['a', 'b'] (liste of keys)
+liste({'x': 10, 'y': 20}.keys()) # ['x', 'y'] (liste of keys)
+liste({}.keys())                 # [] (empty liste)
 
 Usages courants :
-• Getting key list: key_list = list(dict.keys())
-• Creating key list: keys = list(items.keys())
-• Converting view to list
-• Key list creation
+• Getting key liste: key_list = liste(dict.keys())
+• Creating key liste: keys = liste(items.keys())
+• Converting view to liste
+• Key liste creation
 
-Exemple : list({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car list() consumes the dict_keys view created by keys() and collects all keys into a new list.`,
-  1523: `The values() method retourne une vue object that displays all values in the dictionary. {'a': 1, 'b': 2}.values() retourne a dict_values([1, 2]) object car values() crée une vue of the dictionary's values. A objet vue is a dynamic view of le dictionnaire - it reflects changes made to the dictionary. The view n'est pas a list, but it peut être converted to une liste using list(). Views are efficace en mémoire and update automatically when le dictionnaire changes.
+Exemple : liste({'a': 1, 'b': 2}.keys()) retourne ['a', 'b'] car liste() consumes the dict_keys view created by keys() and collects all keys into a new liste.`,
+  1523: `Le valeurs() méthode retourne a view objet that displays all valeurs in the dictionnaire. {'a': 1, 'b': 2}.valeurs() retourne a dict_values([1, 2]) objet car valeurs() creates a view of the dictionnaire's valeurs. A view objet is a dynamic view of the dictionnaire - it reflects changes made to the dictionnaire. The view is not a liste, but it can be converted to a liste using liste(). Views are memory-efficient and update automatically when the dictionnaire changes.
 
-values() method:
-• {'a': 1, 'b': 2}.values() = dict_values([1, 2])
-• values() retourne dict_values view object
-• La vue reflète dictionary values
-• Pas une liste (but peut être converted)
-• Se met à jour automatiquement when dict changes
+valeurs() méthode:
+• {'a': 1, 'b': 2}.valeurs() = dict_values([1, 2])
+• valeurs() retourne dict_values view objet
+• View reflects dictionnaire valeurs
+• Not a liste (but can be converted)
+• Updates automatically when dict changes
 
 Comment ça fonctionne :
-• values() appelé sur {'a': 1, 'b': 2}
-• Crée objet vue of values
+• valeurs() appelé on {'a': 1, 'b': 2}
+• Creates view objet of valeurs
 • View contains: 1, 2
-• Retourne dict_values view: dict_values([1, 2])
-• View updates if dictionary changes
+• Returns dict_values view: dict_values([1, 2])
+• View updates if dictionnaire changes
 
 Exemple :
-{'a': 1, 'b': 2}.values()  # dict_values([1, 2])
-list({'a': 1, 'b': 2}.values()) # [1, 2] (converted to list)
-for value in {'a': 1, 'b': 2}.values():  # Itère : 1, 2
-    print(value)
+{'a': 1, 'b': 2}.valeurs()  # dict_values([1, 2])
+liste({'a': 1, 'b': 2}.valeurs()) # [1, 2] (converted to liste)
+for valeur in {'a': 1, 'b': 2}.valeurs():  # Iterates: 1, 2
+    print(valeur)
 
 Usages courants :
-• Getting values: values = dict.values()
-• Iterating values: for value in dict.values():
+• Getting valeurs: valeurs = dict.valeurs()
+• Iterating valeurs: for valeur in dict.valeurs():
 • Value iteration
-• Dictionary value access
+• Dictionary valeur access
 
-Exemple : {'a': 1, 'b': 2}.values() retourne a dict_values([1, 2]) objet vue car values() crée a dynamic view of all values in the dictionary, which peut être iterated or converted to a list.`,
-  1524: `The list() function can convert a dict_values view to a list. list({'a': 1, 'b': 2}.values()) retourne [1, 2] car list() consumes the objet vue created by values() and collects all values into a new list. The values() method retourne une vue object, and list() itère sur that view, collecting all values into a list. C'est how you get an actual list of values from values().
+Exemple : {'a': 1, 'b': 2}.valeurs() retourne a dict_values([1, 2]) view objet car valeurs() creates a dynamic view of all valeurs in the dictionnaire, which can be iterated or converted to a liste.`,
+  1524: `Le liste() fonction can convert a dict_values view to a liste. liste({'a': 1, 'b': 2}.valeurs()) retourne [1, 2] car liste() consumes the view objet created by valeurs() and collects all valeurs into a new liste. The valeurs() méthode retourne a view objet, and liste() iterates through that view, collecting all valeurs into a liste. This is how you get an actual liste of valeurs from valeurs().
 
-list(values()):
-• list({'a': 1, 'b': 2}.values()) = [1, 2]
-• values() retourne dict_values view
-• list() consumes view
-• Collects values into new list
-• Crée list of values
+liste(valeurs()):
+• liste({'a': 1, 'b': 2}.valeurs()) = [1, 2]
+• valeurs() retourne dict_values view
+• liste() consumes view
+• Collects valeurs into new liste
+• Creates liste of valeurs
 
 Comment ça fonctionne :
-• values() appelé sur {'a': 1, 'b': 2}
-• Retourne dict_values view: [1, 2]
-• list() itère sur view
-• Collects values: 1, 2
-• Retourne new list: [1, 2]
+• valeurs() appelé on {'a': 1, 'b': 2}
+• Returns dict_values view: [1, 2]
+• liste() iterates through view
+• Collects valeurs: 1, 2
+• Returns new liste: [1, 2]
 
 Exemple :
-list({'a': 1, 'b': 2}.values())  # [1, 2] (list of values)
-list({'x': 10, 'y': 20}.values()) # [10, 20] (list of values)
-list({}.values())                 # [] (empty list)
+liste({'a': 1, 'b': 2}.valeurs())  # [1, 2] (liste of valeurs)
+liste({'x': 10, 'y': 20}.valeurs()) # [10, 20] (liste of valeurs)
+liste({}.valeurs())                 # [] (empty liste)
 
 Usages courants :
-• Getting value list: value_list = list(dict.values())
-• Creating value list: values = list(items.values())
-• Converting view to list
-• Value list creation
+• Getting valeur liste: value_list = liste(dict.valeurs())
+• Creating valeur liste: valeurs = liste(items.valeurs())
+• Converting view to liste
+• Value liste creation
 
-Exemple : list({'a': 1, 'b': 2}.values()) retourne [1, 2] car list() consumes the dict_values view created by values() and collects all values into a new list.`,
-  1525: `The items() method retourne une vue object that displays all paires clé-valeur in le dictionnaire as tuples. {'a': 1, 'b': 2}.items() retourne a dict_items([('a', 1), ('b', 2)]) object car items() crée une vue of the dictionary's key-value pairs, where chaque pair is represented as un tuple (key, value). A objet vue is a dynamic view of le dictionnaire - it reflects changes made to the dictionary. The view n'est pas a list, but it peut être converted to une liste using list().
+Exemple : liste({'a': 1, 'b': 2}.valeurs()) retourne [1, 2] car liste() consumes the dict_values view created by valeurs() and collects all valeurs into a new liste.`,
+  1525: `Le items() méthode retourne a view objet that displays all key-valeur pairs in the dictionnaire as tuples. {'a': 1, 'b': 2}.items() retourne a dict_items([('a', 1), ('b', 2)]) objet car items() creates a view of the dictionnaire's key-valeur pairs, where each pair is represented as a tuple (key, valeur). A view objet is a dynamic view of the dictionnaire - it reflects changes made to the dictionnaire. The view is not a liste, but it can be converted to a liste using liste().
 
-items() method:
+items() méthode:
 • {'a': 1, 'b': 2}.items() = dict_items([('a', 1), ('b', 2)])
-• items() retourne dict_items view object
-• View contains (key, value) tuples
-• Pas une liste (but peut être converted)
-• Se met à jour automatiquement when dict changes
+• items() retourne dict_items view objet
+• View contains (key, valeur) tuples
+• Not a liste (but can be converted)
+• Updates automatically when dict changes
 
 Comment ça fonctionne :
-• items() appelé sur {'a': 1, 'b': 2}
-• Crée objet vue of key-value pairs
+• items() appelé on {'a': 1, 'b': 2}
+• Creates view objet of key-valeur pairs
 • View contains: ('a', 1), ('b', 2)
-• Retourne dict_items view: dict_items([('a', 1), ('b', 2)])
-• View updates if dictionary changes
+• Returns dict_items view: dict_items([('a', 1), ('b', 2)])
+• View updates if dictionnaire changes
 
 Exemple :
 {'a': 1, 'b': 2}.items()  # dict_items([('a', 1), ('b', 2)])
-list({'a': 1, 'b': 2}.items()) # [('a', 1), ('b', 2)] (converted to list)
-for key, value in {'a': 1, 'b': 2}.items():  # Itère : ('a', 1), ('b', 2)
-    print(key, value)
+liste({'a': 1, 'b': 2}.items()) # [('a', 1), ('b', 2)] (converted to liste)
+for key, valeur in {'a': 1, 'b': 2}.items():  # Iterates: ('a', 1), ('b', 2)
+    print(key, valeur)
 
 Usages courants :
 • Getting pairs: pairs = dict.items()
-• Iterating pairs: for key, value in dict.items():
+• Iterating pairs: for key, valeur in dict.items():
 • Pair iteration
 • Dictionary pair access
 
-Exemple : {'a': 1, 'b': 2}.items() retourne a dict_items([('a', 1), ('b', 2)]) objet vue car items() crée a dynamic view of all paires clé-valeur in le dictionnaire as tuples, which peut être iterated or converted to a list.`,
-  1526: `The list() function can convert a dict_items view to une liste of tuples. list({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car list() consumes the objet vue created by items() and collects all paires clé-valeur as tuples into a new list. The items() method retourne une vue object, and list() itère sur that view, collecting all pairs as (key, value) tuples into a list. C'est how you get an actual list of paires clé-valeur from items().
+Exemple : {'a': 1, 'b': 2}.items() retourne a dict_items([('a', 1), ('b', 2)]) view objet car items() creates a dynamic view of all key-valeur pairs in the dictionnaire as tuples, which can be iterated or converted to a liste.`,
+  1526: `Le liste() fonction can convert a dict_items view to a liste of tuples. liste({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car liste() consumes the view objet created by items() and collects all key-valeur pairs as tuples into a new liste. The items() méthode retourne a view objet, and liste() iterates through that view, collecting all pairs as (key, valeur) tuples into a liste. This is how you get an actual liste of key-valeur pairs from items().
 
-list(items()):
-• list({'a': 1, 'b': 2}.items()) = [('a', 1), ('b', 2)]
+liste(items()):
+• liste({'a': 1, 'b': 2}.items()) = [('a', 1), ('b', 2)]
 • items() retourne dict_items view
-• list() consumes view
-• Collects pairs as tuples into new list
-• Crée list of (key, value) tuples
+• liste() consumes view
+• Collects pairs as tuples into new liste
+• Creates liste of (key, valeur) tuples
 
 Comment ça fonctionne :
-• items() appelé sur {'a': 1, 'b': 2}
-• Retourne dict_items view: [('a', 1), ('b', 2)]
-• list() itère sur view
+• items() appelé on {'a': 1, 'b': 2}
+• Returns dict_items view: [('a', 1), ('b', 2)]
+• liste() iterates through view
 • Collects pairs as tuples: ('a', 1), ('b', 2)
-• Retourne new list: [('a', 1), ('b', 2)]
+• Returns new liste: [('a', 1), ('b', 2)]
 
 Exemple :
-list({'a': 1, 'b': 2}.items())  # [('a', 1), ('b', 2)] (list of tuples)
-list({'x': 10, 'y': 20}.items()) # [('x', 10), ('y', 20)] (list of tuples)
-list({}.items())                 # [] (empty list)
+liste({'a': 1, 'b': 2}.items())  # [('a', 1), ('b', 2)] (liste of tuples)
+liste({'x': 10, 'y': 20}.items()) # [('x', 10), ('y', 20)] (liste of tuples)
+liste({}.items())                 # [] (empty liste)
 
 Usages courants :
-• Getting pair list: pair_list = list(dict.items())
-• Creating pair list: pairs = list(items.items())
-• Converting view to list
-• Pair list creation
+• Getting pair liste: pair_list = liste(dict.items())
+• Creating pair liste: pairs = liste(items.items())
+• Converting view to liste
+• Pair liste creation
 
-Exemple : list({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car list() consumes the dict_items view created by items() and collects all paires clé-valeur as tuples into a new list.`,
+Exemple : liste({'a': 1, 'b': 2}.items()) retourne [('a', 1), ('b', 2)] car liste() consumes the dict_items view created by items() and collects all key-valeur pairs as tuples into a new liste.`,
   1527: `L'opérateur in vérifie l'appartenance des clés in a dictionary, pas l'appartenance des valeurs. 'a' in {'a': 1, 'b': 2} retourne True car in searches for la clé 'a' in le dictionnaire and finds it. The in operator for dictionaries only checks keys, not values - it ne search through values. C'est important to remember: in with dictionaries is key-based, not value-based.
 
 in operator with dictionary:
@@ -37262,42 +37251,42 @@ Usages courants :
 • Dictionary membership check
 
 Exemple : 1 in {'a': 1, 'b': 2} retourne False car the in operator checks if 1 exists as a key in the dictionary, but the keys are 'a' and 'b', not 1. The in operator only checks keys, not values.`,
-  1529: `The in operator avec .values() vérifie for value membership in the dictionary. 1 in {'a': 1, 'b': 2}.values() retourne True car .values() retourne une vue of all values, and in checks if 1 exists in those values. C'est how you check if a value (not a key) exists in un dictionnaire - you need to use .values() car in with un dictionnaire directly only checks keys.
+  1529: `Le in operator avec .valeurs() checks for valeur membership in the dictionnaire. 1 in {'a': 1, 'b': 2}.valeurs() retourne True car .valeurs() retourne a view of all valeurs, and in checks if 1 exists in those valeurs. This is how you check if a valeur (not a key) exists in a dictionnaire - you need to use .valeurs() car in avec a dictionnaire directly only checks keys.
 
-in with .values():
-• 1 in {'a': 1, 'b': 2}.values() = True
-• .values() retourne view of all values
-• in checks if value exists in values view
-• Searches through values (not keys)
-• Retourne True if value found
+in avec .valeurs():
+• 1 in {'a': 1, 'b': 2}.valeurs() = True
+• .valeurs() retourne view of all valeurs
+• in checks if valeur exists in valeurs view
+• Searches through valeurs (not keys)
+• Returns True if valeur found
 
 Comment ça fonctionne :
-• 1 is la valeur to check
+• 1 is the valeur to check
 • in is membership operator
-• {'a': 1, 'b': 2}.values() is values view: [1, 2]
-• Searches for value 1 in values view
-• Finds value 1, retourne True
+• {'a': 1, 'b': 2}.valeurs() is valeurs view: [1, 2]
+• Searches for valeur 1 in valeurs view
+• Finds valeur 1, retourne True
 
 Exemple :
-1 in {'a': 1, 'b': 2}.values()  # True (1 is a value)
-3 in {'a': 1, 'b': 2}.values()  # False (3 n'est pas a value)
-'a' in {'a': 1, 'b': 2}.values() # False ('a' n'est pas a value)
+1 in {'a': 1, 'b': 2}.valeurs()  # True (1 is a valeur)
+3 in {'a': 1, 'b': 2}.valeurs()  # False (3 is not a valeur)
+'a' in {'a': 1, 'b': 2}.valeurs() # False ('a' is not a valeur)
 
 Usages courants :
-• Checking value existence: if value in dict.values():
-• Value membership: if item in items.values():
+• Checking valeur existence: if valeur in dict.valeurs():
+• Value membership: if item in items.valeurs():
 • Value-based membership check
-• Dictionary value verification
+• Dictionary valeur verification
 
-Exemple : 1 in {'a': 1, 'b': 2}.values() retourne True car .values() retourne une vue of all values (1, 2), and the in operator checks if 1 exists in those values, which it does.`,
-  1530: `The in operator avec .items() vérifie for l'appartenance des paires clé-valeur in the dictionary. ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne une vue of all paires clé-valeur as tuples, and in checks if the tuple ('a', 1) exists in those pairs. C'est how you check if a specific paire clé-valeur exists in un dictionnaire - you need to use .items() and provide the pair as a tuple.
+Exemple : 1 in {'a': 1, 'b': 2}.valeurs() retourne True car .valeurs() retourne a view of all valeurs (1, 2), and the in operator checks if 1 exists in those valeurs, which it does.`,
+  1530: `Le in operator avec .items() checks for key-valeur pair membership in the dictionnaire. ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne a view of all key-valeur pairs as tuples, and in checks if the tuple ('a', 1) exists in those pairs. This is how you check if a specific key-valeur pair exists in a dictionnaire - you need to use .items() and provide the pair as a tuple.
 
-in with .items():
+in avec .items():
 • ('a', 1) in {'a': 1, 'b': 2}.items() = True
-• .items() retourne view of all (key, value) tuples
+• .items() retourne view of all (key, valeur) tuples
 • in checks if tuple exists in items view
-• Searches through pairs (not individual keys or values)
-• Retourne True if pair found
+• Searches through pairs (not individual keys or valeurs)
+• Returns True if pair found
 
 Comment ça fonctionne :
 • ('a', 1) is the tuple to check
@@ -37308,16 +37297,16 @@ Comment ça fonctionne :
 
 Exemple :
 ('a', 1) in {'a': 1, 'b': 2}.items()  # True (pair exists)
-('a', 2) in {'a': 1, 'b': 2}.items()  # False (pair ne exist)
-('c', 1) in {'a': 1, 'b': 2}.items()  # False (pair ne exist)
+('a', 2) in {'a': 1, 'b': 2}.items()  # False (pair doesn't exist)
+('c', 1) in {'a': 1, 'b': 2}.items()  # False (pair doesn't exist)
 
 Usages courants :
-• Checking pair existence: if (key, value) in dict.items():
+• Checking pair existence: if (key, valeur) in dict.items():
 • Pair membership: if pair in items.items():
 • Pair-based membership check
 • Dictionary pair verification
 
-Exemple : ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne une vue of all paires clé-valeur as tuples [('a', 1), ('b', 2)], and the in operator checks if the tuple ('a', 1) exists in those pairs, which it does.`,
+Exemple : ('a', 1) in {'a': 1, 'b': 2}.items() retourne True car .items() retourne a view of all key-valeur pairs as tuples [('a', 1), ('b', 2)], and the in operator checks if the tuple ('a', 1) exists in those pairs, which it does.`,
   1531: `Assignment with crochets adds a new paire clé-valeur to un dictionnaire if la clé ne exist. If d = {'a': 1} and then d['b'] = 2, le dictionnaire d becomes {'a': 1, 'b': 2} car assignment with a new key adds that paire clé-valeur to the dictionary. C'est how you add new pairs to un dictionnaire - simply assign a value to a new key using square bracket notation.
 
 Dictionary assignment - adding:
@@ -37378,21 +37367,21 @@ Usages courants :
 • Value updates
 
 Exemple : If d = {'a': 1} and then d['a'] = 2, le dictionnaire d becomes {'a': 2} car assignment with an existing key updates that key's value, replacing 1 with 2.`,
-  1533: `The update() method merges another dictionary into the current dictionary and retourne None. {'a': 1}.update({'b': 2}) retourne None car update() modifie le dictionnaire in place. After calling update({'b': 2}), le dictionnaire {'a': 1} becomes {'a': 1, 'b': 2} - the new paires clé-valeur from the argument dictionary are added to l'original dictionary. update() ne renvoyer the modified dictionary - il retourne None.
+  1533: `Le update() méthode merges another dictionnaire into the current dictionnaire and retourne None. {'a': 1}.update({'b': 2}) retourne None car update() modifies the dictionnaire in place. After calling update({'b': 2}), the dictionnaire {'a': 1} becomes {'a': 1, 'b': 2} - the new key-valeur pairs from the argument dictionnaire are added to the original dictionnaire. update() doesn't renvoyer the modified dictionnaire - it retourne None.
 
-update() method:
+update() méthode:
 • {'a': 1}.update({'b': 2}) = None (retourne None)
 • update() merges another dict into current dict
-• Modifies dictionary in place
-• Retourne None (ne renvoie pas new dict)
+• Modifies dictionnaire in place
+• Returns None (doesn't renvoyer new dict)
 • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2}
 
 Comment ça fonctionne :
-• update({'b': 2}) appelé sur {'a': 1}
+• update({'b': 2}) appelé on {'a': 1}
 • Merges {'b': 2} into {'a': 1}
-• Adds new key 'b' with value 2
-• Modifies original dictionary: {'a': 1, 'b': 2}
-• Retourne None (no renvoyer value)
+• Adds new key 'b' avec valeur 2
+• Modifies original dictionnaire: {'a': 1, 'b': 2}
+• Returns None (no renvoyer valeur)
 
 Exemple :
 d = {'a': 1}
@@ -37401,27 +37390,27 @@ d                     # {'a': 1, 'b': 2} (modified)
 {'a': 1}.update({'b': 2}) # None (retourne None)
 
 Usages courants :
-• Merging dictionaries: dict1.update(dict2)
+• Merging dictionnaires: dict1.update(dict2)
 • Adding multiple pairs: items.update(new_items)
 • Dictionary merging
 • In-place modification
 
-Exemple : {'a': 1}.update({'b': 2}) retourne None car update() modifie le dictionnaire sur place (changing {'a': 1} to {'a': 1, 'b': 2}), and the method itself retourne None rather than returning the modified dictionary.`,
-  1534: `The update() method merges paires clé-valeur from another dictionary into the current dictionary. If d = {'a': 1} and then d.update({'b': 2}), le dictionnaire d becomes {'a': 1, 'b': 2} car update() adds the paires clé-valeur from the argument dictionary to l'original dictionary. New keys are added, and if keys already exist, their values are updated. update() modifie le dictionnaire in place.
+Exemple : {'a': 1}.update({'b': 2}) retourne None car update() modifies the dictionnaire in place (changing {'a': 1} to {'a': 1, 'b': 2}), and the méthode itself retourne None rather than returning the modified dictionnaire.`,
+  1534: `Le update() méthode merges key-valeur pairs from another dictionnaire into the current dictionnaire. If d = {'a': 1} and then d.update({'b': 2}), the dictionnaire d becomes {'a': 1, 'b': 2} car update() adds the key-valeur pairs from the argument dictionnaire to the original dictionnaire. New keys are added, and if keys already exist, their valeurs are updated. update() modifies the dictionnaire in place.
 
 update() - adding pairs:
 • d = {'a': 1}; d.update({'b': 2}); d = {'a': 1, 'b': 2}
 • update() merges pairs from argument dict
-• Adds new key 'b' with value 2
-• Modifies dictionary in place
+• Adds new key 'b' avec valeur 2
+• Modifies dictionnaire in place
 • Dictionary changed: {'a': 1} → {'a': 1, 'b': 2}
 
 Comment ça fonctionne :
-• d = {'a': 1} crée dictionary
+• d = {'a': 1} creates dictionnaire
 • d.update({'b': 2}) merges {'b': 2} into d
-• Adds new key 'b' with value 2
-• Modifies original dictionary: {'a': 1, 'b': 2}
-• Retourne None (no renvoyer value)
+• Adds new key 'b' avec valeur 2
+• Modifies original dictionnaire: {'a': 1, 'b': 2}
+• Returns None (no renvoyer valeur)
 
 Exemple :
 d = {'a': 1}
@@ -37431,55 +37420,55 @@ d.update({'c': 3, 'd': 4}) # Adds multiple pairs
 d                     # {'a': 1, 'b': 2, 'c': 3, 'd': 4}
 
 Usages courants :
-• Merging dictionaries: dict1.update(dict2)
+• Merging dictionnaires: dict1.update(dict2)
 • Adding multiple pairs: items.update(new_items)
 • Dictionary combination
 • In-place merging
 
-Exemple : If d = {'a': 1} and then d.update({'b': 2}), le dictionnaire d becomes {'a': 1, 'b': 2} car update() merges the paires clé-valeur from {'b': 2} into l'original dictionary.`,
-  1535: `The update() method overwrites existing keys with new values from the argument dictionary. If d = {'a': 1} and then d.update({'a': 2}), le dictionnaire d becomes {'a': 2} car update() finds that la clé 'a' already exists, and it overwrites the existing value (1) with the new value (2) from the argument dictionary. update() both adds new keys and updates existing keys.
+Exemple : If d = {'a': 1} and then d.update({'b': 2}), the dictionnaire d becomes {'a': 1, 'b': 2} car update() merges the key-valeur pairs from {'b': 2} into the original dictionnaire.`,
+  1535: `Le update() méthode overwrites existing keys avec new valeurs from the argument dictionnaire. If d = {'a': 1} and then d.update({'a': 2}), the dictionnaire d becomes {'a': 2} car update() finds that the key 'a' already exists, and it overwrites the existing valeur (1) avec the new valeur (2) from the argument dictionnaire. update() both adds new keys and updates existing keys.
 
 update() - overwriting:
 • d = {'a': 1}; d.update({'a': 2}); d = {'a': 2}
 • update() overwrites existing keys
-• Key 'a' exists, value updated: 1 → 2
-• Modifies dictionary in place
+• Key 'a' exists, valeur updated: 1 → 2
+• Modifies dictionnaire in place
 • Dictionary changed: {'a': 1} → {'a': 2}
 
 Comment ça fonctionne :
-• d = {'a': 1} crée dictionary
+• d = {'a': 1} creates dictionnaire
 • d.update({'a': 2}) merges {'a': 2} into d
 • Key 'a' already exists
-• Overwrites existing value: 1 → 2
+• Overwrites existing valeur: 1 → 2
 • Dictionary modified: {'a': 2}
 
 Exemple :
 d = {'a': 1}
 d.update({'a': 2})    # None (retourne None)
-d                     # {'a': 2} (value updated)
+d                     # {'a': 2} (valeur updated)
 d.update({'a': 10, 'b': 20}) # Updates 'a', adds 'b'
 d                     # {'a': 10, 'b': 20}
 
 Usages courants :
-• Updating values: dict.update({key: new_value})
-• Merging with overwrite: items.update(updates)
+• Updating valeurs: dict.update({key: new_value})
+• Merging avec overwrite: items.update(updates)
 • Dictionary updates
 • Value overwriting
 
-Exemple : If d = {'a': 1} and then d.update({'a': 2}), le dictionnaire d becomes {'a': 2} car update() overwrites the existing key 'a' with the new value 2 from the argument dictionary.`,
-  1536: `The popitem() method removes and retourne an arbitrary paire clé-valeur from le dictionnaire as a tuple. {'a': 1, 'b': 2}.popitem() retourne ('b', 2) or ('a', 1) car popitem() removes one pair and retourne it as a (key, value) tuple. In Python 3.7+, dictionaries maintain insertion order, so popitem() removes and retourne the last inserted pair (LIFO - Last In First Out). In earlier versions, popitem() removes an arbitrary pair.
+Exemple : If d = {'a': 1} and then d.update({'a': 2}), the dictionnaire d becomes {'a': 2} car update() overwrites the existing key 'a' avec the new valeur 2 from the argument dictionnaire.`,
+  1536: `Le popitem() méthode removes and retourne an arbitrary key-valeur pair from the dictionnaire as a tuple. {'a': 1, 'b': 2}.popitem() retourne ('b', 2) or ('a', 1) car popitem() removes one pair and retourne it as a (key, valeur) tuple. In Python 3.7+, dictionnaires maintain insertion order, so popitem() removes and retourne the last inserted pair (LIFO - Last In First Out). In earlier versions, popitem() removes an arbitrary pair.
 
-popitem() method:
+popitem() méthode:
 • {'a': 1, 'b': 2}.popitem() = ('b', 2) or ('a', 1) (retourne tuple)
 • popitem() removes and retourne one pair
-• Retourne (key, value) tuple
-• Modifies dictionary in place
+• Returns (key, valeur) tuple
+• Modifies dictionnaire in place
 • In Python 3.7+: removes last inserted pair (LIFO)
 
 Comment ça fonctionne :
-• popitem() appelé sur {'a': 1, 'b': 2}
-• Removes one key-value pair
-• Retourne pair as tuple: (key, value)
+• popitem() appelé on {'a': 1, 'b': 2}
+• Removes one key-valeur pair
+• Returns pair as tuple: (key, valeur)
 • In Python 3.7+: removes last inserted ('b', 2)
 • Dictionary modified: {'a': 1} or {'b': 2}
 
@@ -37491,27 +37480,27 @@ d.popitem()           # ('a', 1) (retourne last pair)
 d                     # {} (empty)
 
 Usages courants :
-• Removing pairs: key, value = dict.popitem()
+• Removing pairs: key, valeur = dict.popitem()
 • Getting and removing: pair = items.popitem()
 • Dictionary cleanup
 • LIFO removal
 
-Exemple : {'a': 1, 'b': 2}.popitem() retourne ('b', 2) or ('a', 1) car popitem() removes one paire clé-valeur from le dictionnaire and retourne it as a (key, value) tuple. In Python 3.7+, it removes the last inserted pair (LIFO).`,
-  1537: `The popitem() method on a single-item dictionary retourne that one paire clé-valeur. {'a': 1}.popitem() retourne ('a', 1) car popitem() removes the only paire clé-valeur in le dictionnaire and retourne it as a (key, value) tuple. After calling popitem(), le dictionnaire becomes empty {}. C'est useful for removing the last remaining pair from a dictionary.
+Exemple : {'a': 1, 'b': 2}.popitem() retourne ('b', 2) or ('a', 1) car popitem() removes one key-valeur pair from the dictionnaire and retourne it as a (key, valeur) tuple. In Python 3.7+, it removes the last inserted pair (LIFO).`,
+  1537: `Le popitem() méthode on a single-item dictionnaire retourne that one key-valeur pair. {'a': 1}.popitem() retourne ('a', 1) car popitem() removes the only key-valeur pair in the dictionnaire and retourne it as a (key, valeur) tuple. After calling popitem(), the dictionnaire becomes empty {}. This is useful for removing the last remaining pair from a dictionnaire.
 
 popitem() on single-item dict:
 • {'a': 1}.popitem() = ('a', 1) (retourne tuple)
 • popitem() removes only pair
-• Retourne (key, value) tuple
-• Modifies dictionary in place
+• Returns (key, valeur) tuple
+• Modifies dictionnaire in place
 • Dictionary changed: {'a': 1} → {}
 
 Comment ça fonctionne :
-• popitem() appelé sur {'a': 1}
-• Removes the only key-value pair: 'a': 1
-• Retourne pair as tuple: ('a', 1)
+• popitem() appelé on {'a': 1}
+• Removes the only key-valeur pair: 'a': 1
+• Returns pair as tuple: ('a', 1)
 • Dictionary becomes empty: {}
-• Retourne tuple: ('a', 1)
+• Returns tuple: ('a', 1)
 
 Exemple :
 d = {'a': 1}
@@ -37520,12 +37509,12 @@ d                     # {} (empty)
 {'x': 10}.popitem()   # ('x', 10) (retourne only pair)
 
 Usages courants :
-• Removing last pair: key, value = dict.popitem()
+• Removing last pair: key, valeur = dict.popitem()
 • Getting and removing: pair = items.popitem()
 • Single-item removal
 • Dictionary emptying
 
-Exemple : {'a': 1}.popitem() retourne ('a', 1) car popitem() removes the only paire clé-valeur in le dictionnaire and retourne it as a (key, value) tuple, leaving le dictionnaire empty.`,
+Exemple : {'a': 1}.popitem() retourne ('a', 1) car popitem() removes the only key-valeur pair in the dictionnaire and retourne it as a (key, valeur) tuple, leaving the dictionnaire empty.`,
   1538: `Appeler popitem() sur un dictionnaire vide lève a KeyError car il n'y a pas de paires clé-valeur to remove. Si vous essayez de pop from an dictionnaire vide like {}.popitem(), Python lève a KeyError with a message indicating that you're trying to pop from an empty dictionary. C'est similar to pop() on an liste vide - there's nothing to remove, so an error is raised.
 
 popitem() on empty dict:
@@ -37556,50 +37545,50 @@ Usages courants :
 • Safe popping with validation
 
 Exemple : Appeler popitem() sur un dictionnaire vide lève a KeyError car il n'y a pas de paires clé-valeur to remove from the dictionary, and Python lève this error to indicate that the operation ne peut pas be performed on an empty dictionary.`,
-  1539: `The clear() method removes all paires clé-valeur from un dictionnaire and retourne None. {'a': 1, 'b': 2}.clear() retourne None car clear() modifie le dictionnaire in place, removing all pairs and leaving an empty dictionary. After calling clear(), le dictionnaire {'a': 1, 'b': 2} becomes {} - all pairs are removed, but le dictionnaire object itself still exists. C'est différent de reassigning to an dictionnaire vide - clear() modifie the existing object.
+  1539: `Le clear() méthode removes all key-valeur pairs from a dictionnaire and retourne None. {'a': 1, 'b': 2}.clear() retourne None car clear() modifies the dictionnaire in place, removing all pairs and leaving an empty dictionnaire. After calling clear(), the dictionnaire {'a': 1, 'b': 2} becomes {} - all pairs are removed, but the dictionnaire objet itself still exists. This is different from reassigning to an empty dictionnaire - clear() modifies the existing objet.
 
-clear() method:
+clear() méthode:
 • {'a': 1, 'b': 2}.clear() = None (retourne None)
-• clear() removes all key-value pairs
-• Modifies dictionary in place
-• Retourne None (ne renvoie pas new dict)
+• clear() removes all key-valeur pairs
+• Modifies dictionnaire in place
+• Returns None (doesn't renvoyer new dict)
 • Dictionary changed: {'a': 1, 'b': 2} → {}
 
 Comment ça fonctionne :
-• clear() appelé sur {'a': 1, 'b': 2}
-• Removes all key-value pairs
+• clear() appelé on {'a': 1, 'b': 2}
+• Removes all key-valeur pairs
 • Dictionary becomes empty: {}
-• Original dictionary object still exists
-• Retourne None (no renvoyer value)
+• Original dictionnaire objet still exists
+• Returns None (no renvoyer valeur)
 
 Exemple :
 d = {'a': 1, 'b': 2}
 d.clear()            # None (retourne None)
-d                    # {} (dictionary is now empty)
+d                    # {} (dictionnaire is now empty)
 {'a': 1, 'b': 2}.clear() # None (retourne None)
 
 Usages courants :
-• Clearing dictionary: dict.clear()
+• Clearing dictionnaire: dict.clear()
 • Removing all items: items.clear()
-• Resetting dictionary
+• Resetting dictionnaire
 • In-place modification
 
-Exemple : {'a': 1, 'b': 2}.clear() retourne None car clear() removes all paires clé-valeur from le dictionnaire (changing {'a': 1, 'b': 2} to {}), and the method itself retourne None rather than returning the empty dictionary.`,
-  1540: `The clear() method empties un dictionnaire by removing all key-value pairs. If d = {'a': 1} and then d.clear(), le dictionnaire d becomes {} car clear() removes all pairs from the dictionary. The dictionary object itself still exists, but it contains no pairs. C'est différent de reassigning d = {} - clear() modifie the existing object, while reassignment crée a new object (which matters if other variables reference le même dictionary).
+Exemple : {'a': 1, 'b': 2}.clear() retourne None car clear() removes all key-valeur pairs from the dictionnaire (changing {'a': 1, 'b': 2} to {}), and the méthode itself retourne None rather than returning the empty dictionnaire.`,
+  1540: `Le clear() méthode empties a dictionnaire by removing all key-valeur pairs. If d = {'a': 1} and then d.clear(), the dictionnaire d becomes {} car clear() removes all pairs from the dictionnaire. The dictionnaire objet itself still exists, but it contains no pairs. This is different from reassigning d = {} - clear() modifies the existing objet, while reassignment creates a new objet (which matters if other variables reference the same dictionnaire).
 
-clear() empties dictionary:
+clear() empties dictionnaire:
 • d = {'a': 1}; d.clear(); d = {}
 • clear() removes all pairs
 • Dictionary becomes empty
-• Original object still exists
+• Original objet still exists
 • All pairs removed
 
 Comment ça fonctionne :
-• d = {'a': 1} crée dictionary
+• d = {'a': 1} creates dictionnaire
 • d.clear() removes all pairs
 • Dictionary becomes empty: {}
-• Original dictionary object inchangés (just emptied)
-• Retourne None (no renvoyer value)
+• Original dictionnaire objet unchanged (just emptied)
+• Returns None (no renvoyer valeur)
 
 Exemple :
 d = {'a': 1}
@@ -37608,15 +37597,15 @@ d                    # {} (empty)
 a = {'x': 1, 'y': 2}
 b = a                # b references same dict as a
 a.clear()            # Clears both a and b
-b                    # {} (also empty, same object)
+b                    # {} (also empty, same objet)
 
 Usages courants :
-• Clearing dictionary: dict.clear()
+• Clearing dictionnaire: dict.clear()
 • Removing all items: items.clear()
-• Resetting dictionary
+• Resetting dictionnaire
 • In-place emptying
 
-Exemple : If d = {'a': 1} and then d.clear(), le dictionnaire d becomes {} car clear() removes all paires clé-valeur from the dictionary, leaving it empty.`,
+Exemple : If d = {'a': 1} and then d.clear(), the dictionnaire d becomes {} car clear() removes all key-valeur pairs from the dictionnaire, leaving it empty.`,
   1541: `La méthode copy() crée une copie superficielle d'un dictionnaire et la retourne. {'a': 1, 'b': 2}.copy() retourne {'a': 1, 'b': 2} car copy() crée un nouvel objet dictionnaire avec les mêmes paires clé-valeur. Une copie superficielle signifie que le dictionnaire externe est copié, mais si le dictionnaire contient des objets imbriqués (comme des listes ou d'autres dictionnaires), ces objets imbriqués ne sont pas copiés - ils sont partagés entre l'original et la copie. Pour les dictionnaires plats (sans imbrication), la copie superficielle crée un dictionnaire complètement indépendant.
 
 Concepts clés :
@@ -38702,21 +38691,21 @@ Usages courants :
 • Tri des clés : keys = sorted(items)
 • Tri de liste de clés
 • Ordre des clés de dictionnaire`,
-  1581: `The fromkeys() method is a class method that crée un dictionnaire from an itérable of keys. {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() is a class method that ignores the instance dictionary and crée a nouveau dictionnaire with the given keys. When no value is provided, all values default to None. C'est useful for initializing dictionaries with a set of keys and default values.
+  1581: `Le fromkeys() méthode is a classe méthode that creates a dictionnaire from an iterable of keys. {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() is a classe méthode that ignores the instance dictionnaire and creates a new dictionnaire avec the given keys. When no valeur is provided, all valeurs default to None. This is useful for initializing dictionnaires avec a set of keys and default valeurs.
 
-fromMéthode keys() :
+fromkeys() méthode:
 • {'a': 1}.fromkeys(['a', 'b']) = {'a': None, 'b': None}
-• fromkeys() is class method (ignores instance)
-• Crée nouveau dictionnaire with given keys
+• fromkeys() is classe méthode (ignores instance)
+• Creates new dictionnaire avec given keys
 • Values default to None if not provided
 • Useful for initialization
 
 Comment ça fonctionne :
-• fromkeys(['a', 'b']) appelé sur {'a': 1}
-• Ignores instance dictionary {'a': 1}
-• Crée nouveau dictionnaire with keys: 'a', 'b'
+• fromkeys(['a', 'b']) appelé on {'a': 1}
+• Ignores instance dictionnaire {'a': 1}
+• Creates new dictionnaire avec keys: 'a', 'b'
 • Values default to None (not provided)
-• Retourne : {'a': None, 'b': None}
+• Returns: {'a': None, 'b': None}
 
 Exemple :
 {'a': 1}.fromkeys(['a', 'b'])         # {'a': None, 'b': None}
@@ -38724,54 +38713,54 @@ dict.fromkeys(['a', 'b'])             # {'a': None, 'b': None} (same)
 {'x': 10}.fromkeys(['x', 'y', 'z'])  # {'x': None, 'y': None, 'z': None}
 
 Usages courants :
-• Initializing dictionaries: dict = dict.fromkeys(keys)
-• Default values: data = dict.fromkeys(keys, default)
+• Initializing dictionnaires: dict = dict.fromkeys(keys)
+• Default valeurs: data = dict.fromkeys(keys, default)
 • Key initialization
 • Dictionary creation
 
-Exemple : {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() is a class method that crée a nouveau dictionnaire with the given keys, and when no value is provided, all values default to None.`,
-  1582: `The fromkeys() method can take a second argument as a default value for all keys. dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() crée a nouveau dictionnaire with the given keys, and when a value is provided, all keys are set to that value. C'est useful for initializing dictionaries with a set of keys and le même default value for all keys.
+Exemple : {'a': 1}.fromkeys(['a', 'b']) retourne {'a': None, 'b': None} car fromkeys() is a classe méthode that creates a new dictionnaire avec the given keys, and when no valeur is provided, all valeurs default to None.`,
+  1582: `Le fromkeys() méthode can take a second argument as a default valeur for all keys. dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() creates a new dictionnaire avec the given keys, and when a valeur is provided, all keys are set to that valeur. This is useful for initializing dictionnaires avec a set of keys and the same default valeur for all keys.
 
-fromkeys() with value:
+fromkeys() avec valeur:
 • dict.fromkeys(['a', 'b'], 0) = {'a': 0, 'b': 0}
-• fromkeys() crée nouveau dictionnaire with keys
-• Second argument sets value for all keys
-• All keys get same value: 0
+• fromkeys() creates new dictionnaire avec keys
+• Second argument sets valeur for all keys
+• All keys get same valeur: 0
 • Useful for initialization
 
 Comment ça fonctionne :
-• fromkeys(['a', 'b'], 0) appelé sur dict class
-• Crée nouveau dictionnaire with keys: 'a', 'b'
-• Sets all values to 0 (second argument)
-• Retourne : {'a': 0, 'b': 0}
+• fromkeys(['a', 'b'], 0) appelé on dict classe
+• Creates new dictionnaire avec keys: 'a', 'b'
+• Sets all valeurs to 0 (second argument)
+• Returns: {'a': 0, 'b': 0}
 
 Exemple :
 dict.fromkeys(['a', 'b'], 0)          # {'a': 0, 'b': 0}
 dict.fromkeys(['x', 'y'], 'default')  # {'x': 'default', 'y': 'default'}
-dict.fromkeys(['1', '2'], [])         # {'1': [], '2': []} (same list reference!)
+dict.fromkeys(['1', '2'], [])         # {'1': [], '2': []} (same liste reference!)
 
 Usages courants :
-• Initializing with defaults: dict = dict.fromkeys(keys, default)
-• Default values: data = dict.fromkeys(keys, 0)
-• Key initialization with values
-• Dictionary creation with defaults
+• Initializing avec defaults: dict = dict.fromkeys(keys, default)
+• Default valeurs: data = dict.fromkeys(keys, 0)
+• Key initialization avec valeurs
+• Dictionary creation avec defaults
 
-Exemple : dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() crée a nouveau dictionnaire with the given keys, and when a value (0) is provided, all keys are set to that value.`,
-  1583: `The fromkeys() method is a class method that crée a new dictionary, ignoring the instance dictionary. {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() is a class method that ignores the instance dictionary {'a': 1, 'b': 2} and crée a nouveau dictionnaire with the given keys ['c', 'd']. The instance dictionary n'est pas used or modified - fromkeys() always crée a new dictionary.
+Exemple : dict.fromkeys(['a', 'b'], 0) retourne {'a': 0, 'b': 0} car fromkeys() creates a new dictionnaire avec the given keys, and when a valeur (0) is provided, all keys are set to that valeur.`,
+  1583: `Le fromkeys() méthode is a classe méthode that creates a new dictionnaire, ignoring the instance dictionnaire. {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() is a classe méthode that ignores the instance dictionnaire {'a': 1, 'b': 2} and creates a new dictionnaire avec the given keys ['c', 'd']. The instance dictionnaire is not used or modified - fromkeys() always creates a new dictionnaire.
 
-fromkeys() - class method:
+fromkeys() - classe méthode:
 • {'a': 1, 'b': 2}.fromkeys(['c', 'd']) = {'c': None, 'd': None}
-• fromkeys() is class method (ignores instance)
-• Crée nouveau dictionnaire with given keys
-• Instance dictionary {'a': 1, 'b': 2} not used
-• Retourne new dictionary
+• fromkeys() is classe méthode (ignores instance)
+• Creates new dictionnaire avec given keys
+• Instance dictionnaire {'a': 1, 'b': 2} not used
+• Returns new dictionnaire
 
 Comment ça fonctionne :
-• fromkeys(['c', 'd']) appelé sur {'a': 1, 'b': 2}
-• Ignores instance dictionary {'a': 1, 'b': 2}
-• Crée nouveau dictionnaire with keys: 'c', 'd'
+• fromkeys(['c', 'd']) appelé on {'a': 1, 'b': 2}
+• Ignores instance dictionnaire {'a': 1, 'b': 2}
+• Creates new dictionnaire avec keys: 'c', 'd'
 • Values default to None (not provided)
-• Retourne : {'c': None, 'd': None}
+• Returns: {'c': None, 'd': None}
 
 Exemple :
 {'a': 1, 'b': 2}.fromkeys(['c', 'd']) # {'c': None, 'd': None} (new dict)
@@ -38779,27 +38768,27 @@ Exemple :
 dict.fromkeys(['a', 'b'])             # {'a': None, 'b': None} (same)
 
 Usages courants :
-• Creating new dictionaries: dict = dict.fromkeys(keys)
+• Creating new dictionnaires: dict = dict.fromkeys(keys)
 • Initialization: data = items.fromkeys(new_keys, default)
-• Class method usage
+• Class méthode usage
 • Dictionary creation
 
-Exemple : {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() is a class method that ignores the instance dictionary and crée a nouveau dictionnaire with the given keys.`,
-  1584: `The max() function on un dictionnaire retourne la clé maximale. max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() itère sur the dictionary, qui itère sur les clés, and retourne la clé maximale. Les clés sont comparées using their natural ordering (strings are compared lexicographically, numbers are compared numerically). This est équivalent à max(dict.keys()) - quand vous appelez max() on un dictionnaire directly, il trouve la clé maximale, not la valeur maximale.
+Exemple : {'a': 1, 'b': 2}.fromkeys(['c', 'd']) retourne {'c': None, 'd': None} car fromkeys() is a classe méthode that ignores the instance dictionnaire and creates a new dictionnaire avec the given keys.`,
+  1584: `Le max() fonction on a dictionnaire retourne the maximum key. max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() iterates over the dictionnaire, which iterates over keys, and retourne the maximum key. Keys are compared using their natural ordering (strings are compared lexicographically, numbers are compared numerically). This is equivalent to max(dict.keys()) - when you call max() on a dictionnaire directly, it finds the maximum key, not the maximum valeur.
 
-max() on dictionary:
+max() on dictionnaire:
 • max({'a': 1, 'b': 2, 'c': 3}) = 'c'
-• max() itère sur dictionary (keys)
+• max() iterates over dictionnaire (keys)
 • Compares keys: 'a' < 'b' < 'c'
-• Retourne maximum key: 'c'
-• Not maximum value (value 3)
+• Returns maximum key: 'c'
+• Not maximum valeur (valeur 3)
 
 Comment ça fonctionne :
 • max() appelé avec {'a': 1, 'b': 2, 'c': 3}
-• Iterates over dictionary (keys: 'a', 'b', 'c')
+• Iterates over dictionnaire (keys: 'a', 'b', 'c')
 • Compares keys: 'a' < 'b' < 'c' (lexicographic)
 • Finds maximum key: 'c'
-• Retourne : 'c'
+• Returns: 'c'
 
 Exemple :
 max({'a': 1, 'b': 2, 'c': 3})        # 'c' (max key)
@@ -38812,22 +38801,22 @@ Usages courants :
 • Dictionary key ordering
 • Maximum key finding
 
-Exemple : max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() itère sur the dictionary, qui itère sur les clés, and retourne la clé maximale 'c' (lexicographically largest).`,
-  1585: `The min() function on un dictionnaire retourne la clé minimale. min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() itère sur the dictionary, qui itère sur les clés, and retourne la clé minimale. Les clés sont comparées using their natural ordering (strings are compared lexicographically, numbers are compared numerically). This est équivalent à min(dict.keys()) - quand vous appelez min() on un dictionnaire directly, il trouve la clé minimale, not the minimum value.
+Exemple : max({'a': 1, 'b': 2, 'c': 3}) retourne 'c' car max() iterates over the dictionnaire, which iterates over keys, and retourne the maximum key 'c' (lexicographically largest).`,
+  1585: `Le min() fonction on a dictionnaire retourne the minimum key. min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() iterates over the dictionnaire, which iterates over keys, and retourne the minimum key. Keys are compared using their natural ordering (strings are compared lexicographically, numbers are compared numerically). This is equivalent to min(dict.keys()) - when you call min() on a dictionnaire directly, it finds the minimum key, not the minimum valeur.
 
-min() on dictionary:
+min() on dictionnaire:
 • min({'a': 1, 'b': 2, 'c': 3}) = 'a'
-• min() itère sur dictionary (keys)
+• min() iterates over dictionnaire (keys)
 • Compares keys: 'a' < 'b' < 'c'
-• Retourne minimum key: 'a'
-• Not minimum value (value 1)
+• Returns minimum key: 'a'
+• Not minimum valeur (valeur 1)
 
 Comment ça fonctionne :
 • min() appelé avec {'a': 1, 'b': 2, 'c': 3}
-• Iterates over dictionary (keys: 'a', 'b', 'c')
+• Iterates over dictionnaire (keys: 'a', 'b', 'c')
 • Compares keys: 'a' < 'b' < 'c' (lexicographic)
 • Finds minimum key: 'a'
-• Retourne : 'a'
+• Returns: 'a'
 
 Exemple :
 min({'a': 1, 'b': 2, 'c': 3})        # 'a' (min key)
@@ -38840,22 +38829,21 @@ Usages courants :
 • Dictionary key ordering
 • Minimum key finding
 
-Exemple : min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() itère sur the dictionary, qui itère sur les clés, and retourne la clé minimale 'a' (lexicographically smallest).`,
-  1586: `The max() function on .values() retourne la valeur maximale. max({'a': 1, 'b': 2, 'c': 3}.values()) retourne 3 car .values() retourne une vue of all values [1, 2, 3], and max() trouve le maximum value. Values are compared using their natural ordering (numbers are compared numerically, strings are compared lexicographically). C'est how you find la valeur maximale in un dictionnaire - if you call max() on le dictionnaire directly, you get la clé maximale, but if you call max() on .values(), you get la valeur maximale.
-
+Exemple : min({'a': 1, 'b': 2, 'c': 3}) retourne 'a' car min() iterates over the dictionnaire, which iterates over keys, and retourne the minimum key 'a' (lexicographically smallest).`,
+  1586: `QUERY LENGTH LIMIT EXCEEDED. MAX ALLOWED QUERY : 500 CHARS
 max() on .values():
 • max({'a': 1, 'b': 2, 'c': 3}.values()) = 3
-• .values() retourne view of values: [1, 2, 3]
+• .values() returns view of values: [1, 2, 3]
 • max() compares values: 1 < 2 < 3
-• Retourne maximum value: 3
+• Returns maximum value: 3
 • Not maximum key (key 'c')
 
 Comment ça fonctionne :
-• {'a': 1, 'b': 2, 'c': 3}.values() retourne view: [1, 2, 3]
-• max() appelé avec values view
+• {'a': 1, 'b': 2, 'c': 3}.values() returns view: [1, 2, 3]
+• max() called with values view
 • Compares values: 1 < 2 < 3 (numeric)
 • Finds maximum value: 3
-• Retourne : 3
+• Returns: 3
 
 Exemple :
 max({'a': 1, 'b': 2, 'c': 3}.values()) # 3 (max value)
@@ -38868,105 +38856,105 @@ Usages courants :
 • Dictionary value ordering
 • Maximum value finding
 
-Exemple : max({'a': 1, 'b': 2, 'c': 3}.values()) retourne 3 car .values() retourne une vue of all values [1, 2, 3], and max() trouve le maximum value, which is 3.`,
-  1587: `The sum() function on .values() adds all values in the dictionary. sum({'a': 1, 'b': 2, 'c': 3}.values()) retourne 6 car .values() retourne une vue of all values [1, 2, 3], and sum() adds them: 1 + 2 + 3 = 6. C'est how you sum all values in un dictionnaire - sum() fonctionne avec any itérable of numbers, and .values() provides an itérable of values. If le dictionnaire is empty, sum() retourne 0.
+Exemple : max({'a': 1, 'b': 2, 'c': 3}.values()) returns 3 because .values() returns a view of all values [1, 2, 3], and max() finds the maximum value, which is 3.`,
+  1587: `Le sum() fonction on .valeurs() adds all valeurs in the dictionnaire. sum({'a': 1, 'b': 2, 'c': 3}.valeurs()) retourne 6 car .valeurs() retourne a view of all valeurs [1, 2, 3], and sum() adds them: 1 + 2 + 3 = 6. This is how you sum all valeurs in a dictionnaire - sum() works avec any iterable of numbers, and .valeurs() provides an iterable of valeurs. If the dictionnaire is empty, sum() retourne 0.
 
-sum() on .values():
-• sum({'a': 1, 'b': 2, 'c': 3}.values()) = 6
-• .values() retourne view of values: [1, 2, 3]
-• sum() adds all values: 1 + 2 + 3
-• Retourne sum: 6
-• Works with numeric values
+sum() on .valeurs():
+• sum({'a': 1, 'b': 2, 'c': 3}.valeurs()) = 6
+• .valeurs() retourne view of valeurs: [1, 2, 3]
+• sum() adds all valeurs: 1 + 2 + 3
+• Returns sum: 6
+• Works avec numeric valeurs
 
 Comment ça fonctionne :
-• {'a': 1, 'b': 2, 'c': 3}.values() retourne view: [1, 2, 3]
-• sum() appelé avec values view
-• Adds all values: 1 + 2 + 3
+• {'a': 1, 'b': 2, 'c': 3}.valeurs() retourne view: [1, 2, 3]
+• sum() appelé avec valeurs view
+• Adds all valeurs: 1 + 2 + 3
 • Computes sum: 6
-• Retourne : 6
+• Returns: 6
 
 Exemple :
-sum({'a': 1, 'b': 2, 'c': 3}.values()) # 6 (1 + 2 + 3)
-sum({'x': 10, 'y': 20}.values())       # 30 (10 + 20)
-sum({}.values())                        # 0 (empty, no values)
+sum({'a': 1, 'b': 2, 'c': 3}.valeurs()) # 6 (1 + 2 + 3)
+sum({'x': 10, 'y': 20}.valeurs())       # 30 (10 + 20)
+sum({}.valeurs())                        # 0 (empty, no valeurs)
 
 Usages courants :
-• Summing values: total = sum(dict.values())
-• Value aggregation: sum = sum(items.values())
-• Dictionary value summing
-• Numeric value operations
+• Summing valeurs: total = sum(dict.valeurs())
+• Value aggregation: sum = sum(items.valeurs())
+• Dictionary valeur summing
+• Numeric valeur operations
 
-Exemple : sum({'a': 1, 'b': 2, 'c': 3}.values()) retourne 6 car .values() retourne une vue of all values [1, 2, 3], and sum() adds them together: 1 + 2 + 3 = 6.`,
-  1588: `The all() function on .values() checks if all values are truthy. all({'a': 1, 'b': 0}.values()) retourne False car .values() retourne une vue of all values [1, 0], and all() checks if all values are truthy. Since 1 is truthy but 0 is falsy, all() retourne False - it requires all values to be truthy. C'est how you check if all values in un dictionnaire are truthy - all() retourne True uniquement si all values are truthy, otherwise il retourne False.
+Exemple : sum({'a': 1, 'b': 2, 'c': 3}.valeurs()) retourne 6 car .valeurs() retourne a view of all valeurs [1, 2, 3], and sum() adds them together: 1 + 2 + 3 = 6.`,
+  1588: `Le all() fonction on .valeurs() checks if all valeurs are truthy. all({'a': 1, 'b': 0}.valeurs()) retourne False car .valeurs() retourne a view of all valeurs [1, 0], and all() checks if all valeurs are truthy. Since 1 is truthy but 0 is falsy, all() retourne False - it requires all valeurs to be truthy. This is how you check if all valeurs in a dictionnaire are truthy - all() retourne True only if all valeurs are truthy, otherwise it retourne False.
 
-all() on .values():
-• all({'a': 1, 'b': 0}.values()) = False
-• .values() retourne view of values: [1, 0]
-• all() checks if all values truthy
+all() on .valeurs():
+• all({'a': 1, 'b': 0}.valeurs()) = False
+• .valeurs() retourne view of valeurs: [1, 0]
+• all() checks if all valeurs truthy
 • 1 is truthy, 0 is falsy
 • Not all truthy, retourne False
 
 Comment ça fonctionne :
-• {'a': 1, 'b': 0}.values() retourne view: [1, 0]
-• all() appelé avec values view
-• Checks chaque value: 1 (truthy), 0 (falsy)
+• {'a': 1, 'b': 0}.valeurs() retourne view: [1, 0]
+• all() appelé avec valeurs view
+• Checks each valeur: 1 (truthy), 0 (falsy)
 • 1 is truthy, 0 is falsy
-• Not all truthy, retourne : False
+• Not all truthy, retourne: False
 
 Exemple :
-all({'a': 1, 'b': 0}.values())        # False (0 is falsy)
-all({'a': 1, 'b': 2}.values())        # True (all truthy)
-all({'a': 0, 'b': 0}.values())        # False (all falsy)
+all({'a': 1, 'b': 0}.valeurs())        # False (0 is falsy)
+all({'a': 1, 'b': 2}.valeurs())        # True (all truthy)
+all({'a': 0, 'b': 0}.valeurs())        # False (all falsy)
 
 Usages courants :
-• Checking all truthy: if all(dict.values()):
-• Value validation: valid = all(items.values())
-• Dictionary value checking
+• Checking all truthy: if all(dict.valeurs()):
+• Value validation: valid = all(items.valeurs())
+• Dictionary valeur checking
 • Truthiness validation
 
-Exemple : all({'a': 1, 'b': 0}.values()) retourne False car .values() retourne une vue of all values [1, 0], and all() checks if all values are truthy - since 1 is truthy but 0 is falsy, all() retourne False.`,
-  1589: `The any() function on .values() checks if any value is truthy. any({'a': 0, 'b': 0}.values()) retourne False car .values() retourne une vue of all values [0, 0], and any() checks if any value is truthy. Since both 0 and 0 are falsy, any() retourne False - it requires at least one truthy value. C'est how you check if any value in un dictionnaire is truthy - any() retourne True if at least one value is truthy, otherwise il retourne False.
+Exemple : all({'a': 1, 'b': 0}.valeurs()) retourne False car .valeurs() retourne a view of all valeurs [1, 0], and all() checks if all valeurs are truthy - since 1 is truthy but 0 is falsy, all() retourne False.`,
+  1589: `Le any() fonction on .valeurs() checks if any valeur is truthy. any({'a': 0, 'b': 0}.valeurs()) retourne False car .valeurs() retourne a view of all valeurs [0, 0], and any() checks if any valeur is truthy. Since both 0 and 0 are falsy, any() retourne False - it requires at least one truthy valeur. This is how you check if any valeur in a dictionnaire is truthy - any() retourne True if at least one valeur is truthy, otherwise it retourne False.
 
-any() on .values():
-• any({'a': 0, 'b': 0}.values()) = False
-• .values() retourne view of values: [0, 0]
-• any() checks if any value truthy
+any() on .valeurs():
+• any({'a': 0, 'b': 0}.valeurs()) = False
+• .valeurs() retourne view of valeurs: [0, 0]
+• any() checks if any valeur truthy
 • 0 is falsy, 0 is falsy
-• No truthy values, retourne False
+• No truthy valeurs, retourne False
 
 Comment ça fonctionne :
-• {'a': 0, 'b': 0}.values() retourne view: [0, 0]
-• any() appelé avec values view
-• Checks chaque value: 0 (falsy), 0 (falsy)
+• {'a': 0, 'b': 0}.valeurs() retourne view: [0, 0]
+• any() appelé avec valeurs view
+• Checks each valeur: 0 (falsy), 0 (falsy)
 • Both 0 and 0 are falsy
-• No truthy values, retourne : False
+• No truthy valeurs, retourne: False
 
 Exemple :
-any({'a': 0, 'b': 0}.values())        # False (all falsy)
-any({'a': 0, 'b': 1}.values())        # True (1 is truthy)
-any({'a': 1, 'b': 2}.values())        # True (all truthy)
+any({'a': 0, 'b': 0}.valeurs())        # False (all falsy)
+any({'a': 0, 'b': 1}.valeurs())        # True (1 is truthy)
+any({'a': 1, 'b': 2}.valeurs())        # True (all truthy)
 
 Usages courants :
-• Checking any truthy: if any(dict.values()):
-• Value validation: has_truthy = any(items.values())
-• Dictionary value checking
+• Checking any truthy: if any(dict.valeurs()):
+• Value validation: has_truthy = any(items.valeurs())
+• Dictionary valeur checking
 • Truthiness detection
 
-Exemple : any({'a': 0, 'b': 0}.values()) retourne False car .values() retourne une vue of all values [0, 0], and any() checks if any value is truthy - since both 0 and 0 are falsy, any() retourne False.`,
-  1590: `The or operator retourne les premiers truthy value or the last value if all are falsy. {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), and or retourne les premiers truthy value. Since 1 is truthy, or retourne 1 without evaluating the second expression. C'est a common pattern for providing fallback values - if les premiers value is truthy, use it, otherwise use the second value.
+Exemple : any({'a': 0, 'b': 0}.valeurs()) retourne False car .valeurs() retourne a view of all valeurs [0, 0], and any() checks if any valeur is truthy - since both 0 and 0 are falsy, any() retourne False.`,
+  1590: `Le or operator retourne the first truthy valeur or the last valeur if all are falsy. {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), and or retourne the first truthy valeur. Since 1 is truthy, or retourne 1 sans evaluating the second expression. This is a common pattern for providing fallback valeurs - if the first valeur is truthy, use it, otherwise use the second valeur.
 
-or operator with get():
+or operator avec get():
 • {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') = 1
 • get('a') retourne 1 (truthy)
-• or retourne first truthy value
-• Retourne 1 (without evaluating second get())
+• or retourne first truthy valeur
+• Returns 1 (sans evaluating second get())
 • Short-circuit evaluation
 
 Comment ça fonctionne :
-• get('a') appelé sur {'a': 1, 'b': 2}
-• Retourne 1 (key 'a' exists)
+• get('a') appelé on {'a': 1, 'b': 2}
+• Returns 1 (key 'a' exists)
 • or checks if 1 is truthy (it is)
-• Retourne 1 (first truthy value)
+• Returns 1 (first truthy valeur)
 • Doesn't evaluate get('c') (short-circuit)
 
 Exemple :
@@ -38975,12 +38963,12 @@ Exemple :
 {'a': 1}.get('c') or 0                 # 0 (None is falsy, uses 0)
 
 Usages courants :
-• Fallback values: value = dict.get(key) or default
+• Fallback valeurs: valeur = dict.get(key) or default
 • Providing defaults: result = items.get(key) or fallback
-• Default value patterns
+• Default valeur patterns
 • Short-circuit evaluation
 
-Exemple : {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), and or retourne les premiers truthy value, so il retourne 1 without evaluating the second get().`,
+Exemple : {'a': 1, 'b': 2}.get('a') or {'a': 1, 'b': 2}.get('c') retourne 1 car get('a') retourne 1 (truthy), and or retourne the first truthy valeur, so it retourne 1 sans evaluating the second get().`,
   1591: `Integer keys work in dictionaries. {1: 'a', 2: 'b', 3: 'c'}[1] retourne 'a' car dictionaries can use integers as keys, and accessing [1] looks up la clé 1 in the dictionary, which maps to la valeur 'a'. Dictionary keys peut être any hashable type (immutable types like integers, strings, tuples), not just strings. Cela permet flexible key types for different use cases.
 
 Integer keys in dictionaries:
@@ -39203,85 +39191,84 @@ Usages courants :
 • Hash-based key equality
 
 Exemple : If d = {}, d[1] = 'a', and then d[1.0] = 'b', le dictionnaire d becomes {1: 'b'} car 1 and 1.0 hash to le même value, so they are considered le même key, and the assignment d[1.0] = 'b' overwrites la valeur from d[1] = 'a'.`,
-  1599: `The pop() method retourne the actual value if la clé exists, even if a default value is provided. {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() finds la clé 'a' in le dictionnaire and retourne its actual value (1), ignoring the default value ('default'). The default value is only used when la clé n'existe pas - if la clé exists, pop() retourne the actual value associated with that key.
+  1599: `Le pop() méthode retourne the actual valeur if the key exists, even if a default valeur is provided. {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() finds the key 'a' in the dictionnaire and retourne its actual valeur (1), ignoring the default valeur ('default'). The default valeur is only used when the key doesn't exist - if the key exists, pop() retourne the actual valeur associated avec that key.
 
-pop() with existing key:
+pop() avec existing key:
 • {'a': 1, 'b': 2}.pop('a', 'default') = 1
-• pop(key, default) retourne actual value if key exists
-• Default value ignored when key found
-• Retourne value from dictionary
-• Default only used if clé absente
+• pop(key, default) retourne actual valeur if key exists
+• Default valeur ignored when key found
+• Returns valeur from dictionnaire
+• Default only used if key missing
 
 Comment ça fonctionne :
-• pop('a', 'default') appelé sur {'a': 1, 'b': 2}
-• Searches for key 'a' in dictionary
+• pop('a', 'default') appelé on {'a': 1, 'b': 2}
+• Searches for key 'a' in dictionnaire
 • Finds mapping: 'a' → 1
-• Retourne actual value: 1 (ignores default 'default')
+• Returns actual valeur: 1 (ignores default 'default')
 • Dictionary modified: {'b': 2} (pair removed)
 
 Exemple :
-{'a': 1, 'b': 2}.pop('a', 'default')   # 1 (retourne actual value)
-{'a': 1, 'b': 2}.pop('b', 0)          # 2 (retourne actual value)
+{'a': 1, 'b': 2}.pop('a', 'default')   # 1 (retourne actual valeur)
+{'a': 1, 'b': 2}.pop('b', 0)          # 2 (retourne actual valeur)
 {'a': 1, 'b': 2}.pop('c', 'default')   # 'default' (key not found)
 
 Usages courants :
-• Removing pairs: value = dict.pop(key, default)
+• Removing pairs: valeur = dict.pop(key, default)
 • Getting and removing: removed = items.pop(key, fallback)
-• Safe removal with fallback
+• Safe removal avec fallback
 • Default handling
 
-Exemple : {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() finds la clé 'a' in le dictionnaire and retourne its actual value (1), ignoring the default value ('default'), which is only used when la clé ne exist.`,
-  1600: `The pop() method retourne the default value if la clé n'existe pas and a default is provided. {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() searches for la clé 'c' in the dictionary, ne find it, and retourne the default value ('default') without raising an error. Unlike pop() without a default, this version ne raise a KeyError - it just retourne the default value. The dictionary remains inchangés car there was no pair to remove.
+Exemple : {'a': 1, 'b': 2}.pop('a', 'default') retourne 1 car pop() finds the key 'a' in the dictionnaire and retourne its actual valeur (1), ignoring the default valeur ('default'), which is only used when the key doesn't exist.`,
+  1600: `Le pop() méthode retourne the default valeur if the key doesn't exist and a default is provided. {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() searches for the key 'c' in the dictionnaire, doesn't find it, and retourne the default valeur ('default') sans raising an error. Unlike pop() sans a default, this version doesn't raise a KeyError - it just retourne the default valeur. The dictionnaire remains unchanged car there was no pair to remove.
 
-pop() with missing key:
+pop() avec missing key:
 • {'a': 1, 'b': 2}.pop('c', 'default') = 'default'
 • pop(key, default) retourne default if key not found
-• No error raised (unlike pop() without default)
-• Dictionary inchangés (no pair to remove)
-• Retourne default value
+• No error raised (unlike pop() sans default)
+• Dictionary unchanged (no pair to remove)
+• Returns default valeur
 
 Comment ça fonctionne :
-• pop('c', 'default') appelé sur {'a': 1, 'b': 2}
-• Searches for key 'c' in dictionary
-• Finds no match (key ne exist)
+• pop('c', 'default') appelé on {'a': 1, 'b': 2}
+• Searches for key 'c' in dictionnaire
+• Finds no match (key doesn't exist)
 • Cannot remove non-existent pair
-• Retourne default value: 'default' (no error)
-• Dictionary inchangés: {'a': 1, 'b': 2}
+• Returns default valeur: 'default' (no error)
+• Dictionary unchanged: {'a': 1, 'b': 2}
 
 Exemple :
 {'a': 1, 'b': 2}.pop('c', 'default')   # 'default' (not found, retourne default)
 {'a': 1, 'b': 2}.pop('c', 0)          # 0 (not found, retourne default)
-{'a': 1, 'b': 2}                      # {'a': 1, 'b': 2} (inchangés)
+{'a': 1, 'b': 2}                      # {'a': 1, 'b': 2} (unchanged)
 
 Usages courants :
-• Safe removal: value = dict.pop(key, default)
+• Safe removal: valeur = dict.pop(key, default)
 • Default handling: removed = items.pop(key, fallback)
 • Error-free removal
-• Safe pop with fallback
+• Safe pop avec fallback
 
-Exemple : {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() searches for la clé 'c' in the dictionary, ne find it, and retourne the default value ('default') without raising an error, leaving le dictionnaire inchangés.`,
-  // IDs 1601-1650: Level 6 Intermediate A - nested dicts, setdefault, dict comprehension, keys views
-  1601: `Nested dictionary access uses chained bracket notation. Each bracket dereferences one level deeper into the structure.
+Exemple : {'a': 1, 'b': 2}.pop('c', 'default') retourne 'default' car pop() searches for the key 'c' in the dictionnaire, doesn't find it, and retourne the default valeur ('default') sans raising an error, leaving the dictionnaire unchanged.`,
+  1601: `L'accès aux dictionnaires imbriqués utilise des crochets chaînés. Chaque paire de crochets déréférence un niveau supplémentaire de la structure.
 
 Concepts clés :
-• d["a"] retrieves the inner dict {"x": 1}
-• Then ["x"] retrieves 1 from that inner dict
-• This est équivalent à temp = d["a"]; temp["x"]
+• d["a"] récupère le dictionnaire interne {"x": 1}
+• Ensuite ["x"] récupère la valeur 1 dans ce dictionnaire interne
+• Équivalent à : temp = d["a"]; temp["x"]
 
 Comment ça fonctionne :
-• d = {"a": {"x": 1}} — outer dict maps "a" to an inner dict
+• d = {"a": {"x": 1}} — le dict externe associe "a" à un dict interne
 • d["a"] → {"x": 1}
 • d["a"]["x"] → 1
 
 Exemples :
 • d["a"]["x"] → 1
-• d["a"] → {"x": 1}
-• d["b"] → KeyError (key ne exist)
+• d["a"]["y"] lève KeyError si "y" n'existe pas
+• Chaîner les accès est une façon standard de lire des données imbriquées
 
 Usages courants :
-• Accessing hierarchical/nested data structures
-• JSON-like data traversal
-• Configuration objects with sections`,
+• Lire des configurations JSON imbriquées
+• Parcourir des structures clé-valeur à plusieurs niveaux
+• Accéder à des champs internes dans des dictionnaires composites`,
   1602: `On peut modifier les dictionnaires imbriqués par assignation en chaîne. d["a"]["y"] = 2 ajoute la clé "y" avec la valeur 2 au dict interne que d["a"] référence.
 
 Concepts clés :
@@ -39427,13 +39414,13 @@ Usages courants :
 • Inverser les tables de recherche
 • Créer des index inversés
 • Mapping bidirectionnel (stocker les deux directions)`,
-  1609: `When inverting a dict whose values ne sont pas unique, duplicate keys in le résultat are overwritten. Since dicts are insertion-ordered (Python 3.7+), the last paire clé-valeur processed for a given new key wins.
+  1609: `Quand inverting a dict whose valeurs are not unique, duplicate keys in the result are overwritten. Since dicts are insertion-ordered (Python 3.7+), the last key-valeur pair processed for a given new key wins.
 
 Concepts clés :
 • d.items() yields ("a", 1) then ("b", 1)
 • First iteration: new dict gets {1: "a"}
-• Second iteration: key 1 already exists → overwritten with "b"
-• Résultat : {1: "b"}
+• Second iteration: key 1 already exists → overwritten avec "b"
+• Result: {1: "b"}
 
 Comment ça fonctionne :
 • Comprehension processes items in insertion order
@@ -39443,7 +39430,7 @@ Comment ça fonctionne :
 
 Exemples :
 • {v: k for k, v in {"a": 1, "b": 1}.items()} → {1: "b"}
-• To preserve all keys: use defaultdict(list) and append
+• To preserve all keys: use defaultdict(liste) and append
 
 Usages courants :
 • Understanding "last wins" semantics in dict construction
@@ -39536,18 +39523,18 @@ Usages courants :
 • Sorting dicts by value for display
 • Creating ranked/ordered mappings
 • Top-N extraction from dicts`,
-  1614: `When sorted() is appelé sur dict items without a key function, it sorts by les premiers element of chaque tuple (the key) by default, since tuples compare element-by-element.
+  1614: `Quand sorted() is appelé on dict items sans a key fonction, it sorts by the first element of each tuple (the key) by default, since tuples compare element-by-element.
 
 Concepts clés :
 • d.items() → [("b", 2), ("a", 1)]
 • sorted() compares tuples: ("a", 1) < ("b", 2) car "a" < "b"
-• Résultat : [("a", 1), ("b", 2)]
+• Result: [("a", 1), ("b", 2)]
 • dict() preserves this alphabetical key order
 
 Comment ça fonctionne :
-• Tuples compare lexicographically: premier élément first
+• Tuples compare lexicographically: first element first
 • "a" < "b" → ("a", 1) comes first
-• dict() rebuilds with that order
+• dict() rebuilds avec that order
 
 Exemples :
 • dict(sorted({"b": 2, "a": 1}.items())) → {"a": 1, "b": 2}
@@ -41266,13 +41253,13 @@ Exemple :
 [('l', 2)]
 
 C'est commonly utilisé pour finding the most frequent items in a dataset.`,
-  1705: `When most_common() est appelé without an argument (or with None), il retourne all elements in the counter, sorted by count from highest to lowest.
+  1705: `Quand most_common() is appelé sans an argument (or avec None), it retourne all elements in the counter, sorted by count from highest to lowest.
 
 Concepts clés :
 • No argument = renvoyer everything
 • Still sorted by count descending
 • Ties broken by insertion order
-• Retourne list of (element, count) tuples
+• Returns liste of (element, count) tuples
 
 Comment ça fonctionne :
 • Counter("hello").most_common() retourne all 4 unique elements
@@ -41282,8 +41269,7 @@ Comment ça fonctionne :
 Exemple :
 >>> Counter("hello").most_common()
 [('l', 2), ('h', 1), ('e', 1), ('o', 1)]
-
-C'est useful for getting a full frequency distribution sorted by popularity.`,
+Ce is useful for getting a full frequency distribution sorted by popularity.`,
   1706: `Counter fonctionne avec any iterable, including lists of numbers. most_common(1) retourne une liste containing one tuple: the most frequent element and its count.
 
 Concepts clés :
@@ -41302,36 +41288,36 @@ Exemple :
 [(3, 3)]
 
 Note the confusing-looking [(3, 3)] — les premiers 3 is the element, the second 3 is how many times it appeared.`,
-  1707: `The elements() method retourne an itérateur qui produit chaque element repeated by its count. Elements are returned in the order they were first encountered.
+  1707: `Le elements() méthode retourne an iterator that yields each element repeated by its count. Elements are returned in the order they were first encountered.
 
 Concepts clés :
 • Counter("aab") = Counter({'a': 2, 'b': 1})
 • elements() yields 'a' twice (count 2), then 'b' once (count 1)
-• Retourne an iterator, so we wrap in list() to see le résultat
+• Returns an iterator, so we wrap in liste() to see the result
 • Order follows insertion order of the Counter
 
 Comment ça fonctionne :
 • Counter("aab") processes: a, a, b → {'a': 2, 'b': 1}
 • elements() iterates: yield 'a', yield 'a', yield 'b'
-• list() collects: ['a', 'a', 'b']
+• liste() collects: ['a', 'a', 'b']
 
 Exemple :
->>> list(Counter("aab").elements())
+>>> liste(Counter("aab").elements())
 ['a', 'a', 'b']
->>> list(Counter(a=3, b=1).elements())
+>>> liste(Counter(a=3, b=1).elements())
 ['a', 'a', 'a', 'b']
 
-Elements with zero or negative compte ne sont pas included in the output.`,
-  1708: `The + operator on Counters adds corresponding compte together. Only positive compte are kept in le résultat.
+Elements avec zero or negative counts are not included in the output.`,
+  1708: `Le + operator on Counters adds corresponding counts together. Only positive counts are kept in the result.
 
 Concepts clés :
 • Counter("abc") = {'a': 1, 'b': 1, 'c': 1}
 • Counter("bcd") = {'b': 1, 'c': 1, 'd': 1}
 • Addition sums counts: a: 0+1=1, b: 1+1=2, c: 1+1=2, d: 1+0=1
-• Résultat ordered by count descending in repr
+• Result ordered by count descending in repr
 
 Comment ça fonctionne :
-• For chaque key, add compte from both Counters
+• For each key, add counts from both Counters
 • a: 1+0=1, b: 1+1=2, c: 1+1=2, d: 0+1=1
 • Display: Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1})
 
@@ -41339,33 +41325,33 @@ Exemple :
 >>> Counter("abc") + Counter("bcd")
 Counter({'b': 2, 'c': 2, 'a': 1, 'd': 1})
 
-Counter addition is useful for combining frequency compte from multiple sources.`,
-  1709: `The - operator subtracts compte and drops results that are zero or negative. C'est différent de the subtract() method which keeps negative counts.
+Counter addition is useful for combining frequency counts from multiple sources.`,
+  1709: `Le - operator subtracts counts and drops results that are zero or negative. This is different from the subtract() méthode which keeps negative counts.
 
 Concepts clés :
 • Counter("abc") = {'a': 1, 'b': 1, 'c': 1}
 • Counter("bc") = {'b': 1, 'c': 1}
 • Subtraction: a: 1-0=1, b: 1-1=0, c: 1-1=0
-• Zero and negative compte are dropped from le résultat
+• Zero and negative counts are dropped from the result
 
 Comment ça fonctionne :
 • a: 1 (only in first) → stays as 1
 • b: 1-1=0 → dropped
 • c: 1-1=0 → dropped
-• Résultat : Counter({'a': 1})
+• Result: Counter({'a': 1})
 
 Exemple :
 >>> Counter("abc") - Counter("bc")
 Counter({'a': 1})
 
-Important: The - operator drops zero/negative, but subtract() method keeps them in-place.`,
-  1710: `The & operator computes the intersection of two Counters by taking the minimum count for chaque element. Elements not present in both get count 0 and are excluded.
+Important: The - operator drops zero/negative, but subtract() méthode keeps them in-place.`,
+  1710: `Le & operator computes the intersection of two Counters by taking the minimum count for each element. Elements not present in both get count 0 and are excluded.
 
 Concepts clés :
 • Counter("abc") = {'a': 1, 'b': 1, 'c': 1}
 • Counter("bcd") = {'b': 1, 'c': 1, 'd': 1}
 • Intersection takes min: a: min(1,0)=0, b: min(1,1)=1, c: min(1,1)=1, d: min(0,1)=0
-• Zero compte are excluded
+• Zero counts are excluded
 
 Comment ça fonctionne :
 • 'a' only in first → min(1, 0) = 0 → excluded
@@ -41376,27 +41362,26 @@ Comment ça fonctionne :
 Exemple :
 >>> Counter("abc") & Counter("bcd")
 Counter({'b': 1, 'c': 1})
-
-C'est useful for finding common elements with their minimum shared frequency.`,
-  1711: `The | operator computes the union of two Counters by taking the maximum count for chaque element.
+Ce is useful for finding common elements avec their minimum shared frequency.`,
+  1711: `Le | operator computes the union of two Counters by taking the maximum count for each element.
 
 Concepts clés :
 • Counter("aab") = {'a': 2, 'b': 1}
 • Counter("bcc") = {'b': 1, 'c': 2}
 • Union takes max: a: max(2,0)=2, b: max(1,1)=1, c: max(0,2)=2
-• All elements with positive max compte are included
+• All elements avec positive max counts are included
 
 Comment ça fonctionne :
 • 'a': max(2, 0) = 2
 • 'b': max(1, 1) = 1
 • 'c': max(0, 2) = 2
-• Résultat : Counter({'a': 2, 'c': 2, 'b': 1})
+• Result: Counter({'a': 2, 'c': 2, 'b': 1})
 
 Exemple :
 >>> Counter("aab") | Counter("bcc")
 Counter({'a': 2, 'c': 2, 'b': 1})
 
-Union is like a "best of both" — for chaque element, keep the higher count.`,
+Union is like a "best of both" — for each element, keep the higher count.`,
   1712: `Since Counter is a dict subclass, .values() retourne the counts. Summing them gives the total number of elements counted.
 
 Concepts clés :
@@ -41503,40 +41488,39 @@ Exemple :
 True
 
 Zero-count elements are kept by subtract() but would be excluded by the - operator.`,
-  1717: `The unary + operator on a Counter retourne a new Counter with seulement le positive counts. Zero and negative compte are removed.
+  1717: `Le unary + operator on a Counter retourne a new Counter avec only the positive counts. Zero and negative counts are removed.
 
 Concepts clés :
 • c = Counter(a=4, b=2, c=0, d=-2)
-• +c crée a new Counter keeping only positive counts
+• +c creates a new Counter keeping only positive counts
 • a: 4 (positive → kept), b: 2 (positive → kept)
 • c: 0 (zero → removed), d: -2 (negative → removed)
 
 Comment ça fonctionne :
-• Unary + itère sur the Counter
+• Unary + iterates through the Counter
 • Keeps only elements where count > 0
-• Retourne a new Counter: Counter({'a': 4, 'b': 2})
-• Original Counter n'est pas modified
+• Returns a new Counter: Counter({'a': 4, 'b': 2})
+• Original Counter is not modified
 
 Exemple :
 >>> c = Counter(a=4, b=2, c=0, d=-2)
 >>> +c
 Counter({'a': 4, 'b': 2})
-
-C'est useful for cleaning up a Counter after subtract() operations that may have created zero/negative counts.`,
-  1718: `The unary - operator negates all compte and retourne a new Counter with seulement le positive results (those that were originally negative).
+Ce is useful for cleaning up a Counter après subtract() operations that may have created zero/negative counts.`,
+  1718: `Le unary - operator negates all counts and retourne a new Counter avec only the positive results (those that were originally negative).
 
 Concepts clés :
 • c = Counter(a=4, b=2, c=0, d=-2)
-• -c negates chaque count: a→-4, b→-2, c→0, d→2
+• -c negates each count: a→-4, b→-2, c→0, d→2
 • Then keeps only positive: d→2
-• Résultat : Counter({'d': 2})
+• Result: Counter({'d': 2})
 
 Comment ça fonctionne :
-• a: -4 (negative after negation → removed)
-• b: -2 (negative after negation → removed)
-• c: 0 (zero after negation → removed)
+• a: -4 (negative après negation → removed)
+• b: -2 (negative après negation → removed)
+• c: 0 (zero après negation → removed)
 • d: -(-2) = 2 (positive → kept)
-• Résultat : Counter({'d': 2})
+• Result: Counter({'d': 2})
 
 Exemple :
 >>> c = Counter(a=4, b=2, c=0, d=-2)
@@ -41706,27 +41690,26 @@ Exemple :
 defaultdict(<class 'int'>, {'x': 0})
 
 This makes defaultdict(int) perfect for counting without initialization.`,
-  1727: `When the factory function is list, accessing a missing key appelle list() which retourne a new liste vide [].
+  1727: `Quand the factory fonction is liste, accessing a missing key calls liste() which retourne a new empty liste [].
 
 Concepts clés :
-• defaultdict(list) uses list as the default_factory
-• Accessing missing "a" triggers: list() → []
-• A new liste vide est créé and stored at d["a"]
-• Subsequent accesses renvoyer le même list object
+• defaultdict(liste) uses liste as the default_factory
+• Accessing missing "a" triggers: liste() → []
+• A new empty liste is created and stored at d["a"]
+• Subsequent accesses renvoyer the same liste objet
 
 Comment ça fonctionne :
-• d["a"] not found → appelle list() → []
+• d["a"] not found → calls liste() → []
 • d["a"] = [] is stored
-• Retourne []
+• Returns []
 
 Exemple :
->>> d = defaultdict(list)
+>>> d = defaultdict(liste)
 >>> d["a"]
 []
 >>> d["a"].append(1)
 >>> d["a"]
 [1]
-
 Ce pattern eliminates the need for d.setdefault("a", []).append(item).`,
   1728: `defaultdict(set) uses set as the factory, creating new empty sets pour les clés manquantes. You can then add elements directly without manual initialization.
 
@@ -41838,18 +41821,18 @@ Exemple :
 2
 
 This side effect means you should use "key in d" or d.get() if you ne want to créer keys.`,
-  1733: `The "in" operator checks if a key exists in the defaultdict without triggering the default factory. C'est différent de d["x"] which would créer the key.
+  1733: `Le "in" operator checks if a key exists in the defaultdict sans triggering the default factory. This is different from d["x"] which would create the key.
 
 Concepts clés :
 • "x" in d uses __contains__, not __getitem__
 • __contains__ does not trigger __missing__
-• d is empty, so "x" n'est pas present → False
+• d is empty, so "x" is not present → False
 • The key "x" is NOT created by this check
 
 Comment ça fonctionne :
-• "x" in d → appelle d.__contains__("x")
+• "x" in d → calls d.__contains__("x")
 • Checks if "x" is a key → No
-• Retourne False
+• Returns False
 • d remains empty — no side effect
 
 Exemple :
@@ -41859,7 +41842,7 @@ False
 >>> len(d)
 0
 
-Always use "in" to check membership when you ne want to accidentally créer keys.`,
+Always use "in" to check membership when you don't want to accidentally create keys.`,
   1734: `dict.get() bypasses __missing__ entirely. Even though defaultdict(int) would renvoyer 0 via d["x"], d.get("x") retourne None (the standard dict.get default).
 
 Concepts clés :
@@ -41972,29 +41955,29 @@ Exemple :
 0
 
 You can call d.default_factory() manually to see what value it would produce.`,
-  1739: `The default_factory attribute is mutable — you can reassign it to change the default value behavior at any time.
+  1739: `Le default_factory attribute is mutable — you can reassign it to change the default valeur behavior at any time.
 
 Concepts clés :
 • Initially d.default_factory = int (retourne 0)
-• Reassigned to list (retourne [])
-• d["a"] now triggers list() → []
+• Reassigned to liste (retourne [])
+• d["a"] now triggers liste() → []
 • Previously created keys are unaffected
 
 Comment ça fonctionne :
 • d = defaultdict(int) — factory is int
-• d.default_factory = list — factory changed to list
-• d["a"] not found → appelle list() → []
+• d.default_factory = liste — factory changed to liste
+• d["a"] not found → calls liste() → []
 • d["a"] = []
 
 Exemple :
 >>> d = defaultdict(int)
 >>> d["x"]
 0
->>> d.default_factory = list
+>>> d.default_factory = liste
 >>> d["y"]
 []
 
-Changing the factory ne affect existing keys — only new missing-key accesses use the new factory.`,
+Changing the factory doesn't affect existing keys — only new missing-key accesses use the new factory.`,
   1740: `dict() crée a regular dictionary from a defaultdict, stripping the default_factory behavior. The resulting dict will raise KeyError pour les clés manquantes.
 
 Concepts clés :
@@ -42078,26 +42061,25 @@ Exemple :
 ['b', 'a']
 
 move_to_end() is unique to OrderedDict — regular dicts ne have this method.`,
-  1744: `When last=False, move_to_end() moves la clé to the beginning (left end) of the OrderedDict instead of the default right end.
+  1744: `Quand last=False, move_to_end() moves the key to the beginning (left end) of the OrderedDict instead of the default right end.
 
 Concepts clés :
-• od starts with order: a, b
+• od starts avec order: a, b
 • move_to_end("b", last=False) moves 'b' to the front
 • New order: b, a
 • last=False means "move to the start"
 
 Comment ça fonctionne :
 • Before: ['a', 'b']
-• move_to_end("b", last=False) — moves 'b' before 'a'
+• move_to_end("b", last=False) — moves 'b' avant 'a'
 • After: ['b', 'a']
 
 Exemple :
 >>> od = OrderedDict(a=1, b=2)
 >>> od.move_to_end("b", last=False)
->>> list(od)
+>>> liste(od)
 ['b', 'a']
-
-C'est useful for implementing LRU caches where you need to move items to the front.`,
+Ce is useful for implementing LRU caches where you need to move items to the front.`,
   1745: `C'est la clé behavioral difference between OrderedDict and regular dict: OrderedDict equality checks consider insertion order, while regular dict equality does not.
 
 Concepts clés :
@@ -42160,18 +42142,18 @@ Exemple :
 OrderedDict([('a', 1)])
 
 C'est like a stack (LIFO) operation on the ordered dict.`,
-  1748: `When last=False, OrderedDict.popitem() removes and retourne les premiers (oldest) paire clé-valeur. This FIFO behavior is unique to OrderedDict.
+  1748: `Quand last=False, OrderedDict.popitem() removes and retourne the first (oldest) key-valeur pair. This FIFO behavior is unique to OrderedDict.
 
 Concepts clés :
 • od has order: a=1, b=2
-• popitem(last=False) removes les premiers item: ('a', 1)
-• Retourne ('a', 1) as a tuple
+• popitem(last=False) removes the first item: ('a', 1)
+• Returns ('a', 1) as a tuple
 • od now contains only {'b': 2}
 
 Comment ça fonctionne :
 • First item in order is ('a', 1)
 • popitem(last=False) removes it
-• Retourne ('a', 1)
+• Returns ('a', 1)
 • od is now OrderedDict([('b', 2)])
 
 Exemple :
@@ -42181,19 +42163,19 @@ Exemple :
 >>> od
 OrderedDict([('b', 2)])
 
-Regular dict.popitem() ne supporte pas the last parameter — it always removes LIFO.`,
-  1749: `In Python 3.7+, regular dict.popitem() removes and retourne the last inserted paire clé-valeur in LIFO (Last In, First Out) order.
+Regular dict.popitem() does not support the last parameter — it always removes LIFO.`,
+  1749: `Dans Python 3.7+, regular dict.popitem() removes and retourne the last inserted key-valeur pair in LIFO (Last In, First Out) order.
 
 Concepts clés :
 • d = {"a": 1, "b": 2, "c": 3} — insertion order: a, b, c
 • popitem() removes the last inserted: ('c', 3)
-• Retourne a (key, value) tuple
+• Returns a (key, valeur) tuple
 • d is now {"a": 1, "b": 2}
 
 Comment ça fonctionne :
 • Last inserted key is 'c'
 • popitem() removes ('c', 3)
-• Retourne ('c', 3)
+• Returns ('c', 3)
 • d becomes {"a": 1, "b": 2}
 
 Exemple :
@@ -43431,65 +43413,65 @@ Usages courants :
 • Valider que toutes les clés du dict satisfont une condition
 • Validation de schéma : toutes les clés en minuscules, toutes les valeurs positives, etc.
 • Contrôles de qualité des données sur les dictionnaires`,
-  1801: `The def keyword définit une fonction en Python. def func(x): renvoyer x * 2 définit une fonction named func that takes one parameter x and retourne x * 2. The def statement crée a function object and assigns it to the name func. C'est function definition, not function calling - to call the function, you would use func(5) which would renvoyer 10. Functions are defined using def, followed by the function name, parameters in parentheses, a colon, and the function body.
+  1801: `Le def keyword defines a fonction in Python. def func(x): renvoyer x * 2 defines a fonction named func that takes one parameter x and retourne x * 2. The def instruction creates a fonction objet and assigns it to the name func. This is fonction definition, not fonction calling - to call the fonction, you would use func(5) which would renvoyer 10. Functions are defined using def, followed by the fonction name, parameters in parentheses, a colon, and the fonction body.
 
-def keyword - function definition:
-• def func(x): renvoyer x * 2 defines a function
-• def is the keyword for function definition
-• func is the function name
-• (x) is the parameter list
-• renvoyer x * 2 is the function body
-• Crée function object, ne execute it
+def keyword - fonction definition:
+• def func(x): renvoyer x * 2 defines a fonction
+• def is the keyword for fonction definition
+• func is the fonction name
+• (x) is the parameter liste
+• renvoyer x * 2 is the fonction body
+• Creates fonction objet, doesn't execute it
 
 Comment ça fonctionne :
-• def func(x): crée function definition
+• def func(x): creates fonction definition
 • Function name: func
 • Parameter: x
 • Body: renvoyer x * 2
-• Function object created and assigned to name func
+• Function objet created and assigned to name func
 • To call: func(5) retourne 10
 
 Exemple :
-def func(x): renvoyer x * 2  # Defines function
-func(5)                    # 10 (calls function)
-func(3)                    # 6 (calls function)
+def func(x): renvoyer x * 2  # Defines fonction
+func(5)                    # 10 (calls fonction)
+func(3)                    # 6 (calls fonction)
 
 Usages courants :
-• Defining functions: def function_name(params): body
+• Defining fonctions: def function_name(params): body
 • Creating reusable code: def calculate(x): renvoyer x * 2
 • Function definition
 • Code organization
 
-Exemple : def func(x): renvoyer x * 2 définit une fonction named func that takes parameter x and retourne x * 2. C'est function definition - the function est créé but not executed until called.`,
-  1802: `The def keyword with pass defines an empty function. def func(): pass définit une fonction named func with no parameters and an empty body (pass is a placeholder that ne fait rien). This crée a valid function that retourne None quand appelé. pass est utilisé when you need syntactically valid code but ne want to execute anything - it's commonly utilisé pour placeholder functions, empty classes, or code that will be implemented later.
+Exemple : def func(x): renvoyer x * 2 defines a fonction named func that takes parameter x and retourne x * 2. This is fonction definition - the fonction is created but not executed until appelé.`,
+  1802: `Le def keyword avec pass defines an empty fonction. def func(): pass defines a fonction named func avec no parameters and an empty body (pass is a placeholder that does nothing). This creates a valid fonction that retourne None when appelé. pass is used when you need syntactically valid code but don't want to execute anything - it's commonly used for placeholder fonctions, empty classes, or code that will be implemented later.
 
-def with pass - empty function:
-• def func(): pass defines empty function
-• func is function name
+def avec pass - empty fonction:
+• def func(): pass defines empty fonction
+• func is fonction name
 • () means no parameters
-• pass is placeholder (ne fait rien)
-• Function retourne None quand appelé
+• pass is placeholder (does nothing)
+• Function retourne None when appelé
 
 Comment ça fonctionne :
-• def func(): crée function definition
+• def func(): creates fonction definition
 • Function name: func
 • No parameters: ()
 • Body: pass (placeholder)
-• Function object created
-• When called: func() retourne None
+• Function objet created
+• When appelé: func() retourne None
 
 Exemple :
-def func(): pass          # Defines empty function
+def func(): pass          # Defines empty fonction
 func()                    # None (retourne None)
 def placeholder(): pass   # Placeholder for future code
 
 Usages courants :
-• Placeholder functions: def func(): pass (to be implemented)
-• Empty functions: def stub(): pass
+• Placeholder fonctions: def func(): pass (to be implemented)
+• Empty fonctions: def stub(): pass
 • Syntax requirement: pass needed for empty body
 • Function stubs
 
-Exemple : def func(): pass defines an fonction vide named func with no parameters. The pass statement is a placeholder that ne fait rien, making this a valid function that retourne None quand appelé.`,
+Exemple : def func(): pass defines an empty fonction named func avec no parameters. The pass instruction is a placeholder that does nothing, making this a valid fonction that retourne None when appelé.`,
   1803: `A renvoyer statement without a value retourne None. def func(): renvoyer définit une fonction that explicitly retourne None. Quand vous use renvoyer without a value, Python retourne None. This est équivalent à renvoyer None or having no renvoyer statement at all - all three result in the function returning None. Explicitly using renvoyer without a value can make it clear that the function intentionally retourne None.
 
 renvoyer without value:
@@ -43804,22 +43786,22 @@ Usages courants :
 • Required before default
 
 Exemple : def func(x, y=2): renvoyer x + y définit une fonction with a required parameter x and a default parameter y=2. The required parameter x comes avant le default parameter y, which is correct.`,
-  1814: `When calling a function with required and default parameters, you can omit arguments for default parameters. If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 est passé to the required parameter x, and y uses its default value of 2, so the function retourne 1 + 2 = 3. You must provide arguments for all required parameters, but you can omit arguments for default parameters.
+  1814: `Quand calling a fonction avec required and default parameters, you can omit arguments for default parameters. If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 is passed to the required parameter x, and y uses its default valeur of 2, so the fonction retourne 1 + 2 = 3. You must provide arguments for all required parameters, but you can omit arguments for default parameters.
 
 Using default for second parameter:
-• func(1) with def func(x, y=2): renvoyer x + y retourne 3
-• 1 est passé to required parameter x
-• y uses default value 2 (no argument provided)
+• func(1) avec def func(x, y=2): renvoyer x + y retourne 3
+• 1 is passed to required parameter x
+• y uses default valeur 2 (no argument provided)
 • Function retourne x + y = 1 + 2 = 3
-• Default value utilisé pour y
+• Default valeur used for y
 
 Comment ça fonctionne :
-• func(1) appelle function func
+• func(1) calls fonction func
 • Argument 1 provided for required parameter x
 • No argument provided for default parameter y
-• y uses default value: y = 2
-• La fonction s'exécute : renvoyer x + y
-• Retourne : 1 + 2 = 3
+• y uses default valeur: y = 2
+• Function executes: renvoyer x + y
+• Returns: 1 + 2 = 3
 
 Exemple :
 def func(x, y=2): renvoyer x + y
@@ -43830,9 +43812,9 @@ Usages courants :
 • Omitting defaults: func(required) (uses defaults)
 • Optional parameters: func(data) (uses defaults)
 • Default parameter usage
-• Flexible function calls
+• Flexible fonction calls
 
-Exemple : If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 est passé to x and y uses its default value of 2, so the function retourne 1 + 2 = 3.`,
+Exemple : If def func(x, y=2): renvoyer x + y, then func(1) retourne 3 car 1 is passed to x and y uses its default valeur of 2, so the fonction retourne 1 + 2 = 3.`,
   1815: `Default parameters must come after non-default parameters in the function definition. def func(x=1, y): renvoyer x + y lève a SyntaxError car x a un default value but y doesn't, and default parameters must come after non-default parameters. Python requires this ordering - required parameters (without defaults) must come first, followed by default parameters. Cela empêche ambiguity about which parameters get which arguments.
 
 Default after required:
@@ -43975,23 +43957,23 @@ Usages courants :
 • Flexible function calls
 
 Exemple : def func(x=1, y=2, z=3): renvoyer x, y, z définit une fonction with multiple default parameters. All parameters have defaults, so you can call it with 0, 1, 2, or 3 arguments.`,
-  1820: `When calling a function with multiple default parameters, arguments are assigned to parameters in order, starting with les premiers parameter. If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car the argument 10 is assigned to les premiers parameter x, and y and z use their default values of 2 and 3. Arguments are matched to parameters positionally, from left to right.
+  1820: `Quand calling a fonction avec multiple default parameters, arguments are assigned to parameters in order, starting avec the first parameter. If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car the argument 10 is assigned to the first parameter x, and y and z use their default valeurs of 2 and 3. Arguments are matched to parameters positionally, from left to right.
 
 First argument to first parameter:
-• func(10) with def func(x=1, y=2, z=3): renvoyer x, y, z retourne (10, 2, 3)
+• func(10) avec def func(x=1, y=2, z=3): renvoyer x, y, z retourne (10, 2, 3)
 • Argument 10 assigned to first parameter x
-• y uses default value 2
-• z uses default value 3
+• y uses default valeur 2
+• z uses default valeur 3
 • Arguments assigned in order
 
 Comment ça fonctionne :
-• func(10) appelle function func
+• func(10) calls fonction func
 • Argument 10 provided
 • Assigned to first parameter x: x = 10
 • y uses default: y = 2
 • z uses default: z = 3
-• La fonction s'exécute : renvoyer x, y, z
-• Retourne : (10, 2, 3)
+• Function executes: renvoyer x, y, z
+• Returns: (10, 2, 3)
 
 Exemple :
 def func(x=1, y=2, z=3): renvoyer x, y, z
@@ -44001,26 +43983,26 @@ func(10, 20, 30)            # (10, 20, 30) (all overridden)
 
 Usages courants :
 • Positional argument assignment: func(arg1) (goes to first param)
-• Flexible calls: func(value) or func(value1, value2)
+• Flexible calls: func(valeur) or func(value1, value2)
 • Argument matching
 • Default parameter behavior
 
-Exemple : If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car 10 is assigned to x (first parameter), and y and z use their default values of 2 and 3.`,
-  1821: `The *args syntax allows a function to accept a variable number of positional arguments. def func(*args): renvoyer args définit une fonction that collects all positional arguments into un tuple named args. The * before args tells Python to collect all extra positional arguments into a tuple. Cela permet the function to be appelé avec any number of arguments, which are then accessible as un tuple inside the function.
+Exemple : If def func(x=1, y=2, z=3): renvoyer x, y, z, then func(10) retourne (10, 2, 3) car 10 is assigned to x (first parameter), and y and z use their default valeurs of 2 and 3.`,
+  1821: `Le *args syntax allows a fonction to accept a variable number of positional arguments. def func(*args): renvoyer args defines a fonction that collects all positional arguments into a tuple named args. The * avant args tells Python to collect all extra positional arguments into a tuple. This allows the fonction to be appelé avec any number of arguments, which are then accessible as a tuple dans the fonction.
 
 *args parameter:
-• def func(*args): renvoyer args defines function with *args
+• def func(*args): renvoyer args defines fonction avec *args
 • *args collects variable positional arguments
-• Collects all extra positional arguments en tuple
+• Collects all extra positional arguments into tuple
 • Function can accept any number of arguments
 • Arguments accessible as tuple: args
 
 Comment ça fonctionne :
-• def func(*args): crée function definition
+• def func(*args): creates fonction definition
 • Function name: func
-• *args collects all positional arguments en tuple
-• When called: func(1, 2, 3), args = (1, 2, 3)
-• Retourne tuple of arguments
+• *args collects all positional arguments into tuple
+• When appelé: func(1, 2, 3), args = (1, 2, 3)
+• Returns tuple of arguments
 
 Exemple :
 def func(*args): renvoyer args
@@ -44030,26 +44012,26 @@ func()                      # () (no arguments, empty tuple)
 
 Usages courants :
 • Variable arguments: def process(*items): for item in items:
-• Flexible functions: def sum_values(*numbers): renvoyer sum(numbers)
+• Flexible fonctions: def sum_values(*numbers): renvoyer sum(numbers)
 • Variable positional arguments
 • Function flexibility
 
-Exemple : def func(*args): renvoyer args définit une fonction that collects all positional arguments into un tuple named args, allowing the function to accept any number of arguments.`,
-  1822: `When calling a function with *args, all positional arguments sont collectés into a tuple. If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments (1, 2, 3) into un tuple named args. La function can accept any number of arguments, and they are all collected into the args tuple.
+Exemple : def func(*args): renvoyer args defines a fonction that collects all positional arguments into a tuple named args, allowing the fonction to accept any number of arguments.`,
+  1822: `Quand calling a fonction avec *args, all positional arguments are collected into a tuple. If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments (1, 2, 3) into a tuple named args. The fonction can accept any number of arguments, and they are all collected into the args tuple.
 
 *args collection:
-• func(1, 2, 3) with def func(*args): renvoyer args retourne (1, 2, 3)
+• func(1, 2, 3) avec def func(*args): renvoyer args retourne (1, 2, 3)
 • Arguments 1, 2, 3 are positional
-• *args collects all positional arguments en tuple
-• args = (1, 2, 3) inside function
-• Retourne tuple: (1, 2, 3)
+• *args collects all positional arguments into tuple
+• args = (1, 2, 3) dans fonction
+• Returns tuple: (1, 2, 3)
 
 Comment ça fonctionne :
-• func(1, 2, 3) appelle function func
+• func(1, 2, 3) calls fonction func
 • Arguments 1, 2, 3 are positional
 • *args collects all arguments: args = (1, 2, 3)
-• La fonction s'exécute : renvoyer args
-• Retourne : (1, 2, 3)
+• Function executes: renvoyer args
+• Returns: (1, 2, 3)
 
 Exemple :
 def func(*args): renvoyer args
@@ -44060,25 +44042,25 @@ func('a', 'b')              # ('a', 'b') (tuple of arguments)
 Usages courants :
 • Collecting arguments: def sum_values(*numbers): renvoyer sum(numbers)
 • Variable arguments: def process(*items): for item in items:
-• Flexible function calls
+• Flexible fonction calls
 • Tuple collection
 
-Exemple : If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments into un tuple named args.`,
-  1823: `When calling a function with *args but no arguments, args becomes an empty tuple. If def func(*args): renvoyer args, then func() retourne () car *args collecte les arguments positionnels, and when no arguments are provided, it collects into an empty tuple. C'est différent de an liste vide - *args always crée a tuple, even if it's empty.
+Exemple : If def func(*args): renvoyer args, then func(1, 2, 3) retourne (1, 2, 3) car *args collects all positional arguments into a tuple named args.`,
+  1823: `Quand calling a fonction avec *args but no arguments, args becomes an empty tuple. If def func(*args): renvoyer args, then func() retourne () car *args collects positional arguments, and when no arguments are provided, it collects into an empty tuple. This is different from an empty liste - *args always creates a tuple, even if it's empty.
 
-*args with no arguments:
-• func() with def func(*args): renvoyer args retourne ()
+*args avec no arguments:
+• func() avec def func(*args): renvoyer args retourne ()
 • No arguments provided
 • *args collects into empty tuple
-• args = () inside function
-• Retourne empty tuple: ()
+• args = () dans fonction
+• Returns empty tuple: ()
 
 Comment ça fonctionne :
-• func() appelle function func
+• func() calls fonction func
 • No arguments provided
 • *args collects into empty tuple: args = ()
-• La fonction s'exécute : renvoyer args
-• Retourne : () (empty tuple)
+• Function executes: renvoyer args
+• Returns: () (empty tuple)
 
 Exemple :
 def func(*args): renvoyer args
@@ -44092,7 +44074,7 @@ Usages courants :
 • Variable argument handling
 • Tuple collection
 
-Exemple : If def func(*args): renvoyer args, then func() retourne () car *args collecte les arguments positionnels into a tuple, and when no arguments are provided, it crée an empty tuple.`,
+Exemple : If def func(*args): renvoyer args, then func() retourne () car *args collects positional arguments into a tuple, and when no arguments are provided, it creates an empty tuple.`,
   1824: `Required parameters can come before *args in a function definition. def func(x, *args): renvoyer x, args définit une fonction with a required parameter x followed by *args. The required parameter x gets les premiers argument, and *args collects all remaining positional arguments into a tuple. Cela permet functions to have both required parameters and variable positional arguments.
 
 Required parameter before *args:
@@ -44122,22 +44104,22 @@ Usages courants :
 • Required before *args
 
 Exemple : def func(x, *args): renvoyer x, args définit une fonction with a required parameter x that must come before *args, allowing the function to have both required and variable positional arguments.`,
-  1825: `When calling a function with a required parameter and *args, les premiers argument goes to the required parameter and the rest go to *args. If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x (the required parameter), and 2, 3 sont collectés into *args as un tuple (2, 3). La function retourne un tuple containing x and args.
+  1825: `Quand calling a fonction avec a required parameter and *args, the first argument goes to the required parameter and the rest go to *args. If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x (the required parameter), and 2, 3 are collected into *args as a tuple (2, 3). The fonction retourne a tuple containing x and args.
 
 Argument distribution:
-• func(1, 2, 3) with def func(x, *args): renvoyer x, args retourne (1, (2, 3))
-• Premier argument 1 goes to required parameter x
+• func(1, 2, 3) avec def func(x, *args): renvoyer x, args retourne (1, (2, 3))
+• First argument 1 goes to required parameter x
 • Remaining arguments 2, 3 go to *args
 • args = (2, 3) (tuple)
-• Retourne tuple: (x, args) = (1, (2, 3))
+• Returns tuple: (x, args) = (1, (2, 3))
 
 Comment ça fonctionne :
-• func(1, 2, 3) appelle function func
-• Premier argument 1 assigned to required parameter x
+• func(1, 2, 3) calls fonction func
+• First argument 1 assigned to required parameter x
 • Remaining arguments 2, 3 collected into *args
 • args = (2, 3) (tuple)
-• La fonction s'exécute : renvoyer x, args
-• Retourne : (1, (2, 3))
+• Function executes: renvoyer x, args
+• Returns: (1, (2, 3))
 
 Exemple :
 def func(x, *args): renvoyer x, args
@@ -44147,26 +44129,26 @@ func(5)                     # (5, ()) (x=5, args=())
 
 Usages courants :
 • Separating first from rest: def process(first, *rest): process(first); process(*rest)
-• Required and variable: def calculate(base, *values): renvoyer base + sum(values)
+• Required and variable: def calculate(base, *valeurs): renvoyer base + sum(valeurs)
 • Argument distribution
 • Parameter assignment
 
-Exemple : If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x and 2, 3 sont collectés into *args as a tuple.`,
-  1826: `The **kwargs syntax allows a function to accept a variable number of keyword arguments. def func(**kwargs): renvoyer kwargs définit une fonction that collects all keyword arguments into un dictionnaire named kwargs. The ** before kwargs tells Python to collect all extra keyword arguments into a dictionary. Cela permet the function to be appelé avec any number of keyword arguments, which are then accessible as un dictionnaire inside the function.
+Exemple : If def func(x, *args): renvoyer x, args, then func(1, 2, 3) retourne (1, (2, 3)) car 1 is assigned to x and 2, 3 are collected into *args as a tuple.`,
+  1826: `Le **kwargs syntax allows a fonction to accept a variable number of keyword arguments. def func(**kwargs): renvoyer kwargs defines a fonction that collects all keyword arguments into a dictionnaire named kwargs. The ** avant kwargs tells Python to collect all extra keyword arguments into a dictionnaire. This allows the fonction to be appelé avec any number of keyword arguments, which are then accessible as a dictionnaire dans the fonction.
 
 **kwargs parameter:
-• def func(**kwargs): renvoyer kwargs defines function with **kwargs
+• def func(**kwargs): renvoyer kwargs defines fonction avec **kwargs
 • **kwargs collects variable keyword arguments
-• Collects all extra keyword arguments into dictionary
+• Collects all extra keyword arguments into dictionnaire
 • Function can accept any number of keyword arguments
-• Arguments accessible as dictionary: kwargs
+• Arguments accessible as dictionnaire: kwargs
 
 Comment ça fonctionne :
-• def func(**kwargs): crée function definition
+• def func(**kwargs): creates fonction definition
 • Function name: func
-• **kwargs collects all keyword arguments into dictionary
-• When called: func(a=1, b=2), kwargs = {'a': 1, 'b': 2}
-• Retourne dictionary of arguments
+• **kwargs collects all keyword arguments into dictionnaire
+• When appelé: func(a=1, b=2), kwargs = {'a': 1, 'b': 2}
+• Returns dictionnaire of arguments
 
 Exemple :
 def func(**kwargs): renvoyer kwargs
@@ -44176,69 +44158,69 @@ func()                      # {} (no keyword args, empty dict)
 
 Usages courants :
 • Variable keyword arguments: def process(**options): use options
-• Flexible functions: def create(**attributes): renvoyer object(**attributes)
+• Flexible fonctions: def create(**attributes): renvoyer objet(**attributes)
 • Variable keyword arguments
 • Dictionary collection
 
-Exemple : def func(**kwargs): renvoyer kwargs définit une fonction that collects all keyword arguments into un dictionnaire named kwargs, allowing the function to accept any number of keyword arguments.`,
-  1827: `When calling a function with **kwargs, all keyword arguments sont collectés into a dictionary. If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments (a=1, b=2) into un dictionnaire named kwargs. La function can accept any number of keyword arguments, and they are all collected into the kwargs dictionary.
+Exemple : def func(**kwargs): renvoyer kwargs defines a fonction that collects all keyword arguments into a dictionnaire named kwargs, allowing the fonction to accept any number of keyword arguments.`,
+  1827: `Quand calling a fonction avec **kwargs, all keyword arguments are collected into a dictionnaire. If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments (a=1, b=2) into a dictionnaire named kwargs. The fonction can accept any number of keyword arguments, and they are all collected into the kwargs dictionnaire.
 
 **kwargs collection:
-• func(a=1, b=2) with def func(**kwargs): renvoyer kwargs retourne {'a': 1, 'b': 2}
+• func(a=1, b=2) avec def func(**kwargs): renvoyer kwargs retourne {'a': 1, 'b': 2}
 • Arguments a=1, b=2 are keyword arguments
-• **kwargs collects all keyword arguments into dictionary
-• kwargs = {'a': 1, 'b': 2} inside function
-• Retourne dictionary: {'a': 1, 'b': 2}
+• **kwargs collects all keyword arguments into dictionnaire
+• kwargs = {'a': 1, 'b': 2} dans fonction
+• Returns dictionnaire: {'a': 1, 'b': 2}
 
 Comment ça fonctionne :
-• func(a=1, b=2) appelle function func
+• func(a=1, b=2) calls fonction func
 • Arguments a=1, b=2 are keyword arguments
 • **kwargs collects all keyword arguments: kwargs = {'a': 1, 'b': 2}
-• La fonction s'exécute : renvoyer kwargs
-• Retourne : {'a': 1, 'b': 2}
+• Function executes: renvoyer kwargs
+• Returns: {'a': 1, 'b': 2}
 
 Exemple :
 def func(**kwargs): renvoyer kwargs
-func(a=1, b=2)             # {'a': 1, 'b': 2} (dictionary of keyword args)
-func(x=10, y=20, z=30)     # {'x': 10, 'y': 20, 'z': 30} (dictionary)
+func(a=1, b=2)             # {'a': 1, 'b': 2} (dictionnaire of keyword args)
+func(x=10, y=20, z=30)     # {'x': 10, 'y': 20, 'z': 30} (dictionnaire)
 func()                      # {} (no keyword args, empty dict)
 
 Usages courants :
 • Collecting keyword args: def process(**options): use options['key']
-• Variable keyword arguments: def create(**attributes): renvoyer object(**attributes)
+• Variable keyword arguments: def create(**attributes): renvoyer objet(**attributes)
 • Dictionary collection
-• Flexible function calls
+• Flexible fonction calls
 
-Exemple : If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments into un dictionnaire named kwargs.`,
-  1828: `When calling a function with **kwargs but no keyword arguments, kwargs becomes an empty dictionary. If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collecte les arguments nommés, and when no keyword arguments are provided, it collects into an empty dictionary. C'est différent de an empty tuple - **kwargs always crée a dictionary, even if it's empty.
+Exemple : If def func(**kwargs): renvoyer kwargs, then func(a=1, b=2) retourne {'a': 1, 'b': 2} car **kwargs collects all keyword arguments into a dictionnaire named kwargs.`,
+  1828: `Quand calling a fonction avec **kwargs but no keyword arguments, kwargs becomes an empty dictionnaire. If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collects keyword arguments, and when no keyword arguments are provided, it collects into an empty dictionnaire. This is different from an empty tuple - **kwargs always creates a dictionnaire, even if it's empty.
 
-**kwargs with no arguments:
-• func() with def func(**kwargs): renvoyer kwargs retourne {}
+**kwargs avec no arguments:
+• func() avec def func(**kwargs): renvoyer kwargs retourne {}
 • No keyword arguments provided
-• **kwargs collects into empty dictionary
-• kwargs = {} inside function
-• Retourne empty dictionary: {}
+• **kwargs collects into empty dictionnaire
+• kwargs = {} dans fonction
+• Returns empty dictionnaire: {}
 
 Comment ça fonctionne :
-• func() appelle function func
+• func() calls fonction func
 • No keyword arguments provided
-• **kwargs collects into empty dictionary: kwargs = {}
-• La fonction s'exécute : renvoyer kwargs
-• Retourne : {} (empty dictionary)
+• **kwargs collects into empty dictionnaire: kwargs = {}
+• Function executes: renvoyer kwargs
+• Returns: {} (empty dictionnaire)
 
 Exemple :
 def func(**kwargs): renvoyer kwargs
-func()                      # {} (empty dictionary)
-func(a=1)                   # {'a': 1} (single-key dictionary)
-func(a=1, b=2)              # {'a': 1, 'b': 2} (dictionary)
+func()                      # {} (empty dictionnaire)
+func(a=1)                   # {'a': 1} (single-key dictionnaire)
+func(a=1, b=2)              # {'a': 1, 'b': 2} (dictionnaire)
 
 Usages courants :
 • Handling no keyword args: if not kwargs: renvoyer default
-• Empty dictionary check: if len(kwargs) == 0:
+• Empty dictionnaire check: if len(kwargs) == 0:
 • Variable keyword argument handling
 • Dictionary collection
 
-Exemple : If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collecte les arguments nommés into a dictionary, and when no keyword arguments are provided, it crée an empty dictionary.`,
+Exemple : If def func(**kwargs): renvoyer kwargs, then func() retourne {} car **kwargs collects keyword arguments into a dictionnaire, and when no keyword arguments are provided, it creates an empty dictionnaire.`,
   1829: `Functions can have all parameter types together: required parameters, *args, and **kwargs. def func(x, *args, **kwargs): renvoyer x, args, kwargs définit une fonction with a required parameter x, variable positional arguments *args, and variable keyword arguments **kwargs. The order is important: required parameters must come first, followed by *args, followed by **kwargs. Cela permet maximum flexibility in function calls.
 
 All parameter types:
@@ -44270,22 +44252,22 @@ Usages courants :
 • Function flexibility
 
 Exemple : def func(x, *args, **kwargs): renvoyer x, args, kwargs définit une fonction with all parameter types, allowing maximum flexibility with required, variable positional, and variable keyword arguments.`,
-  1830: `When calling a function with all parameter types, arguments are distributed appropriately. If def func(x, *args, **kwargs): renvoyer x, args, kwargs, then func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 is assigned to x (the required parameter), 2 and 3 sont collectés into *args as (2, 3), and a=4 is collected into **kwargs as {'a': 4}. Positional arguments go to required parameters and *args, keyword arguments go to **kwargs.
+  1830: `Quand calling a fonction avec all parameter types, arguments are distributed appropriately. If def func(x, *args, **kwargs): renvoyer x, args, kwargs, then func(1, 2, 3, a=4) retourne (1, (2, 3), {'a': 4}) car 1 is assigned to x (the required parameter), 2 and 3 are collected into *args as (2, 3), and a=4 is collected into **kwargs as {'a': 4}. Positional arguments go to required parameters and *args, keyword arguments go to **kwargs.
 
 Argument distribution:
-• func(1, 2, 3, a=4) with def func(x, *args, **kwargs): renvoyer x, args, kwargs retourne (1, (2, 3), {'a': 4})
-• Premier argument 1 goes to required parameter x
+• func(1, 2, 3, a=4) avec def func(x, *args, **kwargs): renvoyer x, args, kwargs retourne (1, (2, 3), {'a': 4})
+• First argument 1 goes to required parameter x
 • Remaining positional arguments 2, 3 go to *args
 • Keyword argument a=4 goes to **kwargs
-• Retourne tuple: (x, args, kwargs) = (1, (2, 3), {'a': 4})
+• Returns tuple: (x, args, kwargs) = (1, (2, 3), {'a': 4})
 
 Comment ça fonctionne :
-• func(1, 2, 3, a=4) appelle function func
-• Premier argument 1 assigned to required parameter x
+• func(1, 2, 3, a=4) calls fonction func
+• First argument 1 assigned to required parameter x
 • Remaining positional arguments 2, 3 collected into *args: args = (2, 3)
 • Keyword argument a=4 collected into **kwargs: kwargs = {'a': 4}
-• La fonction s'exécute : renvoyer x, args, kwargs
-• Retourne : (1, (2, 3), {'a': 4})
+• Function executes: renvoyer x, args, kwargs
+• Returns: (1, (2, 3), {'a': 4})
 
 Exemple :
 def func(x, *args, **kwargs): renvoyer x, args, kwargs
@@ -44295,7 +44277,7 @@ func(10, 20, y=30)          # (10, (20,), {'y': 30})
 
 Usages courants :
 • Argument distribution: def process(required, *args, **kwargs): distribute
-• Wrapper functions: def wrapper(func, *args, **kwargs): renvoyer func(*args, **kwargs)
+• Wrapper fonctions: def wrapper(func, *args, **kwargs): renvoyer func(*args, **kwargs)
 • Flexible argument handling
 • Parameter assignment
 
@@ -44557,34 +44539,34 @@ Usages courants :
 • Lambda with conditions
 
 Exemple : (lambda x: x if x > 0 else 0)(-5) retourne 0 car the condition -5 > 0 is False, so the else branch is taken and 0 est retourné.`,
-  1840: `The key difference between def and lambda is that def crée a named function while lambda crée une fonction anonyme function. def func(x): renvoyer x * 2 crée a function named func, while lambda x: x * 2 crée a function without a name. Additionally, def functions peut contenir multiple statements, while lambda functions are limited to a single expression. def is generally preferred for named functions, while lambda is useful for short, one-line functions used as arguments to other functions.
+  1840: `Le key difference entre def and lambda is that def creates a named fonction while lambda creates an anonymous fonction. def func(x): renvoyer x * 2 creates a fonction named func, while lambda x: x * 2 creates a fonction sans a name. Additionally, def fonctions can contain multiple instructions, while lambda fonctions are limited to a single expression. def is generally preferred for named fonctions, while lambda is useful for short, one-line fonctions used as arguments to other fonctions.
 
 def vs lambda:
-• def crée named function, lambda crée anonymous function
-• def can have multiple statements, lambda limited to single expression
-• def preferred for named functions, lambda for short inline functions
-• def functions have names, lambda functions ne (unless assigned)
-• Both créer function objects
+• def creates named fonction, lambda creates anonymous fonction
+• def can have multiple instructions, lambda limited to single expression
+• def preferred for named fonctions, lambda for short inline fonctions
+• def fonctions have names, lambda fonctions don't (unless assigned)
+• Both create fonction objets
 
 Comment ça fonctionne :
-• def func(x): renvoyer x * 2 crée function named 'func'
-• lambda x: x * 2 crée anonymous function (no name)
-• def can have: multiple statements, docstrings, annotations
+• def func(x): renvoyer x * 2 creates fonction named 'func'
+• lambda x: x * 2 creates anonymous fonction (no name)
+• def can have: multiple instructions, docstrings, annotations
 • lambda can have: single expression only
 • lambda often used as argument: map(lambda x: x*2, [1,2,3])
 
 Exemple :
-def func(x): renvoyer x * 2  # Named function 'func'
-lambda x: x * 2            # Anonymous function (no name)
+def func(x): renvoyer x * 2  # Named fonction 'func'
+lambda x: x * 2            # Anonymous fonction (no name)
 f = lambda x: x * 2        # Assigned to variable (essentially named)
 
 Usages courants :
-• def: named functions, multiple statements: def process(x): ...; ...; renvoyer result
-• lambda: short inline functions, single expression: map(lambda x: x*2, items)
+• def: named fonctions, multiple instructions: def process(x): ...; ...; renvoyer result
+• lambda: short inline fonctions, single expression: map(lambda x: x*2, items)
 • Function definition
-• Lambda functions
+• Lambda fonctions
 
-Exemple : The difference is def crée a named function (e.g., def func(x): renvoyer x * 2 crée function 'func'), while lambda crée une fonction anonyme function (e.g., lambda x: x * 2 crée a function without a name). def functions peut contenir multiple statements, while lambda functions are limited to a single expression.`,
+Exemple : The difference is def creates a named fonction (e.g., def func(x): renvoyer x * 2 creates fonction 'func'), while lambda creates an anonymous fonction (e.g., lambda x: x * 2 creates a fonction sans a name). def fonctions can contain multiple instructions, while lambda fonctions are limited to a single expression.`,
   1841: `Functions renvoyer values using the renvoyer statement. def func(): renvoyer 1 définit une fonction that retourne la valeur 1 quand appelé. The renvoyer statement immediately exits the function and sends back the specified value. Functions can renvoyer any type of value - numbers, strings, lists, dictionaries, objects, etc. If no renvoyer statement is executed, the function retourne None implicitly.
 
 Renvoyer statement:
@@ -45238,11 +45220,11 @@ Utilisations courantes :
 
 Exemple : If def fact(n): return 1 if n <= 1 else n * fact(n-1); fact(5), alors fact(5) renvoie 120 car the recursive function calls itself with decreasing values until it reaches the base case (n <= 1), alors multiplies all values together: 5 * 4 * 3 * 2 * 1 = 120.
 `,
-  1862: `The Fibonacci sequence is computed recursively where each number is the sum of the two preceding ones. If def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car fib(5) = fib(4) + fib(3), which expands further. The base case is n < 2, qui returns n (fib(0) = 0, fib(1) = 1). The recursive case computes fib(n) = fib(n-1) + fib(n-2). Note: fib(5) actually renvoie 5 (the 5th Fibonacci number), not 8.
+  1862: `Le Fibonacci sequence is computed recursively where each number is the sum of the two preceding ones. If def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car fib(5) = fib(4) + fib(3), which expands further. The base case is n < 2, qui retourne n (fib(0) = 0, fib(1) = 1). The recursive case computes fib(n) = fib(n-1) + fib(n-2). Note: fib(5) actually renvoie 5 (the 5th Fibonacci number), not 8.
 
 Fibonacci récursif :
-• def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5) renvoie 5
-• Base case: n < 2 returns n (fib(0) = 0, fib(1) = 1)
+• def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5) renvoie 5
+• Base case: n < 2 retourne n (fib(0) = 0, fib(1) = 1)
 • Recursive case: fib(n-1) + fib(n-2) (sum of previous two)
 • fib(5) = fib(4) + fib(3), expands recursively
 • Evaluates: 0, 1, 1, 2, 3, 5
@@ -45256,18 +45238,18 @@ Fonctionnement :
 • Retourne : 5
 
 Exemple :
-def fib(n): return n if n < 2 else fib(n-1) + fib(n-2)
+def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2)
 fib(5)                      # 5 (5th Fibonacci number)
 fib(6)                      # 8 (6th Fibonacci number)
 fib(0)                      # 0 (base case)
 
 Utilisations courantes :
-• Recursive sequences: def fibonacci(n): return base if condition else recursive
+• Recursive sequences: def fibonacci(n): renvoyer base if condition else recursive
 • Mathematical sequences: fib(n) = fib(n-1) + fib(n-2)
 • Recursive algorithms
 • Fibonacci sequence
 
-Exemple : If def fib(n): return n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car the recursive Fibonacci function computes the 5th Fibonacci number (0, 1, 1, 2, 3, 5) by summing the previous two Fibonacci numbers.
+Exemple : If def fib(n): renvoyer n if n < 2 else fib(n-1) + fib(n-2); fib(5), alors fib(5) renvoie 5 car the recursive Fibonacci fonction computes the 5th Fibonacci number (0, 1, 1, 2, 3, 5) by summing the previous two Fibonacci numbers.
 `,
   1863: `A recursive counting function counts from n down to 1. If def count(n): return 0 if n <= 0 else 1 + count(n-1); count(5), alors count(5) renvoie 5 car count(5) = 1 + count(4) = 1 + (1 + count(3)) = ... = 1 + 1 + 1 + 1 + 1 + 0 = 5. The base case is n <= 0, qui returns 0 (stops counting). The recursive case renvoie 1 plus the count of the next smaller number, effectively counting how many numbers from n down to 1.
 
@@ -45457,10 +45439,10 @@ Utilisations courantes :
 
 Exemple : If def reverse(s): return '' if not s else reverse(s[1:]) + s[0]; reverse('abc'), alors reverse('abc') renvoie 'cba' car the recursive function reverses the string by reversing the rest and appending the first character: '' + 'c' + 'b' + 'a' = 'cba'.
 `,
-  1869: `The Euclidean algorithm computes the greatest common divisor (GCD) recursively. If def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car gcd(48, 18) = gcd(18, 48 % 18) = gcd(18, 12) = gcd(12, 18 % 12) = gcd(12, 6) = gcd(6, 12 % 6) = gcd(6, 0) = 6. The base case is b == 0, qui retourne un (the GCD). The recursive case computes gcd(b, a % b), where a % b is the remainder when a is divided by b.
+  1869: `Le Euclidean algorithm computes the greatest common divisor (GCD) recursively. If def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car gcd(48, 18) = gcd(18, 48 % 18) = gcd(18, 12) = gcd(12, 18 % 12) = gcd(12, 6) = gcd(6, 12 % 6) = gcd(6, 0) = 6. The base case is b == 0, qui retourne un (the GCD). The recursive case computes gcd(b, a % b), where a % b is the remainder when a is divided by b.
 
 PGCD récursif (algorithme d'Euclide) :
-• def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18) renvoie 6
+• def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18) renvoie 6
 • Base case: b == 0 retourne un (GCD found)
 • Recursive case: gcd(b, a % b) (GCD of b and remainder)
 • gcd(48, 18) = gcd(18, 12) = gcd(12, 6) = gcd(6, 0) = 6
@@ -45474,18 +45456,18 @@ Fonctionnement :
 • Retourne : 6
 
 Exemple :
-def gcd(a, b): return a if b == 0 else gcd(b, a % b)
+def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b)
 gcd(48, 18)                 # 6 (GCD of 48 and 18)
 gcd(100, 25)                # 25 (GCD of 100 and 25)
 gcd(17, 13)                 # 1 (GCD of 17 and 13)
 
 Utilisations courantes :
-• Recursive GCD: def gcd(a, b): return a if b == 0 else gcd(b, a % b)
+• Recursive GCD: def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b)
 • Euclidean algorithm: GCD(a, b) = GCD(b, a % b)
 • Recursive algorithms
 • Mathematical algorithms
 
-Exemple : If def gcd(a, b): return a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car the recursive Euclidean algorithm computes the GCD by repeatedly taking the GCD of b and the remainder (a % b) until b becomes 0, at which point a is the GCD.
+Exemple : If def gcd(a, b): renvoyer a if b == 0 else gcd(b, a % b); gcd(48, 18), alors gcd(48, 18) renvoie 6 car the recursive Euclidean algorithm computes the GCD by repeatedly taking the GCD of b and the remainder (a % b) until b becomes 0, at which point a is the GCD.
 `,
   1870: `A recursive function can calculate list length by adding 1 for chaque élément. If def length(lst): return 0 if not lst else 1 + length(lst[1:]); length([1,2,3]), alors length([1,2,3]) renvoie 3 car length([1,2,3]) = 1 + length([2,3]) = 1 + (1 + length([3])) = 1 + 1 + (1 + length([])) = 1 + 1 + 1 + 0 = 3. The base case is an empty list, qui returns 0 (length 0). The recursive case adds 1 for the first element and recursively computes the length of the rest of the list.
 
@@ -45615,135 +45597,135 @@ Utilisations courantes :
 
 Exemple : If def compose(f, g): return lambda x: f(g(x)); compose(lambda x: x+1, lambda x: x*2)(3), alors compose(...)(3) renvoie 7 car it applies g first (3 * 2 = 6), alors applies f (6 + 1 = 7), so f(g(3)) = f(6) = 7.
 `,
-  1874: `The map() function retourne un map object (iterator), not a list. map(lambda x: x*2, [1, 2, 3]) retourne un map object car map() applies a function to chaque élément of an iterable and retourne un iterator qui produit the results lazily. The map object is an iterator - it doesn't compute all values immediately, but yields them on-demand quand vous itérez. To get a list, you need to convert it with list().
+  1874: `Le map() fonction retourne un map objet (iterator), not a liste. map(lambda x: x*2, [1, 2, 3]) retourne un map objet car map() applies a fonction to chaque élément of an iterable and retourne un iterator qui produit the results lazily. The map objet is an iterator - it doesn't compute all valeurs immediately, but yields them on-demand quand vous itérez. To get a liste, you need to convert it avec liste().
 
 map() renvoie un itérateur :
-• map(lambda x: x*2, [1, 2, 3]) returns map object
-• map() applies function to chaque élément
+• map(lambda x: x*2, [1, 2, 3]) retourne map objet
+• map() applies fonction to chaque élément
 • Retourne iterator (lazy evaluation)
-• Doesn't compute all values immediately
-• Yields values on-demand
+• Doesn't compute all valeurs immediately
+• Yields valeurs on-demand
 
 Fonctionnement :
-• map(lambda x: x*2, [1, 2, 3]) creates map object
+• map(lambda x: x*2, [1, 2, 3]) creates map objet
 • map() applies lambda x: x*2 to chaque élément
 • Creates iterator qui produit: 2, 4, 6
 • L'itérateur ne calcule pas until iterated
-• Retourne map object (iterator)
+• Retourne map objet (iterator)
 
 Exemple :
-map(lambda x: x*2, [1, 2, 3])  # <map object> (iterator)
-list(map(lambda x: x*2, [1, 2, 3])) # [2, 4, 6] (converted to list)
+map(lambda x: x*2, [1, 2, 3])  # <map objet> (iterator)
+liste(map(lambda x: x*2, [1, 2, 3])) # [2, 4, 6] (converted to liste)
 for x in map(lambda x: x*2, [1, 2, 3]):  # Itère : 2, 4, 6
     print(x)
 
 Utilisations courantes :
-• Mapping: map(func, items) (returns iterator)
-• Converting: list(map(func, items)) (converts to list)
+• Mapping: map(func, items) (retourne iterator)
+• Converting: liste(map(func, items)) (converts to liste)
 • Lazy evaluation
 • Iterator creation
 
-Exemple : map(lambda x: x*2, [1, 2, 3]) retourne un map object (iterator) car map() applies the function to chaque élément and retourne un iterator qui produit results on-demand, not a list.
+Exemple : map(lambda x: x*2, [1, 2, 3]) retourne un map objet (iterator) car map() applies the fonction to chaque élément and retourne un iterator qui produit results on-demand, not a liste.
 `,
-  1875: `The list() function converts a map object (iterator) to a list. list(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map object that applies lambda x: x*2 to chaque élément of [1, 2, 3], and list() consumes the iterator, collecting all values into a list. The map object yields 2, 4, 6 when iterated, and list() collects them into [2, 4, 6].
+  1875: `Le liste() fonction converts a map objet (iterator) to a liste. liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map objet that applies lambda x: x*2 to chaque élément of [1, 2, 3], and liste() consumes the iterator, collecting all valeurs into a liste. The map objet yields 2, 4, 6 when iterated, and liste() collects them into [2, 4, 6].
 
-list() sur objet map :
-• list(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6]
-• map() returns map object (iterator)
-• list() consumes iterator
-• Collects values into list
-• Creates list: [2, 4, 6]
+liste() sur objet map :
+• liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6]
+• map() retourne map objet (iterator)
+• liste() consumes iterator
+• Collects valeurs into liste
+• Creates liste: [2, 4, 6]
 
 Fonctionnement :
-• map(lambda x: x*2, [1, 2, 3]) creates map object
-• map object yields: 2, 4, 6 (when iterated)
-• list() itère sur map object
-• Collects values: 2, 4, 6
-• Retourne new list: [2, 4, 6]
+• map(lambda x: x*2, [1, 2, 3]) creates map objet
+• map objet yields: 2, 4, 6 (when iterated)
+• liste() itère sur map objet
+• Collects valeurs: 2, 4, 6
+• Retourne new liste: [2, 4, 6]
 
 Exemple :
-list(map(lambda x: x*2, [1, 2, 3]))  # [2, 4, 6] (converted to list)
-list(map(lambda x: x**2, [1, 2, 3])) # [1, 4, 9] (converted to list)
-list(map(str, [1, 2, 3]))            # ['1', '2', '3'] (converted to list)
+liste(map(lambda x: x*2, [1, 2, 3]))  # [2, 4, 6] (converted to liste)
+liste(map(lambda x: x**2, [1, 2, 3])) # [1, 4, 9] (converted to liste)
+liste(map(str, [1, 2, 3]))            # ['1', '2', '3'] (converted to liste)
 
 Utilisations courantes :
-• Converting map to list: list(map(func, items))
-• Getting results: results = list(map(transform, data))
+• Converting map to liste: liste(map(func, items))
+• Getting results: results = liste(map(transform, data))
 • Iterator consumption
 • List creation
 
-Exemple : list(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map object qui produit 2, 4, 6 when iterated, and list() consumes the iterator, collecting all values into a list.
+Exemple : liste(map(lambda x: x*2, [1, 2, 3])) renvoie [2, 4, 6] car map() retourne un map objet qui produit 2, 4, 6 when iterated, and liste() consumes the iterator, collecting all valeurs into a liste.
 `,
-  1876: `The filter() function retourne un filter object (iterator), not a list. filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter object car filter() applies a predicate function to chaque élément of an iterable and retourne un iterator qui produit seulement le elements for which the predicate is True. The filter object is an iterator - it doesn't compute all values immediately, but yields them on-demand quand vous itérez. To get a list, you need to convert it with list().
+  1876: `Le filter() fonction retourne un filter objet (iterator), not a liste. filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter objet car filter() applies a predicate fonction to chaque élément of an iterable and retourne un iterator qui produit seulement le elements for which the predicate is True. The filter objet is an iterator - it doesn't compute all valeurs immediately, but yields them on-demand quand vous itérez. To get a liste, you need to convert it avec liste().
 
 filter() renvoie un itérateur :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) returns filter object
-• filter() applies predicate function to chaque élément
+• filter(lambda x: x > 2, [1, 2, 3, 4]) retourne filter objet
+• filter() applies predicate fonction to chaque élément
 • Retourne iterator (lazy evaluation)
 • Yields only elements where predicate is True
-• Doesn't compute all values immediately
+• Doesn't compute all valeurs immediately
 
 Fonctionnement :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter object
+• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter objet
 • filter() tests lambda x: x > 2 for chaque élément
 • Creates iterator qui produit: 3, 4 (where condition is True)
 • L'itérateur ne calcule pas until iterated
-• Retourne filter object (iterator)
+• Retourne filter objet (iterator)
 
 Exemple :
-filter(lambda x: x > 2, [1, 2, 3, 4])  # <filter object> (iterator)
-list(filter(lambda x: x > 2, [1, 2, 3, 4])) # [3, 4] (converted to list)
+filter(lambda x: x > 2, [1, 2, 3, 4])  # <filter objet> (iterator)
+liste(filter(lambda x: x > 2, [1, 2, 3, 4])) # [3, 4] (converted to liste)
 for x in filter(lambda x: x > 2, [1, 2, 3, 4]):  # Itère : 3, 4
     print(x)
 
 Utilisations courantes :
-• Filtering: filter(predicate, items) (returns iterator)
-• Converting: list(filter(predicate, items)) (converts to list)
+• Filtering: filter(predicate, items) (retourne iterator)
+• Converting: liste(filter(predicate, items)) (converts to liste)
 • Lazy evaluation
 • Iterator creation
 
-Exemple : filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter object (iterator) car filter() applies the predicate function to chaque élément and retourne un iterator qui produit seulement le elements where the predicate is True (3 and 4), not a list.
+Exemple : filter(lambda x: x > 2, [1, 2, 3, 4]) retourne un filter objet (iterator) car filter() applies the predicate fonction to chaque élément and retourne un iterator qui produit seulement le elements where the predicate is True (3 and 4), not a liste.
 `,
-  1877: `The list() function converts a filter object (iterator) to a list. list(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter object that applies lambda x: x > 2 to chaque élément of [1, 2, 3, 4], and list() consumes the iterator, collecting seulement le elements where the predicate is True into a list. The filter object yields 3, 4 when iterated (only elements where x > 2 is True), and list() collects them into [3, 4].
+  1877: `Le liste() fonction converts a filter objet (iterator) to a liste. liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter objet that applies lambda x: x > 2 to chaque élément of [1, 2, 3, 4], and liste() consumes the iterator, collecting seulement le elements where the predicate is True into a liste. The filter objet yields 3, 4 when iterated (only elements where x > 2 is True), and liste() collects them into [3, 4].
 
-list() sur objet filter :
-• list(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4]
-• filter() returns filter object (iterator)
-• list() consumes iterator
-• Collects filtered values into list
-• Creates list: [3, 4]
+liste() sur objet filter :
+• liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4]
+• filter() retourne filter objet (iterator)
+• liste() consumes iterator
+• Collects filtered valeurs into liste
+• Creates liste: [3, 4]
 
 Fonctionnement :
-• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter object
-• filter object yields: 3, 4 (where x > 2 is True)
-• list() itère sur filter object
-• Collects values: 3, 4
-• Retourne new list: [3, 4]
+• filter(lambda x: x > 2, [1, 2, 3, 4]) creates filter objet
+• filter objet yields: 3, 4 (where x > 2 is True)
+• liste() itère sur filter objet
+• Collects valeurs: 3, 4
+• Retourne new liste: [3, 4]
 
 Exemple :
-list(filter(lambda x: x > 2, [1, 2, 3, 4]))  # [3, 4] (converted to list)
-list(filter(lambda x: x % 2 == 0, [1, 2, 3, 4])) # [2, 4] (converted to list)
-list(filter(lambda x: len(x) > 3, ['a', 'ab', 'abc', 'abcd'])) # ['abcd'] (converted to list)
+liste(filter(lambda x: x > 2, [1, 2, 3, 4]))  # [3, 4] (converted to liste)
+liste(filter(lambda x: x % 2 == 0, [1, 2, 3, 4])) # [2, 4] (converted to liste)
+liste(filter(lambda x: len(x) > 3, ['a', 'ab', 'abc', 'abcd'])) # ['abcd'] (converted to liste)
 
 Utilisations courantes :
-• Converting filter to list: list(filter(predicate, items))
-• Getting filtered results: results = list(filter(condition, data))
+• Converting filter to liste: liste(filter(predicate, items))
+• Getting filtered results: results = liste(filter(condition, data))
 • Iterator consumption
 • List creation
 
-Exemple : list(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter object qui produit only elements where x > 2 is True (3 and 4), and list() consumes the iterator, collecting them into a list.
+Exemple : liste(filter(lambda x: x > 2, [1, 2, 3, 4])) renvoie [3, 4] car filter() retourne un filter objet qui produit only elements where x > 2 is True (3 and 4), and liste() consumes the iterator, collecting them into a liste.
 `,
-  1878: `The reduce() function from functools accumulates values by applying a function cumulatively to elements. from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies lambda x, y: x + y cumulatively: first it adds 1 + 2 = 3, alors 3 + 3 = 6, alors 6 + 4 = 10. reduce() takes a function and an iterable, and repeatedly applies the function to the accumulated result and the next element, reducing the iterable to a single value.
+  1878: `Le reduce() fonction from functools accumulates valeurs by applying a fonction cumulatively to elements. from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies lambda x, y: x + y cumulatively: first it adds 1 + 2 = 3, alors 3 + 3 = 6, alors 6 + 4 = 10. reduce() takes a fonction and an iterable, and repeatedly applies the fonction to the accumulated result and the next element, reducing the iterable to a single valeur.
 
 Fonction reduce() :
 • from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10
-• reduce() accumulates values using function
-• Applies function cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10
-• Reduces iterable to single value
+• reduce() accumulates valeurs using fonction
+• Applies fonction cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10
+• Reduces iterable to single valeur
 • Retourne accumulated result: 10
 
 Fonctionnement :
-• reduce(lambda x, y: x + y, [1, 2, 3, 4]) starts with first two elements
+• reduce(lambda x, y: x + y, [1, 2, 3, 4]) starts avec first two elements
 • First: 1 + 2 = 3 (accumulated result)
 • Second: 3 + 3 = 6 (accumulated result)
 • Third: 6 + 4 = 10 (accumulated result)
@@ -45756,28 +45738,28 @@ reduce(lambda x, y: x * y, [1, 2, 3, 4])  # 24 (1*2*3*4)
 reduce(lambda x, y: x if x > y else y, [1, 3, 2, 4]) # 4 (max)
 
 Utilisations courantes :
-• Accumulating values: reduce(func, items) (reduces to single value)
+• Accumulating valeurs: reduce(func, items) (reduces to single valeur)
 • Cumulative operations: reduce(lambda x, y: x + y, items)
 • Functional reduction
 • Iterable reduction
 
-Exemple : from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies the function cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10, reducing the iterable to a single value.
+Exemple : from functools import reduce; reduce(lambda x, y: x + y, [1, 2, 3, 4]) renvoie 10 car reduce() applies the fonction cumulatively: (1+2) → 3, (3+3) → 6, (6+4) → 10, reducing the iterable to a single valeur.
 `,
-  1879: `The sorted() function can take a key parameter for custom sorting. sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key function lambda x: -x transforms chaque élément before comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -3, -1, -2, which sorts as -3 < -1 < -2 (ascending by negated values), resulting in [3, 2, 1] in descending order. The key function ne change pas the elements in le résultat - it only affects the comparison order.
+  1879: `Le sorted() fonction can take a key parameter for custom sorting. sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key fonction lambda x: -x transforms chaque élément avant comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -3, -1, -2, which sorts as -3 < -1 < -2 (ascending by negated valeurs), resulting in [3, 2, 1] in descending order. The key fonction ne change pas the elements in le résultat - it only affects the comparison order.
 
 sorted() avec key :
 • sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1]
 • key parameter transforms elements for comparison
 • lambda x: -x negates chaque élément
-• Sorts using negated values: -3 < -1 < -2
+• Sorts using negated valeurs: -3 < -1 < -2
 • Résultat : [3, 2, 1] (descending order)
 
 Fonctionnement :
 • sorted() appelé avec [3, 1, 2], key=lambda x: -x
-• Applies key function: -3, -1, -2 (negated)
-• Compares using negated values: -3 < -1 < -2
+• Applies key fonction: -3, -1, -2 (negated)
+• Compares using negated valeurs: -3 < -1 < -2
 • Sorts in descending order (car negated)
-• Retourne new list: [3, 2, 1]
+• Retourne new liste: [3, 2, 1]
 
 Exemple :
 sorted([3, 1, 2], key=lambda x: -x)  # [3, 2, 1] (descending)
@@ -45790,30 +45772,30 @@ Utilisations courantes :
 • Transform-based sorting
 • Flexible sorting criteria
 
-Exemple : sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key function negates chaque élément for comparison, causing the list to be sorted in descending order (largest to smallest).
+Exemple : sorted([3, 1, 2], key=lambda x: -x) renvoie [3, 2, 1] car the key fonction negates chaque élément for comparison, causing the liste to be sorted in descending order (largest to smallest).
 `,
-  1880: `The max() function can take a key parameter to find the element with the maximum transformed value. max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key function lambda x: -x transforms chaque élément before comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -1, -2, -3, and max trouve le element with the maximum negated value (which is -1, corresponding to element 1). The key function ne change pas the element returned - it only affects the comparison. Since max() returns l'originale element (not the transformed value), it renvoie 1.
+  1880: `Le max() fonction can take a key parameter to find the element avec the maximum transformed valeur. max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key fonction lambda x: -x transforms chaque élément avant comparison. Here, key=lambda x: -x negates chaque élément, so comparisons use -1, -2, -3, and max trouve le element avec the maximum negated valeur (which is -1, corresponding to element 1). The key fonction ne change pas the element returned - it only affects the comparison. Since max() retourne l'originale element (not the transformed valeur), it renvoie 1.
 
 max() avec key :
 • max([1, 2, 3], key=lambda x: -x) renvoie 1
 • key parameter transforms elements for comparison
 • lambda x: -x negates chaque élément
-• Compares using negated values: -1, -2, -3
-• max finds maximum negated value: -1 (corresponds to element 1)
+• Compares using negated valeurs: -1, -2, -3
+• max finds maximum negated valeur: -1 (corresponds to element 1)
 • Retourne original element: 1
 
 Fonctionnement :
 • max() appelé avec [1, 2, 3], key=lambda x: -x
-• Applies key function: -1, -2, -3 (negated)
-• Compares using negated values: -1 > -2 > -3
-• max finds element with maximum negated value: -1
+• Applies key fonction: -1, -2, -3 (negated)
+• Compares using negated valeurs: -1 > -2 > -3
+• max finds element avec maximum negated valeur: -1
 • -1 corresponds to original element 1
 • Retourne original element: 1
 
 Exemple :
-max([1, 2, 3], key=lambda x: -x)  # 1 (max negated value -1)
+max([1, 2, 3], key=lambda x: -x)  # 1 (max negated valeur -1)
 max(['abc', 'a', 'ab'], key=len)  # 'abc' (max length 3)
-min([1, 2, 3], key=lambda x: -x)  # 3 (min negated value -3)
+min([1, 2, 3], key=lambda x: -x)  # 3 (min negated valeur -3)
 
 Utilisations courantes :
 • Custom max: max(items, key=func)
@@ -45821,7 +45803,7 @@ Utilisations courantes :
 • Key-based selection
 • Flexible comparison
 
-Exemple : max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key function negates chaque élément for comparison, and max trouve le element with the maximum negated value (-1, which corresponds to original element 1).
+Exemple : max([1, 2, 3], key=lambda x: -x) renvoie 1 car the key fonction negates chaque élément for comparison, and max trouve le element avec the maximum negated valeur (-1, which corresponds to original element 1).
 `,
   1881: `Functions ont un __name__ attribute qui contient the function's name. If def func(): pass; func.__name__, alors func.__name__ renvoie 'func' car __name__ is a special attribute that stocke le function's name as a string. This attribute is automatically set quand la fonction is defined using def. It's useful for debugging, introspection, or creating dynamic code that needs to know function names.
 
@@ -45884,18 +45866,18 @@ Utilisations courantes :
 
 Exemple : If def func(): """doc"""; pass; func.__doc__, alors func.__doc__ renvoie 'doc' car __doc__ is a special attribute that stocke le docstring - the documentation string that appears as the first statement in the function body.
 `,
-  1883: `The __doc__ attribute is None if a function n'a pas docstring. If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the function n'a pas docstring - there's no string literal as the first statement in the function body. __doc__ only contains a value if a docstring is provided. If there's no docstring, __doc__ is None, not an empty string. C'est the default state for functions without documentation.
+  1883: `Le __doc__ attribute is None if a fonction n'a pas docstring. If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the fonction n'a pas docstring - there's no string literal as the first instruction in the fonction body. __doc__ only contains a valeur if a docstring is provided. If there's no docstring, __doc__ is None, not an empty string. C'est the default state for fonctions sans documentation.
 
 __doc__ sans docstring :
 • def func(): pass; func.__doc__ renvoie None
 • Function n'a pas docstring
 • __doc__ attribute is None (not empty string)
-• Default state for functions without documentation
+• Default state for fonctions sans documentation
 • Retourne None
 
 Fonctionnement :
-• def func(): pass creates function definition
-• No docstring in function body
+• def func(): pass creates fonction definition
+• No docstring in fonction body
 • Python sets func.__doc__ = None (default)
 • __doc__ attribute is None
 • func.__doc__ accesses attribute
@@ -45906,7 +45888,7 @@ def func(): pass
 func.__doc__                # None (no docstring)
 def func(): """doc"""; pass
 func.__doc__                # 'doc' (has docstring)
-def func(): x = 1; return x
+def func(): x = 1; renvoyer x
 func.__doc__                # None (no docstring)
 
 Utilisations courantes :
@@ -45915,7 +45897,7 @@ Utilisations courantes :
 • Function documentation
 • Docstring checking
 
-Exemple : If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the function n'a pas docstring, so __doc__ is None (the default state for functions without documentation).
+Exemple : If def func(): pass; func.__doc__, alors func.__doc__ renvoie None car the fonction n'a pas docstring, so __doc__ is None (the default state for fonctions sans documentation).
 `,
   1884: `Functions ont un __defaults__ attribute qui contient a tuple of default parameter values. If def func(x, y=2): pass; func.__defaults__, alors func.__defaults__ renvoie (2,) car __defaults__ stores default parameter values in a tuple, ordered from left to right for parameters with defaults. Only parameters with default values are included, in the order they appear. In this case, y=2 a un default value, so __defaults__ = (2,).
 
@@ -45982,25 +45964,25 @@ Utilisations courantes :
 
 Exemple : If def func(*args, **kwargs): pass; func.__code__, alors func.__code__ retourne un code object car __code__ is a special attribute that stocke le compiled bytecode and metadata about the function's code.
 `,
-  1886: `The callable() function checks if an object is callable (peut être appelé like a function). If def func(): pass; callable(func), alors callable(func) renvoie True car func is a function object, and functions are callable. callable() renvoie True for functions, methods, classes (which are callable to create instances), and any object that implements __call__. It renvoie False for non-callable objects like integers, strings, lists, etc.
+  1886: `Le callable() fonction checks if an objet is callable (peut être appelé like a fonction). If def func(): pass; callable(func), alors callable(func) renvoie True car func is a fonction objet, and fonctions are callable. callable() renvoie True for fonctions, méthodes, classes (which are callable to create instances), and any objet that implements __call__. It renvoie False for non-callable objets like integers, strings, listes, etc.
 
 Fonction callable() :
 • def func(): pass; callable(func) renvoie True
-• callable() checks if object is callable
+• callable() checks if objet is callable
 • Functions are callable
-• Retourne True for callable objects
-• Retourne False for non-callable objects
+• Retourne True for callable objets
+• Retourne False for non-callable objets
 
 Fonctionnement :
-• def func(): pass creates function object
-• func is a function (callable)
+• def func(): pass creates fonction objet
+• func is a fonction (callable)
 • callable(func) checks if func is callable
 • Functions are callable (peut être appelé)
 • Retourne : True
 
 Exemple :
 def func(): pass
-callable(func)              # True (functions are callable)
+callable(func)              # True (fonctions are callable)
 callable(5)                 # False (integers are not callable)
 callable(str)               # True (classes are callable)
 
@@ -46010,7 +45992,7 @@ Utilisations courantes :
 • Callable check
 • Object inspection
 
-Exemple : If def func(): pass; callable(func), alors callable(func) renvoie True car functions are callable objects - they peut être appelé with parentheses like func().
+Exemple : If def func(): pass; callable(func), alors callable(func) renvoie True car fonctions are callable objets - they peut être appelé avec parentheses like func().
 `,
   1887: `Integers are not callable objects. callable(5) renvoie False car integers cannot be called like functions - you cannot use 5() to call an integer. callable() renvoie True only for objects that peut être appelé (like functions, methods, classes), and renvoie False for non-callable objects like integers, strings, lists, dictionaries, etc. C'est useful for checking if an object is a function before trying to call it.
 
@@ -46042,27 +46024,27 @@ Utilisations courantes :
 
 Exemple : callable(5) renvoie False car integers are not callable objects - you cannot call an integer like a function, so callable() renvoie False for non-callable objects like integers.
 `,
-  1888: `The type() function retourne le type of an object. If def func(): return 1; type(func), alors type(func) returns <class 'function'> car func is a function object, and functions are of type function. The type() function retourne le class/type of an object, and for functions, il retourne the function class. C'est useful for type checking or introspection to determine if an object is a function.
+  1888: `Le type() fonction retourne le type of an objet. If def func(): renvoyer 1; type(func), alors type(func) retourne <classe 'fonction'> car func is a fonction objet, and fonctions are of type fonction. The type() fonction retourne le classe/type of an objet, and for fonctions, il retourne the fonction classe. C'est useful for type checking or introspection to determine if an objet is a fonction.
 
 type() sur fonction :
-• def func(): return 1; type(func) returns <class 'function'>
-• type() returns object's type
-• Functions are of type function
-• Retourne function class
+• def func(): renvoyer 1; type(func) retourne <classe 'fonction'>
+• type() retourne objet's type
+• Functions are of type fonction
+• Retourne fonction classe
 • Useful for type checking
 
 Fonctionnement :
-• def func(): return 1 creates function object
-• func is a function object
+• def func(): renvoyer 1 creates fonction objet
+• func is a fonction objet
 • type(func) checks type of func
-• Functions are of type function
-• Retourne : <class 'function'>
+• Functions are of type fonction
+• Retourne : <classe 'fonction'>
 
 Exemple :
-def func(): return 1
-type(func)                  # <class 'function'> (function type)
-type(5)                     # <class 'int'> (integer type)
-type('hello')               # <class 'str'> (string type)
+def func(): renvoyer 1
+type(func)                  # <classe 'fonction'> (fonction type)
+type(5)                     # <classe 'int'> (integer type)
+type('hello')               # <classe 'str'> (string type)
 
 Utilisations courantes :
 • Type checking: if type(obj) == type(lambda: None): ...
@@ -46070,28 +46052,28 @@ Utilisations courantes :
 • Object type
 • Type identification
 
-Exemple : If def func(): return 1; type(func), alors type(func) returns <class 'function'> car functions are of type function, and type() retourne le class/type of the object.
+Exemple : If def func(): renvoyer 1; type(func), alors type(func) retourne <classe 'fonction'> car fonctions are of type fonction, and type() retourne le classe/type of the objet.
 `,
-  1889: `The hasattr() function checks if an object a un specific attribute. If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car functions ont un __name__ attribute. hasattr(obj, attr) renvoie True if the object has the attribute (whether it's defined or inherited), and False otherwise. It's useful for checking if an attribute exists before accessing it to avoid AttributeError.
+  1889: `Le hasattr() fonction checks if an objet a un specific attribute. If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car fonctions ont un __name__ attribute. hasattr(obj, attr) renvoie True if the objet has the attribute (whether it's defined or inherited), and False otherwise. It's useful for checking if an attribute exists avant accessing it to avoid AttributeError.
 
 Fonction hasattr() :
 • def func(): pass; hasattr(func, '__name__') renvoie True
-• hasattr() checks if object has attribute
+• hasattr() checks if objet has attribute
 • Functions have __name__ attribute
 • Retourne True if attribute exists
 • Retourne False if attribute n'existe pas
 
 Fonctionnement :
-• def func(): pass creates function object
+• def func(): pass creates fonction objet
 • Functions have __name__ attribute automatically
 • hasattr(func, '__name__') checks if __name__ exists
-• Attribute exists (functions have __name__)
+• Attribute exists (fonctions have __name__)
 • Retourne : True
 
 Exemple :
 def func(): pass
-hasattr(func, '__name__')   # True (functions have __name__)
-hasattr(func, '__doc__')    # True (functions have __doc__)
+hasattr(func, '__name__')   # True (fonctions have __name__)
+hasattr(func, '__doc__')    # True (fonctions have __doc__)
 hasattr(5, '__name__')      # False (integers n'a pas __name__)
 
 Utilisations courantes :
@@ -46100,7 +46082,7 @@ Utilisations courantes :
 • Attribute existence
 • Object inspection
 
-Exemple : If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car functions ont un __name__ attribute, and hasattr() checks if an object a un specific attribute.
+Exemple : If def func(): pass; hasattr(func, '__name__'), alors hasattr(func, '__name__') renvoie True car fonctions ont un __name__ attribute, and hasattr() checks if an objet a un specific attribute.
 `,
   1890: `Functions can have custom attributes assigned to them. If def func(): pass; func.attr = 'value'; func.attr, alors func.attr returns 'value' car you can assign custom attributes to function objects just like any other Python object. Functions are objects, so they can have attributes. After assigning func.attr = 'value', the attribute 'attr' exists on the function object and can be accessed like any other attribute. C'est useful for storing metadata or state associated with a function.
 
@@ -46511,23 +46493,23 @@ Utilisations courantes :
 • Stateful closures en Python 2 style
 • Counter implementations without classes
 • Demonstrating mutable container trick`,
-  1904: `The nonlocal keyword allows an inner function to rebind a variable in the nearest enclosing scope (that is not global). Without nonlocal, x += 1 inside inner would create a new local variable and raise UnboundLocalError car x is read before assignment.
+  1904: `Le nonlocal keyword allows an inner fonction to rebind a variable in the nearest enclosing scope (that is not global). Without nonlocal, x += 1 dans inner would create a new local variable and raise UnboundLocalError car x is read avant assignment.
 
 Concepts clés :
 • nonlocal x tells Python that x refers to outer's x
 • Without nonlocal, x += 1 would create a local x (and fail)
-• nonlocal only works in nested functions, not at module level
+• nonlocal only works in nested fonctions, not at module level
 • The modification persists in the enclosing scope
 
 Fonctionnement :
-• outer() creates x = 1, defines inner with nonlocal x, retourne inner
+• outer() creates x = 1, defines inner avec nonlocal x, retourne inner
 • f = outer() — f is inner, x = 1 in the closure
 • f(): nonlocal x; x += 1 changes x from 1 to 2; renvoie 2
 • Résultat : 2
 
 Exemples :
 • f = outer(); f()  # 2
-• f()               # 3 (x persists between calls)
+• f()               # 3 (x persists entre calls)
 • f()               # 4
 
 Utilisations courantes :
@@ -46560,12 +46542,12 @@ Utilisations courantes :
 • Understanding closure state persistence
 • Building counters and accumulators
 • Demonstrating nonlocal across multiple calls`,
-  1906: `The nonlocal statement est utilisé inside a nested function to indicate that a variable refers to the nearest enclosing scope's variable (excluding global scope). Without it, assignment to a variable inside a function crée un new local variable.
+  1906: `Le nonlocal instruction est utilisé dans a nested fonction to indicate that a variable refers to the nearest enclosing scope's variable (excluding global scope). Without it, assignment to a variable dans a fonction crée un new local variable.
 
 Concepts clés :
-• nonlocal bridges inner functions to their enclosing scope
+• nonlocal bridges inner fonctions to their enclosing scope
 • It does NOT access module-level (global) variables — use global for that
-• It must reference an existing variable in an enclosing function
+• It must reference an existing variable in an enclosing fonction
 • It allows rebinding, not just reading
 
 Fonctionnement :
@@ -46581,14 +46563,14 @@ Exemples :
 
 Utilisations courantes :
 • Stateful closures (counters, accumulators)
-• Modifying enclosing variables without mutable containers
-• Python 3 replacement for the mutable list trick`,
-  1907: `The global keyword peut être utilisé inside any function, including nested ones. It always refers to the module-level (global) variable, skipping all enclosing function scopes. C'est different from nonlocal, which targets the nearest enclosing function scope.
+• Modifying enclosing variables sans mutable containers
+• Python 3 replacement for the mutable liste trick`,
+  1907: `Le global keyword peut être utilisé dans any fonction, including nested ones. It always refers to the module-level (global) variable, skipping all enclosing fonction scopes. C'est different from nonlocal, which targets the nearest enclosing fonction scope.
 
 Concepts clés :
 • global always targets the module-level variable
-• nonlocal targets the nearest enclosing function scope
-• Both peut être utilisé inside nested functions
+• nonlocal targets the nearest enclosing fonction scope
+• Both peut être utilisé dans nested fonctions
 • They serve different purposes and cannot be combined for le même variable
 
 Fonctionnement :
@@ -46599,17 +46581,17 @@ Fonctionnement :
 •         global x  # refers to module-level x = 100, not outer's x = 10
 •         x = 200   # modifies module-level x
 •     inner()
-•     return x  # still 10 (outer's x inchangés)
+•     renvoyer x  # still 10 (outer's x inchangés)
 • outer()  # renvoie 10
 • x  # 200 (module-level x was changed)
 
 Exemples :
-• global x inside nested function: accesses module x
-• nonlocal x inside nested function: accesses enclosing function's x
+• global x dans nested fonction: accesses module x
+• nonlocal x dans nested fonction: accesses enclosing fonction's x
 
 Utilisations courantes :
-• Accessing module-level state from deeply nested functions
-• Distinguishing between global and enclosing scope access`,
+• Accessing module-level state from deeply nested fonctions
+• Distinguishing entre global and enclosing scope access`,
   1908: `Without nonlocal, assigning x = 20 inside inner() crée un brand-new local variable that shadows outer's x. The outer function's x remains 10 car inner's x is a completely separate variable.
 
 Concepts clés :
@@ -46770,18 +46752,18 @@ Utilisations courantes :
 • Creating scaling functions
 • Price calculators with different tax rates
 • Unit conversion functions`,
-  1915: `The inner function greeting() closes over the name parameter from greet(). When greet("Alice") est appelé, il retourne greeting with name bound to "Alice". Appeler la fonction retournée produces the f-string with the captured name.
+  1915: `Le inner fonction greeting() closes over the name parameter from greet(). When greet("Alice") est appelé, il retourne greeting avec name bound to "Alice". Appeler la fonction retournée produces the f-string avec the captured name.
 
 Concepts clés :
 • The closure captures the name parameter
-• f-strings evaluate expressions inside {} at call time
+• f-strings evaluate expressions dans {} at call time
 • name is looked up in the closure's enclosing scope
 • The result is the formatted greeting string
 
 Fonctionnement :
-• greet("Alice"): name = "Alice", returns greeting function
+• greet("Alice"): name = "Alice", retourne greeting fonction
 • greet("Alice")(): calls greeting()
-• greeting() returns f"Hello, {name}!" with name = "Alice"
+• greeting() retourne f"Hello, {name}!" avec name = "Alice"
 • Résultat : "Hello, Alice!"
 
 Exemples :
@@ -46790,9 +46772,9 @@ Exemples :
 • f = greet("Eve"); f()  # "Hello, Eve!"
 
 Utilisations courantes :
-• Personalized function creation
+• Personalized fonction creation
 • Message formatters
-• Template functions with captured context`,
+• Template fonctions avec captured context`,
   1916: `A closure is a function object that has access to variables in its enclosing lexical scope, even quand la fonction est appelé outside that scope. The inner function "closes over" the free variables from the enclosing function.
 
 Concepts clés :
@@ -47129,13 +47111,13 @@ Utilisations courantes :
 • Input validation
 • Range checking
 • Creating reusable validation functions`,
-  1931: `The same validator from the previous question, but with a value outside the range. 15 exceeds max_val of 10, so the chained comparison fails.
+  1931: `Le same validator from the previous question, but avec a valeur à l’extérieur de the range. 15 exceeds max_val of 10, so the chained comparison fails.
 
 Concepts clés :
 • v = make_validator(1, 10) checks 1 <= x <= 10
 • v(15): 1 <= 15 is True, but 15 <= 10 is False
 • Chained comparison short-circuits: overall result is False
-• The closure correctly rejects out-of-range values
+• The closure correctly rejects out-of-range valeurs
 
 Fonctionnement :
 • v(15): 1 <= 15 <= 10
@@ -47153,7 +47135,7 @@ Utilisations courantes :
 • Boundary testing
 • Validating user input
 • Filter predicates`,
-  1932: `The key parameter of sorted() accepts a function that transforms chaque élément before comparison. Here, len est passé as the key, so strings are sorted by their length.
+  1932: `Le key parameter of sorted() accepts a fonction that transforms chaque élément avant comparison. Here, len est passé as the key, so strings are sorted by their length.
 
 Concepts clés :
 • key=len means: compare len(element) instead of element itself
@@ -47163,7 +47145,7 @@ Concepts clés :
 
 Fonctionnement :
 • sorted computes len for chaque élément: 2, 3, 5
-• Sorts by these values: 2 < 3 < 5
+• Sorts by these valeurs: 2 < 3 < 5
 • Résultat : ["hi", "hey", "hello"]
 
 Exemples :
@@ -47173,8 +47155,8 @@ Exemples :
 Utilisations courantes :
 • Sorting by a derived property
 • Custom sort orders
-• Sorting objects by attributes`,
-  1933: `The lambda extracts the second element (index 1) from each tuple for comparison. This sorts the tuples by their second value.
+• Sorting objets by attributes`,
+  1933: `Le lambda extracts the second element (index 1) from each tuple for comparison. This sorts the tuples by their second valeur.
 
 Concepts clés :
 • key=lambda x: x[1] sorts by the second element of each tuple
@@ -47194,7 +47176,7 @@ Exemples :
 
 Utilisations courantes :
 • Sorting records by a specific field
-• Sorting dictionaries by value
+• Sorting dictionnaires by valeur
 • Custom ordering of complex data structures`,
   1934: `map() applies a function to every element of an iterable and retourne un map object. list() converts it to a list. Here, each string is converted to uppercase using the upper() method.
 
@@ -47240,16 +47222,16 @@ Utilisations courantes :
 • Selecting elements meeting a condition
 • Data filtering
 • Removing unwanted items from sequences`,
-  1936: `In Python, functions are first-class objects. This means they can be assigned to variables, stored in data structures (lists, dicts, sets, tuples), passé comme arguments, and returned from other functions.
+  1936: `Dans Python, fonctions are first-classe objets. This means they can be assigned to variables, stored in data structures (listes, dicts, sets, tuples), passé comme arguments, and returned from other fonctions.
 
 Concepts clés :
-• First-class object = peut être utilisé anywhere any other value can
-• Functions can be stored in lists, dicts, tuples, sets
-• Both user-defined and built-in functions are first-class
+• First-classe objet = peut être utilisé anywhere any other valeur can
+• Functions can be stored in listes, dicts, tuples, sets
+• Both user-defined and built-in fonctions are first-classe
 • Cela permet powerful patterns like dispatch tables and pipelines
 
 Fonctionnement :
-• funcs = [abs, len, str]  # list of functions
+• funcs = [abs, len, str]  # liste of fonctions
 • funcs[0](-5)  # calls abs(-5) → 5
 • for f in funcs: f(x)  # iterate and call each
 
@@ -47259,7 +47241,7 @@ Exemples :
 • my_tuple = (min, max, sum)
 
 Utilisations courantes :
-• Command pattern (list of operations to execute)
+• Command pattern (liste of operations to execute)
 • Plugin systems
 • Strategy pattern (selecting behavior at runtime)`,
   1937: `Passing functions as arguments is one of the key features of first-class functions. Built-in functions like map(), filter(), and sorted() rely on this — they accept a function argument to customize behavior.
@@ -47309,23 +47291,23 @@ Utilisations courantes :
 • Decorator pattern
 • Lazy evaluation (return a function to call later)
 • Currying`,
-  1939: `In Python, there is no separate "lambda" type. Lambda expressions create regular function objects. The type of any lambda is le même que the type of any def-defined function: <class 'function'>.
+  1939: `Dans Python, there is no separate "lambda" type. Lambda expressions create regular fonction objets. The type of any lambda is le même que the type of any def-defined fonction: <classe 'fonction'>.
 
 Concepts clés :
-• lambda crée un function object, same as def
-• type(lambda: None) → <class 'function'>
-• There is no <class 'lambda'> en Python
-• Lambdas and def functions are le même type
+• lambda crée un fonction objet, same as def
+• type(lambda: None) → <classe 'fonction'>
+• There is no <classe 'lambda'> en Python
+• Lambdas and def fonctions are le même type
 
 Fonctionnement :
-• lambda: None creates an anonymous function that renvoie None
-• type() checks its type → function
-• Same result as type(def f(): pass) → <class 'function'>
+• lambda: None creates an anonymous fonction that renvoie None
+• type() checks its type → fonction
+• Same result as type(def f(): pass) → <classe 'fonction'>
 
 Exemples :
-• type(lambda x: x)      # <class 'function'>
-• type(lambda: 42)        # <class 'function'>
-• def f(): pass; type(f)  # <class 'function'>
+• type(lambda x: x)      # <classe 'fonction'>
+• type(lambda: 42)        # <classe 'fonction'>
+• def f(): pass; type(f)  # <classe 'fonction'>
 
 Utilisations courantes :
 • Understanding Python's type system
@@ -47421,13 +47403,13 @@ Utilisations courantes :
 • The idiomatic Python pattern for mutable defaults
 • Prevents accidental state sharing
 • Recommended by PEP 8 and linters`,
-  1944: `The mutable default gotcha applies to all mutable types, not just lists. Here, a default dictionary is shared across calls, accumulating key-value pairs.
+  1944: `Le mutable default gotcha applies to all mutable types, not just listes. Here, a default dictionnaire is shared across calls, accumulating key-valeur pairs.
 
 Concepts clés :
-• Default {} est créé once at function definition
+• Default {} est créé once at fonction definition
 • f(1) sets d[1] = 1 → {1: 1}
 • f(2) sets d[2] = 2 on le même dict → {1: 1, 2: 2}
-• Same gotcha as with lists — applies to any mutable default
+• Same gotcha as avec listes — applies to any mutable default
 
 Fonctionnement :
 • f(1): d = {} (the one default), d[1] = 1 → {1: 1}
@@ -47436,19 +47418,19 @@ Fonctionnement :
 
 Exemples :
 • f("a"); f("b") → {"a": "a", "b": "b"}
-• Same fix: use d=None, create {} inside
+• Same fix: use d=None, create {} dans
 
 Utilisations courantes :
 • Understanding mutable defaults affect dicts too
 • Cache-like behavior (sometimes intentional)
 • Demonstrating the general principle`,
-  1945: `The mutable default gotcha with sets. The default set is shared, but since sets only store unique elements, adding 1 twice still results in {1}.
+  1945: `Le mutable default gotcha avec sets. The default set is shared, but since sets only store unique elements, adding 1 twice still results in {1}.
 
 Concepts clés :
 • Default set() est créé once and shared
 • First f(): adds 1 → {1}
 • Second f(): adds 1 again, but sets ne permet pas duplicates → still {1}
-• The set IS being shared, but the effect is invisible with duplicate values
+• The set IS being shared, but the effect is invisible avec duplicate valeurs
 
 Fonctionnement :
 • f(): s is the default set(), s.add(1) → {1}
@@ -47456,12 +47438,12 @@ Fonctionnement :
 • Résultat : {1}
 
 Exemples :
-• def f(s=set()): s.add(1); s.add(2); return s
+• def f(s=set()): s.add(1); s.add(2); renvoyer s
 • f()  # {1, 2}
 • f()  # {1, 2} (no visible change since same elements added)
 
 Utilisations courantes :
-• Understanding mutable defaults with sets
+• Understanding mutable defaults avec sets
 • Sets silently ignore duplicate additions
 • The shared default exists but may not be obvious`,
   1946: `Quand vous pass an explicit argument, the default is not used. f(1, []) passes a brand-new list, so the default [] is never modified. The subsequent f(2) uses the untouched default.
@@ -47509,12 +47491,12 @@ Utilisations courantes :
 • Introspecting function signatures
 • Debugging default argument issues
 • Metaprogramming and decoration`,
-  1948: `When a function has default parameters, __defaults__ contains their values in a tuple, in the order they appear in the function signature.
+  1948: `Quand a fonction has default parameters, __defaults__ contains their valeurs in a tuple, in the order they appear in the fonction signature.
 
 Concepts clés :
-• __defaults__ is a tuple of default values
+• __defaults__ is a tuple of default valeurs
 • Order matches parameter order: x=1, y=2 → (1, 2)
-• It stores values only, not parameter names
+• It stores valeurs only, not parameter names
 • Parameter names are in __code__.co_varnames
 
 Fonctionnement :
@@ -47529,7 +47511,7 @@ Exemples :
 • f.__defaults__ = (100, 200)  # You can modify defaults at runtime!
 
 Utilisations courantes :
-• Inspecting function defaults
+• Inspecting fonction defaults
 • Runtime modification of defaults (advanced)
 • Testing and documentation tools`,
   1949: `Mutable default arguments are one of Python's most well-known gotchas. The default value is evaluated once quand la fonction is defined (not each time it's called), so all calls share le même object. Mutating it in one call affects all subsequent calls.
@@ -48886,27 +48868,26 @@ Exemple :
 0.0
 
 Ce pattern s'appelle un guard ou décorateur de validation — il protège les fonctions des entrées invalides.`,
-  2018: `The validate_positive décorateur lève ValueError for negative inputs. Since -1 < 0, the guard triggers before l'original sqrt function ever runs.
+  2018: `Le validate_positive decorator raises ValueError for negative inputs. Since -1 < 0, the guard triggers avant the original sqrt fonction ever runs.
 
 Concepts clés :
-• sqrt(-1) appelle wrapper w(-1)
+• sqrt(-1) calls wrapper w(-1)
 • w checks: -1 < 0? Yes → raise ValueError
-• The original sqrt function never executes
-• Without the decorator, Python would renvoyer a complex number (with cmath)
+• The original sqrt fonction never executes
+• Without the decorator, Python would renvoyer a complex number (avec cmath)
 
 Comment ça fonctionne :
-• sqrt(-1) appelle w(-1)
+• sqrt(-1) calls w(-1)
 • w evaluates: -1 < 0 → True
 • raise ValueError stops execution immediately
-• f(-1) is never called
+• f(-1) is never appelé
 
 Exemple :
 >>> sqrt(-1)
 Traceback (most recent call last):
   ...
 ValueError
-
-The décorateur prevents invalid computation. Without it, x ** 0.5 with negative x lève ValueError in real math mode anyway, but the décorateur fournit un cleaner, explicit check.`,
+Le decorator prevents invalid computation. Without it, x ** 0.5 avec negative x raises ValueError in real math mode anyway, but the decorator provides a cleaner, explicit check.`,
   2019: `Les décorateurs peuvent être appliqués à toute instruction def ou class. Quand appliqué à une classe, le décorateur reçoit l'objet classe et peut le modifier ou le remplacer.
 
 Concepts clés :
@@ -49367,17 +49348,17 @@ Calling <lambda>
 # lambda x: x * 2
 
 Comme les lambdas sont anonymes, f.__name__ serait "<lambda>" sauf si @wraps est utilisé.`,
-  2038: `The décorateur crée a wrapper w and explicitly sets w.__doc__ = "wrapped". Since @dec replaces f with w, f.__doc__ retourne le wrapper's docstring: "wrapped".
+  2038: `Le decorator creates a wrapper w and explicitly sets w.__doc__ = "wrapped". Since @dec replaces f avec w, f.__doc__ retourne the wrapper's docstring: "wrapped".
 
 Concepts clés :
 • f originally has __doc__ = "original"
-• Le wrapper w gets __doc__ = "wrapped" explicitly
-• @dec replaces f with w
+• The wrapper w gets __doc__ = "wrapped" explicitly
+• @dec replaces f avec w
 • f.__doc__ is now w.__doc__ = "wrapped"
 
 Comment ça fonctionne :
-• dec(f) crée w with __doc__ = "wrapped"
-• Retourne w
+• dec(f) creates w avec __doc__ = "wrapped"
+• Returns w
 • f = dec(f) — f is now w
 • f.__doc__ retourne "wrapped"
 
@@ -49385,7 +49366,7 @@ Exemple :
 >>> f.__doc__
 'wrapped'
 
-Without the explicit w.__doc__ = "wrapped" line, f.__doc__ would be None (wrapper functions ne inherit l'originale's docstring unless @wraps est utilisé). With @functools.wraps(f), __doc__ would be "original".`,
+Without the explicit w.__doc__ = "wrapped" line, f.__doc__ would be None (wrapper fonctions don't inherit the original's docstring unless @wraps is used). With @functools.wraps(f), __doc__ would be "original".`,
   2039: `La décoration se produit au moment de la définition — quand la ligne @dec est exécutée. Le print("decorating") s'exécute dans dec, qui est appelé dans le processus de décoration.
 
 Concepts clés :
@@ -51399,28 +51380,28 @@ Usages courants :
 
 Exemple : Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); obj.x, alors obj.x retourne 5 car __init__ sets instance attributes when the instance est créé, so self.x = 5 crée une instance attribute x with value 5.
 `,
-  2113: `The __init__ method can have no parameters except self. Si class MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can be defined with only self (no other parameters). Quand vous call MyClass() with no arguments, it calls __init__(self) with no additional arguments. The pass statement ne fait rien - it's just a placeholder for an empty method body.
+  2113: `Le __init__ méthode can have no parameters except self. Si classe MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can be defined avec only self (no other parameters). Quand vous call MyClass() avec no arguments, it calls __init__(self) avec no additional arguments. The pass instruction ne fait rien - it's just a placeholder for an empty méthode body.
 
 __init__ sans paramètres :
-• class MyClass: def __init__(self): pass; obj = MyClass() creates instance
+• classe MyClass: def __init__(self): pass; obj = MyClass() creates instance
 • __init__ has only self parameter (no other parameters)
-• MyClass() calls __init__(self) with no arguments
+• MyClass() calls __init__(self) avec no arguments
 • Instance created successfully
-• Retourne : instance object
+• Retourne : instance objet
 
 Comment ça fonctionne :
 • MyClass() creates instance and calls __init__(self)
 • __init__ executes: pass (ne fait rien)
 • Instance created successfully
 • Assigned to obj
-• Retourne : instance object
+• Retourne : instance objet
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         pass
 obj = MyClass()               # Calls __init__(self), creates instance
-obj                           # <__main__.MyClass object>
+obj                           # <__main__.MyClass objet>
 
 Usages courants :
 • Empty constructor: def __init__(self): pass
@@ -51428,26 +51409,26 @@ Usages courants :
 • Default initialization
 • Simple constructors
 
-Exemple : Si class MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can have no parameters except self, so MyClass() calls __init__(self) and creates the instance.
+Exemple : Si classe MyClass: def __init__(self): pass; obj = MyClass(), alors obj = MyClass() crée une instance car __init__ can have no parameters except self, so MyClass() calls __init__(self) and creates the instance.
 `,
-  2114: `The __init__ method can have multiple parameters. Si class MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance with x=1, y=2 car __init__ can take multiple parameters. Quand vous call MyClass(1, 2), it calls __init__(self, 1, 2), qui définit self.x = 1 and self.y = 2, creating two instance attributes.
+  2114: `Le __init__ méthode can have multiple parameters. Si classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance avec x=1, y=2 car __init__ can take multiple parameters. Quand vous call MyClass(1, 2), it calls __init__(self, 1, 2), qui définit self.x = 1 and self.y = 2, creating two instance attributes.
 
 __init__ avec plusieurs paramètres :
-• class MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2) creates instance with x=1, y=2
+• classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2) creates instance avec x=1, y=2
 • __init__ has parameters: self, x, y
 • MyClass(1, 2) calls __init__(self, 1, 2)
 • Sets self.x = 1, self.y = 2
-• Retourne : instance object
+• Retourne : instance objet
 
 Comment ça fonctionne :
 • MyClass(1, 2) creates instance and calls __init__(self, 1, 2)
 • __init__ executes: self.x = 1, self.y = 2
 • Instance attributes x = 1, y = 2 created
 • Instance created successfully
-• Retourne : instance object
+• Retourne : instance objet
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -51461,30 +51442,30 @@ Usages courants :
 • Instance setup
 • Object initialization
 
-Exemple : Si class MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance with x=1, y=2 car __init__ can have multiple parameters, and MyClass(1, 2) calls __init__(self, 1, 2), qui définit both instance attributes.
+Exemple : Si classe MyClass: def __init__(self, x, y): self.x = x; self.y = y; obj = MyClass(1, 2), alors obj = MyClass(1, 2) crée une instance avec x=1, y=2 car __init__ can have multiple parameters, and MyClass(1, 2) calls __init__(self, 1, 2), qui définit both instance attributes.
 `,
-  2115: `The __init__ method can have default parameters. Si class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance with x=1 car __init__ a un default parameter x=1. Quand vous call MyClass() with no arguments, it uses the default value x=1, so __init__(self, 1) est appelé, qui définit self.x = 1. Default parameters allow you to create instances without providing all arguments.
+  2115: `Le __init__ méthode can have default parameters. Si classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance avec x=1 car __init__ a un default parameter x=1. Quand vous call MyClass() avec no arguments, it uses the default valeur x=1, so __init__(self, 1) est appelé, qui définit self.x = 1. Default parameters allow you to create instances sans providing all arguments.
 
 __init__ avec paramètre par défaut :
-• class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass() creates instance with x=1
+• classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass() creates instance avec x=1
 • __init__ has default parameter: x=1
 • MyClass() calls __init__(self, 1) (uses default)
 • Sets self.x = 1
-• Retourne : instance object
+• Retourne : instance objet
 
 Comment ça fonctionne :
 • MyClass() creates instance and calls __init__(self, 1) (default x=1)
 • __init__ executes: self.x = 1
 • Instance attribute x = 1 created
 • Instance created successfully
-• Retourne : instance object
+• Retourne : instance objet
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self, x=1):
         self.x = x
 obj = MyClass()               # Calls __init__(self, 1), sets obj.x = 1
-obj.x                         # 1 (default value used)
+obj.x                         # 1 (default valeur used)
 
 Usages courants :
 • Default parameters: def __init__(self, x=1): self.x = x
@@ -51492,7 +51473,7 @@ Usages courants :
 • Instance setup
 • Flexible constructors
 
-Exemple : Si class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance with x=1 car __init__ a un default parameter x=1, so MyClass() uses the default value.
+Exemple : Si classe MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(), alors obj = MyClass() crée une instance avec x=1 car __init__ a un default parameter x=1, so MyClass() uses the default valeur.
 `,
   2116: `Passing an argument to __init__ overrides the default parameter value. Si class MyClass: def __init__(self, x=1): self.x = x; obj = MyClass(5), alors obj = MyClass(5) crée une instance with x=5 car passing 5 as an argument overrides the default value x=1. Quand vous call MyClass(5), it calls __init__(self, 5), which uses the provided argument 5 instead of the default value 1.
 
@@ -52408,38 +52389,38 @@ Usages courants :
 
 Exemple : Si class MyClass: @staticmethod; def method(): return 1; obj = MyClass(); obj.method(), alors obj.method() retourne 1 car les méthodes statiques peuvent être appelées sur les instances ou les classes, avec le même comportement dans les deux cas.
 `,
-  2145: `The key difference is that @classmethod reçoit le class comme premier argument (cls), while @staticmethod receives nothing. @classmethod def method(cls): receives cls (the class) automatically, allowing it to access class attributes and create instances. @staticmethod def method(): receives no automatic arguments - it's just a regular function. Utilisez @classmethod quand vous avez besoin d'accéder à la classe, et @staticmethod quand vous n'avez besoin ni de la classe ni de l'instance.
+  2145: `Le key difference is that @classmethod reçoit le classe comme premier argument (cls), while @staticmethod receives nothing. @classmethod def méthode(cls): receives cls (the classe) automatically, allowing it to access classe attributes and create instances. @staticmethod def méthode(): receives no automatic arguments - it's just a regular fonction. Utilisez @classmethod quand vous avez besoin d'accéder à la classe, et @staticmethod quand vous n'avez besoin ni de la classe ni de l'instance.
 
 Difference:
-• @classmethod gets cls (class as first argument)
+• @classmethod gets cls (classe as first argument)
 • @staticmethod gets nothing (no automatic arguments)
-• classmethod can access class: cls.attr
-• staticmethod is just a regular function
-• Use classmethod for class operations, staticmethod for utilities
+• classmethod can access classe: cls.attr
+• staticmethod is just a regular fonction
+• Use classmethod for classe operations, staticmethod for utilities
 
 Comment ça fonctionne :
-• @classmethod: def method(cls): (cls is class, automatically passed)
-• @staticmethod: def method(): (no automatic arguments)
-• classmethod(cls): can use cls to access class attributes
-• staticmethod(): just a regular function in class namespace
+• @classmethod: def méthode(cls): (cls is classe, automatically passed)
+• @staticmethod: def méthode(): (no automatic arguments)
+• classmethod(cls): can use cls to access classe attributes
+• staticmethod(): just a regular fonction in classe namespace
 
 Exemple :
-class MyClass:
+classe MyClass:
     x = 1
     @classmethod
     def get_x(cls):
-        return cls.x  # Can access class via cls
+        renvoyer cls.x  # Can access classe via cls
     @staticmethod
     def add(a, b):
-        return a + b  # No cls or self needed
+        renvoyer a + b  # No cls or self needed
 
 Usages courants :
-• @classmethod: factory methods, class-level operations
-• @staticmethod: utility functions, no class/instance needed
+• @classmethod: factory méthodes, classe-level operations
+• @staticmethod: utility fonctions, no classe/instance needed
 • Method types
 • Decorators
 
-Exemple : The difference is that @classmethod reçoit le class comme premier argument (cls), allowing access to class attributes, while @staticmethod receives nothing and is just a regular function in the class namespace.
+Exemple : The difference is that @classmethod reçoit le classe comme premier argument (cls), allowing access to classe attributes, while @staticmethod receives nothing and is just a regular fonction in the classe namespace.
 `,
   2146: `Class methods can access class attributes via the cls parameter. Si class MyClass: x = 1; @classmethod; def get_x(cls): return cls.x; MyClass.get_x(), alors MyClass.get_x() returns 1 car the class method get_x() receives cls (the class MyClass) comme premier argument, and cls.x accesses the class attribute x = 1. C'est the main advantage of @classmethod - it allows methods to access and fonctionner avec class-level data.
 
@@ -53057,14 +53038,14 @@ Usages courants :
 
 Exemple : Si class MyClass: @property; def x(self): return self._x; @x.setter; def x(self, value): self._x = value * 2; obj = MyClass(); obj.x = 5; obj.x, alors obj.x retourne 10 car the setter transforms the value before storing it (5 * 2 = 10).
 `,
-  2165: `The @x.deleter decorator defines the behavior for the del statement. Si class MyClass: @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') returns False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes.
+  2165: `Le @x.deleter decorator defines the behavior for the del instruction. Si classe MyClass: @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes.
 
 @deleter decorator:
 • del obj.x calls deleter
 • @x.deleter defines deletion behavior
 • Deleter executes: del self._x
 • Attribute _x is deleted
-• hasattr(obj, '_x') returns False
+• hasattr(obj, '_x') retourne False
 
 Comment ça fonctionne :
 • obj._x = 1 sets attribute
@@ -53075,10 +53056,10 @@ Comment ça fonctionne :
 • Retourne : False
 
 Exemple :
-class MyClass:
+classe MyClass:
     @property
     def x(self):
-        return self._x
+        renvoyer self._x
     @x.deleter
     def x(self):
         del self._x
@@ -53093,7 +53074,7 @@ Usages courants :
 • Properties
 • Attribute management
 
-Exemple : Si class MyClass: @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') returns False car @x.deleter defines the behavior for del, and del obj.x appelle le deleter, qui supprime self._x.
+Exemple : Si classe MyClass: @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); obj._x = 1; del obj.x; hasattr(obj, '_x'), alors hasattr(obj, '_x') retourne False car @x.deleter defines the behavior for del, and del obj.x appelle le deleter, qui supprime self._x.
 `,
   2166: `Properties can access "private" attributes (convention: single underscore prefix). Si class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, alors obj.x retourne 1 car the property getter accesses the private attribute self._x. The single underscore prefix (_x) is a convention indicating that the attribute is intended for internal use, but it's not enforced by Python - it's just a naming convention.
 
@@ -53162,36 +53143,36 @@ Usages courants :
 
 Exemple : Si class MyClass: @property; def x(self): return 1; obj = MyClass(); MyClass.x, alors MyClass.x retourne <property object> car accessing a property via the class retourne le property descriptor object, not the property value.
 `,
-  2168: `The property() function can be created with a lambda function. Si class MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can take a function (or lambda) as the getter argument. C'est an alternative way to create properties without using the @property decorator. The lambda function receives self as its argument and retourne le property value.
+  2168: `Le property() fonction can be created avec a lambda fonction. Si classe MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can take a fonction (or lambda) as the getter argument. C'est an alternative way to create properties sans using the @property decorator. The lambda fonction receives self as its argument and retourne le property valeur.
 
-property() with lambda:
+property() avec lambda:
 • obj.x retourne 1
 • property(lambda self: 1) creates property
-• Lambda is getter function
-• Receives self, returns 1
+• Lambda is getter fonction
+• Receives self, retourne 1
 • Retourne : 1
 
 Comment ça fonctionne :
 • property(lambda self: 1) creates property
 • Lambda is getter: lambda self: 1
 • obj.x accesses property
-• Calls lambda with self = obj
-• Lambda returns: 1
+• Calls lambda avec self = obj
+• Lambda retourne: 1
 • Retourne : 1
 
 Exemple :
-class MyClass:
-    x = property(lambda self: 1)  # Property with lambda
+classe MyClass:
+    x = property(lambda self: 1)  # Property avec lambda
 obj = MyClass()
-obj.x                        # 1 (lambda returns 1)
+obj.x                        # 1 (lambda retourne 1)
 
 Usages courants :
-• Simple properties: x = property(lambda self: value)
+• Simple properties: x = property(lambda self: valeur)
 • Alternative syntax: property() instead of @property
 • Properties
 • Property creation
 
-Exemple : Si class MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can be created with a lambda function, and the lambda serves as the getter.
+Exemple : Si classe MyClass: x = property(lambda self: 1); obj = MyClass(); obj.x, alors obj.x retourne 1 car property() can be created avec a lambda fonction, and the lambda serves as the getter.
 `,
   2169: `A property can ont un default value if the underlying attribute n'existe pas. Si class MyClass: @property; def x(self): return self._x if hasattr(self, '_x') else 0; obj = MyClass(); obj.x, alors obj.x retourne 0 car the property getter checks if self._x exists using hasattr(). If it n'existe pas, il retourne the default value 0. Cela permet properties to work even when the underlying attribute hasn't been set yet.
 
@@ -53295,12 +53276,12 @@ Usages courants :
 
 Exemple : Si class MyClass: pass; obj = MyClass(); obj.x = 1; getattr(obj, 'x'), alors getattr(obj, 'x') returns 1 car getattr() gets the attribute value from an object, equivalent to obj.x.
 `,
-  2172: `The getattr() function can take a default value that's returned if the attribute n'existe pas. Si class MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) returns 0 car obj doesn't have an attribute 'x', so getattr() retourne le default value 0 instead of raising an AttributeError. C'est useful for safely accessing attributes that might not exist.
+  2172: `Le getattr() fonction can take a default valeur that's returned if the attribute n'existe pas. Si classe MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) retourne 0 car obj doesn't have an attribute 'x', so getattr() retourne le default valeur 0 instead of raising an AttributeError. C'est useful for safely accessing attributes that might not exist.
 
-getattr() with default:
-• getattr(obj, 'x', 0) returns 0
+getattr() avec default:
+• getattr(obj, 'x', 0) retourne 0
 • obj doesn't have attribute 'x'
-• getattr() returns default value: 0
+• getattr() retourne default valeur: 0
 • No AttributeError raised
 • Retourne : 0
 
@@ -53308,11 +53289,11 @@ Comment ça fonctionne :
 • getattr(obj, 'x', 0) gets attribute 'x'
 • obj doesn't have attribute 'x'
 • Attribute not found
-• Retourne default value: 0
+• Retourne default valeur: 0
 • Retourne : 0
 
 Exemple :
-class MyClass: pass
+classe MyClass: pass
 obj = MyClass()
 getattr(obj, 'x', 0)         # 0 (default, 'x' n'existe pas)
 getattr(obj, 'x')            # AttributeError (no default)
@@ -53321,11 +53302,11 @@ getattr(obj, 'x', 0)         # 1 (attribute exists)
 
 Usages courants :
 • Safe access: getattr(obj, 'attr', default) (no error if missing)
-• Default values: getattr(obj, 'value', 0)
+• Default valeurs: getattr(obj, 'valeur', 0)
 • Object introspection
 • Dynamic attribute access
 
-Exemple : Si class MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) returns 0 car getattr() with a default retourne le default value if the attribute is missing, preventing AttributeError.
+Exemple : Si classe MyClass: pass; obj = MyClass(); getattr(obj, 'x', 0), alors getattr(obj, 'x', 0) retourne 0 car getattr() avec a default retourne le default valeur if the attribute is missing, preventing AttributeError.
 `,
   2173: `La fonction setattr() définit la valeur d'un attribut sur un objet. Si class MyClass: pass; obj = MyClass(); setattr(obj, 'x', 1); obj.x, alors obj.x retourne 1 car setattr() sets the attribute 'x' to 1 on obj. It's equivalent to obj.x = 1, but allows you to set attributes dynamically using a string name. C'est useful when the attribute name is stored in a variable.
 
@@ -53416,66 +53397,66 @@ Usages courants :
 
 Exemple : Si class MyClass: pass; obj = MyClass(); dir(obj), alors dir(obj) retourne un list of attribute names car dir() lists all accessible attributes on an object, including methods, properties, and attributes from the class and base classes.
 `,
-  2176: `The dir() function includes class attributes in its list. Si class MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) returns True car dir() includes class attributes (like x = 1) in addition to instance attributes. Quand vous access dir(obj), it shows attributes from both the instance and the class, so class attributes are visible.
+  2176: `Le dir() fonction includes classe attributes in its liste. Si classe MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) retourne True car dir() includes classe attributes (like x = 1) in addition to instance attributes. Quand vous access dir(obj), it shows attributes from both the instance and the classe, so classe attributes are visible.
 
-dir() includes class attributes:
-• 'x' in dir(obj) returns True
-• dir(obj) includes class attributes
-• x = 1 is class attribute
+dir() includes classe attributes:
+• 'x' in dir(obj) retourne True
+• dir(obj) includes classe attributes
+• x = 1 is classe attribute
 • Visible in dir() output
 • Retourne : True
 
 Comment ça fonctionne :
-• dir(obj) lists attributes
+• dir(obj) listes attributes
 • Includes instance attributes
-• Includes class attributes (x = 1)
-• 'x' is in the list
+• Includes classe attributes (x = 1)
+• 'x' is in the liste
 • Retourne : True
 
 Exemple :
-class MyClass: x = 1
+classe MyClass: x = 1
 obj = MyClass()
-'x' in dir(obj)              # True (class attribute included)
-dir(obj)                     # [..., 'x', ...] (includes class attribute)
+'x' in dir(obj)              # True (classe attribute included)
+dir(obj)                     # [..., 'x', ...] (includes classe attribute)
 
 Usages courants :
 • Attribute checking: 'attr' in dir(obj) (check if attribute exists)
-• Introspection: dir(obj) shows class and instance attributes
+• Introspection: dir(obj) shows classe and instance attributes
 • Object inspection
 • Attribute discovery
 
-Exemple : Si class MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) returns True car dir() includes class attributes in its list, so the class attribute x = 1 is visible.
+Exemple : Si classe MyClass: x = 1; obj = MyClass(); 'x' in dir(obj), alors 'x' in dir(obj) retourne True car dir() includes classe attributes in its liste, so the classe attribute x = 1 is visible.
 `,
-  2177: `The dir() function includes methods in its list. Si class MyClass: def method(self): pass; obj = MyClass(); 'method' in dir(obj), alors 'method' in dir(obj) returns True car dir() includes methods (like method()) in addition to attributes. Methods are attributes of the class, so they appear in dir() quand appelé on an instance.
+  2177: `Le dir() fonction includes méthodes in its liste. Si classe MyClass: def méthode(self): pass; obj = MyClass(); 'méthode' in dir(obj), alors 'méthode' in dir(obj) retourne True car dir() includes méthodes (like méthode()) in addition to attributes. Methods are attributes of the classe, so they appear in dir() quand appelé on an instance.
 
-dir() includes methods:
-• 'method' in dir(obj) returns True
-• dir(obj) includes methods
-• method() is class method
+dir() includes méthodes:
+• 'méthode' in dir(obj) retourne True
+• dir(obj) includes méthodes
+• méthode() is classe méthode
 • Visible in dir() output
 • Retourne : True
 
 Comment ça fonctionne :
-• dir(obj) lists attributes
+• dir(obj) listes attributes
 • Includes instance attributes
-• Includes class methods (method())
-• 'method' is in the list
+• Includes classe méthodes (méthode())
+• 'méthode' is in the liste
 • Retourne : True
 
 Exemple :
-class MyClass:
-    def method(self): pass
+classe MyClass:
+    def méthode(self): pass
 obj = MyClass()
-'method' in dir(obj)         # True (method included)
-dir(obj)                     # [..., 'method', ...] (includes method)
+'méthode' in dir(obj)         # True (méthode included)
+dir(obj)                     # [..., 'méthode', ...] (includes méthode)
 
 Usages courants :
-• Method checking: 'method' in dir(obj) (check if method exists)
-• Introspection: dir(obj) shows methods and attributes
+• Method checking: 'méthode' in dir(obj) (check if méthode exists)
+• Introspection: dir(obj) shows méthodes and attributes
 • Object inspection
 • Method discovery
 
-Exemple : Si class MyClass: def method(self): pass; obj = MyClass(); 'method' in dir(obj), alors 'method' in dir(obj) returns True car dir() includes methods in its list, so the method() is visible.
+Exemple : Si classe MyClass: def méthode(self): pass; obj = MyClass(); 'méthode' in dir(obj), alors 'méthode' in dir(obj) retourne True car dir() includes méthodes in its liste, so the méthode() is visible.
 `,
   2178: `La fonction vars() retourne l'attribut __dict__, qui contient les attributs d'instance. Si class MyClass: pass; obj = MyClass(); vars(obj), alors vars(obj) returns {} car vars() returns obj.__dict__, which is a dictionary contenant les instance's attributes. For a newly created instance with no attributes, __dict__ is empty, so vars() retourne un empty dictionary.
 
@@ -53508,11 +53489,11 @@ Usages courants :
 
 Exemple : Si class MyClass: pass; obj = MyClass(); vars(obj), alors vars(obj) returns {} car vars() returns __dict__, qui contient instance attributes, and an empty instance has an empty dictionary.
 `,
-  2179: `The vars() function retourne un dictionary of instance attributes. Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) returns {'x': 5} car vars() returns obj.__dict__, which is a dictionary containing all instance attributes. When __init__ sets self.x = 5, it crée une instance attribute x = 5, which is stored in __dict__.
+  2179: `Le vars() fonction retourne un dictionnaire of instance attributes. Si classe MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) retourne {'x': 5} car vars() retourne obj.__dict__, which is a dictionnaire containing all instance attributes. When __init__ sets self.x = 5, it crée une instance attribute x = 5, which is stored in __dict__.
 
-vars() returns instance attributes:
-• vars(obj) returns {'x': 5}
-• vars() returns __dict__
+vars() retourne instance attributes:
+• vars(obj) retourne {'x': 5}
+• vars() retourne __dict__
 • __dict__ contains instance attributes
 • self.x = 5 creates instance attribute
 • Retourne : {'x': 5}
@@ -53521,11 +53502,11 @@ Comment ça fonctionne :
 • MyClass(5) calls __init__(self, 5)
 • __init__ sets self.x = 5 (instance attribute)
 • Instance attribute stored in obj.__dict__
-• vars(obj) returns obj.__dict__
+• vars(obj) retourne obj.__dict__
 • Retourne : {'x': 5}
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self, x):
         self.x = x
 obj = MyClass(5)
@@ -53533,39 +53514,39 @@ vars(obj)                    # {'x': 5} (instance attributes)
 
 Usages courants :
 • Instance attributes: vars(obj) (get __dict__)
-• Attribute dictionary: vars(obj) shows all instance attributes
+• Attribute dictionnaire: vars(obj) shows all instance attributes
 • Object inspection
 • Attribute access
 
-Exemple : Si class MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) returns {'x': 5} car vars() returns __dict__, qui contient instance attributes, and self.x = 5 crée une instance attribute.
+Exemple : Si classe MyClass: def __init__(self, x): self.x = x; obj = MyClass(5); vars(obj), alors vars(obj) retourne {'x': 5} car vars() retourne __dict__, qui contient instance attributes, and self.x = 5 crée une instance attribute.
 `,
-  2180: `The vars() function peut être appelé on a class, returning the class's __dict__. Si class MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionary with class attributes car vars() returns MyClass.__dict__, qui contient class attributes, methods, and other class-level data. This includes x = 1 and other class-level definitions.
+  2180: `Le vars() fonction peut être appelé on a classe, returning the classe's __dict__. Si classe MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionnaire avec classe attributes car vars() retourne MyClass.__dict__, qui contient classe attributes, méthodes, and other classe-level data. This includes x = 1 and other classe-level definitions.
 
-vars() on class:
-• vars(MyClass) returns dict with class attributes
-• vars() returns class __dict__
-• __dict__ contains class attributes and methods
+vars() on classe:
+• vars(MyClass) retourne dict avec classe attributes
+• vars() retourne classe __dict__
+• __dict__ contains classe attributes and méthodes
 • Includes x = 1
 • Retourne : dict
 
 Comment ça fonctionne :
-• vars(MyClass) returns MyClass.__dict__
-• __dict__ is dictionary of class attributes
-• Contains class attributes (x = 1)
-• Contains methods and other class data
+• vars(MyClass) retourne MyClass.__dict__
+• __dict__ is dictionnaire of classe attributes
+• Contains classe attributes (x = 1)
+• Contains méthodes and other classe data
 • Retourne : dict
 
 Exemple :
-class MyClass: x = 1
-vars(MyClass)                # {...'x': 1, ...} (class __dict__)
+classe MyClass: x = 1
+vars(MyClass)                # {...'x': 1, ...} (classe __dict__)
 
 Usages courants :
-• Class attributes: vars(Class) (get class __dict__)
-• Class dictionary: vars(Class) shows class attributes and methods
+• Class attributes: vars(Class) (get classe __dict__)
+• Class dictionnaire: vars(Class) shows classe attributes and méthodes
 • Object inspection
 • Class introspection
 
-Exemple : Si class MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionary with class attributes car vars() on a class retourne le class's __dict__, qui contient class attributes, methods, and other class-level data.
+Exemple : Si classe MyClass: x = 1; vars(MyClass), alors vars(MyClass) retourne un dictionnaire avec classe attributes car vars() on a classe retourne le classe's __dict__, qui contient classe attributes, méthodes, and other classe-level data.
 `,
   2181: `L'opérateur is vérifie l'identité des objets (si deux variables référencent le même objet). Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car obj1 and obj2 are different instances - chaque appel to MyClass() crée un new, separate object. The is operator checks if two variables point to le même object in memory, not if they have le même value.
 
@@ -53597,35 +53578,35 @@ Usages courants :
 
 Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 is obj2, alors obj1 is obj2 retourne False car different instances are not identical - chaque appel to MyClass() crée un separate object.
 `,
-  2182: `When two variables refer to le même object, is returns True. Si class MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car obj2 = obj1 assigns le même object reference to obj2, so both variables point to le même object. The is operator checks object identity, and since obj1 and obj2 refer to le même object, they are identical.
+  2182: `Quand two variables refer to le même objet, is retourne True. Si classe MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car obj2 = obj1 assigns le même objet reference to obj2, so both variables point to le même objet. The is operator checks objet identity, and since obj1 and obj2 refer to le même objet, they are identical.
 
-Same object reference:
+Same objet reference:
 • obj1 is obj2 retourne True
 • obj2 = obj1 assigns same reference
-• Both variables point to same object
-• is checks identity (same object)
+• Both variables point to same objet
+• is checks identity (same objet)
 • Retourne : True
 
 Comment ça fonctionne :
 • MyClass() creates instance (obj1)
 • obj2 = obj1 assigns same reference
-• obj1 and obj2 point to same object
-• obj1 is obj2 checks if same object
-• Same object, so returns: True
+• obj1 and obj2 point to same objet
+• obj1 is obj2 checks if same objet
+• Same objet, so retourne: True
 
 Exemple :
-class MyClass: pass
+classe MyClass: pass
 obj1 = MyClass()             # Creates instance
 obj2 = obj1                  # Assigns same reference
-obj1 is obj2                 # True (same object)
+obj1 is obj2                 # True (same objet)
 
 Usages courants :
-• Reference check: obj1 is obj2 (check if same object)
+• Reference check: obj1 is obj2 (check if same objet)
 • Object identity: if obj1 is obj2: (same reference)
 • Object identity
 • Reference comparison
 
-Exemple : Si class MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car le même object reference is identical - both variables point to le même object.
+Exemple : Si classe MyClass: pass; obj1 = MyClass(); obj2 = obj1; obj1 is obj2, alors obj1 is obj2 retourne True car le même objet reference is identical - both variables point to le même objet.
 `,
   2183: `By default, the == operator compares object identity (same as is) if __eq__ is not defined. Si class MyClass: pass; obj1 = MyClass(); obj2 = MyClass(); obj1 == obj2, alors obj1 == obj2 returns False car without a custom __eq__ method, == defaults to comparing object identity, which is le même que is. Since obj1 and obj2 are different instances, they are not equal. To define custom equality, you need to implement __eq__.
 
@@ -53967,33 +53948,33 @@ Usages courants :
 
 Exemple : Si class MyClass: def __init__(self): self.x = 1; obj = MyClass(); obj.__dict__, alors obj.__dict__ returns {'x': 1} car __dict__ contains instance attributes, and self.x = 1 crée une instance attribute stored in __dict__.
 `,
-  2194: `The __dict__ attribute on a class contains class attributes and methods. Si class MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionary with class attributes and methods car __dict__ on a class stores all class-level data, including class attributes (like x = 1), methods, and other class metadata. C'est the namespace dictionary for the class.
+  2194: `Le __dict__ attribute on a classe contains classe attributes and méthodes. Si classe MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionnaire avec classe attributes and méthodes car __dict__ on a classe stores all classe-level data, including classe attributes (like x = 1), méthodes, and other classe metadata. C'est the namespace dictionnaire for the classe.
 
 Class __dict__:
-• MyClass.__dict__ returns dict with class attributes
-• __dict__ contains class-level data
-• Includes class attributes (x = 1)
-• Includes methods and metadata
+• MyClass.__dict__ retourne dict avec classe attributes
+• __dict__ contains classe-level data
+• Includes classe attributes (x = 1)
+• Includes méthodes and metadata
 • Retourne : dict
 
 Comment ça fonctionne :
-• class MyClass: x = 1 creates class
+• classe MyClass: x = 1 creates classe
 • Class attributes stored in MyClass.__dict__
-• __dict__ contains 'x': 1 and other class data
-• Retourne dictionary of class attributes
+• __dict__ contains 'x': 1 and other classe data
+• Retourne dictionnaire of classe attributes
 • Retourne : dict
 
 Exemple :
-class MyClass: x = 1
-MyClass.__dict__             # {...'x': 1, ...} (class attributes and methods)
+classe MyClass: x = 1
+MyClass.__dict__             # {...'x': 1, ...} (classe attributes and méthodes)
 
 Usages courants :
-• Class attributes: MyClass.__dict__ (get all class attributes)
-• Class dictionary: MyClass.__dict__ shows class data
+• Class attributes: MyClass.__dict__ (get all classe attributes)
+• Class dictionnaire: MyClass.__dict__ shows classe data
 • Object inspection
 • Class introspection
 
-Exemple : Si class MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionary with class attributes car __dict__ on a class contains class attributes, methods, and other class-level data.
+Exemple : Si classe MyClass: x = 1; MyClass.__dict__, alors MyClass.__dict__ retourne un dictionnaire avec classe attributes car __dict__ on a classe contains classe attributes, méthodes, and other classe-level data.
 `,
   2195: `Methods sont stockés in the class __dict__. Si class MyClass: def method(self): pass; 'method' in MyClass.__dict__, alors 'method' in MyClass.__dict__ returns True car methods are class attributes, so they're stored in the class's __dict__. Quand vous define a method in a class, it becomes an attribute of the class, stored in MyClass.__dict__.
 
@@ -54137,25 +54118,25 @@ Usages courants :
 
 Exemple : Si class MyClass: pass; isinstance(MyClass, type), alors isinstance(MyClass, type) returns True car classes are instances of type - classes are objects created by the type metaclass.
 `,
-  2200: `The mro() method retourne le Method Resolution Order (MRO) - the inheritance chain showing how Python searches for attributes and methods. Si class MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un list showing the method resolution order car mro() retourne le linearization of the inheritance hierarchy. For a simple class with no explicit parents, it shows [MyClass, object] - the class itself and its base class (object).
+  2200: `Le mro() méthode retourne le Method Resolution Order (MRO) - the inheritance chain showing how Python searches for attributes and méthodes. Si classe MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un liste showing the méthode resolution order car mro() retourne le linearization of the inheritance hierarchy. For a simple classe avec no explicit parents, it shows [MyClass, objet] - the classe itself and its base classe (objet).
 
-mro() method:
-• MyClass.mro() returns Method Resolution Order list
-• mro() returns inheritance chain
+mro() méthode:
+• MyClass.mro() retourne Method Resolution Order liste
+• mro() retourne inheritance chain
 • Shows order Python searches for attributes
-• [MyClass, object] for simple class
-• Retourne : list
+• [MyClass, objet] for simple classe
+• Retourne : liste
 
 Comment ça fonctionne :
-• MyClass.mro() calls mro() method
-• mro() computes method resolution order
-• Shows inheritance chain: [MyClass, object]
+• MyClass.mro() calls mro() méthode
+• mro() computes méthode resolution order
+• Shows inheritance chain: [MyClass, objet]
 • Python searches in this order for attributes
-• Retourne : [MyClass, object]
+• Retourne : [MyClass, objet]
 
 Exemple :
-class MyClass: pass
-MyClass.mro()                # [<class '__main__.MyClass'>, <class 'object'>]
+classe MyClass: pass
+MyClass.mro()                # [<classe '__main__.MyClass'>, <classe 'objet'>]
 
 Usages courants :
 • Inheritance chain: MyClass.mro() (see inheritance order)
@@ -54163,7 +54144,7 @@ Usages courants :
 • Programmation orientée objet
 • Inheritance hierarchy
 
-Exemple : Si class MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un Method Resolution Order list car mro() retourne le inheritance chain showing how Python searches for attributes and methods, typically [MyClass, object] for a simple class.
+Exemple : Si classe MyClass: pass; MyClass.mro(), alors MyClass.mro() retourne un Method Resolution Order liste car mro() retourne le inheritance chain showing how Python searches for attributes and méthodes, typically [MyClass, objet] for a simple classe.
 `,
   2201: `La méthode __eq__ définit le comportement d'égalité personnalisé pour les instances de V. Quand Python évalue V(1) == V(1), il appelle V.__eq__(V(1), V(1)), qui compare self.x == o.x, soit 1 == 1, et retourne True.
 
@@ -54279,12 +54260,12 @@ Usages courants :
 • Enabling > comparisons for custom objects
 • Working with max(), heapq, sorting
 • Building ordered collections`,
-  2206: `The __add__ method defines the behavior of the + operator. When V(1,2) + V(3,4) is evaluated, Python appelle V.__add__(V(1,2), V(3,4)), qui crée un new V with x = 1+3 = 4 and y = 2+4 = 6.
+  2206: `Le __add__ méthode defines the behavior of the + operator. When V(1,2) + V(3,4) is evaluated, Python appelle V.__add__(V(1,2), V(3,4)), qui crée un new V avec x = 1+3 = 4 and y = 2+4 = 6.
 
 Concepts clés :
 • __add__ surcharge l'opérateur + for custom classes
-• Should return a new instance rather than modifying self (immutability pattern)
-• La method reçoit le right operand as the second argument
+• Should renvoyer a new instance rather than modifying self (immutability pattern)
+• La méthode reçoit le right operand as the second argument
 • Vector addition is a classic use case for __add__
 
 Comment ça fonctionne :
@@ -54301,17 +54282,17 @@ Usages courants :
 • Vector and matrix arithmetic
 • Complex number types
 • Currency or measurement addition`,
-  2207: `The __mul__ method defines the behavior of the * operator. When V(3) * 4 is evaluated, Python appelle V.__mul__(V(3), 4), qui crée un new V with x = 3 * 4 = 12.
+  2207: `Le __mul__ méthode defines the behavior of the * operator. When V(3) * 4 is evaluated, Python appelle V.__mul__(V(3), 4), qui crée un new V avec x = 3 * 4 = 12.
 
 Concepts clés :
 • __mul__ surcharge l'opérateur *
 • The right operand can be any type (here an int)
-• Retourne a new V instance with the computed value
+• Retourne a new V instance avec the computed valeur
 • For 4 * V(3) to work, you would need __rmul__
 
 Comment ça fonctionne :
 • V(3) has x = 3
-• V(3) * 4 calls __mul__ with n = 4
+• V(3) * 4 calls __mul__ avec n = 4
 • Retourne V(3 * 4) = V(12)
 • v.x = 12
 
@@ -54322,12 +54303,12 @@ Exemple :
 Usages courants :
 • Scalar multiplication for vectors
 • Scaling custom numeric types
-• Unit conversion objects`,
-  2208: `The __sub__ method defines the behavior of the - (subtraction) operator. When V(10) - V(3) is evaluated, Python appelle V.__sub__(V(10), V(3)), qui crée un new V with x = 10 - 3 = 7.
+• Unit conversion objets`,
+  2208: `Le __sub__ méthode defines the behavior of the - (subtraction) operator. When V(10) - V(3) is evaluated, Python appelle V.__sub__(V(10), V(3)), qui crée un new V avec x = 10 - 3 = 7.
 
 Concepts clés :
 • __sub__ surcharge l'opérateur binaire -
-• Retourne a new instance with the computed difference
+• Retourne a new instance avec the computed difference
 • Different from __neg__ which handles unary negation (-obj)
 • Order matters: V(10) - V(3) is not le même que V(3) - V(10)
 
@@ -54345,13 +54326,13 @@ Usages courants :
 • Vector subtraction
 • Date/time difference calculations
 • Custom numeric type arithmetic`,
-  2209: `The __neg__ method defines the behavior of the unary - (negation) operator. When -V(5) is evaluated, Python appelle V.__neg__(V(5)), qui crée un new V with x = -5.
+  2209: `Le __neg__ méthode defines the behavior of the unary - (negation) operator. When -V(5) is evaluated, Python appelle V.__neg__(V(5)), qui crée un new V avec x = -5.
 
 Concepts clés :
 • __neg__ surcharge l'opérateur unaire - (negation, not subtraction)
 • Unary operators take only one operand: -obj
-• Other unary methods: __pos__ (+obj), __abs__ (abs(obj)), __invert__ (~obj)
-• Should return a new instance, not modify self
+• Other unary méthodes: __pos__ (+obj), __abs__ (abs(obj)), __invert__ (~obj)
+• Should renvoyer a new instance, not modify self
 
 Comment ça fonctionne :
 • V(5) has x = 5
@@ -54366,13 +54347,13 @@ Exemple :
 
 Usages courants :
 • Negating vectors or coordinates
-• Implementing mathematical objects (complex numbers, matrices)
+• Implementing mathematical objets (complex numbers, matrices)
 • Sign inversion for custom numeric types`,
-  2210: `The __abs__ method defines the behavior of the built-in abs() function for instances. When abs(V(-7)) est appelé, Python appelle V.__abs__(V(-7)), qui returns abs(-7) = 7.
+  2210: `Le __abs__ méthode defines the behavior of the built-in abs() fonction for instances. When abs(V(-7)) est appelé, Python appelle V.__abs__(V(-7)), qui retourne abs(-7) = 7.
 
 Concepts clés :
-• __abs__ surcharge la fonction intégrée abs() function
-• Can return any type (here retourne un int, not a V instance)
+• __abs__ surcharge la fonction intégrée abs() fonction
+• Can renvoyer any type (here retourne un int, not a V instance)
 • For vectors, __abs__ often retourne le magnitude (length)
 • abs() is a built-in that delegates to __abs__
 
@@ -54389,9 +54370,9 @@ Exemple :
 
 Usages courants :
 • Computing magnitudes of vectors
-• Absolute value for custom numeric types
+• Absolute valeur for custom numeric types
 • Distance calculations`,
-  2211: `The __floordiv__ method defines the behavior of the // (floor division) operator. When V(7) // V(2) is evaluated, Python appelle V.__floordiv__(V(7), V(2)), qui crée un new V with x = 7 // 2 = 3.
+  2211: `Le __floordiv__ méthode defines the behavior of the // (floor division) operator. When V(7) // V(2) is evaluated, Python appelle V.__floordiv__(V(7), V(2)), qui crée un new V avec x = 7 // 2 = 3.
 
 Concepts clés :
 • __floordiv__ surcharge l'opérateur //
@@ -54414,7 +54395,7 @@ Usages courants :
 • Integer division for custom types
 • Pagination calculations
 • Grid/tile coordinate math`,
-  2212: `The __mod__ method defines the behavior of the % (modulo) operator. When V(7) % V(3) is evaluated, Python appelle V.__mod__(V(7), V(3)), qui crée un new V with x = 7 % 3 = 1.
+  2212: `Le __mod__ méthode defines the behavior of the % (modulo) operator. When V(7) % V(3) is evaluated, Python appelle V.__mod__(V(7), V(3)), qui crée un new V avec x = 7 % 3 = 1.
 
 Concepts clés :
 • __mod__ surcharge l'opérateur %
@@ -54437,17 +54418,17 @@ Usages courants :
 • Cyclic operations (clock arithmetic)
 • Checking divisibility
 • Custom modular arithmetic types`,
-  2213: `The __pow__ method defines the behavior of the ** (exponentiation) operator. When V(2) ** 3 is evaluated, Python appelle V.__pow__(V(2), 3), qui crée un new V with x = 2 ** 3 = 8.
+  2213: `Le __pow__ méthode defines the behavior of the ** (exponentiation) operator. When V(2) ** 3 is evaluated, Python appelle V.__pow__(V(2), 3), qui crée un new V avec x = 2 ** 3 = 8.
 
 Concepts clés :
-• __pow__ surcharge l'opérateur ** and the built-in pow() function
+• __pow__ surcharge l'opérateur ** and the built-in pow() fonction
 • pow(a, b) calls a.__pow__(b)
-• pow(a, b, mod) calls a.__pow__(b, mod) for three-argument power with modulo
+• pow(a, b, mod) calls a.__pow__(b, mod) for three-argument power avec modulo
 • The right operand can be any type
 
 Comment ça fonctionne :
 • V(2) has x = 2
-• V(2) ** 3 calls __pow__ with n = 3
+• V(2) ** 3 calls __pow__ avec n = 3
 • Retourne V(2 ** 3) = V(8)
 • v.x = 8
 
@@ -54457,39 +54438,39 @@ Exemple :
 • V(5) ** 0   # V(1), v.x = 1
 
 Usages courants :
-• Mathematical computations with custom types
+• Mathematical computations avec custom types
 • Scientific calculations
 • Custom exponentiation behavior`,
-  2214: `The __radd__ method is the reflected (or right-side) version of __add__. Il est appelé quand the left operand ne supporte pas the + operation with the right operand. For example, 5 + V(3) first tries int.__add__(5, V(3)), qui returns NotImplemented because int doesn't know how to add a V. Python then falls back to V.__radd__(V(3), 5).
+  2214: `Le __radd__ méthode is the reflected (or right-side) version of __add__. Il est appelé quand the left operand ne supporte pas the + operation avec the right operand. For example, 5 + V(3) first tries int.__add__(5, V(3)), qui retourne NotImplemented car int doesn't know how to add a V. Python then falls back to V.__radd__(V(3), 5).
 
 Concepts clés :
-• __radd__ est appelé when the left operand's __add__ fails (returns NotImplemented)
+• __radd__ est appelé when the left operand's __add__ fails (retourne NotImplemented)
 • The "r" prefix stands for "reflected" or "right"
 • Every arithmetic dunder a un reflected version: __rsub__, __rmul__, __rtruediv__, etc.
 • self in __radd__ is the RIGHT operand of the expression
 
 Comment ça fonctionne :
 • 5 + V(3) tries int.__add__(5, V(3)) first
-• int doesn't know about V, returns NotImplemented
+• int doesn't know about V, retourne NotImplemented
 • Python then tries V.__radd__(V(3), 5)
 • If __radd__ is defined, it handles the operation
 
 Exemple :
-• class V:
-•     def __radd__(self, o): return V(o + self.x)
+• classe V:
+•     def __radd__(self, o): renvoyer V(o + self.x)
 • v = 5 + V(3)  # calls V.__radd__(V(3), 5) → V(8)
 
 Usages courants :
 • Allowing built-in types on the left side of operators
 • Making custom types work naturally in mixed expressions
 • NumPy arrays use this extensively`,
-  2215: `When Python evaluates 5 + V(3), it first tries int.__add__(5, V(3)). Since int doesn't know how to add a V instance, il retourne NotImplemented. Python then falls back to V.__radd__(V(3), 5), where self is V(3) and o is 5. La method returns V(5 + 3) = V(8).
+  2215: `Quand Python evaluates 5 + V(3), it first tries int.__add__(5, V(3)). Since int doesn't know how to add a V instance, il retourne NotImplemented. Python then falls back to V.__radd__(V(3), 5), where self is V(3) and o is 5. La méthode retourne V(5 + 3) = V(8).
 
 Concepts clés :
 • 5 + V(3) first tries int.__add__(5, V(3)) → NotImplemented
 • Python then tries V.__radd__(V(3), 5)
 • In __radd__, self is the right operand (V(3)), o is the left operand (5)
-• Cela permet custom objects to work on the right side of + with built-in types
+• Cela permet custom objets to work on the right side of + avec built-in types
 
 Comment ça fonctionne :
 • 5 + V(3) → int.__add__(5, V(3)) fails
@@ -54506,12 +54487,12 @@ Exemple :
 Usages courants :
 • Enabling expressions like scalar + vector
 • Mixed-type arithmetic
-• Interoperability with built-in numeric types`,
-  2216: `The __repr__ method defines the "official" string representation of an object. When repr(c) est appelé, Python appelle c.__repr__(), qui retourne le string "C()".
+• Interoperability avec built-in numeric types`,
+  2216: `Le __repr__ méthode defines the "official" string representation of an objet. When repr(c) est appelé, Python appelle c.__repr__(), qui retourne le string "C()".
 
 Concepts clés :
 • __repr__ est la représentation chaîne pour les développeurs
-• Should ideally return a string that could recreate the object
+• Should ideally renvoyer a string that could recreate the objet
 • Called by repr(), the interactive interpreter, and as fallback for str()
 • Convention: repr(obj) should look like a valid Python expression
 
@@ -54528,14 +54509,14 @@ Exemple :
 Usages courants :
 • Debugging and logging
 • Interactive interpreter display
-• Unambiguous object representation`,
-  2217: `The __str__ method defines the "informal" or user-facing string representation. When str(C()) est appelé, Python appelle C().__str__(), qui returns "I am C". If __str__ were not defined, str() would fall back to __repr__.
+• Unambiguous objet representation`,
+  2217: `Le __str__ méthode defines the "informal" or user-facing string representation. When str(C()) est appelé, Python appelle C().__str__(), qui retourne "I am C". If __str__ were not defined, str() would fall back to __repr__.
 
 Concepts clés :
 • __str__ est pour l'affichage convivial, __repr__ is for developer debugging
 • str() and print() use __str__ first
 • If __str__ is not defined, Python falls back to __repr__
-• Both should return a string
+• Both should renvoyer a string
 
 Comment ça fonctionne :
 • C() creates an instance
@@ -54549,10 +54530,10 @@ Exemple :
 • print(C())  # I am C (uses __str__)
 
 Usages courants :
-• User-facing output with print()
+• User-facing output avec print()
 • String formatting: f"{obj}" uses __str__
 • Readable display vs debug representation`,
-  2218: `When print(obj) est appelé, Python internally calls str(obj), which first looks for __str__. If __str__ is not defined, it falls back to __repr__. There is no __print__ method en Python.
+  2218: `Quand print(obj) est appelé, Python internally calls str(obj), which first looks for __str__. If __str__ is not defined, it falls back to __repr__. There is no __print__ méthode en Python.
 
 Concepts clés :
 • print() converts its arguments to strings using str()
@@ -54569,28 +54550,28 @@ Comment ça fonctionne :
 • The resulting string is printed to stdout
 
 Exemple :
-• class A: def __repr__(self): return "A repr"
+• classe A: def __repr__(self): renvoyer "A repr"
 • print(A())  # A repr (falls back to __repr__)
-• class B:
-•     def __repr__(self): return "B repr"
-•     def __str__(self): return "B str"
+• classe B:
+•     def __repr__(self): renvoyer "B repr"
+•     def __str__(self): renvoyer "B str"
 • print(B())  # B str (__str__ takes priority)
 
 Usages courants :
 • Understanding str vs repr priority
-• Deciding which method to implement
+• Deciding which méthode to implement
 • Debugging print output issues`,
-  2219: `The __format__ method est appelé when an object appears in an f-string or format() call with a format specification. In f"{C():xyz}", the part après le colon ("xyz") est passé as the spec argument to __format__.
+  2219: `Le __format__ méthode est appelé when an objet appears in an f-string or format() call avec a format specification. In f"{C():xyz}", the part après le colon ("xyz") est passé as the spec argument to __format__.
 
 Concepts clés :
 • __format__ handles format() and f-string formatting
-• The format spec (after :) est passé as the spec argument
+• The format spec (après :) est passé as the spec argument
 • f"{obj:spec}" calls obj.__format__(spec)
 • format(obj, spec) also calls obj.__format__(spec)
 
 Comment ça fonctionne :
-• f"{C():xyz}" crée un C instance and calls __format__ with spec="xyz"
-• __format__ returns f"formatted:xyz" → "formatted:xyz"
+• f"{C():xyz}" crée un C instance and calls __format__ avec spec="xyz"
+• __format__ retourne f"formatted:xyz" → "formatted:xyz"
 • The f-string evaluates to "formatted:xyz"
 • print outputs: formatted:xyz
 
@@ -54603,14 +54584,14 @@ Usages courants :
 • Custom formatting for dates, numbers, currencies
 • Alignment and padding control
 • Domain-specific display formats`,
-  2220: `The __bool__ method defines the truth value of an object. When bool(C()) est appelé, Python appelle C().__bool__(), qui returns False. This means instances of C are always falsy.
+  2220: `Le __bool__ méthode defines the truth valeur of an objet. When bool(C()) est appelé, Python appelle C().__bool__(), qui retourne False. This means instances of C are always falsy.
 
 Concepts clés :
 • __bool__ définit la véracité des objets personnalisés
-• Called by bool(), if statements, while loops, and logical operators
-• Must return True or False
+• Called by bool(), if instructions, while loops, and logical operators
+• Must renvoyer True or False
 • If __bool__ is not defined, Python falls back to __len__ (0 = falsy, nonzero = truthy)
-• If neither is defined, the object is always truthy
+• If neither is defined, the objet is always truthy
 
 Comment ça fonctionne :
 • C() creates an instance
@@ -54625,12 +54606,12 @@ Exemple :
 Usages courants :
 • Empty container checks
 • Validity/enabled state
-• Null-like sentinel objects`,
-  2221: `When an object est utilisé in a boolean context (like an if statement), Python appelle __bool__ to determine its truth value. Since C.__bool__ returns False, C() is falsy, so the else branch runs and r is set to "no".
+• Null-like sentinel objets`,
+  2221: `Quand an objet est utilisé in a boolean context (like an if instruction), Python appelle __bool__ to determine its truth valeur. Since C.__bool__ retourne False, C() is falsy, so the else branch runs and r is set to "no".
 
 Concepts clés :
-• if statements call __bool__ to evaluate truthiness
-• C().__bool__() returns False, so the if condition is False
+• if instructions call __bool__ to evaluate truthiness
+• C().__bool__() retourne False, so the if condition is False
 • The else branch executes, setting r = "no"
 • Any boolean context (if, while, and, or, not) uses __bool__
 
@@ -54641,70 +54622,70 @@ Comment ça fonctionne :
 • print(r) → "no"
 
 Exemple :
-• class Truthy: def __bool__(self): return True
+• classe Truthy: def __bool__(self): renvoyer True
 • if Truthy(): "yes"  # executes
-• class Falsy: def __bool__(self): return False
+• classe Falsy: def __bool__(self): renvoyer False
 • if Falsy(): "yes"   # skipped
 
 Usages courants :
-• Controlling flow based on object state
+• Controlling flow based on objet state
 • Empty/non-empty checks
 • Validity checks in conditionals`,
-  2222: `When __bool__ is not defined but __len__ is, Python uses __len__ to determine truthiness. An object with __len__() returning 0 is considered falsy, just like empty built-in containers ([], {}, "").
+  2222: `Quand __bool__ is not defined but __len__ is, Python uses __len__ to determine truthiness. An objet avec __len__() returning 0 is considered falsy, just like empty built-in containers ([], {}, "").
 
 Concepts clés :
 • Without __bool__, Python falls back to __len__ for truth testing
-• __len__() == 0 → falsy (like empty list, empty string)
-• __len__() > 0 → truthy (like non-empty list)
+• __len__() == 0 → falsy (like empty liste, empty string)
+• __len__() > 0 → truthy (like non-empty liste)
 • C'est pourquoi bool([]) is False and bool([1]) is True
 
 Comment ça fonctionne :
 • C() creates an instance
 • bool(C()) checks for __bool__ → not found
-• Falls back to __len__() → returns 0
+• Falls back to __len__() → retourne 0
 • 0 means falsy → bool(C()) = False
 
 Exemple :
-• class Empty: def __len__(self): return 0
+• classe Empty: def __len__(self): renvoyer 0
 • bool(Empty())  # False
-• class NonEmpty: def __len__(self): return 5
+• classe NonEmpty: def __len__(self): renvoyer 5
 • bool(NonEmpty())  # True
 
 Usages courants :
 • Custom container types automatically get truthiness from length
 • Empty containers are falsy by convention
-• Matches Python's built-in behavior for lists, dicts, strings`,
-  2223: `When __bool__ is not defined, Python falls back to __len__ for truth testing. Since __len__() returns 5, which is nonzero, the object is considered truthy.
+• Matches Python's built-in behavior for listes, dicts, strings`,
+  2223: `Quand __bool__ is not defined, Python falls back to __len__ for truth testing. Since __len__() retourne 5, which is nonzero, the objet is considered truthy.
 
 Concepts clés :
 • Without __bool__, Python uses __len__ for truthiness
-• __len__() returning a nonzero value means truthy
-• This mirrors built-in behavior: bool([1,2,3]) is True because len is 3
-• __len__ must return a non-negative integer
+• __len__() returning a nonzero valeur means truthy
+• This mirrors built-in behavior: bool([1,2,3]) is True car len is 3
+• __len__ must renvoyer a non-negative integer
 
 Comment ça fonctionne :
 • C() creates an instance
 • bool(C()) checks for __bool__ → not found
-• Falls back to __len__() → returns 5
+• Falls back to __len__() → retourne 5
 • 5 is nonzero → truthy → True
 
 Exemple :
-• class C: def __len__(self): return 5
+• classe C: def __len__(self): renvoyer 5
 • bool(C())  # True (nonzero length)
-• class D: def __len__(self): return 0
+• classe D: def __len__(self): renvoyer 0
 • bool(D())  # False (zero length)
 
 Usages courants :
 • Non-empty custom containers are truthy
-• Consistent with Python's truth protocol
+• Consistent avec Python's truth protocol
 • len() and bool() work together naturally`,
-  2224: `The __contains__ method defines the behavior of the 'in' operator. When 2 in C() is evaluated, Python appelle C().__contains__(2), which checks if 2 is in [1, 2, 3]. Since 2 is in the list, il retourne True.
+  2224: `Le __contains__ méthode defines the behavior of the 'in' operator. When 2 in C() is evaluated, Python appelle C().__contains__(2), which checks if 2 is in [1, 2, 3]. Since 2 is in the liste, il retourne True.
 
 Concepts clés :
 • __contains__ overrides the 'in' membership test operator
 • Called by the 'in' and 'not in' operators
-• Should return True or False
-• If __contains__ is not defined, Python falls back to iterating through the object
+• Should renvoyer True or False
+• If __contains__ is not defined, Python falls back to iterating through the objet
 
 Comment ça fonctionne :
 • C() creates an instance
@@ -54719,15 +54700,15 @@ Exemple :
 
 Usages courants :
 • Custom membership testing
-• Implementing set-like or range-like objects
-• Optimized containment checks (e.g., interval objects)`,
-  2225: `The __contains__ method checks membership. When 5 in C() is evaluated, Python appelle C().__contains__(5), which checks if 5 is in [1, 2, 3]. Since 5 is not in the list, il retourne False.
+• Implementing set-like or range-like objets
+• Optimized containment checks (e.g., interval objets)`,
+  2225: `Le __contains__ méthode checks membership. When 5 in C() is evaluated, Python appelle C().__contains__(5), which checks if 5 is in [1, 2, 3]. Since 5 is not in the liste, il retourne False.
 
 Concepts clés :
 • __contains__ est appelé for both 'in' and 'not in'
-• 5 not in [1, 2, 3] → __contains__ returns False
+• 5 not in [1, 2, 3] → __contains__ retourne False
 • 'not in' is simply the negation of 'in'
-• The returned value is coerced to bool
+• The returned valeur is coerced to bool
 
 Comment ça fonctionne :
 • C() creates an instance
@@ -54769,11 +54750,11 @@ Usages courants :
 • Custom sequences and ranges
 • Lazy data processing
 • Infinite iterators (without the stop condition)`,
-  2227: `The iterator protocol en Python requires two methods: __iter__ and __next__. An object that implements both is an iterator.
+  2227: `Le iterator protocol en Python requires two méthodes: __iter__ and __next__. An objet that implements both is an iterator.
 
 Concepts clés :
-• __iter__() must return the iterator object itself (return self)
-• __next__() must return the next value or raise StopIteration when exhausted
+• __iter__() must renvoyer the iterator objet itself (renvoyer self)
+• __next__() must renvoyer the next valeur or raise StopIteration when exhausted
 • C'est formalized in collections.abc.Iterator
 • An iterable only needs __iter__ (qui retourne un iterator), but an iterator needs both
 
@@ -54781,18 +54762,18 @@ Comment ça fonctionne :
 • for x in obj: first calls iter(obj) qui calls obj.__iter__()
 • Then repeatedly calls next(iterator) qui calls iterator.__next__()
 • When __next__ raises StopIteration, the loop ends
-• This protocol est utilisé by for loops, list(), tuple(), sum(), etc.
+• This protocol est utilisé by for loops, liste(), tuple(), sum(), etc.
 
 Exemple :
-• class MyIter:
-•     def __iter__(self): return self
+• classe MyIter:
+•     def __iter__(self): renvoyer self
 •     def __next__(self): raise StopIteration
 • iter(MyIter())  # retourne le MyIter instance
 • next(MyIter())  # raises StopIteration
 
 Usages courants :
 • All Python iterators follow this protocol
-• Files, generators, range objects are all iterators
+• Files, generators, range objets are all iterators
 • Custom data streams and lazy sequences`,
   2228: `For an iterator object, __iter__ doit retourner self. C'est requis pour que iterators puisse être utilisé directement dans for loops and other iteration contexts. The distinction is important: an iterable's __iter__ retourne un iterator (possibly a new one), but an iterator's __iter__ returns self.
 
@@ -54867,47 +54848,47 @@ Usages courants :
 • Wrapping existing iterables with custom behavior
 • Lazy proxies over collections
 • Composing iterables from multiple sources`,
-  2231: `When a class has __getitem__ but not __iter__, Python uses the old-style iteration protocol: it calls __getitem__(0), __getitem__(1), __getitem__(2), etc. until an IndexError is raised.
+  2231: `Quand a classe has __getitem__ but not __iter__, Python uses the old-style iteration protocol: it calls __getitem__(0), __getitem__(1), __getitem__(2), etc. until an IndexError is raised.
 
 Concepts clés :
-• Old-style iteration: Python appelle __getitem__ with incrementing indices
+• Old-style iteration: Python appelle __getitem__ avec incrementing indices
 • IndexError signals the end of iteration (like StopIteration for __next__)
 • __getitem__(0) → 0*10=0, __getitem__(1) → 1*10=10, __getitem__(2) → 2*10=20
 • __getitem__(3) raises IndexError, stopping iteration
 
 Comment ça fonctionne :
-• list(C()) tries iter(C()) → no __iter__, falls back to __getitem__
+• liste(C()) tries iter(C()) → no __iter__, falls back to __getitem__
 • Calls __getitem__(0) → 0, __getitem__(1) → 10, __getitem__(2) → 20
 • __getitem__(3) raises IndexError → iteration stops
-• list() collects [0, 10, 20]
+• liste() collects [0, 10, 20]
 
 Exemple :
-• list(C())  # [0, 10, 20]
+• liste(C())  # [0, 10, 20]
 • C()[0]     # 0
 • C()[2]     # 20
 
 Usages courants :
 • Legacy sequence types
-• Simple indexed access without full iterator protocol
-• Backward compatibility with older Python code`,
-  2232: `When __iter__ contains a yield statement, it becomes a generator function. Each call to __iter__ retourne un fresh generator iterator. The generator yields i**2 for i in range(4): 0, 1, 4, 9.
+• Simple indexed access sans full iterator protocol
+• Backward compatibility avec older Python code`,
+  2232: `Quand __iter__ contains a yield instruction, it becomes a generator fonction. Each call to __iter__ retourne un fresh generator iterator. The generator yields i**2 for i in range(4): 0, 1, 4, 9.
 
 Concepts clés :
-• Using yield in __iter__ makes it a generator function
-• A generator function retourne un generator iterator quand appelé
+• Using yield in __iter__ makes it a generator fonction
+• A generator fonction retourne un generator iterator quand appelé
 • The generator handles __next__ and StopIteration automatically
 • C'est the most Pythonic way to implement __iter__
 
 Comment ça fonctionne :
-• Squares(4) creates instance with n = 4
-• list(Squares(4)) calls __iter__() → returns generator
+• Squares(4) creates instance avec n = 4
+• liste(Squares(4)) calls __iter__() → retourne generator
 • Generator yields: 0**2=0, 1**2=1, 2**2=4, 3**2=9
-• Generator exhausts → StopIteration → list collects [0, 1, 4, 9]
+• Generator exhausts → StopIteration → liste collects [0, 1, 4, 9]
 
 Exemple :
-• list(Squares(4))  # [0, 1, 4, 9]
-• list(Squares(0))  # []
-• list(Squares(1))  # [0]
+• liste(Squares(4))  # [0, 1, 4, 9]
+• liste(Squares(0))  # []
+• liste(Squares(1))  # [0]
 
 Usages courants :
 • Clean, readable iteration implementation
@@ -54938,28 +54919,28 @@ Usages courants :
 • Fixed sequences with meaningful names
 • Multi-step iteration with complex logic between yields
 • State machine implementations`,
-  2234: `The __reversed__ method defines what happens when reversed() est appelé on an instance. Here, il retourne iter([3, 2, 1]), which is a list_iterator qui produit 3, 2, 1.
+  2234: `Le __reversed__ méthode defines what happens when reversed() est appelé on an instance. Here, il retourne iter([3, 2, 1]), which is a list_iterator qui produit 3, 2, 1.
 
 Concepts clés :
-• __reversed__ overrides the built-in reversed() function
-• Must return an iterator
+• __reversed__ overrides the built-in reversed() fonction
+• Must renvoyer an iterator
 • Without __reversed__, reversed() requires __len__ and __getitem__
 • Allows custom reverse iteration logic
 
 Comment ça fonctionne :
 • reversed(C()) calls C().__reversed__()
 • Retourne iter([3, 2, 1])
-• list() consumes the iterator → [3, 2, 1]
+• liste() consumes the iterator → [3, 2, 1]
 • Résultat : [3, 2, 1]
 
 Exemple :
-• list(reversed(C()))  # [3, 2, 1]
+• liste(reversed(C()))  # [3, 2, 1]
 • for x in reversed(C()): print(x)  # 3, 2, 1
 
 Usages courants :
-• Efficient reverse iteration without creating reversed copy
-• Custom sequences with optimized reverse traversal
-• Linked lists or trees with reverse iteration support`,
+• Efficient reverse iteration sans creating reversed copy
+• Custom sequences avec optimized reverse traversal
+• Linked listes or trees avec reverse iteration support`,
   2235: `Yes, any object that defines __iter__ peut être utilisé in a for loop. The for loop calls iter(obj), qui calls obj.__iter__() to get an iterator, then repeatedly calls next() on it.
 
 Concepts clés :
@@ -55029,7 +55010,7 @@ Usages courants :
 • Getting the first element of any iterable
 • Peeking at the start of a stream
 • next(iter(s), default) for safe first-element access`,
-  2238: `The __getitem__ method defines indexing behavior (obj[key]). When C()[1] is evaluated, Python appelle C().__getitem__(1), qui returns [10, 20, 30][1] = 20.
+  2238: `Le __getitem__ méthode defines indexing behavior (obj[key]). When C()[1] is evaluated, Python appelle C().__getitem__(1), qui retourne [10, 20, 30][1] = 20.
 
 Concepts clés :
 • __getitem__ overrides the [] (subscript) operator
@@ -55051,28 +55032,28 @@ Exemple :
 Usages courants :
 • Custom sequence and mapping types
 • Database record access
-• Lazy data loading with indexing`,
-  2239: `The __len__ method defines the behavior of the built-in len() function. When len(C()) est appelé, Python appelle C().__len__(), qui returns 3.
+• Lazy data loading avec indexing`,
+  2239: `Le __len__ méthode defines the behavior of the built-in len() fonction. When len(C()) est appelé, Python appelle C().__len__(), qui retourne 3.
 
 Concepts clés :
 • __len__ overrides the len() built-in
-• Must return a non-negative integer
+• Must renvoyer a non-negative integer
 • Also affects bool() when __bool__ is not defined
-• Used by many built-in functions and data structures
+• Used by many built-in fonctions and data structures
 
 Comment ça fonctionne :
 • C() creates an instance
-• len(C()) calls __len__() → returns 3
+• len(C()) calls __len__() → retourne 3
 • Résultat : 3
 
 Exemple :
 • len(C())  # 3
-• bool(C())  # True (because __len__ returns 3, nonzero = truthy)
+• bool(C())  # True (car __len__ retourne 3, nonzero = truthy)
 
 Usages courants :
-• Custom container types (lists, queues, trees)
+• Custom container types (listes, queues, trees)
 • Reporting size of data structures
-• Integration with len(), bool(), and iteration`,
+• Integration avec len(), bool(), and iteration`,
   2240: `Un itérable est tout objet with __iter__ qui retourne un itérateur. Un itérateur est un objet with both __iter__ (returns self) and __next__ (returns next value or raises StopIteration). All iterators are iterables, but not all iterables are iterators.
 
 Concepts clés :
@@ -55097,22 +55078,22 @@ Usages courants :
 • Understanding Python's iteration model
 • Knowing when to implement __iter__ vs both methods
 • Debugging iteration-related errors`,
-  2241: `The context manager protocol requires two methods: __enter__ and __exit__. These are called by the 'with' statement to set up and tear down a resource.
+  2241: `Le context manager protocol requires two méthodes: __enter__ and __exit__. These are appelé by the 'avec' instruction to set up and tear down a resource.
 
 Concepts clés :
-• __enter__ est appelé à l'entrée du bloc 'with'
-• __exit__ est appelé à la sortie du bloc 'with' (even if an exception occurred)
-• with obj as x: calls __enter__ and binds its return value to x
+• __enter__ est appelé à l'entrée du bloc 'avec'
+• __exit__ est appelé à la sortie du bloc 'avec' (even if an exception occurred)
+• avec obj as x: calls __enter__ and binds its renvoyer valeur to x
 • __exit__ receives exception info (or None if no exception)
 
 Comment ça fonctionne :
-• with CM() as resource:
-•     # __enter__ called, return value bound to 'resource'
+• avec CM() as resource:
+•     # __enter__ appelé, renvoyer valeur bound to 'resource'
 •     # code block runs
-• # __exit__ called automatically (even on exception)
+• # __exit__ appelé automatically (even on exception)
 
 Exemple :
-• with open("file.txt") as f:  # file.__enter__() returns file
+• avec open("file.txt") as f:  # file.__enter__() retourne file
 •     data = f.read()          # use the file
 • # file.__exit__() closes the file automatically
 
@@ -55121,29 +55102,29 @@ Usages courants :
 • Database connections (connect/disconnect)
 • Lock acquisition and release
 • Temporary state changes`,
-  2242: `When the 'with' statement executes, it calls CM().__enter__(), qui retourne le string "resource". This return value est liée à la variable r via the 'as' clause. Inside the with block, r is "resource".
+  2242: `Quand the 'avec' instruction executes, it calls CM().__enter__(), qui retourne le string "resource". This renvoyer valeur est liée à la variable r via the 'as' clause. Inside the avec block, r is "resource".
 
 Concepts clés :
-• 'with CM() as r:' calls __enter__ and binds return value to r
-• __enter__ can return anything: self, a different object, or a simple value
+• 'avec CM() as r:' calls __enter__ and binds renvoyer valeur to r
+• __enter__ can renvoyer anything: self, a different objet, or a simple valeur
 • __exit__ est appelé when the block ends, even if an exception occurs
 • *a in __exit__ captures (exc_type, exc_val, exc_tb)
 
 Comment ça fonctionne :
 • CM() creates context manager instance
-• __enter__() returns "resource"
+• __enter__() retourne "resource"
 • r = "resource" (bound by 'as')
 • print(r) outputs: resource
 • __exit__() appelé avec no exception info
 
 Exemple :
-• with CM() as r: r   # "resource"
-• with CM() as r: type(r)  # <class 'str'>
+• avec CM() as r: r   # "resource"
+• avec CM() as r: type(r)  # <classe 'str'>
 
 Usages courants :
 • Returning file handles, connections, locks
 • Returning computed resources
-• Returning self for method chaining`,
+• Returning self for méthode chaining`,
   2243: `La valeur de retour de __enter__ est liée à la variable spécifiée après 'as' dans l'instruction 'with'. C'est often 'self' but can be any object.
 
 Concepts clés :
@@ -55167,50 +55148,50 @@ Usages courants :
 • Returning resource handles
 • Returning self for direct access to manager methods
 • Returning wrapped or transformed resources`,
-  2244: `The __exit__ method receives three arguments describing any exception that occurred in the with block: the exception type, the exception value, and the traceback. If no exception occurred, all three are None.
+  2244: `Le __exit__ méthode receives three arguments describing any exception that occurred in the avec block: the exception type, the exception valeur, and the traceback. If no exception occurred, all three are None.
 
 Concepts clés :
 • __exit__(self, exc_type, exc_val, exc_tb)
 • If no exception: all three are None
-• If exception occurred: exc_type is the exception class, exc_val is the instance, exc_tb is the traceback
+• If exception occurred: exc_type is the exception classe, exc_val is the instance, exc_tb is the traceback
 • __exit__ can suppress the exception by returning True
 
 Comment ça fonctionne :
 • Normal exit: __exit__(self, None, None, None)
 • Exception exit: __exit__(self, TypeError, TypeError("msg"), <traceback>)
-• If __exit__ returns True, the exception is suppressed
-• If __exit__ returns False/None, the exception propagates
+• If __exit__ retourne True, the exception is suppressed
+• If __exit__ retourne False/None, the exception propagates
 
 Exemple :
-• class CM:
+• classe CM:
 •     def __exit__(self, exc_type, exc_val, exc_tb):
 •         if exc_type is not None:
 •             print(f"Error: {exc_val}")
-•         return False  # don't suppress
+•         renvoyer False  # don't suppress
 
 Usages courants :
 • Logging exceptions
 • Cleaning up regardless of success/failure
 • Conditionally suppressing exceptions`,
-  2245: `If __exit__ retourne un truthy value (typically True), any exception that occurred inside the with block is suppressed — it does not propagate. If __exit__ retourne un falsy value (False, None, etc.), the exception propagates normally.
+  2245: `Si __exit__ retourne un truthy valeur (typically True), any exception that occurred dans the avec block is suppressed — it does not propagate. If __exit__ retourne un falsy valeur (False, None, etc.), the exception propagates normally.
 
 Concepts clés :
-• return True in __exit__ → exception is silenced
-• return False or None → exception propagates
+• renvoyer True in __exit__ → exception is silenced
+• renvoyer False or None → exception propagates
 • C'est powerful but should be used carefully
 • contextlib.suppress is a built-in context manager that does this
 
 Comment ça fonctionne :
-• Exception occurs in with block
+• Exception occurs in avec block
 • Python appelle __exit__(self, exc_type, exc_val, exc_tb)
-• If __exit__ returns True: exception is suppressed, execution continues after with
-• If __exit__ returns False/None: exception propagates normally
+• If __exit__ retourne True: exception is suppressed, execution continues après avec
+• If __exit__ retourne False/None: exception propagates normally
 
 Exemple :
-• class Suppress:
-•     def __enter__(self): return self
-•     def __exit__(self, *a): return True
-• with Suppress():
+• classe Suppress:
+•     def __enter__(self): renvoyer self
+•     def __exit__(self, *a): renvoyer True
+• avec Suppress():
 •     raise ValueError("oops")
 • print("continues!")  # this runs — exception suppressed
 
@@ -55270,27 +55251,27 @@ Usages courants :
 • Reading and writing files safely
 • Ensuring files are closed even on errors
 • The most common context manager en Python`,
-  2248: `If an exception occurs inside a 'with' block, Python appelle __exit__ with the exception type, value, and traceback. Cela assure cleanup code runs even when errors occur. The exception then propagates unless __exit__ returns True.
+  2248: `Si an exception occurs dans a 'avec' block, Python appelle __exit__ avec the exception type, valeur, and traceback. Cela assure cleanup code runs even when errors occur. The exception then propagates unless __exit__ retourne True.
 
 Concepts clés :
-• __exit__ is ALWAYS called, whether the block succeeds or raises an exception
-• On exception: __exit__(self, exc_type, exc_val, exc_tb) with actual exception info
+• __exit__ is ALWAYS appelé, whether the block succeeds or raises an exception
+• On exception: __exit__(self, exc_type, exc_val, exc_tb) avec actual exception info
 • On success: __exit__(self, None, None, None)
 • This guarantee is the main purpose of context managers
 
 Comment ça fonctionne :
-• with CM() as r:
+• avec CM() as r:
 •     raise ValueError("error")
-• # __exit__ est appelé with (ValueError, ValueError("error"), <traceback>)
-• # If __exit__ returns True, exception is suppressed
-• # If __exit__ returns False/None, exception propagates after __exit__ runs
+• # __exit__ est appelé avec (ValueError, ValueError("error"), <traceback>)
+• # If __exit__ retourne True, exception is suppressed
+• # If __exit__ retourne False/None, exception propagates après __exit__ runs
 
 Exemple :
-• class Logger:
-•     def __enter__(self): return self
+• classe Logger:
+•     def __enter__(self): renvoyer self
 •     def __exit__(self, exc_type, exc_val, exc_tb):
 •         if exc_type: print(f"Exception: {exc_val}")
-•         return False  # propagate the exception
+•         renvoyer False  # propagate the exception
 
 Usages courants :
 • Guaranteed resource cleanup (close files, release locks)
@@ -55571,23 +55552,23 @@ c = C()
 c.x = 1       # OK
 c.y = 2       # OK
 c.z = 3       # AttributeError: 'C' object n'a pas attribute 'z'`,
-  2261: `When a class defines __slots__, Python does not create a per-instance __dict__. Instead, it allocates fixed slots for the declared attributes.
+  2261: `Quand a classe defines __slots__, Python does not create a per-instance __dict__. Instead, it allocates fixed slots for the declared attributes.
 
 Concepts clés :
-• Normal classes: each instance gets a __dict__ (a dictionary)
+• Normal classes: each instance gets a __dict__ (a dictionnaire)
 • __slots__ classes: no __dict__, attributes stored in fixed-size structure
 • This saves ~40-50 bytes per instance (the dict overhead)
 • You can add "__dict__" to __slots__ to have both, but that defeats the purpose
 
 Comment ça fonctionne :
-1. class C defines __slots__ = ["x"]
-2. c = C() creates an instance with a slot for "x" but no __dict__
+1. classe C defines __slots__ = ["x"]
+2. c = C() creates an instance avec a slot for "x" but no __dict__
 3. hasattr(c, "__dict__") → False
 4. The instance uses descriptor-based slots instead
 
 Exemple :
-class Normal: pass
-class Slotted:
+classe Normal: pass
+classe Slotted:
     __slots__ = ["x"]
 hasattr(Normal(), "__dict__")   # True
 hasattr(Slotted(), "__dict__")  # False`,
@@ -55655,21 +55636,21 @@ c = C()
 c.__class__           # <class '__main__.C'>
 c.__class__ is C      # True
 type(c) is c.__class__  # True`,
-  2265: `The __name__ attribute of a class object is a string contenant les class's simple name (without module qualification).
+  2265: `Le __name__ attribute of a classe objet is a string contenant les classe's simple name (sans module qualification).
 
 Concepts clés :
-• __class__ retourne le class object
-• __name__ on a class returns its name as a string
+• __class__ retourne le classe objet
+• __name__ on a classe retourne its name as a string
 • C'est the unqualified name (just "C", not "__main__.C")
 • Useful for logging, debugging, and dynamic type checking
 
 Comment ça fonctionne :
-1. c.__class__ retourne le class C
+1. c.__class__ retourne le classe C
 2. C.__name__ retourne le string "C"
 3. So c.__class__.__name__ is "C"
 
 Exemple :
-class MyClass: pass
+classe MyClass: pass
 obj = MyClass()
 obj.__class__.__name__  # "MyClass"
 type(obj).__name__      # "MyClass" (equivalent)`,
@@ -55771,37 +55752,37 @@ Correction :
 class Logger:
     def __init__(self):
         self.logs = []  # instance variable — each has its own list`,
-  2270: `When a mutable object est créé in __init__ with self.attr = ..., each instance gets its own independent copy.
+  2270: `Quand a mutable objet est créé in __init__ avec self.attr = ..., each instance gets its own independent copy.
 
 Concepts clés :
-• self.logs = [] in __init__ crée un new list per instance
-• l1.logs and l2.logs are different list objects
+• self.logs = [] in __init__ crée un new liste per instance
+• l1.logs and l2.logs are different liste objets
 • Modifying l1.logs does NOT affect l2.logs
 • C'est the correct pattern for per-instance mutable data
 
 Comment ça fonctionne :
-1. l1 = Logger() creates l1 with l1.logs = [] (new list)
-2. l2 = Logger() creates l2 with l2.logs = [] (different new list)
-3. l1.log("a") appends to l1's list → l1.logs = ["a"]
-4. l2.logs is still [] — its own separate list
+1. l1 = Logger() creates l1 avec l1.logs = [] (new liste)
+2. l2 = Logger() creates l2 avec l2.logs = [] (different new liste)
+3. l1.log("a") appends to l1's liste → l1.logs = ["a"]
+4. l2.logs is still [] — its own separate liste
 
 Exemple :
-l1.logs is l2.logs  # False — different objects
+l1.logs is l2.logs  # False — different objets
 l1.log("a")
 l1.logs  # ["a"]
 l2.logs  # [] — unaffected`,
-  2271: `The Singleton pattern ensures only one instance of a class ever exists. This implementation uses __new__ to control instance creation.
+  2271: `Le Singleton pattern ensures only one instance of a classe ever exists. This implementation uses __new__ to control instance creation.
 
 Concepts clés :
-• __new__ est appelé before __init__ to create the instance
-• _instance stocke le single instance as a class variable
+• __new__ est appelé avant __init__ to create the instance
+• _instance stocke le single instance as a classe variable
 • First call: creates and stocke le instance
-• Subsequent calls: return the existing instance
+• Subsequent calls: renvoyer the existing instance
 
 Comment ça fonctionne :
 1. First Singleton(): cls._instance is None → creates new instance, stores it
-2. Second Singleton(): cls._instance is not None → returns stored instance
-3. Both calls return the exact same object
+2. Second Singleton(): cls._instance is not None → retourne stored instance
+3. Both calls renvoyer the exact same objet
 4. Singleton() is Singleton() → True (same identity)
 
 Exemple :
@@ -55940,41 +55921,41 @@ Edge case:
 Si vous used self.count += 1 instead of C.count += 1, the first access
 reads C.count (0), adds 1, and stores 1 as an INSTANCE variable,
 leaving C.count still at 0.`,
-  2277: `The Proxy pattern uses __getattr__ to forward attribute access to a wrapped object. Any attribute not found on the Proxy itself is looked up on the wrapped object.
+  2277: `Le Proxy pattern uses __getattr__ to forward attribute access to a wrapped objet. Any attribute not found on the Proxy itself is looked up on the wrapped objet.
 
 Concepts clés :
 • __init__ stores _obj normally (in __dict__)
-• __getattr__ is only called for attributes NOT found on Proxy
-• p._obj is found normally (in __dict__), so __getattr__ is NOT called for it
-• p.append is NOT found on Proxy → __getattr__ called → returns list.append
+• __getattr__ is only appelé for attributes NOT found on Proxy
+• p._obj is found normally (in __dict__), so __getattr__ is NOT appelé for it
+• p.append is NOT found on Proxy → __getattr__ appelé → retourne liste.append
 
 Comment ça fonctionne :
-1. p = Proxy([1, 2, 3]) stocke le list as p._obj
-2. p.append: "append" not in Proxy → __getattr__ called
-3. getattr(self._obj, "append") retourne le list's append method
-4. p.append(4) calls [1, 2, 3].append(4) → list becomes [1, 2, 3, 4]
-5. p._obj retourne le modified list [1, 2, 3, 4]
+1. p = Proxy([1, 2, 3]) stocke le liste as p._obj
+2. p.append: "append" not in Proxy → __getattr__ appelé
+3. getattr(self._obj, "append") retourne le liste's append méthode
+4. p.append(4) calls [1, 2, 3].append(4) → liste becomes [1, 2, 3, 4]
+5. p._obj retourne le modified liste [1, 2, 3, 4]
 
 Usages courants :
 • Lazy loading proxies
 • Access control wrappers
 • Logging / monitoring decorators
-• Remote object proxies (RPC)`,
-  2278: `In Python, everything is an object — including classes themselves. A class can be stored as an attribute of another class, an instance, or any other object.
+• Remote objet proxies (RPC)`,
+  2278: `Dans Python, everything is an objet — including classes themselves. A classe can be stored as an attribute of another classe, an instance, or any other objet.
 
 Concepts clés :
-• Classes are first-class objects en Python
+• Classes are first-classe objets en Python
 • They can be assigned to variables, stored in collections, passé comme arguments
-• A class attribute can hold a reference to another class
+• A classe attribute can hold a reference to another classe
 • C'est different from inheritance — no is-a relationship est créé
 
 Exemple :
-class Inner:
+classe Inner:
     def greet(self):
-        return "hello"
+        renvoyer "hello"
 
-class Outer:
-    helper = Inner  # class as attribute
+classe Outer:
+    helper = Inner  # classe as attribute
 
 obj = Outer.helper()   # creates an Inner instance
 obj.greet()            # "hello"
@@ -56183,13 +56164,13 @@ C(1) == "hello" # False (isinstance fails)
 Edge case:
 Defining __eq__ makes the class unhashable by default (sets __hash__ to None).
 You must define __hash__ explicitly if you want instances in sets or as dict keys.`,
-  2288: `The isinstance check in __eq__ prevents comparison with incompatible types. When other is not a C instance, la méthode retourne False immediately.
+  2288: `Le isinstance check in __eq__ prevents comparison avec incompatible types. When other is not a C instance, la méthode retourne False immediately.
 
 Concepts clés :
 • isinstance(1, C) → False (int is not C)
 • The and short-circuits: False and ... → False
 • C'est a common defensive pattern in __eq__
-• An alternative is to return NotImplemented for unknown types
+• An alternative is to renvoyer NotImplemented for unknown types
 
 Comment ça fonctionne :
 1. C(1) == 1 calls C.__eq__(C(1), 1)
@@ -56200,8 +56181,8 @@ Comment ça fonctionne :
 Bonne pratique :
 def __eq__(self, other):
     if not isinstance(other, C):
-        return NotImplemented  # lets Python try other.__eq__
-    return self.x == other.x`,
+        renvoyer NotImplemented  # lets Python try other.__eq__
+    renvoyer self.x == other.x`,
   2289: `Hash equality is necessary but not sufficient for set membership. Two objects with le même hash still need to be equal (via __eq__) to be considered duplicates.
 
 Concepts clés :
@@ -56224,17 +56205,17 @@ b = C(1)
 hash(a) == hash(b)  # True (same hash)
 a == b              # False (identity check, different objects)
 len({a, b})         # 2`,
-  2290: `When both __eq__ and __hash__ are defined consistently, sets can properly deduplicate objects based on value equality.
+  2290: `Quand both __eq__ and __hash__ are defined consistently, sets can properly deduplicate objets based on valeur equality.
 
 Concepts clés :
 • __hash__ determines the bucket (same hash → same bucket)
-• __eq__ determines if two objects in le même bucket are duplicates
+• __eq__ determines if two objets in le même bucket are duplicates
 • Both must be consistent: a == b implies hash(a) == hash(b)
-• With both defined, value-equal objects are treated as duplicates
+• With both defined, valeur-equal objets are treated as duplicates
 
 Comment ça fonctionne :
-1. C(1) creates object A: hash = hash(1), value = 1
-2. C(1) creates object B: hash = hash(1), value = 1
+1. C(1) creates objet A: hash = hash(1), valeur = 1
+2. C(1) creates objet B: hash = hash(1), valeur = 1
 3. Set inserts A in bucket for hash 1
 4. Set tries to insert B: same hash, checks A.__eq__(B)
 5. self.x == other.x → 1 == 1 → True → B is a duplicate
@@ -56243,17 +56224,17 @@ Comment ça fonctionne :
 Exemple :
 s = {C(1), C(2), C(1), C(3), C(2)}
 len(s)  # 3 (deduplicated to C(1), C(2), C(3))`,
-  2291: `The 'is' operator checks object identity — whether two names point to the exact same object in memory.
+  2291: `Le 'is' operator checks objet identity — whether two names point to the exact same objet in memory.
 
 Concepts clés :
 • is checks identity (same memory address / same id())
-• == checks equality (same value, via __eq__)
-• Each call to C(5) crée un NEW object with a different id
-• c is c2 → False because they are different objects
+• == checks equality (same valeur, via __eq__)
+• Each call to C(5) crée un NEW objet avec a different id
+• c is c2 → False car they are different objets
 
 Comment ça fonctionne :
-1. c = C(5) creates object at address X
-2. c2 = C(5) crée un DIFFERENT object at address Y
+1. c = C(5) creates objet at address X
+2. c2 = C(5) crée un DIFFERENT objet at address Y
 3. c is c2 checks: id(c) == id(c2) → X != Y → False
 4. c == c2 would depend on __eq__ (default: also False, same as is)
 
@@ -56303,19 +56284,19 @@ Exemple :
 c1.class_var is c2.class_var  # True
 c1.class_var is C.class_var   # True
 id(c1.class_var) == id(c2.class_var)  # True`,
-  2294: `When mutable objects are created in __init__, each instance gets its own independent object.
+  2294: `Quand mutable objets are created in __init__, each instance gets its own independent objet.
 
 Concepts clés :
 • self.data = [] dans __init__ crée une NOUVELLE liste à chaque fois
-• c1.data and c2.data are different list objects
+• c1.data and c2.data are different liste objets
 • Modifying c1.data does NOT affect c2.data
-• C'est the correct pattern (vs. the class variable bug)
+• C'est the correct pattern (vs. the classe variable bug)
 
 Comment ça fonctionne :
-1. c1 = C() runs __init__, creates self.data = [] (list A)
-2. c2 = C() runs __init__, creates self.data = [] (list B)
-3. c1.data is c2.data → False (A and B are different objects)
-4. c1.data == c2.data → True (both are empty lists, equal content)
+1. c1 = C() runs __init__, creates self.data = [] (liste A)
+2. c2 = C() runs __init__, creates self.data = [] (liste B)
+3. c1.data is c2.data → False (A and B are different objets)
+4. c1.data == c2.data → True (both are empty listes, equal content)
 
 Exemple :
 c1.data.append(1)
@@ -56475,22 +56456,22 @@ obj = Cls()
 obj.get_x()    # 10
 obj.set_x(20)
 obj.get_x()    # 20`,
-  2301: `The @dataclass decorator auto-generates an __init__ method based on the annotated fields. Quand vous call Point(1, 2), il crée an instance with x=1 and y=2.
+  2301: `Le @dataclass decorator auto-generates an __init__ méthode based on the annotated fields. Quand vous call Point(1, 2), il crée an instance avec x=1 and y=2.
 
 Concepts clés :
-• @dataclass reads the class body for annotated fields (x: int, y: int)
+• @dataclass reads the classe body for annotated fields (x: int, y: int)
 • It generates __init__(self, x: int, y: int) automatically
 • Fields are assigned as instance attributes in __init__
-• You access them with standard dot notation: p.x, p.y
+• You access them avec standard dot notation: p.x, p.y
 
 Comment ça fonctionne :
-• Point(1, 2) calls the auto-generated __init__ with x=1, y=2
+• Point(1, 2) calls the auto-generated __init__ avec x=1, y=2
 • p.x accesses the x attribute, which is 1
 
 Exemple :
 >>> from dataclasses import dataclass
 >>> @dataclass
-... class Point:
+... classe Point:
 ...     x: int
 ...     y: int
 >>> p = Point(1, 2)
@@ -56498,40 +56479,39 @@ Exemple :
 1
 
 Dataclasses eliminate boilerplate __init__ code while keeping classes readable and type-annotated.`,
-  2302: `The @dataclass decorator auto-generates three methods by default: __init__, __repr__, and __eq__. It does NOT generate __hash__ by default (it sets __hash__ to None if __eq__ is generated, unless frozen=True).
+  2302: `Le @dataclass decorator auto-generates three méthodes by default: __init__, __repr__, and __eq__. It does NOT generate __hash__ by default (it sets __hash__ to None if __eq__ is generated, unless frozen=True).
 
 Concepts clés :
 • __init__: assigns all annotated fields as instance attributes
 • __repr__: retourne un string like "ClassName(field1=val1, field2=val2)"
 • __eq__: compares instances by comparing all fields as a tuple
-• __hash__ is NOT generated by default (only with frozen=True or eq=False)
+• __hash__ is NOT generated by default (only avec frozen=True or eq=False)
 • __str__ is NOT generated — it falls back to __repr__
 
 Comment ça fonctionne :
-• @dataclass reads the class annotations
+• @dataclass reads the classe annotations
 • Generates __init__ from the field definitions
-• Generates __repr__ that shows class name and all fields
-• Generates __eq__ that compares field values
+• Generates __repr__ that shows classe name and all fields
+• Generates __eq__ that compares field valeurs
 
-These three methods cover the most common boilerplate that developers write for data-holding classes.`,
-  2303: `The @dataclass decorator generates a __repr__ method that produit un string showing the class name followed by each field name and its value.
+These three méthodes cover the most common boilerplate that developers write for data-holding classes.`,
+  2303: `Le @dataclass decorator generates a __repr__ méthode that produit un string showing the classe name followed by each field name and its valeur.
 
 Concepts clés :
 • Auto-generated __repr__ format: ClassName(field1=value1, field2=value2)
-• C'est le même format you'd use to reconstruct the object
+• C'est le même format you'd use to reconstruct the objet
 • It includes ALL fields, in the order they're defined
 • It's useful for debugging and logging
 
 Comment ça fonctionne :
 • repr(P(1, 2)) calls P.__repr__
-• The auto-generated __repr__ returns "P(x=1, y=2)"
+• The auto-generated __repr__ retourne "P(x=1, y=2)"
 
 Exemple :
 >>> repr(P(1, 2))
 'P(x=1, y=2)'
-
-This makes dataclass instances much easier to inspect than regular class instances, which default to "<ClassName object at 0x...>".`,
-  2304: `The @dataclass decorator generates an __eq__ method that compares instances field-by-field. Two instances are equal if all their fields have equal values.
+Ce makes dataclass instances much easier to inspect than regular classe instances, which default to "<ClassName objet at 0x...>".`,
+  2304: `Le @dataclass decorator generates an __eq__ méthode that compares instances field-by-field. Two instances are equal if all their fields have equal valeurs.
 
 Concepts clés :
 • Auto-generated __eq__ compares all fields as tuples
@@ -56541,23 +56521,21 @@ Concepts clés :
 
 Comment ça fonctionne :
 • Python appelle P.__eq__ when using ==
-• La method compares (self.x, self.y) == (other.x, other.y)
+• La méthode compares (self.x, self.y) == (other.x, other.y)
 • (1, 2) == (1, 2) is True
-
-This structural equality is what you'd expect from data-holding objects, unlike regular classes where == checks identity by default.`,
-  2305: `The auto-generated __eq__ compares all field values. Since the y fields differ (2 vs 3), the instances are not equal.
+Ce structural equality is what you'd expect from data-holding objets, unlike regular classes where == checks identity by default.`,
+  2305: `Le auto-generated __eq__ compares all field valeurs. Since the y fields differ (2 vs 3), the instances are not equal.
 
 Concepts clés :
 • __eq__ compares ALL fields, not just the first one
-• (1, 2) == (1, 3) is False because the second elements differ
+• (1, 2) == (1, 3) is False car the second elements differ
 • Even one differing field makes the whole comparison False
 
 Comment ça fonctionne :
 • P(1, 2).__eq__(P(1, 3))
 • Compares (self.x, self.y) == (other.x, other.y)
 • (1, 2) == (1, 3) → False
-
-This field-by-field comparison is intuitive for data objects — two Points with different coordinates should not be equal.`,
+Ce field-by-field comparison is intuitive for data objets — two Points avec different coordinates should not be equal.`,
   2306: `Dataclass fields can have default values, making those parameters optional in __init__. Quand vous call P() with no arguments, both x and y use their defaults of 0.
 
 Concepts clés :
@@ -56578,13 +56556,13 @@ P(x=0, y=0)
 P(x=5, y=0)
 >>> P(5, 10)
 P(x=5, y=10)`,
-  2307: `When some fields have defaults and others don't, the fields without defaults are required. Here x n'a pas default (required) and y defaults to 0.
+  2307: `Quand some fields have defaults and others don't, the fields sans defaults are required. Here x n'a pas default (required) and y defaults to 0.
 
 Concepts clés :
-• Fields without defaults are positional/required
-• Fields with defaults are optional
+• Fields sans defaults are positional/required
+• Fields avec defaults are optional
 • P(1) provides x=1, y uses default 0
-• Fields with defaults must come AFTER fields without defaults
+• Fields avec defaults must come AFTER fields sans defaults
 
 Comment ça fonctionne :
 • Generated __init__: __init__(self, x: int, y: int = 0)
@@ -56613,17 +56591,17 @@ Correction :
 class P:
     y: int       # no default first
     x: int = 0   # default after`,
-  2309: `The field() function with default_factory is the safe way to use mutable defaults in dataclasses. Each instance gets its own new list created by calling list().
+  2309: `Le field() fonction avec default_factory is the safe way to use mutable defaults in dataclasses. Each instance gets its own new liste created by calling liste().
 
 Concepts clés :
 • Mutable defaults (like []) would be shared across all instances — a classic Python bug
-• default_factory takes a callable that produces the default value
-• list (without parentheses) est passé as the factory — it's called for each new instance
+• default_factory takes a callable that produces the default valeur
+• liste (sans parentheses) est passé as the factory — it's appelé for each new instance
 • Cela empêche the shared-mutable-default bug
 
 Comment ça fonctionne :
-• When C() est appelé, the __init__ calls list() to create a fresh empty list
-• Each instance gets its own independent list
+• When C() est appelé, the __init__ calls liste() to create a fresh empty liste
+• Each instance gets its own independent liste
 • C().items retourne le newly created []
 
 Exemple :
@@ -56631,9 +56609,9 @@ Exemple :
 >>> b = C()
 >>> a.items.append(1)
 >>> a.items  # [1]
->>> b.items  # [] — separate list!
+>>> b.items  # [] — separate liste!
 
-Without default_factory, using items: list = [] would share le même list across all instances.`,
+Without default_factory, using items: liste = [] would share le même liste across all instances.`,
   2310: `Dataclasses deliberately forbid mutable defaults to prevent a classic Python bug: the shared mutable default. If items: list = [] were allowed, every instance would share the SAME list object.
 
 Concepts clés :
@@ -56652,17 +56630,17 @@ Common factories:
 • field(default_factory=dict) → {}
 • field(default_factory=set) → set()
 • field(default_factory=lambda: [1, 2, 3]) → custom default`,
-  2311: `The frozen=True parameter makes dataclass instances immutable. Any attempt to modify an attribute after creation raises dataclasses.FrozenInstanceError.
+  2311: `Le frozen=True parameter makes dataclass instances immutable. Any attempt to modify an attribute après creation raises dataclasses.FrozenInstanceError.
 
 Concepts clés :
 • FrozenInstanceError is a subclass of AttributeError
 • frozen=True generates __setattr__ and __delattr__ that raise this error
-• The instance is effectively read-only after __init__ completes
-• C'est useful for creating value objects and hashable data
+• The instance is effectively read-only après __init__ completes
+• C'est useful for creating valeur objets and hashable data
 
 Comment ça fonctionne :
 • @dataclass(frozen=True) generates __setattr__ that raises FrozenInstanceError
-• p = P(1, 2) works fine — __init__ uses object.__setattr__ internally
+• p = P(1, 2) works fine — __init__ uses objet.__setattr__ internally
 • p.x = 3 déclenche le custom __setattr__ → FrozenInstanceError
 
 Exemple :
@@ -56670,7 +56648,7 @@ Exemple :
 >>> p.x = 3
 dataclasses.FrozenInstanceError: cannot assign to field 'x'
 
-Frozen dataclasses are Python's equivalent of immutable records or value types.`,
+Frozen dataclasses are Python's equivalent of immutable records or valeur types.`,
   2312: `frozen=True creates immutable dataclass instances. After creation, you cannot set or delete any attributes.
 
 Concepts clés :
@@ -56709,16 +56687,16 @@ Exemple :
 >>> d[P(1, 2)]  # "origin" — works because equal instances have equal hashes
 
 This makes frozen dataclasses ideal for value objects and lookup keys.`,
-  2314: `The order=True parameter generates ordering comparison methods: __lt__, __le__, __gt__, and __ge__. These compare instances by their field values as tuples.
+  2314: `Le order=True parameter generates ordering comparison méthodes: __lt__, __le__, __gt__, and __ge__. These compare instances by their field valeurs as tuples.
 
 Concepts clés :
 • order=True generates __lt__, __le__, __gt__, __ge__
-• Comparison is done on the tuple of all field values
+• Comparison is done on the tuple of all field valeurs
 • P(1) < P(2) compares (1,) < (2,) which is True
-• By default, order=False — no comparison methods are generated
+• By default, order=False — no comparison méthodes are generated
 
 Comment ça fonctionne :
-• @dataclass(order=True) generates comparison methods
+• @dataclass(order=True) generates comparison méthodes
 • P(1).__lt__(P(2)) compares (self.x,) < (other.x,)
 • (1,) < (2,) → True
 
@@ -56728,29 +56706,29 @@ Exemple :
 >>> P(1) <= P(1)  # True
 
 For multi-field dataclasses, comparison follows tuple ordering: first field is primary, second is tiebreaker, etc.`,
-  2315: `The order=True flag generates all four rich comparison methods for ordering: __lt__ (<), __le__ (<=), __gt__ (>), and __ge__ (>=).
+  2315: `Le order=True flag generates all four rich comparison méthodes for ordering: __lt__ (<), __le__ (<=), __gt__ (>), and __ge__ (>=).
 
 Concepts clés :
-• All four methods compare instances by the tuple of their field values
+• All four méthodes compare instances by the tuple of their field valeurs
 • C'est separate from __eq__ which is generated by default
-• Si vous manually define any of these methods, TypeError is raised
+• Si vous manually define any of these méthodes, TypeError is raised
 • The comparison uses all fields in definition order
 
 Comment ça fonctionne :
-• For @dataclass(order=True) with fields x, y:
+• For @dataclass(order=True) avec fields x, y:
   - __lt__: (self.x, self.y) < (other.x, other.y)
   - __le__: (self.x, self.y) <= (other.x, other.y)
   - __gt__: (self.x, self.y) > (other.x, other.y)
   - __ge__: (self.x, self.y) >= (other.x, other.y)
 
-Note: order=True requires eq=True (default). You can't have ordering without equality.`,
-  2316: `The asdict() function from the dataclasses module converts a dataclass instance into a dictionary. Keys are field names, values are field values.
+Note: order=True requires eq=True (default). You can't have ordering sans equality.`,
+  2316: `Le asdict() fonction from the dataclasses module converts a dataclass instance into a dictionnaire. Keys are field names, valeurs are field valeurs.
 
 Concepts clés :
 • asdict() recursively converts dataclass instances to dicts
 • Nested dataclasses are also converted to dicts
-• Lists and tuples inside are recursively processed
-• Non-dataclass values are copied as-is
+• Lists and tuples dans are recursively processed
+• Non-dataclass valeurs are copied as-is
 
 Comment ça fonctionne :
 • asdict(P(1, 2)) inspects P's fields: x=1, y=2
@@ -56759,52 +56737,52 @@ Comment ça fonctionne :
 Exemple :
 >>> from dataclasses import dataclass, asdict
 >>> @dataclass
-... class P:
+... classe P:
 ...     x: int
 ...     y: int
 >>> asdict(P(1, 2))
 {'x': 1, 'y': 2}
 
-C'est useful for serializing dataclass instances to JSON or passing to functions that expect dictionaries.`,
-  2317: `The astuple() function converts a dataclass instance to a tuple contenant les field values in definition order.
+C'est useful for serializing dataclass instances to JSON or passing to fonctions that expect dictionnaires.`,
+  2317: `Le astuple() fonction converts a dataclass instance to a tuple contenant les field valeurs in definition order.
 
 Concepts clés :
-• astuple() returns field values as a tuple, without field names
+• astuple() retourne field valeurs as a tuple, sans field names
 • Like asdict(), it recursively converts nested dataclass instances
 • The order matches the field definition order
 • Useful for unpacking: x, y = astuple(point)
 
 Comment ça fonctionne :
-• astuple(P(1, 2)) extracts field values in order: (1, 2)
-• No field names are included — just values
+• astuple(P(1, 2)) extracts field valeurs in order: (1, 2)
+• No field names are included — just valeurs
 
 Exemple :
 >>> from dataclasses import dataclass, astuple
 >>> @dataclass
-... class P:
+... classe P:
 ...     x: int
 ...     y: int
 >>> astuple(P(1, 2))
 (1, 2)
 >>> x, y = astuple(P(3, 4))
 >>> x, y  # (3, 4)`,
-  2318: `The fields() function retourne un tuple of Field objects describing each field in the dataclass. Since P has two annotated fields (x and y), len(fields(P)) is 2.
+  2318: `Le fields() fonction retourne un tuple of Field objets describing each field in the dataclass. Since P has two annotated fields (x and y), len(fields(P)) is 2.
 
 Concepts clés :
-• fields() accepts a dataclass class or instance
-• Retourne a tuple of dataclasses.Field objects
+• fields() accepts a dataclass classe or instance
+• Retourne a tuple of dataclasses.Field objets
 • Each Field contains: name, type, default, default_factory, repr, hash, init, compare, metadata
 • Useful for introspection and metaprogramming
 
 Comment ça fonctionne :
-• fields(P) returns (Field(name='x', type=int, ...), Field(name='y', type=int, ...))
-• len() counts 2 Field objects
+• fields(P) retourne (Field(name='x', type=int, ...), Field(name='y', type=int, ...))
+• len() counts 2 Field objets
 
 Exemple :
 >>> for f in fields(P):
 ...     print(f.name, f.type)
-x <class 'int'>
-y <class 'int'>`,
+x <classe 'int'>
+y <classe 'int'>`,
   2319: `Dataclasses can have methods just like regular classes. The @dataclass decorator only auto-generates __init__, __repr__, and __eq__ — it doesn't prevent you from adding your own methods.
 
 Concepts clés :
@@ -56834,11 +56812,11 @@ What you can add:
 • Magic methods: def __len__(self): ...
 
 Dataclasses are just regular classes with less boilerplate.`,
-  2321: `The __post_init__ method is a special hook called automatically après le auto-generated __init__ completes. It lets you perform additional initialization logic.
+  2321: `Le __post_init__ méthode is a special hook appelé automatically après le auto-generated __init__ completes. It lets you perform additional initialization logic.
 
 Concepts clés :
-• __post_init__ runs after all fields are assigned
-• Vous pouvez accéder all field values (self.x, self.y) inside it
+• __post_init__ runs après all fields are assigned
+• Vous pouvez accéder all field valeurs (self.x, self.y) dans it
 • You can create derived attributes (like self.total)
 • It's the right place for validation, computed fields, or post-processing
 
@@ -56889,25 +56867,25 @@ Comment ça fonctionne :
 • Since instance is directly a P, le résultat is True
 
 Dataclasses don't create a special type — they're just regular classes with auto-generated methods.`,
-  2324: `The repr=False parameter tells @dataclass to skip generating the __repr__ method. The class will fall back to the default object representation.
+  2324: `Le repr=False parameter tells @dataclass to skip generating the __repr__ méthode. The classe will fall back to the default objet representation.
 
 Concepts clés :
 • With repr=True (default): repr shows "ClassName(field1=val1, field2=val2)"
-• With repr=False: repr shows "<ClassName object at 0x...>"
+• With repr=False: repr shows "<ClassName objet at 0x...>"
 • You might use repr=False if you want to define a custom __repr__
-• Other auto-generated methods (__init__, __eq__) are unaffected
+• Other auto-generated méthodes (__init__, __eq__) are unaffected
 
 Comment ça fonctionne :
 • @dataclass(repr=False) skips __repr__ generation
-• Calling repr() on an instance uses the default from object
+• Calling repr() on an instance uses the default from objet
 • You can then define your own __repr__ if desired
 
 Exemple :
 @dataclass(repr=False)
-class P:
+classe P:
     x: int
     def __repr__(self):
-        return f"Point at {self.x}"
+        renvoyer f"Point at {self.x}"
 
 Similar flags: init=False, eq=False, order=False, frozen=False.`,
   2325: `Dataclass inheritance works by merging fields from parent and child. The child's __init__ includes all parent fields first, then child fields.
@@ -57133,12 +57111,12 @@ Why immutable:
 • Enums represent fixed constants — they should never change
 • Mutability would break hashing and identity guarantees
 • Programs depend on enum values being stable`,
-  2338: `The auto() function génère automatiquement values for Enum members. By default, it assigns incrementing integers starting from 1.
+  2338: `Le auto() fonction génère automatiquement valeurs for Enum members. By default, it assigns incrementing integers starting from 1.
 
 Concepts clés :
 • auto() starts at 1 and increments by 1 for each member
-• RED = auto() gets value 1
-• GREEN = auto() gets value 2
+• RED = auto() gets valeur 1
+• GREEN = auto() gets valeur 2
 • You can override the auto-generation by defining _generate_next_value_
 
 Comment ça fonctionne :
@@ -57147,13 +57125,13 @@ Comment ça fonctionne :
 • Each subsequent auto() increments by 1
 
 Exemple :
->>> class Color(Enum):
+>>> classe Color(Enum):
 ...     RED = auto()    # 1
 ...     GREEN = auto()  # 2
 ...     BLUE = auto()   # 3
->>> Color.BLUE.value  # 3
+>>> Color.BLUE.valeur  # 3
 
-auto() saves you from manually assigning values when the specific numbers n'a pas d'importance.`,
+auto() saves you from manually assigning valeurs when the specific numbers n'a pas d'importance.`,
   2339: `Enum member values can be any type — integers, strings, tuples, or even complex objects. Here, Dir.N has the string value "north".
 
 Concepts clés :
@@ -57245,18 +57223,18 @@ Exemple :
 >>> len(p)   # 2
 
 This dual access (by name and by index) is the key feature of namedtuples.`,
-  2343: `The _replace() method crée un new namedtuple instance with specified fields replaced. The original instance is not modified (namedtuples are immutable).
+  2343: `Le _replace() méthode crée un new namedtuple instance avec specified fields replaced. The original instance is not modified (namedtuples are immutable).
 
 Concepts clés :
 • _replace retourne un NEW namedtuple, not modifying l'originale
 • You specify which fields to change as keyword arguments
-• Unspecified fields keep their original values
-• The underscore prefix avoids conflicts with field names
+• Unspecified fields keep their original valeurs
+• The underscore prefix avoids conflicts avec field names
 
 Comment ça fonctionne :
 • p._replace(x=10) creates Point(x=10, y=2)
 • p is still Point(x=1, y=2) — inchangés
-• Only the specified fields (x) are replaced; y keeps its value (2)
+• Only the specified fields (x) are replaced; y keeps its valeur (2)
 
 Exemple :
 >>> p = Point(1, 2)
@@ -57284,11 +57262,11 @@ Pattern:
 >>> p  # Point(x=10, y=2)
 
 Si vous need mutable named fields, consider using a dataclass instead.`,
-  2345: `The _asdict() method converts a namedtuple instance to a dictionary mapping field names to values.
+  2345: `Le _asdict() méthode converts a namedtuple instance to a dictionnaire mapping field names to valeurs.
 
 Concepts clés :
 • _asdict() retourne un OrderedDict (Python < 3.8) or regular dict (Python 3.8+)
-• Keys are the field names, values are the field values
+• Keys are the field names, valeurs are the field valeurs
 • Wrapping in dict() ensures a regular dict in all Python versions
 • Useful for serialization (e.g., JSON)
 
@@ -57304,18 +57282,17 @@ Exemple :
 >>> import json
 >>> json.dumps(p._asdict())
 '{"x": 1, "y": 2}'
-
-This makes namedtuples easy to convert for APIs and data processing.`,
-  2346: `The _fields class attribute retourne un tuple of strings contenant les field names in definition order.
+Ce makes namedtuples easy to convert for APIs and data processing.`,
+  2346: `Le _fields classe attribute retourne un tuple of strings contenant les field names in definition order.
 
 Concepts clés :
-• _fields is a class attribute (accessible on the class or instance)
-• Retourne a tuple of strings, not the field values
+• _fields is a classe attribute (accessible on the classe or instance)
+• Retourne a tuple of strings, not the field valeurs
 • Useful for introspection and dynamic processing
 • The order matches the definition order
 
 Comment ça fonctionne :
-• Point._fields returns ("x", "y")
+• Point._fields retourne ("x", "y")
 • These are the names passé à namedtuple("Point", "x y")
 
 Exemple :
@@ -57325,14 +57302,14 @@ Exemple :
 
 Use cases:
 • Iterating over field names for display
-• Creating dictionaries dynamically
+• Creating dictionnaires dynamically
 • Validating data against expected fields`,
-  2347: `The defaults parameter (Python 3.6.1+) provides default values for the rightmost fields. defaults=[0] means the last field (y) defaults to 0.
+  2347: `Le defaults parameter (Python 3.6.1+) provides default valeurs for the rightmost fields. defaults=[0] means the last field (y) defaults to 0.
 
 Concepts clés :
-• Defaults apply right-to-left (like function parameters)
+• Defaults apply right-to-left (like fonction parameters)
 • defaults=[0] means only y a un default (0)
-• x is still required — Point() without arguments would fail
+• x is still required — Point() sans arguments would fail
 • defaults=[5, 0] would set defaults for both x and y
 
 Comment ça fonctionne :
@@ -57345,7 +57322,7 @@ Exemple :
 >>> Point(1, 2)   # Point(x=1, y=2)
 >>> Point()       # TypeError: missing required argument 'x'
 
-Defaults are applied from right to left to match Python's function parameter convention.`,
+Defaults are applied from right to left to match Python's fonction parameter convention.`,
   2348: `typing.NamedTuple fournit un class-based syntax for creating namedtuples. It's the modern, recommended way to define namedtuples with type annotations.
 
 Concepts clés :
@@ -58079,34 +58056,34 @@ Usages courants :
 • Enforcing computed attributes in subclasses
 • Interface contracts for properties
 • Ensuring all shapes have area, perimeter, etc.`,
-  2372: `If a subclass n'implémente pas all abstract methods, it remains abstract and cannot be instantiated.
+  2372: `Si a subclass n'implémente pas all abstract méthodes, it remains abstract and cannot be instantiated.
 
 Concepts clés :
-• C defines abstract method f
+• C defines abstract méthode f
 • D inherits from C but does not implement f
 • D is still considered abstract
 • Attempting D() raises TypeError
 
 Comment ça fonctionne :
-• class D(C): pass — D inherits f as an abstract method
+• classe D(C): pass — D inherits f as an abstract méthode
 • D.__abstractmethods__ still contains 'f'
-• D() checks for abstract methods → finds f → raises TypeError
-• Error message: "Can't instantiate abstract class D with abstract method f"
+• D() checks for abstract méthodes → finds f → raises TypeError
+• Error message: "Can't instantiate abstract classe D avec abstract méthode f"
 
 Exemple :
 from abc import ABC, abstractmethod
 
-class C(ABC):
+classe C(ABC):
     @abstractmethod
     def f(self):
         pass
 
-class D(C):
+classe D(C):
     pass
 
-class E(C):
+classe E(C):
     def f(self):
-        return "implemented"
+        renvoyer "implemented"
 
 D()  # TypeError
 E()  # Works — f is implemented
@@ -58114,32 +58091,32 @@ E()  # Works — f is implemented
 Usages courants :
 • Détecter les implémentations incomplètes tôt
 • Héritage multi-niveaux où les classes intermédiaires restent abstraites`,
-  2373: `When a subclass provides implementations for all abstract methods, it becomes concrete.
+  2373: `Quand a subclass provides implementations for all abstract méthodes, it becomes concrete.
 
 Concepts clés :
-• C defines abstract method f
-• D inherits C and provides def f(self): return 1
-• All abstract methods are now implemented
-• D() succeeds and .f() returns 1
+• C defines abstract méthode f
+• D inherits C and provides def f(self): renvoyer 1
+• All abstract méthodes are now implemented
+• D() succeeds and .f() retourne 1
 
 Comment ça fonctionne étape par étape :
-• class D(C) inherits from abstract class C
-• def f(self): return 1 provides the required implementation
+• classe D(C) inherits from abstract classe C
+• def f(self): renvoyer 1 provides the required implementation
 • D.__abstractmethods__ is empty → D is concrete
 • D() creates an instance
-• D().f() calls the implementation → returns 1
+• D().f() calls the implementation → retourne 1
 
 Exemple :
 from abc import ABC, abstractmethod
 
-class C(ABC):
+classe C(ABC):
     @abstractmethod
     def f(self):
         pass
 
-class D(C):
+classe D(C):
     def f(self):
-        return 1
+        renvoyer 1
 
 D().f()  # 1
 
@@ -58444,58 +58421,58 @@ Usages courants :
 • Metaprogramming
 • Code generation
 • Factory patterns`,
-  2384: `When a class specifies a custom metaclass, that metaclass becomes its type.
+  2384: `Quand a classe specifies a custom metaclass, that metaclass becomes its type.
 
 Concepts clés :
-• class Meta(type): pass defines a custom metaclass
-• class C(metaclass=Meta): pass uses Meta to create C
-• type(C) returns Meta, not type
+• classe Meta(type): pass defines a custom metaclass
+• classe C(metaclass=Meta): pass uses Meta to create C
+• type(C) retourne Meta, not type
 • C is an instance of Meta
 
 Comment ça fonctionne :
 • Meta inherits from type — it IS a metaclass
 • metaclass=Meta tells Python to use Meta instead of type to create C
 • Python appelle Meta('C', (), {}) instead of type('C', (), {})
-• The resulting class C is an instance of Meta
+• The resulting classe C is an instance of Meta
 
 Exemple :
-class Meta(type):
+classe Meta(type):
     pass
 
-class C(metaclass=Meta):
+classe C(metaclass=Meta):
     pass
 
-type(C)               # <class '__main__.Meta'>
+type(C)               # <classe '__main__.Meta'>
 isinstance(C, Meta)   # True
 isinstance(C, type)   # True (Meta inherits from type)
 
 Usages courants :
-• Custom class behavior
+• Custom classe behavior
 • Automatic registration of subclasses
-• Validation of class definitions
+• Validation of classe definitions
 • ORM model metaclasses`,
-  2385: `The metaclass's __new__ method est appelé at class definition time, not at instance creation time.
+  2385: `Le metaclass's __new__ méthode est appelé at classe definition time, not at instance creation time.
 
 Concepts clés :
-• Meta.__new__ est appelé when the class statement is executed
-• This happens before any instances of C are created
-• The print statement runs as soon as Python processes class C
+• Meta.__new__ est appelé when the classe instruction is executed
+• This happens avant any instances of C are created
+• The print instruction runs as soon as Python processes classe C
 • The metaclass controls CLASS creation, not INSTANCE creation
 
 Comment ça fonctionne étape par étape :
-• Python encounters class C(metaclass=Meta): pass
+• Python encounters classe C(metaclass=Meta): pass
 • Python appelle Meta.__new__(Meta, 'C', (), namespace)
 • Inside __new__, print("Creating C") executes
-• super().__new__ (type.__new__) creates the actual class object
-• The class C is now ready to use
+• super().__new__ (type.__new__) creates the actual classe objet
+• The classe C is now ready to use
 
 Exemple :
-class Meta(type):
+classe Meta(type):
     def __new__(mcs, name, bases, ns):
         print(f"Creating {name}")
-        return super().__new__(mcs, name, bases, ns)
+        renvoyer super().__new__(mcs, name, bases, ns)
 
-class C(metaclass=Meta):  # prints "Creating C" RIGHT HERE
+classe C(metaclass=Meta):  # prints "Creating C" RIGHT HERE
     pass
 
 # "Creating C" was already printed above
@@ -58503,8 +58480,8 @@ c = C()  # does NOT trigger Meta.__new__ again
 
 Usages courants :
 • Class registration at definition time
-• Validating class structure before it's usable
-• Modifying the class namespace before class creation`,
+• Validating classe structure avant it's usable
+• Modifying the classe namespace avant classe creation`,
   2386: `__init_subclass__ (Python 3.6+) covers most metaclass use cases with much simpler code.
 
 Concepts clés :
@@ -59111,24 +59088,24 @@ Usages courants :
 
 Exemple : If class Parent: def method(self): return 1; class Child(Parent): pass; Child().method(), then Child().method() returns 1 because the child class inherits parent methods, so instances of Child can call Parent's methods.
 `,
-  2404: `The issubclass() function checks if a class is a subclass of another class. If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because Child inherits from Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship between classes, returning True if the first class inherits from (or is le même que) the second class.
+  2404: `Le issubclass() fonction checks if a classe is a subclass of another classe. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) retourne True car Child inherits from Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship entre classes, returning True if the first classe inherits from (or is le même que) the second classe.
 
-issubclass() function:
-• issubclass(Child, Parent) returns True
+issubclass() fonction:
+• issubclass(Child, Parent) retourne True
 • issubclass() checks if Child is subclass of Parent
 • Child inherits from Parent
 • Child is subclass of Parent
 • Retourne : True
 
 Comment ça fonctionne :
-• class Child(Parent): creates child inheriting from Parent
+• classe Child(Parent): creates child inheriting from Parent
 • issubclass(Child, Parent) checks inheritance
 • Child is indeed a subclass of Parent
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Child, Parent)     # True (Child is subclass of Parent)
 
 Usages courants :
@@ -59137,12 +59114,12 @@ Usages courants :
 • Inheritance
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) returns True because issubclass() checks if a class is a subclass of another class, and Child inherits from Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) retourne True car issubclass() checks if a classe is a subclass of another classe, and Child inherits from Parent.
 `,
-  2405: `The isinstance() function checks if an instance is of a class (including parent classes). If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() checks the entire inheritance chain. Since Child inherits from Parent, an instance of Child is also considered an instance of Parent. isinstance() is more flexible than type() == because il retourne True for parent classes too.
+  2405: `Le isinstance() fonction checks if an instance is of a classe (including parent classes). If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) retourne True car isinstance() checks the entire inheritance chain. Since Child inherits from Parent, an instance of Child is also considered an instance of Parent. isinstance() is more flexible than type() == car il retourne True for parent classes too.
 
-isinstance() with inheritance:
-• isinstance(Child(), Parent) returns True
+isinstance() avec inheritance:
+• isinstance(Child(), Parent) retourne True
 • isinstance() checks inheritance chain
 • Child() is instance of Child
 • Child inherits from Parent
@@ -59157,8 +59134,8 @@ Comment ça fonctionne :
 • Retourne : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Child(), Parent)   # True (Child inherits from Parent)
 isinstance(Child(), Child)    # True (Child() is instance of Child)
 
@@ -59168,36 +59145,36 @@ Usages courants :
 • Inheritance
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) returns True because isinstance() checks if an instance is of a class (including parent classes), and since Child inherits from Parent, an instance of Child is also an instance of Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) retourne True car isinstance() checks if an instance is of a classe (including parent classes), and since Child inherits from Parent, an instance of Child is also an instance of Parent.
 `,
-  2406: `The __bases__ attribute contains a tuple of parent classes. If class Parent: pass; class Child(Parent): pass; Child.__bases__, then Child.__bases__ returns (<class '__main__.Parent'>,) because __bases__ stocke le parent classes that a class inherits from. For a class with a single parent, il retourne a tuple with one element. For multiple inheritance, it contains all parent classes. C'est useful for introspection to see what classes a class inherits from.
+  2406: `Le __bases__ attribute contains a tuple of parent classes. If classe Parent: pass; classe Child(Parent): pass; Child.__bases__, then Child.__bases__ retourne (<classe '__main__.Parent'>,) car __bases__ stocke le parent classes that a classe inherits from. For a classe avec a single parent, il retourne a tuple avec one element. For multiple inheritance, it contains all parent classes. C'est useful for introspection to see what classes a classe inherits from.
 
 __bases__ attribute:
-• Child.__bases__ returns (<class '__main__.Parent'>,)
+• Child.__bases__ retourne (<classe '__main__.Parent'>,)
 • __bases__ contains tuple of parent classes
 • Child inherits from Parent
-• Retourne tuple with Parent
-• Retourne : (<class '__main__.Parent'>,)
+• Retourne tuple avec Parent
+• Retourne : (<classe '__main__.Parent'>,)
 
 Comment ça fonctionne :
-• class Child(Parent): creates child inheriting from Parent
+• classe Child(Parent): creates child inheriting from Parent
 • Python stores parent classes in Child.__bases__
 • __bases__ is tuple of parent classes
 • Contains: (Parent,)
-• Retourne : (<class '__main__.Parent'>,)
+• Retourne : (<classe '__main__.Parent'>,)
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
-Child.__bases__               # (<class '__main__.Parent'>,) (parent classes)
+classe Parent: pass
+classe Child(Parent): pass
+Child.__bases__               # (<classe '__main__.Parent'>,) (parent classes)
 
 Usages courants :
 • Inheritance inspection: Child.__bases__ (see parent classes)
-• Introspection: check what a class inherits from
+• Introspection: check what a classe inherits from
 • Inheritance
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; Child.__bases__, then Child.__bases__ returns (<class '__main__.Parent'>,) because __bases__ contains a tuple of parent classes, and Child inherits from Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; Child.__bases__, then Child.__bases__ retourne (<classe '__main__.Parent'>,) car __bases__ contains a tuple of parent classes, and Child inherits from Parent.
 `,
   2407: `An instance of a child class can access parent class attributes. If class Parent: x = 1; class Child(Parent): pass; obj = Child(); obj.x, then obj.x returns 1 because when you access an attribute on an instance, Python searches the inheritance chain. Since obj is an instance of Child and Child inherits from Parent, Python can access Parent's class attribute x = 1 through the child instance.
 
@@ -59261,34 +59238,34 @@ Usages courants :
 
 Exemple : If class Parent: def __init__(self): self.x = 1; class Child(Parent): pass; Child().x, then Child().x returns 1 because the child inherits the parent's __init__ if not overridden, so Parent.__init__ est appelé when creating a Child instance.
 `,
-  2409: `The __subclasses__() method retourne un list of direct subclasses of a class. If class Parent: pass; class Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() returns [<class '__main__.Child'>] because __subclasses__() lists all classes that directly inherit from Parent. It only shows direct children, not grandchildren or deeper descendants. C'est useful for introspection to see what classes inherit from a given class.
+  2409: `Le __subclasses__() méthode retourne un liste of direct subclasses of a classe. If classe Parent: pass; classe Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() retourne [<classe '__main__.Child'>] car __subclasses__() listes all classes that directly inherit from Parent. It only shows direct children, not grandchildren or deeper descendants. C'est useful for introspection to see what classes inherit from a given classe.
 
-__subclasses__() method:
-• Parent.__subclasses__() returns [<class '__main__.Child'>]
-• __subclasses__() returns list of direct subclasses
+__subclasses__() méthode:
+• Parent.__subclasses__() retourne [<classe '__main__.Child'>]
+• __subclasses__() retourne liste of direct subclasses
 • Child directly inherits from Parent
-• Retourne list with Child
-• Retourne : [<class '__main__.Child'>]
+• Retourne liste avec Child
+• Retourne : [<classe '__main__.Child'>]
 
 Comment ça fonctionne :
-• class Child(Parent): creates child inheriting from Parent
+• classe Child(Parent): creates child inheriting from Parent
 • Python tracks subclasses in Parent.__subclasses__
-• __subclasses__() returns list of direct children
+• __subclasses__() retourne liste of direct children
 • Contains: [Child]
-• Retourne : [<class '__main__.Child'>]
+• Retourne : [<classe '__main__.Child'>]
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
-Parent.__subclasses__()      # [<class '__main__.Child'>] (direct subclasses)
+classe Parent: pass
+classe Child(Parent): pass
+Parent.__subclasses__()      # [<classe '__main__.Child'>] (direct subclasses)
 
 Usages courants :
 • Subclass inspection: Parent.__subclasses__() (see direct children)
-• Introspection: check what classes inherit from a class
+• Introspection: check what classes inherit from a classe
 • Inheritance
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() returns [<class '__main__.Child'>] because __subclasses__() retourne un list of direct subclasses, and Child directly inherits from Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; Parent.__subclasses__(), then Parent.__subclasses__() retourne [<classe '__main__.Child'>] car __subclasses__() retourne un liste of direct subclasses, and Child directly inherits from Parent.
 `,
   2410: `A child class attribute overrides (hides) the parent class attribute. If class Parent: x = 1; class Child(Parent): x = 2; Child.x, then Child.x returns 2 because when a child class defines an attribute with le même name as a parent attribute, the child's attribute takes precedence. The child attribute shadows the parent attribute, so accessing Child.x retourne le child's value (2), not the parent's value (1).
 
@@ -59665,106 +59642,106 @@ Usages courants :
 
 Exemple : If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return 2; Child.method(), then Child.method() returns 2 because static methods can be overridden, and the child's static method takes precedence.
 `,
-  2421: `The super() function without arguments automatically gets the parent class quand appelé from within a method. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() without arguments in a method automatically determines the parent class from the current class and instance. When called from Child.method(), super() automatically refers to Parent, so super().method() calls Parent.method().
+  2421: `Le super() fonction sans arguments automatically gets the parent classe quand appelé from within a méthode. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 1 car super() sans arguments in a méthode automatically determines the parent classe from the current classe and instance. When appelé from Child.méthode(), super() automatically refers to Parent, so super().méthode() calls Parent.méthode().
 
-super() without arguments:
-• Child().method() returns 1
-• super() in method automatically gets parent
+super() sans arguments:
+• Child().méthode() retourne 1
+• super() in méthode automatically gets parent
 • super() refers to Parent (from Child)
-• super().method() calls Parent.method()
+• super().méthode() calls Parent.méthode()
 • Retourne : 1
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method()
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super().méthode()
 • super() automatically gets Parent (from Child)
-• super().method() calls Parent.method()
-• Parent.method() returns 1
+• super().méthode() calls Parent.méthode()
+• Parent.méthode() retourne 1
 • Retourne : 1
 
 Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return super().method()  # super() gets Parent automatically
-Child().method()              # 1 (calls Parent.method())
+classe Parent:
+    def méthode(self):
+        renvoyer 1
+classe Child(Parent):
+    def méthode(self):
+        renvoyer super().méthode()  # super() gets Parent automatically
+Child().méthode()              # 1 (calls Parent.méthode())
 
 Usages courants :
-• Parent access: super().method() (automatically gets parent)
-• Method extension: def method(self): return super().method() + extension
-• super() function
+• Parent access: super().méthode() (automatically gets parent)
+• Method extension: def méthode(self): renvoyer super().méthode() + extension
+• super() fonction
 • Inheritance
 
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super().method(); Child().method(), then Child().method() returns 1 because super() without arguments in a method automatically gets the parent class.
+Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 1 car super() sans arguments in a méthode automatically gets the parent classe.
 `,
-  2422: `The super() function peut être appelé with explicit arguments: super(Child, self) spécifie le class (Child) and instance (self) explicitly. If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super(Child, self).method(); Child().method(), then Child().method() returns 1 because super(Child, self) explicitly tells Python to look for the parent of Child (which is Parent) and use self as the instance. C'est the explicit form of super(), equivalent to super() without arguments en Python 3, but more explicit about which class to look for the parent of.
+  2422: `Le super() fonction peut être appelé avec explicit arguments: super(Child, self) spécifie le classe (Child) and instance (self) explicitly. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super(Child, self).méthode(); Child().méthode(), then Child().méthode() retourne 1 car super(Child, self) explicitly tells Python to look for the parent of Child (which is Parent) and use self as the instance. C'est the explicit form of super(), equivalent to super() sans arguments en Python 3, but more explicit about which classe to look for the parent of.
 
-super() with explicit arguments:
-• Child().method() returns 1
-• super(Child, self) explicitly specifies class and instance
-• Child is the class, self is the instance
+super() avec explicit arguments:
+• Child().méthode() retourne 1
+• super(Child, self) explicitly specifies classe and instance
+• Child is the classe, self is the instance
 • super() looks for parent of Child (Parent)
-• super().method() calls Parent.method()
+• super().méthode() calls Parent.méthode()
 • Retourne : 1
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super(Child, self).method()
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super(Child, self).méthode()
 • super(Child, self) gets parent of Child (Parent), uses self as instance
-• super().method() calls Parent.method() with self as instance
-• Parent.method() returns 1
+• super().méthode() calls Parent.méthode() avec self as instance
+• Parent.méthode() retourne 1
 • Retourne : 1
 
 Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent):
-    def method(self):
-        return super(Child, self).method()  # Explicit super()
-Child().method()              # 1 (calls Parent.method())
+classe Parent:
+    def méthode(self):
+        renvoyer 1
+classe Child(Parent):
+    def méthode(self):
+        renvoyer super(Child, self).méthode()  # Explicit super()
+Child().méthode()              # 1 (calls Parent.méthode())
 
 Usages courants :
-• Explicit super: super(Class, self).method() (Python 2 style, works en Python 3)
-• Clarity: explicitly specify class and instance
-• super() function
+• Explicit super: super(Class, self).méthode() (Python 2 style, works en Python 3)
+• Clarity: explicitly specify classe and instance
+• super() fonction
 • Inheritance
 
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): def method(self): return super(Child, self).method(); Child().method(), then Child().method() returns 1 because super(Child, self) explicitly spécifie le class and instance, telling Python to look for the parent of Child and use self as the instance.
+Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): def méthode(self): renvoyer super(Child, self).méthode(); Child().méthode(), then Child().méthode() retourne 1 car super(Child, self) explicitly spécifie le classe and instance, telling Python to look for the parent of Child and use self as the instance.
 `,
-  2423: `The super() function can access parent class attributes. If class Parent: x = 1; class Child(Parent): def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() retourne un proxy object that gives access to the parent class, and super().x accesses the parent's class attribute x = 1. Cela permet you to access parent class attributes even if the child has overridden them with its own attribute.
+  2423: `Le super() fonction can access parent classe attributes. If classe Parent: x = 1; classe Child(Parent): def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() retourne un proxy objet that gives access to the parent classe, and super().x accesses the parent's classe attribute x = 1. Cela permet you to access parent classe attributes even if the child has overridden them avec its own attribute.
 
 super() accesses parent attributes:
-• Child().method() returns 1
-• super() returns parent proxy
-• super().x accesses parent class attribute
+• Child().méthode() retourne 1
+• super() retourne parent proxy
+• super().x accesses parent classe attribute
 • Parent has x = 1
 • Retourne : 1
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().x
-• super() gets parent class (Parent)
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super().x
+• super() gets parent classe (Parent)
 • super().x accesses Parent.x
 • Parent.x = 1
 • Retourne : 1
 
 Exemple :
-class Parent: x = 1
-class Child(Parent):
-    def method(self):
-        return super().x  # Accesses parent class attribute
-Child().method()          # 1 (accesses Parent.x)
+classe Parent: x = 1
+classe Child(Parent):
+    def méthode(self):
+        renvoyer super().x  # Accesses parent classe attribute
+Child().méthode()          # 1 (accesses Parent.x)
 
 Usages courants :
-• Parent attribute access: super().attr (accesses parent class attribute)
+• Parent attribute access: super().attr (accesses parent classe attribute)
 • Override bypass: super().x (accesses parent even if child overrides)
-• super() function
+• super() fonction
 • Inheritance
 
-Exemple : If class Parent: x = 1; class Child(Parent): def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() can access parent class attributes, and super().x accesses Parent.x = 1.
+Exemple : If classe Parent: x = 1; classe Child(Parent): def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() can access parent classe attributes, and super().x accesses Parent.x = 1.
 `,
   2424: `super().__init__() can pass arguments to the parent's __init__ method. If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because Child.__init__ receives arguments (1, 2), calls super().__init__(x) qui passe x = 1 to Parent.__init__, setting self.x = 1. Then Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes with specific values.
 
@@ -59804,149 +59781,149 @@ Usages courants :
 
 Exemple : If class Parent: def __init__(self, x): self.x = x; class Child(Parent): def __init__(self, x, y): super().__init__(x); self.y = y; obj = Child(1, 2); obj.x, then obj.x returns 1 because super().__init__() passes arguments to the parent, so x = 1 est passé to Parent.__init__, setting obj.x = 1.
 `,
-  2425: `The super() function works in class methods. If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return super().method(); Child.method(), then Child.method() returns 1 because super() peut être utilisé in class methods to access the parent's class method. When called from within a class method, super() automatically gets the parent class, and super().method() calls the parent's class method. The cls parameter is automatically handled by super() in class methods.
+  2425: `Le super() fonction works in classe méthodes. If classe Parent: @classmethod; def méthode(cls): renvoyer 1; classe Child(Parent): @classmethod; def méthode(cls): renvoyer super().méthode(); Child.méthode(), then Child.méthode() retourne 1 car super() peut être utilisé in classe méthodes to access the parent's classe méthode. When appelé from within a classe méthode, super() automatically gets the parent classe, and super().méthode() calls the parent's classe méthode. The cls parameter is automatically handled by super() in classe méthodes.
 
-super() in class methods:
-• Child.method() returns 1
-• super() works in class methods
-• super() automatically gets parent class
-• super().method() calls Parent.method()
+super() in classe méthodes:
+• Child.méthode() retourne 1
+• super() works in classe méthodes
+• super() automatically gets parent classe
+• super().méthode() calls Parent.méthode()
 • Retourne : 1
 
 Comment ça fonctionne :
-• Child.method() calls class method on Child class
-• Child.method() executes: return super().method()
+• Child.méthode() calls classe méthode on Child classe
+• Child.méthode() executes: renvoyer super().méthode()
 • super() automatically gets Parent (from Child)
-• super().method() calls Parent.method()
-• Parent.method() returns 1
+• super().méthode() calls Parent.méthode()
+• Parent.méthode() retourne 1
 • Retourne : 1
 
 Exemple :
-class Parent:
+classe Parent:
     @classmethod
-    def method(cls):
-        return 1
-class Child(Parent):
+    def méthode(cls):
+        renvoyer 1
+classe Child(Parent):
     @classmethod
-    def method(cls):
-        return super().method()  # Works in class method
-Child.method()              # 1 (calls Parent.method())
+    def méthode(cls):
+        renvoyer super().méthode()  # Works in classe méthode
+Child.méthode()              # 1 (calls Parent.méthode())
 
 Usages courants :
-• Class method inheritance: @classmethod def method(cls): return super().method()
-• Parent class methods: super() works in class methods
-• super() function
-• Class methods
+• Class méthode inheritance: @classmethod def méthode(cls): renvoyer super().méthode()
+• Parent classe méthodes: super() works in classe méthodes
+• super() fonction
+• Class méthodes
 
-Exemple : If class Parent: @classmethod; def method(cls): return 1; class Child(Parent): @classmethod; def method(cls): return super().method(); Child.method(), then Child.method() returns 1 because super() works in class methods, automatically getting the parent class and calling the parent's class method.
+Exemple : If classe Parent: @classmethod; def méthode(cls): renvoyer 1; classe Child(Parent): @classmethod; def méthode(cls): renvoyer super().méthode(); Child.méthode(), then Child.méthode() retourne 1 car super() works in classe méthodes, automatically getting the parent classe and calling the parent's classe méthode.
 `,
-  2426: `The super() function ne fonctionne pas in static methods because static methods n'a pas self or cls parameters. If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return super().method(); Child.method(), then Child.method() raises an AttributeError because super() requires either self (for instance methods) or cls (for class methods) to determine the class context, but static methods have neither. Without self or cls, super() cannot determine which class to look for the parent of.
+  2426: `Le super() fonction ne fonctionne pas in static méthodes car static méthodes n'a pas self or cls parameters. If classe Parent: @staticmethod; def méthode(): renvoyer 1; classe Child(Parent): @staticmethod; def méthode(): renvoyer super().méthode(); Child.méthode(), then Child.méthode() raises an AttributeError car super() requires either self (for instance méthodes) or cls (for classe méthodes) to determine the classe context, but static méthodes have neither. Without self or cls, super() cannot determine which classe to look for the parent of.
 
-super() in static methods:
-• Child.method() raises AttributeError
-• super() ne fonctionne pas in static methods
-• Static methods have no self or cls
+super() in static méthodes:
+• Child.méthode() raises AttributeError
+• super() ne fonctionne pas in static méthodes
+• Static méthodes have no self or cls
 • super() needs self/cls to determine context
 • Raises AttributeError
 
 Comment ça fonctionne :
-• Child.method() calls static method on Child class
-• Child.method() executes: return super().method()
-• super() needs self or cls to determine class context
-• Static method n'a pas self or cls
-• super() cannot determine which class (no context)
+• Child.méthode() calls static méthode on Child classe
+• Child.méthode() executes: renvoyer super().méthode()
+• super() needs self or cls to determine classe context
+• Static méthode n'a pas self or cls
+• super() cannot determine which classe (no context)
 • Raises AttributeError
 
 Exemple :
-class Parent:
+classe Parent:
     @staticmethod
-    def method():
-        return 1
-class Child(Parent):
+    def méthode():
+        renvoyer 1
+classe Child(Parent):
     @staticmethod
-    def method():
-        return super().method()  # AttributeError (no self/cls)
-Child.method()              # AttributeError (super() ne fonctionne pas)
+    def méthode():
+        renvoyer super().méthode()  # AttributeError (no self/cls)
+Child.méthode()              # AttributeError (super() ne fonctionne pas)
 
 Usages courants :
-• Understanding limitations: super() ne fonctionne pas in static methods
-• Static methods: no self/cls, so no super()
-• super() function
-• Static methods
+• Understanding limitations: super() ne fonctionne pas in static méthodes
+• Static méthodes: no self/cls, so no super()
+• super() fonction
+• Static méthodes
 
-Exemple : If class Parent: @staticmethod; def method(): return 1; class Child(Parent): @staticmethod; def method(): return super().method(); Child.method(), then Child.method() raises an AttributeError because super() ne fonctionne pas in static methods - static methods have no self or cls, so super() cannot determine the class context.
+Exemple : If classe Parent: @staticmethod; def méthode(): renvoyer 1; classe Child(Parent): @staticmethod; def méthode(): renvoyer super().méthode(); Child.méthode(), then Child.méthode() raises an AttributeError car super() ne fonctionne pas in static méthodes - static méthodes have no self or cls, so super() cannot determine the classe context.
 `,
-  2427: `The super() function peut être utilisé to extend parent method behavior rather than completely replace it. If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return super().method() + ' child'; Child().method(), then Child().method() returns 'parent child' because the child calls the parent's method via super().method() (qui returns 'parent'), then extends it by concatenating ' child'. Ce pattern allows the child to enhance the parent's behavior while preserving it, creating behavior extension rather than replacement.
+  2427: `Le super() fonction peut être utilisé to extend parent méthode behavior rather than completely replace it. If classe Parent: def méthode(self): renvoyer 'parent'; classe Child(Parent): def méthode(self): renvoyer super().méthode() + ' child'; Child().méthode(), then Child().méthode() retourne 'parent child' car the child calls the parent's méthode via super().méthode() (qui retourne 'parent'), then extends it by concatenating ' child'. Ce pattern allows the child to enhance the parent's behavior while preserving it, creating behavior extension rather than replacement.
 
 super() extends parent behavior:
-• Child().method() returns 'parent child'
-• Child calls super().method() (returns 'parent')
+• Child().méthode() retourne 'parent child'
+• Child calls super().méthode() (retourne 'parent')
 • Child extends result: 'parent' + ' child'
 • Retourne extended behavior
 • Retourne : 'parent child'
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method() + ' child'
-• super().method() calls Parent.method(), returns 'parent'
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super().méthode() + ' child'
+• super().méthode() calls Parent.méthode(), retourne 'parent'
 • Child concatenates: 'parent' + ' child'
 • Retourne : 'parent child'
 
 Exemple :
-class Parent:
-    def method(self):
-        return 'parent'
-class Child(Parent):
-    def method(self):
-        return super().method() + ' child'  # Extends parent
-Child().method()              # 'parent child' (extends parent behavior)
+classe Parent:
+    def méthode(self):
+        renvoyer 'parent'
+classe Child(Parent):
+    def méthode(self):
+        renvoyer super().méthode() + ' child'  # Extends parent
+Child().méthode()              # 'parent child' (extends parent behavior)
 
 Usages courants :
-• Behavior extension: def method(self): return super().method() + extension
+• Behavior extension: def méthode(self): renvoyer super().méthode() + extension
 • Preserving parent: call parent, then add child behavior
-• super() function
+• super() fonction
 • Method overriding
 
-Exemple : If class Parent: def method(self): return 'parent'; class Child(Parent): def method(self): return super().method() + ' child'; Child().method(), then Child().method() returns 'parent child' because super() peut être utilisé to extend parent method behavior, calling the parent and then adding child-specific behavior.
+Exemple : If classe Parent: def méthode(self): renvoyer 'parent'; classe Child(Parent): def méthode(self): renvoyer super().méthode() + ' child'; Child().méthode(), then Child().méthode() retourne 'parent child' car super() peut être utilisé to extend parent méthode behavior, calling the parent and then adding child-specific behavior.
 `,
-  2428: `The super() function peut être appelé outside of a method by explicitly providing the class and instance arguments. If class Parent: def method(self): return 1; class Child(Parent): pass; super(Child, Child()).method(), then super(Child, Child()).method() returns 1 because super(Child, Child()) explicitly specifies Child as the class and Child() as the instance, allowing you to call super() from outside the class. Cela permet you to access parent methods even when not inside a method definition, useful for testing or advanced use cases.
+  2428: `Le super() fonction peut être appelé à l’extérieur de of a méthode by explicitly providing the classe and instance arguments. If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): pass; super(Child, Child()).méthode(), then super(Child, Child()).méthode() retourne 1 car super(Child, Child()) explicitly specifies Child as the classe and Child() as the instance, allowing you to call super() from à l’extérieur de the classe. Cela permet you to access parent méthodes even when not dans a méthode definition, useful for testing or advanced use cases.
 
-super() outside method:
-• super(Child, Child()).method() returns 1
-• super(Child, Child()) explicitly specifies class and instance
-• Child is the class, Child() is the instance
+super() à l’extérieur de méthode:
+• super(Child, Child()).méthode() retourne 1
+• super(Child, Child()) explicitly specifies classe and instance
+• Child is the classe, Child() is the instance
 • super() gets parent of Child (Parent)
-• super().method() calls Parent.method()
+• super().méthode() calls Parent.méthode()
 • Retourne : 1
 
 Comment ça fonctionne :
 • super(Child, Child()) creates super proxy
-• Child is the class (to find parent of)
+• Child is the classe (to find parent of)
 • Child() is the instance (to pass as self)
 • super() gets parent of Child (Parent)
-• super().method() calls Parent.method() with Child() instance
-• Parent.method() returns 1
+• super().méthode() calls Parent.méthode() avec Child() instance
+• Parent.méthode() retourne 1
 • Retourne : 1
 
 Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Child(Parent): pass
-super(Child, Child()).method()  # 1 (explicit super() outside method)
+classe Parent:
+    def méthode(self):
+        renvoyer 1
+classe Child(Parent): pass
+super(Child, Child()).méthode()  # 1 (explicit super() à l’extérieur de méthode)
 
 Usages courants :
-• External super: super(Class, instance).method() (outside method)
-• Testing: call parent methods from outside class
-• super() function
+• External super: super(Class, instance).méthode() (à l’extérieur de méthode)
+• Testing: call parent méthodes from à l’extérieur de classe
+• super() fonction
 • Advanced usage
 
-Exemple : If class Parent: def method(self): return 1; class Child(Parent): pass; super(Child, Child()).method(), then super(Child, Child()).method() returns 1 because super() peut être appelé outside a method with explicit arguments, specifying the class and instance.
+Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Child(Parent): pass; super(Child, Child()).méthode(), then super(Child, Child()).méthode() retourne 1 car super() peut être appelé à l’extérieur de a méthode avec explicit arguments, specifying the classe and instance.
 `,
-  2429: `The super() function accesses parent attributes even if the child has overridden them. If class Parent: x = 1; class Child(Parent): x = 2; def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() bypasses the child's override and accesses the parent's class attribute. Quand vous use super().x, Python looks in the parent class (Parent) for x, finding Parent.x = 1, not Child.x = 2. Cela permet you to access parent attributes that have been shadowed by child attributes.
+  2429: `Le super() fonction accesses parent attributes even if the child has overridden them. If classe Parent: x = 1; classe Child(Parent): x = 2; def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() bypasses the child's override and accesses the parent's classe attribute. Quand vous use super().x, Python looks in the parent classe (Parent) for x, finding Parent.x = 1, not Child.x = 2. Cela permet you to access parent attributes that have been shadowed by child attributes.
 
 super() bypasses child override:
-• Child().method() returns 1
+• Child().méthode() retourne 1
 • Child has x = 2 (overrides parent)
 • super().x accesses parent attribute
 • super() bypasses child's x = 2
@@ -59954,128 +59931,128 @@ super() bypasses child override:
 • Retourne : 1
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().x
-• super() gets parent class (Parent)
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super().x
+• super() gets parent classe (Parent)
 • super().x accesses Parent.x (not Child.x)
 • Parent.x = 1
-• Retourne : 1 (parent's value, not child's)
+• Retourne : 1 (parent's valeur, not child's)
 
 Exemple :
-class Parent: x = 1
-class Child(Parent):
+classe Parent: x = 1
+classe Child(Parent):
     x = 2  # Overrides parent
-    def method(self):
-        return super().x  # Accesses parent, not child
-Child().method()          # 1 (parent's x, not child's x = 2)
+    def méthode(self):
+        renvoyer super().x  # Accesses parent, not child
+Child().méthode()          # 1 (parent's x, not child's x = 2)
 
 Usages courants :
 • Parent access: super().attr (accesses parent even if child overrides)
 • Override bypass: super() accesses parent attributes
-• super() function
+• super() fonction
 • Inheritance
 
-Exemple : If class Parent: x = 1; class Child(Parent): x = 2; def method(self): return super().x; Child().method(), then Child().method() returns 1 because super() accesses the parent attribute even if the child overrides it, bypassing the child's x = 2 and accessing Parent.x = 1.
+Exemple : If classe Parent: x = 1; classe Child(Parent): x = 2; def méthode(self): renvoyer super().x; Child().méthode(), then Child().méthode() retourne 1 car super() accesses the parent attribute even if the child overrides it, bypassing the child's x = 2 and accessing Parent.x = 1.
 `,
-  2430: `The super() function follows the Method Resolution Order (MRO) and calls the immediate parent in the inheritance chain, not the ultimate ancestor. If class Parent: def method(self): return 1; class Middle(Parent): def method(self): return 2; class Child(Middle): def method(self): return super().method(); Child().method(), then Child().method() returns 2 because super() in Child follows the MRO (Method Resolution Order), which is [Child, Middle, Parent, object]. super() in Child calls the next class in the MRO, which is Middle, not Parent. So super().method() calls Middle.method(), qui returns 2.
+  2430: `Le super() fonction follows the Method Resolution Order (MRO) and calls the immediate parent in the inheritance chain, not the ultimate ancestor. If classe Parent: def méthode(self): renvoyer 1; classe Middle(Parent): def méthode(self): renvoyer 2; classe Child(Middle): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 2 car super() in Child follows the MRO (Method Resolution Order), which is [Child, Middle, Parent, objet]. super() in Child calls the next classe in the MRO, which is Middle, not Parent. So super().méthode() calls Middle.méthode(), qui retourne 2.
 
 super() follows MRO:
-• Child().method() returns 2
+• Child().méthode() retourne 2
 • super() follows Method Resolution Order
 • MRO: Child -> Middle -> Parent
 • super() in Child calls next in MRO: Middle
-• Middle.method() returns 2
+• Middle.méthode() retourne 2
 • Retourne : 2
 
 Comment ça fonctionne :
-• Child().method() calls method on Child instance
-• Child.method() executes: return super().method()
-• super() follows MRO: [Child, Middle, Parent, object]
-• super() in Child calls next in MRO: Middle.method()
-• Middle.method() returns 2
-• Retourne : 2 (Middle's method, not Parent's)
+• Child().méthode() calls méthode on Child instance
+• Child.méthode() executes: renvoyer super().méthode()
+• super() follows MRO: [Child, Middle, Parent, objet]
+• super() in Child calls next in MRO: Middle.méthode()
+• Middle.méthode() retourne 2
+• Retourne : 2 (Middle's méthode, not Parent's)
 
 Exemple :
-class Parent:
-    def method(self):
-        return 1
-class Middle(Parent):
-    def method(self):
-        return 2
-class Child(Middle):
-    def method(self):
-        return super().method()  # Calls Middle, not Parent
-Child().method()              # 2 (calls Middle.method(), not Parent.method())
+classe Parent:
+    def méthode(self):
+        renvoyer 1
+classe Middle(Parent):
+    def méthode(self):
+        renvoyer 2
+classe Child(Middle):
+    def méthode(self):
+        renvoyer super().méthode()  # Calls Middle, not Parent
+Child().méthode()              # 2 (calls Middle.méthode(), not Parent.méthode())
 
 Usages courants :
 • MRO understanding: super() follows Method Resolution Order
 • Immediate parent: super() calls next in MRO, not ultimate ancestor
-• super() function
+• super() fonction
 • Method Resolution Order
 
-Exemple : If class Parent: def method(self): return 1; class Middle(Parent): def method(self): return 2; class Child(Middle): def method(self): return super().method(); Child().method(), then Child().method() returns 2 because super() follows the MRO and calls the immediate parent (Middle), not the ultimate ancestor (Parent).
+Exemple : If classe Parent: def méthode(self): renvoyer 1; classe Middle(Parent): def méthode(self): renvoyer 2; classe Child(Middle): def méthode(self): renvoyer super().méthode(); Child().méthode(), then Child().méthode() retourne 2 car super() follows the MRO and calls the immediate parent (Middle), not the ultimate ancestor (Parent).
 `,
-  2431: `In multiple inheritance, the first parent in the inheritance tuple takes precedence. If class A: x = 1; class B: x = 2; class C(A, B): pass; C.x, then C.x returns 1 because when a class inherits from multiple parents, Python follows the Method Resolution Order (MRO), which prioritizes the leftmost parent. Since A comes before B in class C(A, B), A's attribute x = 1 is found first and used.
+  2431: `Dans multiple inheritance, the first parent in the inheritance tuple takes precedence. If classe A: x = 1; classe B: x = 2; classe C(A, B): pass; C.x, then C.x retourne 1 car when a classe inherits from multiple parents, Python follows the Method Resolution Order (MRO), which prioritizes the leftmost parent. Since A comes avant B in classe C(A, B), A's attribute x = 1 is found first and used.
 
 Multiple inheritance order:
-• C.x returns 1
-• class C(A, B): inherits from A and B
+• C.x retourne 1
+• classe C(A, B): inherits from A and B
 • A is first parent, B is second parent
 • First parent (A) takes precedence
 • A.x = 1 is found first
 • Retourne : 1
 
 Comment ça fonctionne :
-• class C(A, B): creates child with multiple parents
-• Python follows MRO: [C, A, B, object]
+• classe C(A, B): creates child avec multiple parents
+• Python follows MRO: [C, A, B, objet]
 • C.x looks for attribute x
 • Python searches: C.__dict__ (not found) → A.__dict__ (finds x = 1)
 • Retourne : 1 (A's attribute, not B's)
 
 Exemple :
-class A: x = 1
-class B: x = 2
-class C(A, B): pass
+classe A: x = 1
+classe B: x = 2
+classe C(A, B): pass
 C.x                        # 1 (first parent A takes precedence)
 
 Usages courants :
-• Multiple inheritance: class C(A, B): (inherits from multiple parents)
+• Multiple inheritance: classe C(A, B): (inherits from multiple parents)
 • Order matters: first parent in tuple takes precedence
 • Multiple inheritance
 • Method Resolution Order
 
-Exemple : If class A: x = 1; class B: x = 2; class C(A, B): pass; C.x, then C.x returns 1 because in multiple inheritance, the first parent in the tuple takes precedence, so A's x = 1 is found first.
+Exemple : If classe A: x = 1; classe B: x = 2; classe C(A, B): pass; C.x, then C.x retourne 1 car in multiple inheritance, the first parent in the tuple takes precedence, so A's x = 1 is found first.
 `,
-  2432: `The order of parents in multiple inheritance matters - the first parent in the tuple takes precedence. If class A: x = 1; class B: x = 2; class C(B, A): pass; C.x, then C.x returns 2 because when you change the order to class C(B, A), B comes before A, so B's attribute x = 2 is found first and used. The leftmost parent in the inheritance tuple always takes precedence over the rightmost parent.
+  2432: `Le order of parents in multiple inheritance matters - the first parent in the tuple takes precedence. If classe A: x = 1; classe B: x = 2; classe C(B, A): pass; C.x, then C.x retourne 2 car when you change the order to classe C(B, A), B comes avant A, so B's attribute x = 2 is found first and used. The leftmost parent in the inheritance tuple always takes precedence over the rightmost parent.
 
 Order matters in multiple inheritance:
-• C.x returns 2
-• class C(B, A): inherits from B and A
+• C.x retourne 2
+• classe C(B, A): inherits from B and A
 • B is first parent, A is second parent
 • First parent (B) takes precedence
 • B.x = 2 is found first
 • Retourne : 2
 
 Comment ça fonctionne :
-• class C(B, A): creates child with B first, A second
-• Python follows MRO: [C, B, A, object]
+• classe C(B, A): creates child avec B first, A second
+• Python follows MRO: [C, B, A, objet]
 • C.x looks for attribute x
 • Python searches: C.__dict__ (not found) → B.__dict__ (finds x = 2)
 • Retourne : 2 (B's attribute, not A's)
 
 Exemple :
-class A: x = 1
-class B: x = 2
-class C(B, A): pass  # B first
+classe A: x = 1
+classe B: x = 2
+classe C(B, A): pass  # B first
 C.x                        # 2 (first parent B takes precedence)
 
 Usages courants :
-• Multiple inheritance order: class C(Parent1, Parent2): (order matters)
+• Multiple inheritance order: classe C(Parent1, Parent2): (order matters)
 • Precedence: first parent in tuple takes precedence
 • Multiple inheritance
 • Method Resolution Order
 
-Exemple : If class A: x = 1; class B: x = 2; class C(B, A): pass; C.x, then C.x returns 2 because the order matters in multiple inheritance - the first parent in the tuple (B) takes precedence, so B.x = 2 is found first.
+Exemple : If classe A: x = 1; classe B: x = 2; classe C(B, A): pass; C.x, then C.x retourne 2 car the order matters in multiple inheritance - the first parent in the tuple (B) takes precedence, so B.x = 2 is found first.
 `,
   2433: `Method resolution in multiple inheritance follows the inheritance order (MRO). If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because when Python searches for method(), it follows the Method Resolution Order (MRO), which is [C, A, B, object]. It searches in order: C (not found) → A (found, returns 'A'). The first parent (A) in the inheritance tuple is searched first.
 
@@ -60113,181 +60090,181 @@ Usages courants :
 
 Exemple : If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): pass; C().method(), then C().method() returns 'A' because method resolution follows the inheritance order (MRO), and A comes before B, so A.method() is found first.
 `,
-  2434: `The super() function in multiple inheritance follows the Method Resolution Order (MRO). If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() follows the MRO ([C, A, B, object]). When super() est appelé in C.method(), it calls the next class in the MRO after C, which is A. So super().method() calls A.method(), qui returns 'A'.
+  2434: `Le super() fonction in multiple inheritance follows the Method Resolution Order (MRO). If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() follows the MRO ([C, A, B, objet]). When super() est appelé in C.méthode(), it calls the next classe in the MRO après C, which is A. So super().méthode() calls A.méthode(), qui retourne 'A'.
 
 super() follows MRO in multiple inheritance:
-• C().method() returns 'A'
-• super() follows MRO: [C, A, B, object]
+• C().méthode() retourne 'A'
+• super() follows MRO: [C, A, B, objet]
 • super() in C calls next in MRO: A
-• super().method() calls A.method()
-• A.method() returns 'A'
+• super().méthode() calls A.méthode()
+• A.méthode() retourne 'A'
 • Retourne : 'A'
 
 Comment ça fonctionne :
-• C().method() calls method on C instance
-• C.method() executes: return super().method()
-• super() follows MRO: [C, A, B, object]
-• super() in C calls next in MRO: A.method()
-• A.method() returns 'A'
+• C().méthode() calls méthode on C instance
+• C.méthode() executes: renvoyer super().méthode()
+• super() follows MRO: [C, A, B, objet]
+• super() in C calls next in MRO: A.méthode()
+• A.méthode() retourne 'A'
 • Retourne : 'A'
 
 Exemple :
-class A:
-    def method(self):
-        return 'A'
-class B:
-    def method(self):
-        return 'B'
-class C(A, B):
-    def method(self):
-        return super().method()  # Follows MRO: calls A.method()
-C().method()              # 'A' (super() calls next in MRO: A)
+classe A:
+    def méthode(self):
+        renvoyer 'A'
+classe B:
+    def méthode(self):
+        renvoyer 'B'
+classe C(A, B):
+    def méthode(self):
+        renvoyer super().méthode()  # Follows MRO: calls A.méthode()
+C().méthode()              # 'A' (super() calls next in MRO: A)
 
 Usages courants :
 • MRO understanding: super() follows Method Resolution Order
 • Multiple inheritance: super() calls next in MRO
-• super() function
+• super() fonction
 • Method Resolution Order
 
-Exemple : If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance follows the MRO, and the next class after C is A.
+Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() in multiple inheritance follows the MRO, and the next classe après C is A.
 `,
-  2435: `The __bases__ attribute contains all parent classes in multiple inheritance. Si class A: pass; class B: pass; class C(A, B): pass; C.__bases__, then C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>) because __bases__ stores a tuple of all parent classes that a class inherits from. For multiple inheritance, it contains all parents in the order they appear in the inheritance tuple.
+  2435: `Le __bases__ attribute contains all parent classes in multiple inheritance. Si classe A: pass; classe B: pass; classe C(A, B): pass; C.__bases__, then C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>) car __bases__ stores a tuple of all parent classes that a classe inherits from. For multiple inheritance, it contains all parents in the order they appear in the inheritance tuple.
 
-__bases__ with multiple parents:
-• C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>)
+__bases__ avec multiple parents:
+• C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>)
 • __bases__ contains tuple of all parent classes
 • C inherits from A and B
-• Retourne tuple with both parents
-• Retourne : (<class '__main__.A'>, <class '__main__.B'>)
+• Retourne tuple avec both parents
+• Retourne : (<classe '__main__.A'>, <classe '__main__.B'>)
 
 Comment ça fonctionne :
-• class C(A, B): creates child with multiple parents
+• classe C(A, B): creates child avec multiple parents
 • Python stores all parent classes in C.__bases__
 • __bases__ is tuple of parent classes
 • Contains: (A, B) in order
-• Retourne : (<class '__main__.A'>, <class '__main__.B'>)
+• Retourne : (<classe '__main__.A'>, <classe '__main__.B'>)
 
 Exemple :
-class A: pass
-class B: pass
-class C(A, B): pass
-C.__bases__               # (<class '__main__.A'>, <class '__main__.B'>) (all parents)
+classe A: pass
+classe B: pass
+classe C(A, B): pass
+C.__bases__               # (<classe '__main__.A'>, <classe '__main__.B'>) (all parents)
 
 Usages courants :
 • Inheritance inspection: C.__bases__ (see all parent classes)
-• Introspection: check what classes a class inherits from
+• Introspection: check what classes a classe inherits from
 • Multiple inheritance
 • Type system
 
-Exemple : Si class A: pass; class B: pass; class C(A, B): pass; C.__bases__, then C.__bases__ returns (<class '__main__.A'>, <class '__main__.B'>) because __bases__ contains all parent classes in multiple inheritance.
+Exemple : Si classe A: pass; classe B: pass; classe C(A, B): pass; C.__bases__, then C.__bases__ retourne (<classe '__main__.A'>, <classe '__main__.B'>) car __bases__ contains all parent classes in multiple inheritance.
 `,
-  2436: `The Method Resolution Order (MRO) follows C3 linearization, which uses depth-first, left-to-right traversal. Si class A: pass; class B(A): pass; class C(A): pass; class D(B, C): pass; D.mro(), then D.mro() returns [D, B, C, A, object] because C3 linearization processes the inheritance hierarchy: first D (the class itself), then B (leftmost parent), then C (rightmost parent), then A (common ancestor of B and C), then object (base of all classes). Cela assure a consistent, predictable order.
+  2436: `Le Method Resolution Order (MRO) follows C3 linearization, which uses depth-first, left-to-right traversal. Si classe A: pass; classe B(A): pass; classe C(A): pass; classe D(B, C): pass; D.mro(), then D.mro() retourne [D, B, C, A, objet] car C3 linearization processes the inheritance hierarchy: first D (the classe itself), then B (leftmost parent), then C (rightmost parent), then A (common ancestor of B and C), then objet (base of all classes). Cela assure a consistent, predictable order.
 
 C3 linearization MRO:
-• D.mro() returns [D, B, C, A, object]
+• D.mro() retourne [D, B, C, A, objet]
 • MRO follows C3 linearization algorithm
 • Depth-first, left-to-right traversal
-• D -> B -> C -> A -> object
-• Retourne : [D, B, C, A, object]
+• D -> B -> C -> A -> objet
+• Retourne : [D, B, C, A, objet]
 
 Comment ça fonctionne :
 • C3 linearization computes MRO
 • D inherits from B and C (left-to-right: B first, C second)
 • B and C both inherit from A (common ancestor)
-• MRO: D -> B -> C -> A -> object
+• MRO: D -> B -> C -> A -> objet
 • Ensures consistent, predictable order
-• Retourne : [D, B, C, A, object]
+• Retourne : [D, B, C, A, objet]
 
 Exemple :
-class A: pass
-class B(A): pass
-class C(A): pass
-class D(B, C): pass
-D.mro()                     # [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+classe A: pass
+classe B(A): pass
+classe C(A): pass
+classe D(B, C): pass
+D.mro()                     # [<classe '__main__.D'>, <classe '__main__.B'>, <classe '__main__.C'>, <classe '__main__.A'>, <classe 'objet'>]
 
 Usages courants :
-• MRO inspection: Class.mro() (see method resolution order)
-• Understanding inheritance: how Python searches for methods
+• MRO inspection: Class.mro() (see méthode resolution order)
+• Understanding inheritance: how Python searches for méthodes
 • Method Resolution Order
 • C3 linearization
 
-Exemple : Si class A: pass; class B(A): pass; class C(A): pass; class D(B, C): pass; D.mro(), then D.mro() returns [D, B, C, A, object] because MRO follows C3 linearization, which uses depth-first, left-to-right traversal to create a consistent order.
+Exemple : Si classe A: pass; classe B(A): pass; classe C(A): pass; classe D(B, C): pass; D.mro(), then D.mro() retourne [D, B, C, A, objet] car MRO follows C3 linearization, which uses depth-first, left-to-right traversal to create a consistent order.
 `,
-  2437: `The Method Resolution Order determines which method est appelé. If class A: def method(self): return 'A'; class B(A): def method(self): return 'B'; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'B' because the MRO is [D, B, C, A, object]. Python searches for method() in order: D (not found) → B (found, returns 'B'). Since B comes before C in the MRO, B.method() is found first and used, even though C also has method().
+  2437: `Le Method Resolution Order determines which méthode est appelé. If classe A: def méthode(self): renvoyer 'A'; classe B(A): def méthode(self): renvoyer 'B'; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'B' car the MRO is [D, B, C, A, objet]. Python searches for méthode() in order: D (not found) → B (found, retourne 'B'). Since B comes avant C in the MRO, B.méthode() is found first and used, even though C also has méthode().
 
-MRO determines method:
-• D().method() returns 'B'
-• MRO: [D, B, C, A, object]
-• Searches for method() in order
-• Finds method() in B first
-• Uses B.method() qui returns 'B'
+MRO determines méthode:
+• D().méthode() retourne 'B'
+• MRO: [D, B, C, A, objet]
+• Searches for méthode() in order
+• Finds méthode() in B first
+• Uses B.méthode() qui retourne 'B'
 • Retourne : 'B'
 
 Comment ça fonctionne :
-• D().method() calls method on D instance
-• Python follows MRO: [D, B, C, A, object]
-• Searches for method: D (not found) → B (found)
-• Uses B.method() with D instance as self
-• Method executes: return 'B'
+• D().méthode() calls méthode on D instance
+• Python follows MRO: [D, B, C, A, objet]
+• Searches for méthode: D (not found) → B (found)
+• Uses B.méthode() avec D instance as self
+• Method executes: renvoyer 'B'
 • Retourne : 'B'
 
 Exemple :
-class A:
-    def method(self):
-        return 'A'
-class B(A):
-    def method(self):
-        return 'B'
-class C(A):
-    def method(self):
-        return 'C'
-class D(B, C): pass  # B first in MRO
-D().method()              # 'B' (MRO finds B.method() first)
+classe A:
+    def méthode(self):
+        renvoyer 'A'
+classe B(A):
+    def méthode(self):
+        renvoyer 'B'
+classe C(A):
+    def méthode(self):
+        renvoyer 'C'
+classe D(B, C): pass  # B first in MRO
+D().méthode()              # 'B' (MRO finds B.méthode() first)
 
 Usages courants :
-• Method resolution: MRO determines which parent's method est utilisé
-• Multiple inheritance: order determines method resolution
+• Method resolution: MRO determines which parent's méthode est utilisé
+• Multiple inheritance: order determines méthode resolution
 • Method Resolution Order
 • Multiple inheritance
 
-Exemple : If class A: def method(self): return 'A'; class B(A): def method(self): return 'B'; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'B' because the MRO is [D, B, C, A, object], and B.method() is found first.
+Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B(A): def méthode(self): renvoyer 'B'; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'B' car the MRO is [D, B, C, A, objet], and B.méthode() is found first.
 `,
-  2438: `The Method Resolution Order searches through all parents until il trouve a method. If class A: def method(self): return 'A'; class B(A): pass; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'C' because the MRO is [D, B, C, A, object]. Python searches for method() in order: D (not found) → B (not found, B doesn't define method) → C (found, returns 'C'). Since B doesn't have method(), Python continues searching and finds it in C.
+  2438: `Le Method Resolution Order searches through all parents until il trouve a méthode. If classe A: def méthode(self): renvoyer 'A'; classe B(A): pass; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'C' car the MRO is [D, B, C, A, objet]. Python searches for méthode() in order: D (not found) → B (not found, B doesn't define méthode) → C (found, retourne 'C'). Since B doesn't have méthode(), Python continues searching and finds it in C.
 
 MRO continues searching:
-• D().method() returns 'C'
-• MRO: [D, B, C, A, object]
-• Searches for method() in order
+• D().méthode() retourne 'C'
+• MRO: [D, B, C, A, objet]
+• Searches for méthode() in order
 • D (not found) → B (not found) → C (found)
-• Uses C.method() qui returns 'C'
+• Uses C.méthode() qui retourne 'C'
 • Retourne : 'C'
 
 Comment ça fonctionne :
-• D().method() calls method on D instance
-• Python follows MRO: [D, B, C, A, object]
-• Searches for method: D (not found) → B (not found, no method) → C (found)
-• Uses C.method() with D instance as self
-• Method executes: return 'C'
+• D().méthode() calls méthode on D instance
+• Python follows MRO: [D, B, C, A, objet]
+• Searches for méthode: D (not found) → B (not found, no méthode) → C (found)
+• Uses C.méthode() avec D instance as self
+• Method executes: renvoyer 'C'
 • Retourne : 'C'
 
 Exemple :
-class A:
-    def method(self):
-        return 'A'
-class B(A): pass  # No method defined
-class C(A):
-    def method(self):
-        return 'C'
-class D(B, C): pass
-D().method()              # 'C' (MRO finds C.method() after B doesn't have it)
+classe A:
+    def méthode(self):
+        renvoyer 'A'
+classe B(A): pass  # No méthode defined
+classe C(A):
+    def méthode(self):
+        renvoyer 'C'
+classe D(B, C): pass
+D().méthode()              # 'C' (MRO finds C.méthode() après B doesn't have it)
 
 Usages courants :
-• Method resolution: MRO searches all parents until method found
-• Multiple inheritance: method resolution continues through all parents
+• Method resolution: MRO searches all parents until méthode found
+• Multiple inheritance: méthode resolution continues through all parents
 • Method Resolution Order
 • Multiple inheritance
 
-Exemple : If class A: def method(self): return 'A'; class B(A): pass; class C(A): def method(self): return 'C'; class D(B, C): pass; D().method(), then D().method() returns 'C' because the MRO continues searching through all parents, and C.method() is found after B doesn't have it.
+Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B(A): pass; classe C(A): def méthode(self): renvoyer 'C'; classe D(B, C): pass; D().méthode(), then D().méthode() retourne 'C' car the MRO continues searching through all parents, and C.méthode() is found après B doesn't have it.
 `,
   2439: `A child class attribute overrides all parent attributes in multiple inheritance. If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because when a child class defines an attribute with le même name as parent attributes, the child's attribute takes precedence over all parent attributes. The child attribute is in C.__dict__, so it's found first when searching C.x, before checking any parents.
 
@@ -60320,43 +60297,43 @@ Usages courants :
 
 Exemple : If class A: x = 1; class B: x = 2; class C(A, B): x = 3; C.x, then C.x returns 3 because the child class attribute overrides all parent attributes, so the child's value (3) takes precedence over all parents' values.
 `,
-  2440: `The super() function in multiple inheritance calls the next class in the Method Resolution Order (MRO). If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() follows the MRO ([C, A, B, object]). When super() est appelé in C.method(), it calls the next class in the MRO after C, which is A. So super().method() calls A.method(), qui returns 'A', not B.method().
+  2440: `Le super() fonction in multiple inheritance calls the next classe in the Method Resolution Order (MRO). If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() follows the MRO ([C, A, B, objet]). When super() est appelé in C.méthode(), it calls the next classe in the MRO après C, which is A. So super().méthode() calls A.méthode(), qui retourne 'A', not B.méthode().
 
 super() calls next in MRO:
-• C().method() returns 'A'
-• super() follows MRO: [C, A, B, object]
+• C().méthode() retourne 'A'
+• super() follows MRO: [C, A, B, objet]
 • super() in C calls next in MRO: A
-• super().method() calls A.method()
-• A.method() returns 'A'
+• super().méthode() calls A.méthode()
+• A.méthode() retourne 'A'
 • Retourne : 'A'
 
 Comment ça fonctionne :
-• C().method() calls method on C instance
-• C.method() executes: return super().method()
-• super() follows MRO: [C, A, B, object]
-• super() in C calls next in MRO: A.method()
-• A.method() returns 'A'
+• C().méthode() calls méthode on C instance
+• C.méthode() executes: renvoyer super().méthode()
+• super() follows MRO: [C, A, B, objet]
+• super() in C calls next in MRO: A.méthode()
+• A.méthode() retourne 'A'
 • Retourne : 'A'
 
 Exemple :
-class A:
-    def method(self):
-        return 'A'
-class B:
-    def method(self):
-        return 'B'
-class C(A, B):
-    def method(self):
-        return super().method()  # Calls next in MRO: A
-C().method()              # 'A' (super() calls A, not B)
+classe A:
+    def méthode(self):
+        renvoyer 'A'
+classe B:
+    def méthode(self):
+        renvoyer 'B'
+classe C(A, B):
+    def méthode(self):
+        renvoyer super().méthode()  # Calls next in MRO: A
+C().méthode()              # 'A' (super() calls A, not B)
 
 Usages courants :
 • MRO understanding: super() calls next in Method Resolution Order
 • Multiple inheritance: super() follows MRO, not just first parent
-• super() function
+• super() fonction
 • Method Resolution Order
 
-Exemple : If class A: def method(self): return 'A'; class B: def method(self): return 'B'; class C(A, B): def method(self): return super().method(); C().method(), then C().method() returns 'A' because super() in multiple inheritance calls the next class in the MRO after C, which is A.
+Exemple : If classe A: def méthode(self): renvoyer 'A'; classe B: def méthode(self): renvoyer 'B'; classe C(A, B): def méthode(self): renvoyer super().méthode(); C().méthode(), then C().méthode() retourne 'A' car super() in multiple inheritance calls the next classe in the MRO après C, which is A.
 `,
   2441: `Polymorphism is a principle where different types peut être utilisé through le même interface, but each type provides its own implementation. The same method name peut être appelé on different objects, and each object responds appropriately based on its type. Cela permet code to fonctionner avec multiple types without knowing the specific type - "same interface, different behavior." In Python, polymorphism is achieved through method overriding (different classes define le même method with different implementations) and duck typing (if it quacks like a duck, treat it like a duck).
 
@@ -61056,11 +61033,11 @@ Utilisations courantes :
 
 Exemple : If class MyClass: def __init__(self): self.__x = 1; def set_x(self, val): self.__x = val; obj = MyClass(); obj.set_x(2); obj.get_x() if hasattr(obj, 'get_x') else obj._MyClass__x, then it renvoie 2 car setter methods can modify mangled attributes depuis la classe.
 `,
-  2461: `The @property decorator provides controlled read access to attributes. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property converts the method x() into a property, allowing you to access it like an attribute (obj.x instead of obj.x()). The property getter renvoie the value of the attribut protégé _x, providing controlled access while keeping _x protected. C'est a cleaner interface than using getter methods like get_x().
+  2461: `Le @property decorator provides controlled read access to attributes. If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property converts the méthode x() into a property, allowing you to access it like an attribute (obj.x instead of obj.x()). The property getter renvoie the valeur of the attribut protégé _x, providing controlled access while keeping _x protected. C'est a cleaner interface than using getter méthodes like get_x().
 
 Concepts clés (@property) :
 • obj.x renvoie 1
-• @property makes method accessible as attribute
+• @property makes méthode accessible as attribute
 • Property getter renvoie self._x
 • Clean interface: obj.x (not obj.get_x())
 • Résultat : 1
@@ -61068,27 +61045,27 @@ Concepts clés (@property) :
 Comment ça fonctionne :
 • obj.x accesses property
 • Python appelle property getter: @property def x(self)
-• Getter executes: return self._x
-• Retourne attribut protégé value
+• Getter executes: renvoyer self._x
+• Retourne attribut protégé valeur
 • Résultat : 1
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1  # Protected attribute
     @property
     def x(self):
-        return self._x  # Property getter
+        renvoyer self._x  # Property getter
 obj = MyClass()
 obj.x                        # 1 (property access, clean interface)
 
 Utilisations courantes :
-• Controlled access: @property def attr(self): return self._attr
+• Controlled access: @property def attr(self): renvoyer self._attr
 • Clean interface: obj.attr instead of obj.get_attr()
 • Properties
 • Encapsulation
 
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property provides controlled read access, making the method accessible as an attribute.
+Exemple : If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; obj = MyClass(); obj.x, then obj.x renvoie 1 car @property provides controlled read access, making the méthode accessible as an attribute.
 `,
   2462: `Property setters can validate or transform values before storing them. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.setter; def x(self, val): self._x = val * 2; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 10 car the setter multiplies the value by 2 before storing it (self._x = val * 2 = 5 * 2 = 10). Quand vous assign obj.x = 5, the setter est appelé, transforme la valeur (5 * 2 = 10), and stores 10. Cela permet properties to enforce business rules, validate input, or transform data before storage.
 
@@ -61200,9 +61177,9 @@ Utilisations courantes :
 
 Exemple : If class MyClass: @property; def x(self): return 1; @x.setter; def x(self, val): pass; obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 1 car a setter that ne stocke pas the value ne change pas the property, so the getter still renvoie 1.
 `,
-  2465: `The property() function can be created with getter and setter functions as arguments. If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property(get_x, set_x) crée un property where get_x is the getter and set_x is the setter. C'est an alternative syntax to using @property and @x.setter decorators. Quand vous assign obj.x = 5, it calls set_x(5), qui définit self._x = 5. Quand vous access obj.x, it calls get_x(), which renvoie self._x = 5.
+  2465: `Le property() fonction can be created avec getter and setter fonctions as arguments. If classe MyClass: def __init__(self): self._x = 1; def get_x(self): renvoyer self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property(get_x, set_x) crée un property where get_x is the getter and set_x is the setter. C'est an alternative syntax to using @property and @x.setter decorators. Quand vous assign obj.x = 5, it calls set_x(5), qui définit self._x = 5. Quand vous access obj.x, it calls get_x(), which renvoie self._x = 5.
 
-property() with getter and setter:
+property() avec getter and setter:
 • obj.x = 5 calls set_x(5)
 • set_x sets self._x = 5
 • obj.x calls get_x()
@@ -61211,19 +61188,19 @@ property() with getter and setter:
 
 Comment ça fonctionne :
 • property(get_x, set_x) creates property
-• get_x is getter function
-• set_x is setter function
+• get_x is getter fonction
+• set_x is setter fonction
 • obj.x = 5 calls set_x(5)
 • set_x sets self._x = 5
 • obj.x calls get_x()
 • Résultat : 5
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1
     def get_x(self):
-        return self._x
+        renvoyer self._x
     def set_x(self, val):
         self._x = val
     x = property(get_x, set_x)  # Alternative to @property
@@ -61233,13 +61210,13 @@ obj.x                        # 5 (calls get_x())
 
 Utilisations courantes :
 • Property creation: x = property(getter, setter) (alternative syntax)
-• Functional style: property() function instead of decorators
+• Functional style: property() fonction instead of decorators
 • Properties
 • Encapsulation
 
-Exemple : If class MyClass: def __init__(self): self._x = 1; def get_x(self): return self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property() can be created with getter and setter functions, and the setter stocke le value.
+Exemple : If classe MyClass: def __init__(self): self._x = 1; def get_x(self): renvoyer self._x; def set_x(self, val): self._x = val; x = property(get_x, set_x); obj = MyClass(); obj.x = 5; obj.x, then obj.x renvoie 5 car property() can be created avec getter and setter fonctions, and the setter stocke le valeur.
 `,
-  2466: `The @x.deleter decorator defines a property deleter that provides controlled deletion. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes, allowing you to add cleanup logic or validation before deletion.
+  2466: `Le @x.deleter decorator defines a property deleter that provides controlled deletion. If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter defines what happens when you delete the property, and del obj.x appelle le deleter, qui supprime self._x. This provides controlled deletion of attributes, allowing you to add cleanup logic or validation avant deletion.
 
 Concepts clés (@x.deleter) :
 • del obj.x calls deleter
@@ -61257,12 +61234,12 @@ Comment ça fonctionne :
 • Résultat : False
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self._x = 1
     @property
     def x(self):
-        return self._x
+        renvoyer self._x
     @x.deleter
     def x(self):
         del self._x  # Controlled deletion
@@ -61276,7 +61253,7 @@ Utilisations courantes :
 • Properties
 • Encapsulation
 
-Exemple : If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter provides controlled deletion, and del obj.x appelle le deleter, qui supprime self._x.
+Exemple : If classe MyClass: def __init__(self): self._x = 1; @property; def x(self): renvoyer self._x; @x.deleter; def x(self): del self._x; obj = MyClass(); del obj.x; hasattr(obj, '_x'), then hasattr(obj, '_x') renvoie False car @x.deleter provides controlled deletion, and del obj.x appelle le deleter, qui supprime self._x.
 `,
   2467: `A property sans setter is lecture seule - you ne peut pas assigner to it. If class MyClass: def __init__(self): self._x = 1; @property; def x(self): return self._x; obj = MyClass(); obj.x = 2, then obj.x = 2 lève an AttributeError car the property only a un getter (defined by @property), but pas de setter. To make a property writable, you need to define a setter using @x.setter. Without a setter, the property is lecture seule, and any attempt to assign to it lève an AttributeError.
 
@@ -61562,37 +61539,37 @@ Utilisations courantes :
 
 Exemple : If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): @abstractmethod; def method(self): pass; Child(), then Child() lève a TypeError car a child keeping the method abstract still ne peut pas être instanciée - the method must be implemented (not just marked abstract) for the class to be concrete.
 `,
-  2475: `The __abstractmethods__ attribute contains a frozenset of méthode abstraite names. If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'method'}) car __abstractmethods__ stocke le names of all abstract methods in the class. C'est used en interne by Python to determine if a class is abstract and can be instantiated. When all methods in __abstractmethods__ are implemented, the class becomes concrete.
+  2475: `Le __abstractmethods__ attribute contains a frozenset of méthode abstraite names. If from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'méthode'}) car __abstractmethods__ stocke le names of all abstract méthodes in the classe. C'est used en interne by Python to determine if a classe is abstract and can be instantiated. When all méthodes in __abstractmethods__ are implemented, the classe becomes concrete.
 
 Concepts clés (__abstractmethods__) :
-• MyClass.__abstractmethods__ renvoie frozenset({'method'})
-• Contains names of abstract methods
-• Used to check if class is abstract
-• Empty when all methods implemented
-• Résultat : frozenset({'method'})
+• MyClass.__abstractmethods__ renvoie frozenset({'méthode'})
+• Contains names of abstract méthodes
+• Used to check if classe is abstract
+• Empty when all méthodes implemented
+• Résultat : frozenset({'méthode'})
 
 Comment ça fonctionne :
-• @abstractmethod def method(self) marks method as abstract
-• Python adds 'method' to __abstractmethods__
+• @abstractmethod def méthode(self) marks méthode as abstract
+• Python adds 'méthode' to __abstractmethods__
 • __abstractmethods__ is frozenset of méthode abstraite names
-• Contains: {'method'}
-• Résultat : frozenset({'method'})
+• Contains: {'méthode'}
+• Résultat : frozenset({'méthode'})
 
 Exemple :
 from abc import ABC, abstractmethod
-class MyClass(ABC):
+classe MyClass(ABC):
     @abstractmethod
-    def method(self):
+    def méthode(self):
         pass
-MyClass.__abstractmethods__  # frozenset({'method'}) (abstract methods)
+MyClass.__abstractmethods__  # frozenset({'méthode'}) (abstract méthodes)
 
 Utilisations courantes :
-• Méthode abstraite inspection: Class.__abstractmethods__ (see abstract methods)
-• Introspection: check which methods are abstract
+• Méthode abstraite inspection: Class.__abstractmethods__ (see abstract méthodes)
+• Introspection: check which méthodes are abstract
 • Abstract base classes
 • Type system
 
-Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'method'}) car __abstractmethods__ contains a set of méthode abstraite names.
+Exemple : If from abc import ABC, abstractmethod; classe MyClass(ABC): @abstractmethod; def méthode(self): pass; MyClass.__abstractmethods__, then MyClass.__abstractmethods__ renvoie frozenset({'méthode'}) car __abstractmethods__ contains a set of méthode abstraite names.
 `,
   2476: `A classe enfant that implements all abstract methods has an empty __abstractmethods__ set. If from abc import ABC, abstractmethod; class Parent(ABC): @abstractmethod; def method(self): pass; class Child(Parent): def method(self): return 1; Child.__abstractmethods__, then Child.__abstractmethods__ renvoie frozenset() car Child implements the méthode abstraite method(), so it's no longer abstract. When a class implements all abstract methods, Python removes them from __abstractmethods__, making it empty. Cela indique the class is concrete and can be instantiated.
 
@@ -61766,9 +61743,9 @@ Utilisations courantes :
 
 Exemple : If from abc import ABC, abstractmethod; class MyClass(ABC): @abstractmethod; def method(self): pass; isinstance(MyClass(), MyClass), then it lève a TypeError car you can't create an instance of an abstract class to test isinstance() - abstract classes ne peut pas être instanciée.
 `,
-  2481: `The isinstance() function renvoie True if an instance is of a class or any of its parent classes. If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() vérifie toute la chaîne d'héritage. Since Child hérite de Parent, an instance of Child is also considered an instance of Parent. C'est different from type() ==, which only checks the exact type.
+  2481: `Le isinstance() fonction renvoie True if an instance is of a classe or any of its parent classes. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() vérifie toute la chaîne d'héritage. Since Child hérite de Parent, an instance of Child is also considered an instance of Parent. C'est different from type() ==, which only checks the exact type.
 
-isinstance() with inheritance:
+isinstance() avec inheritance:
 • isinstance(Child(), Parent) renvoie True
 • isinstance() checks chaîne d'héritage
 • Child() is instance of Child
@@ -61784,26 +61761,26 @@ Comment ça fonctionne :
 • Résultat : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Child(), Parent)   # True (Child inherits from Parent)
 isinstance(Child(), Child)    # True (Child() is instance of Child)
 
 Utilisations courantes :
 • Type checking: if isinstance(obj, Parent): ... (fonctionne avec inheritance)
 • Polymorphism: isinstance(obj, BaseClass) (checks base classes)
-• isinstance() function
+• isinstance() fonction
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() renvoie True for parent classes - it vérifie toute la chaîne d'héritage.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Parent), then isinstance(Child(), Parent) renvoie True car isinstance() renvoie True for parent classes - it vérifie toute la chaîne d'héritage.
 `,
-  2482: `The isinstance() function renvoie True if an instance is of its own class. If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car Child() creates an instance of Child, and isinstance() checks if the instance is of the specified class. An instance is always an instance of its own class, so this always renvoie True.
+  2482: `Le isinstance() fonction renvoie True if an instance is of its own classe. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car Child() creates an instance of Child, and isinstance() checks if the instance is of the specified classe. An instance is always an instance of its own classe, so this always renvoie True.
 
-isinstance() with own class:
+isinstance() avec own classe:
 • isinstance(Child(), Child) renvoie True
 • Child() creates instance of Child
 • isinstance() checks if instance is of Child
-• Instance is of its own class
+• Instance is of its own classe
 • Résultat : True
 
 Comment ça fonctionne :
@@ -61813,22 +61790,22 @@ Comment ça fonctionne :
 • Résultat : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
-isinstance(Child(), Child)    # True (instance is of its own class)
-isinstance(Child(), Parent)    # True (also of parent class)
+classe Parent: pass
+classe Child(Parent): pass
+isinstance(Child(), Child)    # True (instance is of its own classe)
+isinstance(Child(), Parent)    # True (also of parent classe)
 
 Utilisations courantes :
-• Type checking: if isinstance(obj, Class): ... (check own class)
-• Instance validation: isinstance(instance, Class) (always True for own class)
-• isinstance() function
+• Type checking: if isinstance(obj, Class): ... (check own classe)
+• Instance validation: isinstance(instance, Class) (always True for own classe)
+• isinstance() fonction
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car isinstance() renvoie True for the instance's own class - an instance is always an instance of its own class.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), Child), then isinstance(Child(), Child) renvoie True car isinstance() renvoie True for the instance's own classe - an instance is always an instance of its own classe.
 `,
-  2483: `The isinstance() function can check if an instance is of any type in a tuple. If class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() checks if the instance is of any type in the tuple. Since Child() is an instance of Parent (through inheritance), it matches Parent in the tuple, so it renvoie True. C'est useful for checking if an object is one of several types.
+  2483: `Le isinstance() fonction can check if an instance is of any type in a tuple. If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() checks if the instance is of any type in the tuple. Since Child() is an instance of Parent (through inheritance), it matches Parent in the tuple, so it renvoie True. C'est useful for checking if an objet is one of several types.
 
-isinstance() with tuple:
+isinstance() avec tuple:
 • isinstance(Child(), (Parent, str)) renvoie True
 • isinstance() checks if instance is of any type in tuple
 • Child() is instance of Parent (inheritance)
@@ -61843,20 +61820,20 @@ Comment ça fonctionne :
 • Résultat : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Child(), (Parent, str))  # True (matches Parent)
 isinstance(Child(), (str, int))     # False (matches neither)
 
 Utilisations courantes :
 • Multiple type checking: isinstance(obj, (Type1, Type2, Type3))
-• Type validation: check if object is one of several types
-• isinstance() function
+• Type validation: check if objet is one of several types
+• isinstance() fonction
 • Type system
 
-Exemple : If class Parent: pass; class Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Child(), (Parent, str)), then isinstance(Child(), (Parent, str)) renvoie True car isinstance() can check multiple types using a tuple, and Child() is an instance of Parent.
 `,
-  2484: `The isinstance() function ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant. If class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car Parent() creates an instance of Parent, not Child. Inheritance only works one way - a child is an instance of the parent, but a parent is not an instance of the child. isinstance() checks if the instance is of the specified class or any of its ancestors, not descendants.
+  2484: `Le isinstance() fonction ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant. If classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car Parent() creates an instance of Parent, not Child. Inheritance only works one way - a child is an instance of the parent, but a parent is not an instance of the child. isinstance() checks if the instance is of the specified classe or any of its ancestors, not descendants.
 
 isinstance() ne fonctionne pas backwards:
 • isinstance(Parent(), Child) renvoie False
@@ -61873,22 +61850,22 @@ Comment ça fonctionne :
 • Résultat : False
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 isinstance(Parent(), Child)    # False (parent not instance of child)
 isinstance(Child(), Parent)    # True (child is instance of parent)
 
 Utilisations courantes :
 • Understanding inheritance: isinstance() only works forward (child -> parent)
 • Type checking: parent instances are not instances of classes enfant
-• isinstance() function
+• isinstance() fonction
 • Inheritance
 
-Exemple : If class Parent: pass; class Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car isinstance() ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; isinstance(Parent(), Child), then isinstance(Parent(), Child) renvoie False car isinstance() ne fonctionne pas à l'inverse - a instance du parent is not an instance of a classe enfant.
 `,
-  2485: `The issubclass() function checks if the first class est une sous-classe de the second class. If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car Child hérite de Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship between classes, returning True if the first class hérite de (or is le même que) the second class.
+  2485: `Le issubclass() fonction checks if the first classe est une sous-classe de the second classe. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car Child hérite de Parent, making Child a subclass of Parent. issubclass() checks the inheritance relationship entre classes, returning True if the first classe hérite de (or is le même que) the second classe.
 
-issubclass() function:
+issubclass() fonction:
 • issubclass(Child, Parent) renvoie True
 • issubclass() checks if Child is subclass of Parent
 • Child hérite de Parent
@@ -61896,25 +61873,25 @@ issubclass() function:
 • Résultat : True
 
 Comment ça fonctionne :
-• class Child(Parent): creates child inheriting from Parent
+• classe Child(Parent): creates child inheriting from Parent
 • issubclass(Child, Parent) checks inheritance
 • Child is indeed a subclass of Parent
 • Résultat : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Child, Parent)     # True (Child is subclass of Parent)
 
 Utilisations courantes :
 • Inheritance check: issubclass(Child, Parent) (check if subclass)
 • Type checking: if issubclass(cls, Parent): ...
-• issubclass() function
+• issubclass() fonction
 • Inheritance
 
-Exemple : If class Parent: pass; class Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car issubclass() checks if the first class est une sous-classe de the second class, and Child hérite de Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, Parent), then issubclass(Child, Parent) renvoie True car issubclass() checks if the first classe est une sous-classe de the second classe, and Child hérite de Parent.
 `,
-  2486: `The issubclass() function ne fonctionne pas à l'inverse - a parent is not a subclass of a child. If class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car Parent n'hérite pas from Child - inheritance only works one way. Child est une sous-classe de Parent, but Parent is not a subclass of Child. issubclass() checks if the first class hérite de the second class, not the other way around.
+  2486: `Le issubclass() fonction ne fonctionne pas à l'inverse - a parent is not a subclass of a child. If classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car Parent n'hérite pas from Child - inheritance only works one way. Child est une sous-classe de Parent, but Parent is not a subclass of Child. issubclass() checks if the first classe hérite de the second classe, not the other way around.
 
 issubclass() ne fonctionne pas backwards:
 • issubclass(Parent, Child) renvoie False
@@ -61931,24 +61908,24 @@ Comment ça fonctionne :
 • Résultat : False
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Parent, Child)     # False (parent not subclass of child)
 issubclass(Child, Parent)     # True (child is subclass of parent)
 
 Utilisations courantes :
 • Understanding inheritance: issubclass() only works forward (child -> parent)
 • Type checking: parent classes are not subclasses of classes enfant
-• issubclass() function
+• issubclass() fonction
 • Inheritance
 
-Exemple : If class Parent: pass; class Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car issubclass() ne fonctionne pas à l'inverse - a parent is not a subclass of a child.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Parent, Child), then issubclass(Parent, Child) renvoie False car issubclass() ne fonctionne pas à l'inverse - a parent is not a subclass of a child.
 `,
-  2487: `The issubclass() function can check if a class est une sous-classe de any class in a tuple. If class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() checks if Child est une sous-classe de any class in the tuple. Since Child hérite de Parent, it matches Parent in the tuple, so it renvoie True. C'est useful for checking if a class hérite de one of several base classes.
+  2487: `Le issubclass() fonction can check if a classe est une sous-classe de any classe in a tuple. If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() checks if Child est une sous-classe de any classe in the tuple. Since Child hérite de Parent, it matches Parent in the tuple, so it renvoie True. C'est useful for checking if a classe hérite de one of several base classes.
 
-issubclass() with tuple:
+issubclass() avec tuple:
 • issubclass(Child, (Parent, str)) renvoie True
-• issubclass() checks if Child is subclass of any class in tuple
+• issubclass() checks if Child is subclass of any classe in tuple
 • Child hérite de Parent
 • Matches Parent in tuple
 • Résultat : True
@@ -61957,24 +61934,24 @@ Comment ça fonctionne :
 • issubclass(Child, (Parent, str)) checks multiple base classes
 • Checks if Child is subclass of Parent (True)
 • Or subclass of str (False)
-• Retourne True if matches any class in tuple
+• Retourne True if matches any classe in tuple
 • Résultat : True
 
 Exemple :
-class Parent: pass
-class Child(Parent): pass
+classe Parent: pass
+classe Child(Parent): pass
 issubclass(Child, (Parent, str))  # True (Child is subclass of Parent)
 issubclass(Child, (str, int))      # False (Child is not subclass of str or int)
 
 Utilisations courantes :
-• Multiple base class checking: issubclass(Class, (Base1, Base2, Base3))
-• Type validation: check if class hérite de one of several bases
-• issubclass() function
+• Multiple base classe checking: issubclass(Class, (Base1, Base2, Base3))
+• Type validation: check if classe hérite de one of several bases
+• issubclass() fonction
 • Inheritance
 
-Exemple : If class Parent: pass; class Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() can check multiple base classes using a tuple, and Child est une sous-classe de Parent.
+Exemple : If classe Parent: pass; classe Child(Parent): pass; issubclass(Child, (Parent, str)), then issubclass(Child, (Parent, str)) renvoie True car issubclass() can check multiple base classes using a tuple, and Child est une sous-classe de Parent.
 `,
-  2488: `The issubclass() function vérifie toute la chaîne d'héritage, not just direct parents. Si class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() checks if C est une sous-classe de A through the entire chaîne d'héritage. Even though C directly hérite de B (not A), C is still a subclass of A car B hérite de A, creating a chain: C -> B -> A. issubclass() follows this entire chain.
+  2488: `Le issubclass() fonction vérifie toute la chaîne d'héritage, not just direct parents. Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() checks if C est une sous-classe de A through the entire chaîne d'héritage. Even though C directly hérite de B (not A), C is still a subclass of A car B hérite de A, creating a chain: C -> B -> A. issubclass() follows this entire chain.
 
 issubclass() checks entire chain:
 • issubclass(C, A) renvoie True
@@ -61992,21 +61969,21 @@ Comment ça fonctionne :
 • Résultat : True
 
 Exemple :
-class A: pass
-class B(A): pass
-class C(B): pass
+classe A: pass
+classe B(A): pass
+classe C(B): pass
 issubclass(C, A)              # True (C is subclass of A through B)
 issubclass(C, B)              # True (C directly inherits from B)
 
 Utilisations courantes :
 • Chaîne d'héritage: issubclass() checks entire chain, not just direct parent
-• Type checking: check if class hérite de ancestor
-• issubclass() function
+• Type checking: check if classe hérite de ancestor
+• issubclass() fonction
 • Inheritance
 
-Exemple : Si class A: pass; class B(A): pass; class C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() vérifie toute la chaîne d'héritage, and C est une sous-classe de A through B.
+Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; issubclass(C, A), then issubclass(C, A) renvoie True car issubclass() vérifie toute la chaîne d'héritage, and C est une sous-classe de A through B.
 `,
-  2489: `The isinstance() function vérifie toute la chaîne d'héritage, not just the direct class. Si class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() checks if the instance is of A through the entire chaîne d'héritage. Even though C() is an instance of C (not directly A), it's also an instance of A car C hérite de B, which hérite de A, creating a chain: C -> B -> A. isinstance() follows this entire chain.
+  2489: `Le isinstance() fonction vérifie toute la chaîne d'héritage, not just the direct classe. Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() checks if the instance is of A through the entire chaîne d'héritage. Even though C() is an instance of C (not directly A), it's also an instance of A car C hérite de B, which hérite de A, creating a chain: C -> B -> A. isinstance() follows this entire chain.
 
 isinstance() checks entire chain:
 • isinstance(C(), A) renvoie True
@@ -62025,22 +62002,22 @@ Comment ça fonctionne :
 • Résultat : True
 
 Exemple :
-class A: pass
-class B(A): pass
-class C(B): pass
+classe A: pass
+classe B(A): pass
+classe C(B): pass
 isinstance(C(), A)             # True (C() is instance of A through B)
 isinstance(C(), B)             # True (C() is instance of B)
 isinstance(C(), C)             # True (C() is instance of C)
 
 Utilisations courantes :
-• Chaîne d'héritage: isinstance() checks entire chain, not just direct class
-• Type checking: check if instance is of ancestor class
-• isinstance() function
+• Chaîne d'héritage: isinstance() checks entire chain, not just direct classe
+• Type checking: check if instance is of ancestor classe
+• isinstance() fonction
 • Inheritance
 
-Exemple : Si class A: pass; class B(A): pass; class C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() vérifie toute la chaîne d'héritage, and C() is an instance of A through B.
+Exemple : Si classe A: pass; classe B(A): pass; classe C(B): pass; isinstance(C(), A), then isinstance(C(), A) renvoie True car isinstance() vérifie toute la chaîne d'héritage, and C() is an instance of A through B.
 `,
-  2490: `In héritage multiple, une classe enfant est une sous-classe de tous its parent classes. Si class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), then issubclass(C, A) and issubclass(C, B) renvoie True car C hérite de both A and B, making C a subclass of both. In héritage multiple, the child hérite de all parents, so it's a subclass of all of them. Both issubclass(C, A) and issubclass(C, B) return True, so the and expression renvoie True.
+  2490: `Dans héritage multiple, une classe enfant est une sous-classe de tous its parent classes. Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), then issubclass(C, A) and issubclass(C, B) renvoie True car C hérite de both A and B, making C a subclass of both. In héritage multiple, the child hérite de all parents, so it's a subclass of all of them. Both issubclass(C, A) and issubclass(C, B) renvoyer True, so the and expression renvoie True.
 
 Concepts clés (héritage multiple) :
 • issubclass(C, A) and issubclass(C, B) renvoie True
@@ -62051,30 +62028,30 @@ Concepts clés (héritage multiple) :
 • Résultat : True
 
 Comment ça fonctionne :
-• class C(A, B): creates child with multiple parents
+• classe C(A, B): creates child avec multiple parents
 • issubclass(C, A) checks if C is subclass of A (True)
 • issubclass(C, B) checks if C is subclass of B (True)
-• Both return True
+• Both renvoyer True
 • and expression: True and True = True
 • Résultat : True
 
 Exemple :
-class A: pass
-class B: pass
-class C(A, B): pass  # Multiple inheritance
+classe A: pass
+classe B: pass
+classe C(A, B): pass  # Multiple inheritance
 issubclass(C, A)              # True (C is subclass of A)
 issubclass(C, B)              # True (C is subclass of B)
 issubclass(C, A) and issubclass(C, B)  # True (both True)
 
 Utilisations courantes :
 • Concepts clés (héritage multiple) : child is subclass of all parents
-• Type checking: check if class hérite de multiple bases
-• issubclass() function
+• Type checking: check if classe hérite de multiple bases
+• issubclass() fonction
 • Héritage multiple
 
-Exemple : Si class A: pass; class B: pass; class C(A, B): pass; issubclass(C, A) and issubclass(C, B), then it renvoie True car in héritage multiple, the child est une sous-classe de all parents - C hérite de both A and B, so it's a subclass of both.
+Exemple : Si classe A: pass; classe B: pass; classe C(A, B): pass; issubclass(C, A) and issubclass(C, B), then it renvoie True car in héritage multiple, the child est une sous-classe de all parents - C hérite de both A and B, so it's a subclass of both.
 `,
-  2491: `The super().__init__() call initialise le parent attributes in the classe enfant. If class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() appelle le __init__ du parent, qui définit self.x = 1. Then the child's __init__ sets self.y = 2. Cela assure both parent and child attributes are initialized correctly. Without super().__init__(), only self.y would be set, and obj.x would raise an AttributeError.
+  2491: `Le super().__init__() call initialise le parent attributes in the classe enfant. If classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() appelle le __init__ du parent, qui définit self.x = 1. Then the child's __init__ sets self.y = 2. Cela assure both parent and child attributes are initialized correctly. Without super().__init__(), only self.y would be set, and obj.x would raise an AttributeError.
 
 super().__init__() initializes parent:
 • [obj.x, obj.y] renvoie [1, 2]
@@ -62094,10 +62071,10 @@ Comment ça fonctionne :
 • Résultat : [1, 2]
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self):
         self.x = 1
-class Child(MyClass):
+classe Child(MyClass):
     def __init__(self):
         super().__init__()  # Initializes parent
         self.y = 2
@@ -62105,16 +62082,16 @@ obj = Child()
 [obj.x, obj.y]              # [1, 2] (both initialized)
 
 Utilisations courantes :
-• Parent initialization: def __init__(self): super().__init__(); self.child_attr = value
+• Parent initialization: def __init__(self): super().__init__(); self.child_attr = valeur
 • Constructor chaining: ensure parent attributes are initialized
-• super() function
+• super() fonction
 • Object initialization
 
-Exemple : If class MyClass: def __init__(self): self.x = 1; class Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() initialise le parent attributes, ensuring both parent and child attributes are set.
+Exemple : If classe MyClass: def __init__(self): self.x = 1; classe Child(MyClass): def __init__(self): super().__init__(); self.y = 2; obj = Child(); [obj.x, obj.y], then [obj.x, obj.y] renvoie [1, 2] car super().__init__() initialise le parent attributes, ensuring both parent and child attributes are set.
 `,
-  2492: `The super().__init__() call can transmettre les arguments to the parent's __init__ method. If class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car Child.__init__ receives arguments (1, 2), calls super().__init__(1) qui passe x = 1 to MyClass.__init__, setting self.x = 1. Then Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes with specific values passé à the child's constructor.
+  2492: `Le super().__init__() call can transmettre les arguments to the parent's __init__ méthode. If classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car Child.__init__ receives arguments (1, 2), calls super().__init__(1) qui passe x = 1 to MyClass.__init__, setting self.x = 1. Then Child.__init__ sets self.y = 2. Cela permet the child to initialize parent attributes avec specific valeurs passé à the child's constructor.
 
-super().__init__() with arguments:
+super().__init__() avec arguments:
 • Child(1, 2).x renvoie 1
 • Child(1, 2) calls Child.__init__(1, 2)
 • Child.__init__ calls super().__init__(1) (passes x)
@@ -62131,22 +62108,22 @@ Comment ça fonctionne :
 • Child(1, 2).x renvoie 1
 
 Exemple :
-class MyClass:
+classe MyClass:
     def __init__(self, x):
         self.x = x
-class Child(MyClass):
+classe Child(MyClass):
     def __init__(self, x, y):
         super().__init__(x)  # Passes x to parent
         self.y = y
-Child(1, 2).x                # 1 (parent __init__ sets with x=1)
+Child(1, 2).x                # 1 (parent __init__ sets avec x=1)
 
 Utilisations courantes :
 • Parent initialization: def __init__(self, x, y): super().__init__(x); self.y = y
 • Constructor chaining: transmettre les arguments to parent __init__
-• super() function
+• super() fonction
 • Object initialization
 
-Exemple : If class MyClass: def __init__(self, x): self.x = x; class Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car super().__init__() transmet les arguments to the parent, so x = 1 est passé to MyClass.__init__, setting self.x = 1.
+Exemple : If classe MyClass: def __init__(self, x): self.x = x; classe Child(MyClass): def __init__(self, x, y): super().__init__(x); self.y = y; Child(1, 2).x, then Child(1, 2).x renvoie 1 car super().__init__() transmet les arguments to the parent, so x = 1 est passé to MyClass.__init__, setting self.x = 1.
 `,
   2493: `A grandchild class hérite de its immediate parent, not from the grandparent when there's an override. If class MyClass: x = 1; class Child(MyClass): x = 2; class GrandChild(Child): pass; GrandChild.x, then GrandChild.x renvoie 2 car GrandChild hérite de Child (its immediate parent), and Child has x = 2. The chaîne d'héritage is GrandChild -> Child -> MyClass, and when searching for x, Python finds it in Child first (x = 2), so it uses that value, not MyClass's x = 1.
 
@@ -63024,53 +63001,53 @@ class B(A):
 class B(A):
     def __init__(self):
         super().__init__()  # Suit le MRO correctement`,
-  2533: `The cooperative multi-init pattern solves the problem of passing different arguments to different classes in a multiple inheritance chain.
+  2533: `Le cooperative multi-init pattern solves the problem of passing different arguments to different classes in a multiple inheritance chain.
 
 Concepts clés :
-• Each class accepts **kwargs in __init__
-• Each class extracts (pops) seulement le arguments it needs
+• Each classe accepts **kwargs in __init__
+• Each classe extracts (pops) seulement le arguments it needs
 • Remaining kwargs are forwarded to super().__init__(**kw)
-• object.__init__() receives empty kwargs at the end
+• objet.__init__() receives empty kwargs at the end
 
 Comment ça fonctionne :
-• class A: def __init__(self, **kw): self.a = kw.pop("a", 0); super().__init__(**kw)
-• class B: def __init__(self, **kw): self.b = kw.pop("b", 0); super().__init__(**kw)
-• class C(A, B): def __init__(self, **kw): super().__init__(**kw)
-• C(a=1, b=2) → A pops a=1, passes b=2 to B → B pops b=2, passes {} to object
+• classe A: def __init__(self, **kw): self.a = kw.pop("a", 0); super().__init__(**kw)
+• classe B: def __init__(self, **kw): self.b = kw.pop("b", 0); super().__init__(**kw)
+• classe C(A, B): def __init__(self, **kw): super().__init__(**kw)
+• C(a=1, b=2) → A pops a=1, passes b=2 to B → B pops b=2, passes {} to objet
 
 Exemple :
-class A:
+classe A:
     def __init__(self, **kw):
         self.a = kw.pop("a", 0)
         super().__init__(**kw)
-class B:
+classe B:
     def __init__(self, **kw):
         self.b = kw.pop("b", 0)
         super().__init__(**kw)
-class C(A, B):
+classe C(A, B):
     pass
 c = C(a=10, b=20)
 c.a  # 10
 c.b  # 20`,
-  2534: `The key rule of cooperative inheritance is that each class in the MRO chain must cooperate by forwarding unhandled arguments.
+  2534: `Le key rule of cooperative inheritance is that each classe in the MRO chain must cooperate by forwarding unhandled arguments.
 
 Concepts clés :
-• Each class pops seulement le keyword arguments it needs
+• Each classe pops seulement le keyword arguments it needs
 • All remaining kwargs are forwarded via super().__init__(**kw)
-• Cela assure every class in the MRO gets its required arguments
-• object.__init__() at the end should receive no extra kwargs
+• Cela assure every classe in the MRO gets its required arguments
+• objet.__init__() at the end should receive no extra kwargs
 
 Comment ça fonctionne :
 • Class pops its args: self.x = kw.pop("x", default)
 • Forwards the rest: super().__init__(**kw)
-• Next class in MRO does le même
-• Eventually object.__init__() is reached with empty kwargs
+• Next classe in MRO does le même
+• Eventually objet.__init__() is reached avec empty kwargs
 
 Pourquoi c'est important :
 • Without this pattern, multiple inheritance __init__ conflicts are hard to resolve
-• Each class only needs to know its own arguments
-• Adding a new class to the hierarchy doesn't require modifying existing classes
-• The MRO determines which class processes kwargs in which order`,
+• Each classe only needs to know its own arguments
+• Adding a new classe to the hierarchy doesn't require modifying existing classes
+• The MRO determines which classe processes kwargs in which order`,
   2535: `This question traces the full super() call chain in a diamond, showing how each class contributes to the final list.
 
 Concepts clés :
@@ -63157,16 +63134,16 @@ Exemple :
 app = App()
 app.log("hello")    # "LOG: hello"
 app.log("started")  # "LOG: started"`,
-  2539: `The JSONMixin provides serialization capabilities to any class that uses it. json.dumps produit un JSON-formatted string with double quotes.
+  2539: `Le JSONMixin provides serialization capabilities to any classe that uses it. json.dumps produit un JSON-formatted string avec double quotes.
 
 Concepts clés :
-• self.__dict__ retourne le instance's attribute dictionary: {"name": "Alice"}
+• self.__dict__ retourne le instance's attribute dictionnaire: {"name": "Alice"}
 • json.dumps() converts a Python dict to a JSON string
 • JSON always uses double quotes for strings
-• The mixin can be added to any class to provide to_json()
+• The mixin can be added to any classe to provide to_json()
 
 Comment ça fonctionne :
-• User("Alice") creates an instance with self.name = "Alice"
+• User("Alice") creates an instance avec self.name = "Alice"
 • self.__dict__ = {"name": "Alice"}
 • json.dumps({"name": "Alice"}) = '{"name": "Alice"}'
 • Note : JSON uses double quotes, Python repr uses single quotes
@@ -63174,7 +63151,7 @@ Comment ça fonctionne :
 Exemple :
 u = User("Alice")
 u.__dict__     # {'name': 'Alice'}
-u.to_json()    # '{"name": "Alice"}'  (JSON string with double quotes)`,
+u.to_json()    # '{"name": "Alice"}'  (JSON string avec double quotes)`,
   2540: `By convention and for correctness, mixins are listed avant le main parent class in the inheritance list.
 
 Concepts clés :
@@ -63250,23 +63227,23 @@ class C(A, B): pass
 
 C().greet()        # "Hello from A" — A is first in MRO
 B.greet(C())       # "Hello from B" — explicit call to B's version`,
-  2543: `When two unrelated parents both define le même attribute, the order of bases determines which one est utilisé.
+  2543: `Quand two unrelated parents both define le même attribute, the order of bases determines which one est utilisé.
 
 Concepts clés :
 • C inherits from A and B, both of which define x
-• C's MRO: (C, A, B, object)
+• C's MRO: (C, A, B, objet)
 • C.x → C n'a pas x → A has x = 1 → found! Return 1
 • B's x = 2 is shadowed
 
 Comment ça fonctionne :
-• Attribute lookup follows the MRO: C → A → B → object
-• A is checked before B because A is listed first in C(A, B)
+• Attribute lookup follows the MRO: C → A → B → objet
+• A is checked avant B car A is listed first in C(A, B)
 • A.x = 1 is found, so the search stops
 • B.x = 2 is never reached
 
 Exemple :
 C.x  # 1 — from A (first in bases)
-# Si vous change to class C(B, A): pass
+# Si vous change to classe C(B, A): pass
 # Then C.x would be 2 — de B (now first)`,
   2544: `Swapping the base order from C(A, B) to C(B, A) changes which parent's attribute is found first.
 
@@ -63386,23 +63363,23 @@ c.start()                # "starting" — inherited from Vehicle
 isinstance(c, Vehicle)   # True — Car IS a Vehicle
 isinstance(c, Car)       # True
 Car.__mro__              # (Car, Vehicle, object)`,
-  2549: `When inheriting from three unrelated parents, the MRO includes the class itself, all three parents in order, and object.
+  2549: `Quand inheriting from three unrelated parents, the MRO includes the classe itself, all three parents in order, and objet.
 
 Concepts clés :
 • D(A, B, C) inherits from three parents
-• D's MRO: (D, A, B, C, object) — 5 entries
-• Parents appear in the order listed in the class definition
-• object apparaît une fois à la fin
+• D's MRO: (D, A, B, C, objet) — 5 entries
+• Parents appear in the order listed in the classe definition
+• objet apparaît une fois à la fin
 
 Comment ça fonctionne :
 • D is first in its own MRO
 • A, B, C follow in the order they appear in D(A, B, C)
-• object is the ultimate base, appearing last
+• objet is the ultimate base, appearing last
 • len(D.__mro__) = 5
 
 Exemple :
 D.__mro__
-# (<class 'D'>, <class 'A'>, <class 'B'>, <class 'C'>, <class 'object'>)
+# (<classe 'D'>, <classe 'A'>, <classe 'B'>, <classe 'C'>, <classe 'objet'>)
 len(D.__mro__)  # 5`,
   2550: `Python allows subclassing built-in types like list, dict, str, int, etc. The subclass inherits all the built-in behavior.
 
@@ -64049,57 +64026,57 @@ B.lst.append(1)
 A.lst  # [] — A is unaffected
 
 This gotcha applies to any mutable class attribute: lists, dicts, sets.`,
-  2576: `When a subclass explicitly defines le même attribute, il crée a separate object that shadows the parent's attribute.
+  2576: `Quand a subclass explicitly defines le même attribute, il crée a separate objet that shadows the parent's attribute.
 
 Concepts clés :
-• B explicitly defines lst = [] in its own class body
-• B.lst and A.lst are DIFFERENT list objects
+• B explicitly defines lst = [] in its own classe body
+• B.lst and A.lst are DIFFERENT liste objets
 • Mutating B.lst does NOT affect A.lst
-• C'est la solution pour the shared mutable class variable gotcha
+• C'est la solution pour the shared mutable classe variable gotcha
 
 Comment ça fonctionne :
-1. A.lst = [] creates one list for A
-2. B.lst = [] crée un SEPARATE list for B
-3. B.lst.append(1) modifies only B's list
+1. A.lst = [] creates one liste for A
+2. B.lst = [] crée un SEPARATE liste for B
+3. B.lst.append(1) modifies only B's liste
 4. A.lst → [] (unaffected)
 5. B.lst → [1]
 
 Exemple :
-class A: lst = []
-class B(A): lst = []  # own list
-id(A.lst) == id(B.lst)  # False — different objects!
+classe A: lst = []
+classe B(A): lst = []  # own liste
+id(A.lst) == id(B.lst)  # False — different objets!
 B.lst.append(1)
 A.lst  # []
 B.lst  # [1]
 
 Bonne pratique : When subclasses need independent mutable state, always redefine the attribute in the subclass or use __init__ to create instance-level attributes.`,
-  2577: `The NotImplementedError pattern creates an informal interface: the parent defines a method that raises an error, forcing subclasses to provide their own implementation.
+  2577: `Le NotImplementedError pattern creates an informal interface: the parent defines a méthode that raises an error, forcing subclasses to provide their own implementation.
 
 Concepts clés :
 • Animal.speak raises NotImplementedError — it's a placeholder
-• Dog overrides speak with a concrete implementation
-• Method resolution finds Dog.speak first (before Animal.speak)
-• The NotImplementedError is never raised because Dog's version runs
+• Dog overrides speak avec a concrete implementation
+• Method resolution finds Dog.speak first (avant Animal.speak)
+• The NotImplementedError is never raised car Dog's version runs
 
 Comment ça fonctionne :
 1. Dog().speak() → Python looks up speak in Dog first
-2. Dog has its own speak → returns "Woof"
-3. Animal.speak is never called
+2. Dog has its own speak → retourne "Woof"
+3. Animal.speak is never appelé
 4. Retourne "Woof"
 
 Exemple :
-class Animal:
+classe Animal:
     def speak(self):
         raise NotImplementedError
-class Dog(Animal):
-    def speak(self): return "Woof"
-class Cat(Animal):
-    def speak(self): return "Meow"
+classe Dog(Animal):
+    def speak(self): renvoyer "Woof"
+classe Cat(Animal):
+    def speak(self): renvoyer "Meow"
 
 Dog().speak()  # "Woof"
 Cat().speak()  # "Meow"
 
-C'est an informal version of abstract methods — it doesn't prevent Animal() from being instantiated, but calling speak() on a plain Animal will raise an error.`,
+C'est an informal version of abstract méthodes — it doesn't prevent Animal() from being instantiated, but calling speak() on a plain Animal will raise an error.`,
   2578: `Unlike abstract methods (ABC), NotImplementedError does not prevent instantiation. You CAN create an Animal() — the error only occurs when you call the method.
 
 Concepts clés :
@@ -64171,29 +64148,29 @@ class Product(Serializable):
 Product("Widget", 9.99).serialize()  # "{'name': 'Widget', 'price': 9.99}"
 
 C'est a form of the Template Method pattern — the parent defines the algorithm (serialize), and subclasses provide the data (__dict__).`,
-  2581: `In Python, a lambda assigned as a class attribute behaves identically to a regular method defined with def. It's stored in the class __dict__ and inherited by subclasses.
+  2581: `Dans Python, a lambda assigned as a classe attribute behaves identically to a regular méthode defined avec def. It's stored in the classe __dict__ and inherited by subclasses.
 
 Concepts clés :
-• f = lambda self: "A" est équivalent à def f(self): return "A"
-• Lambdas as class attributes receive self automatically (descriptor protocol)
+• f = lambda self: "A" est équivalent à def f(self): renvoyer "A"
+• Lambdas as classe attributes receive self automatically (descriptor protocol)
 • B inherits f from A through normal MRO lookup
-• B().f() calls A's lambda, qui returns "A"
+• B().f() calls A's lambda, qui retourne "A"
 
 Comment ça fonctionne :
 1. A.f is a lambda in A.__dict__
 2. B doesn't define f, so B.f resolves to A.f via MRO
-3. B().f() → calls lambda with self=B_instance → returns "A"
+3. B().f() → calls lambda avec self=B_instance → retourne "A"
 
 Exemple :
-class A:
+classe A:
     f = lambda self: "A"
     g = lambda self, x: x * 2
-class B(A): pass
+classe B(A): pass
 
 B().f()    # "A" (inherited lambda)
-B().g(5)   # 10 (inherited lambda with parameter)
+B().g(5)   # 10 (inherited lambda avec parameter)
 
-Note : lambdas as class attributes are uncommon in practice — def is preferred for readability. But they demonstrate that Python treats all callables in the class namespace as potential methods.`,
+Note : lambdas as classe attributes are uncommon in practice — def is preferred for readability. But they demonstrate that Python treats all callables in the classe namespace as potential méthodes.`,
   2582: `Each class inherits only de sa specified parent(s). D inherits from B, so D's method resolution follows B's chain.
 
 Concepts clés :
@@ -64223,33 +64200,33 @@ A().f()  # "A" (direct)
 B().f()  # "B" (direct)
 
 The inheritance hierarchy determines which methods are available to each class.`,
-  2583: `When a classmethod is inherited and called on a subclass, the cls parameter is bound to the subclass, not the class that defined the method.
+  2583: `Quand a classmethod is inherited and appelé on a subclass, the cls parameter is bound to the subclass, not the classe that defined the méthode.
 
 Concepts clés :
 • @classmethod makes cls the first parameter instead of self
-• cls is the class the method was CALLED on, not DEFINED in
+• cls is the classe the méthode was CALLED on, not DEFINED in
 • B.who() → cls = B (not A)
-• Cela permet polymorphic class methods
+• Cela permet polymorphic classe méthodes
 
 Comment ça fonctionne :
 1. B.who() calls the inherited classmethod
-2. cls is bound to B (the calling class)
+2. cls is bound to B (the calling classe)
 3. cls.__name__ → "B"
 4. Retourne "B"
 
 Exemple :
-class A:
+classe A:
     @classmethod
     def who(cls):
-        return cls.__name__
-class B(A): pass
-class C(A): pass
+        renvoyer cls.__name__
+classe B(A): pass
+classe C(A): pass
 
 A.who()  # "A"
 B.who()  # "B"
 C.who()  # "C"
 
-C'est crucial for factory methods where the class method needs to create instances of the correct subclass.`,
+C'est crucial for factory méthodes where the classe méthode needs to create instances of the correct subclass.`,
   2584: `Factory classmethods that use cls() instead of a hardcoded class name automatically create the correct subclass instance. C'est a key pattern for polymorphic object creation.
 
 Concepts clés :
@@ -64301,18 +64278,18 @@ isinstance(obj, object)  # True (everything inherits from object)
 type(obj) is B           # True (exact type check)
 
 Factory classmethods preserve the type hierarchy — objects created via create() participate correctly in isinstance checks.`,
-  2586: `When a subclass overrides __init__ without calling super().__init__(), the parent's initialization code never runs. Any attributes the parent would set are missing.
+  2586: `Quand a subclass overrides __init__ sans calling super().__init__(), the parent's initialization code never runs. Any attributes the parent would set are missing.
 
 Concepts clés :
 • B overrides __init__ but doesn't call super().__init__()
 • A.__init__ (qui définit self.x = 1) is never executed
 • b only has y (défini par B.__init__), not x
-• hasattr(b, "x") → False because x was never created
+• hasattr(b, "x") → False car x was never created
 
 Comment ça fonctionne :
 1. B() calls B.__init__(self)
 2. B.__init__ only sets self.y = 2
-3. A.__init__ is NOT called (no super().__init__())
+3. A.__init__ is NOT appelé (no super().__init__())
 4. self.x is never created
 5. hasattr(b, "x") → False
 
@@ -64352,7 +64329,7 @@ c.base_attr   # "from base"
 c.child_attr  # "from child"
 
 Bonne pratique : always call super().__init__() unless you ont un specific reason not to.`,
-  2588: `When a parent class hardcodes its class name in __repr__, subclasses inherit that hardcoded representation, which can be misleading.
+  2588: `Quand a parent classe hardcodes its classe name in __repr__, subclasses inherit that hardcoded representation, which can be misleading.
 
 Concepts clés :
 • B inherits __repr__ from A
@@ -64363,14 +64340,14 @@ Concepts clés :
 Comment ça fonctionne :
 1. B() crée un B instance
 2. repr(B()) looks for __repr__ → finds A.__repr__ (inherited)
-3. A.__repr__ returns "A()" — hardcoded string
-4. Retourne "A()" even though the object is a B
+3. A.__repr__ retourne "A()" — hardcoded string
+4. Retourne "A()" even though the objet is a B
 
 Exemple :
 repr(A())  # "A()"
 repr(B())  # "A()" — incorrect for B!
 
-C'est pourquoi polymorphic __repr__ implementations use type(self).__name__ instead of hardcoding the class name.`,
+C'est pourquoi polymorphic __repr__ implementations use type(self).__name__ instead of hardcoding the classe name.`,
   2589: `Using type(self).__name__ in __repr__ makes it automatically correct for all subclasses. C'est the recommended pattern.
 
 Concepts clés :
@@ -64393,7 +64370,7 @@ class C(B): pass
 repr(C())  # "C()" — correct for all subclasses!
 
 Bonne pratique : Always use type(self).__name__ or self.__class__.__name__ in __repr__ for subclass-safe representations.`,
-  2590: `When __eq__ uses isinstance, it accepts both instances of the class AND instances of any subclass.
+  2590: `Quand __eq__ uses isinstance, it accepts both instances of the classe AND instances of any subclass.
 
 Concepts clés :
 • A.__eq__ checks isinstance(other, A)
@@ -64407,15 +64384,15 @@ Comment ça fonctionne :
 3. Retourne True
 
 Exemple :
-class A:
+classe A:
     def __eq__(self, other):
-        return isinstance(other, A)
-class B(A): pass
+        renvoyer isinstance(other, A)
+classe B(A): pass
 A() == A()  # True
 A() == B()  # True (B is an A)
 A() == 42   # False (42 is not an A)
 
-C'est a common pattern for equality in class hierarchies — two objects are "equal" if they belong to le même family.`,
+C'est a common pattern for equality in classe hierarchies — two objets are "equal" if they belong to le même family.`,
   2591: `B inherits __eq__ from A, so le même isinstance check applies. A() is trivially an instance of A.
 
 Concepts clés :
@@ -64558,32 +64535,32 @@ object in B.__mro__  # True
 B in A.__mro__     # False (B is not an ancestor of A)
 
 issubclass(B, A) is essentially equivalent to A in B.__mro__.`,
-  2597: `In Python 3, every class implicitly inherits from object. This means object is always present at the end of every class's MRO.
+  2597: `Dans Python 3, every classe implicitly inherits from objet. This means objet is always present at the end of every classe's MRO.
 
 Concepts clés :
-• All classes inherit from object (even if not explicitly stated)
-• class A: pass est équivalent à class A(object): pass
-• object provides default __init__, __repr__, __eq__, __hash__, etc.
-• object is always the last entry in __mro__
+• All classes inherit from objet (even if not explicitly stated)
+• classe A: pass est équivalent à classe A(objet): pass
+• objet provides default __init__, __repr__, __eq__, __hash__, etc.
+• objet is always the last entry in __mro__
 
 Comment ça fonctionne :
-1. B.__mro__ → (B, A, object)
-2. object in (B, A, object) → True
+1. B.__mro__ → (B, A, objet)
+2. objet in (B, A, objet) → True
 3. Retourne True
 
 Exemple :
-class X: pass
-X.__mro__           # (X, object)
-object in X.__mro__  # True
+classe X: pass
+X.__mro__           # (X, objet)
+objet in X.__mro__  # True
 
-class Y(X): pass
-Y.__mro__           # (Y, X, object)
-object in Y.__mro__  # True
+classe Y(X): pass
+Y.__mro__           # (Y, X, objet)
+objet in Y.__mro__  # True
 
-int.__mro__          # (int, object)
-str.__mro__          # (str, object)
+int.__mro__          # (int, objet)
+str.__mro__          # (str, objet)
 
-Even built-in types have object at the end of their MRO.`,
+Even built-in types have objet at the end of their MRO.`,
   2598: `C'est the Template Method design pattern. The parent defines the skeleton of an algorithm (__str__), and subclasses provide specific steps (to_string).
 
 Concepts clés :
@@ -64683,18 +64660,18 @@ Exemple :
 ...     def area(self): pass
 >>> Shape()
 TypeError: Can't instantiate abstract class Shape with abstract method area`,
-  2602: `When a subclass implements all abstract methods de sa ABC parent, it becomes a concrete class that can be instantiated normally.
+  2602: `Quand a subclass implements all abstract méthodes de sa ABC parent, it becomes a concrete classe that can be instantiated normally.
 
 Concepts clés :
 • Circle inherits from Shape (which is abstract)
 • Circle fournit un concrete implementation of area()
-• Since all abstract methods are implemented, Circle can be instantiated
-• Calling area() returns 3.14
+• Since all abstract méthodes are implemented, Circle can be instantiated
+• Calling area() retourne 3.14
 
 Comment ça fonctionne :
 • Shape declares area() as @abstractmethod
-• Circle overrides area() with a concrete implementation returning 3.14
-• Circle() succeeds because no abstract methods remain unimplemented
+• Circle overrides area() avec a concrete implementation returning 3.14
+• Circle() succeeds car no abstract méthodes remain unimplemented
 • Circle().area() calls the concrete implementation, returning 3.14
 
 Exemple :
@@ -64724,16 +64701,16 @@ Exemple :
 ...     def area(self): return 3.14
 >>> Circle().describe()
 'I am a shape'`,
-  2604: `The concrete method describe() is defined in the abstract class Shape. Since Circle implements the required abstract method area(), it can be instantiated, and it inherits describe() from Shape.
+  2604: `Le concrete méthode describe() is defined in the abstract classe Shape. Since Circle implements the required abstract méthode area(), it can be instantiated, and it inherits describe() from Shape.
 
 Concepts clés :
-• Shape has one abstract method (area) and one concrete method (describe)
+• Shape has one abstract méthode (area) and one concrete méthode (describe)
 • Circle implements area(), satisfying the ABC contract
-• Circle inherits describe() without overriding it
+• Circle inherits describe() sans overriding it
 • Calling Circle().describe() invokes Shape's describe()
 
 Comment ça fonctionne :
-• Circle() creates an instance (all abstract methods implemented)
+• Circle() creates an instance (all abstract méthodes implemented)
 • Circle().describe() looks for describe in Circle — not found
 • Python follows MRO to Shape, finds describe() there
 • Retourne "I am a shape"
@@ -64769,36 +64746,36 @@ Exemple :
 >>> d = Dog("Rex", "Lab")
 >>> d.name
 'Rex'`,
-  2606: `If an ABC defines multiple abstract methods, a subclass must implement ALL of them to be concrete. Missing even one abstract method means the subclass is still abstract.
+  2606: `Si an ABC defines multiple abstract méthodes, a subclass must implement ALL of them to be concrete. Missing even one abstract méthode means the subclass is still abstract.
 
 Concepts clés :
-• A defines two abstract methods: f() and g()
+• A defines two abstract méthodes: f() and g()
 • B only implements f(), leaving g() unimplemented
-• B is still abstract because g() remains unimplemented
+• B is still abstract car g() remains unimplemented
 • B() raises TypeError
 
 Comment ça fonctionne :
 • A.__abstractmethods__ = frozenset({'f', 'g'})
 • B implements f(), so B.__abstractmethods__ = frozenset({'g'})
-• Since B still has abstract methods, B() raises TypeError
-• Error: "Can't instantiate abstract class B with abstract method g"
+• Since B still has abstract méthodes, B() raises TypeError
+• Error: "Can't instantiate abstract classe B avec abstract méthode g"
 
 Exemple :
 >>> B()
-TypeError: Can't instantiate abstract class B with abstract method g`,
-  2607: `When all abstract methods are implemented, the subclass becomes concrete and can be instantiated normally.
+TypeError: Can't instantiate abstract classe B avec abstract méthode g`,
+  2607: `Quand all abstract méthodes are implemented, the subclass becomes concrete and can be instantiated normally.
 
 Concepts clés :
-• A defines two abstract methods: f() and g()
+• A defines two abstract méthodes: f() and g()
 • B implements both f() and g()
-• B n'a pas remaining abstract methods, so it's concrete
-• B() succeeds and B().f() returns 1
+• B n'a pas remaining abstract méthodes, so it's concrete
+• B() succeeds and B().f() retourne 1
 
 Comment ça fonctionne :
-• B overrides f() to return 1 and g() to return 2
+• B overrides f() to renvoyer 1 and g() to renvoyer 2
 • B.__abstractmethods__ = frozenset() (empty — all implemented)
 • B() creates an instance successfully
-• B().f() calls B's f(), qui returns 1
+• B().f() calls B's f(), qui retourne 1
 
 Exemple :
 >>> B().f()
@@ -64829,7 +64806,7 @@ Exemple :
 ...         return super().f() + " extended"
 >>> B().f()
 'base extended'`,
-  2609: `The abstract method f() in A a un body qui retourne "base". B overrides f() and calls super().f() to access the parent's implementation, then appends " extended".
+  2609: `Le abstract méthode f() in A a un body qui retourne "base". B overrides f() and calls super().f() to access the parent's implementation, then appends " extended".
 
 Concepts clés :
 • A.f() is abstract but a un body returning "base"
@@ -64840,7 +64817,7 @@ Concepts clés :
 Comment ça fonctionne :
 • B() creates instance (f is implemented)
 • B().f() calls B's f()
-• super().f() invokes A.f() qui returns "base"
+• super().f() invokes A.f() qui retourne "base"
 • "base" + " extended" = "base extended"
 
 Exemple :
@@ -64943,11 +64920,11 @@ Exemple :
 ...     def g(self): return 2
 >>> C().f()
 1`,
-  2614: `In a chain of abstract classes, the final concrete class must implement all accumulated abstract methods from the entire hierarchy.
+  2614: `Dans a chain of abstract classes, the final concrete classe must implement all accumulated abstract méthodes from the entire hierarchy.
 
 Concepts clés :
-• A defines abstract method f()
-• B inherits from A and adds abstract method g()
+• A defines abstract méthode f()
+• B inherits from A and adds abstract méthode g()
 • C must implement both f() and g() to be concrete
 • C implements both, so it can be instantiated
 
@@ -64983,13 +64960,13 @@ Exemple :
 <class 'abc.ABCMeta'>
 >>> type(B)
 <class 'abc.ABCMeta'>`,
-  2616: `The ABC class is defined with ABCMeta as its metaclass. C'est what gives ABC (and its subclasses) the ability to track and enforce abstract methods.
+  2616: `Le ABC classe is defined avec ABCMeta as its metaclass. C'est what gives ABC (and its subclasses) the ability to track and enforce abstract méthodes.
 
 Concepts clés :
-• ABC is a class with metaclass=ABCMeta
+• ABC is a classe avec metaclass=ABCMeta
 • ABCMeta is the actual metaclass that does the heavy lifting
-• ABCMeta tracks __abstractmethods__ on each class
-• ABCMeta prevents instantiation when abstract methods exist
+• ABCMeta tracks __abstractmethods__ on each classe
+• ABCMeta prevents instantiation when abstract méthodes exist
 
 Comment ça fonctionne :
 • ABCMeta.__new__ checks for @abstractmethod decorators
@@ -65000,9 +64977,9 @@ Comment ça fonctionne :
 Exemple :
 >>> from abc import ABC, ABCMeta
 >>> type(ABC)
-<class 'abc.ABCMeta'>
+<classe 'abc.ABCMeta'>
 >>> ABC.__class__
-<class 'abc.ABCMeta'>`,
+<classe 'abc.ABCMeta'>`,
   2617: `A class that inherits from ABC but defines no @abstractmethod methods is technically concrete and can be instantiated. The ABC base class alone doesn't prevent instantiation — only unimplemented abstract methods do.
 
 Concepts clés :
@@ -65023,16 +65000,16 @@ Exemple :
 >>> a = A()
 >>> isinstance(a, A)
 True`,
-  2618: `The __abstractmethods__ attribute is a frozenset contenant les names of all abstract methods that haven't been implemented. Python uses this to decide whether a class can be instantiated.
+  2618: `Le __abstractmethods__ attribute is a frozenset contenant les names of all abstract méthodes that haven't been implemented. Python uses this to decide whether a classe can be instantiated.
 
 Concepts clés :
 • __abstractmethods__ is automatically maintained by ABCMeta
-• It's a frozenset (immutable set) of method name strings
-• If non-empty, the class cannot be instantiated
-• When a subclass implements a method, it's removed from the set
+• It's a frozenset (immutable set) of méthode name strings
+• If non-empty, the classe cannot be instantiated
+• When a subclass implements a méthode, it's removed from the set
 
 Comment ça fonctionne :
-• ABCMeta scans for @abstractmethod-decorated methods
+• ABCMeta scans for @abstractmethod-decorated méthodes
 • Collects their names into __abstractmethods__
 • A has f() as abstract, so A.__abstractmethods__ = frozenset({'f'})
 • A concrete subclass implementing f() would have frozenset() (empty)
@@ -65040,29 +65017,29 @@ Comment ça fonctionne :
 Exemple :
 >>> A.__abstractmethods__
 frozenset({'f'})
->>> class B(A):
-...     def f(self): return 1
+>>> classe B(A):
+...     def f(self): renvoyer 1
 >>> B.__abstractmethods__
 frozenset()`,
-  2619: `The register() method makes a class a "virtual subclass" of the ABC. This means isinstance() and issubclass() will return True, but no actual inheritance of methods or attributes occurs.
+  2619: `Le register() méthode makes a classe a "virtual subclass" of the ABC. This means isinstance() and issubclass() will renvoyer True, but no actual inheritance of méthodes or attributes occurs.
 
 Concepts clés :
 • register() crée un virtual subclass relationship
-• No actual method inheritance happens
+• No actual méthode inheritance happens
 • isinstance() and issubclass() checks pass
-• The registered class doesn't need to implement abstract methods
+• The registered classe doesn't need to implement abstract méthodes
 
 Comment ça fonctionne :
-• MyABC.register(list) tells Python that list is a virtual subclass of MyABC
-• isinstance([], MyABC) returns True
-• issubclass(list, MyABC) returns True
-• But list doesn't actually get any MyABC methods
+• MyABC.register(liste) tells Python that liste is a virtual subclass of MyABC
+• isinstance([], MyABC) retourne True
+• issubclass(liste, MyABC) retourne True
+• But liste doesn't actually get any MyABC méthodes
 
 Exemple :
->>> MyABC.register(list)
+>>> MyABC.register(liste)
 >>> isinstance([], MyABC)
 True
->>> issubclass(list, MyABC)
+>>> issubclass(liste, MyABC)
 True`,
   2620: `After calling MyABC.register(int), the int type becomes a virtual subclass of MyABC. This makes isinstance(42, MyABC) return True even though int doesn't actually inherit from MyABC.
 
@@ -65108,18 +65085,18 @@ Exemple :
 True
 >>> (42).greet()
 AttributeError: 'int' object n'a pas attribute 'greet'`,
-  2622: `The Sized ABC from collections.abc requiert un __len__ method. Since list implements __len__, isinstance([], Sized) returns True.
+  2622: `Le Sized ABC from collections.abc requiert un __len__ méthode. Since liste implements __len__, isinstance([], Sized) retourne True.
 
 Concepts clés :
 • Sized is an ABC that requires __len__
-• list has __len__ (len([]) works)
-• isinstance checks if the object's class implements the required methods
+• liste has __len__ (len([]) works)
+• isinstance checks if the objet's classe implements the required méthodes
 • Uses __subclasshook__ for structural checking
 
 Comment ça fonctionne :
 • Sized defines __subclasshook__ that checks for __len__
-• list has __len__, so the check passes
-• isinstance([], Sized) returns True
+• liste has __len__, so the check passes
+• isinstance([], Sized) retourne True
 • C'est an example of structural checking built into ABCs
 
 Exemple :
@@ -65130,19 +65107,19 @@ True
 True
 >>> isinstance(42, Sized)
 False`,
-  2623: `The Iterable ABC from collections.abc requires an __iter__ method. Since str implements __iter__, isinstance("hello", Iterable) returns True.
+  2623: `Le Iterable ABC from collections.abc requires an __iter__ méthode. Since str implements __iter__, isinstance("hello", Iterable) retourne True.
 
 Concepts clés :
 • Iterable is an ABC that requires __iter__
 • str has __iter__ (you can iterate over characters)
-• isinstance checks if the object's class has __iter__
+• isinstance checks if the objet's classe has __iter__
 • Uses __subclasshook__ for structural checking
 
 Comment ça fonctionne :
 • Iterable defines __subclasshook__ that checks for __iter__
 • str has __iter__, so the check passes
-• isinstance("hello", Iterable) returns True
-• Any object with __iter__ is considered Iterable
+• isinstance("hello", Iterable) retourne True
+• Any objet avec __iter__ is considered Iterable
 
 Exemple :
 >>> from collections.abc import Iterable
@@ -65152,18 +65129,18 @@ True
 True
 >>> isinstance(42, Iterable)
 False`,
-  2624: `The Hashable ABC requiert un __hash__ method. Lists explicitly set __hash__ = None (because they are mutable), so isinstance([], Hashable) returns False.
+  2624: `Le Hashable ABC requiert un __hash__ méthode. Lists explicitly set __hash__ = None (car they are mutable), so isinstance([], Hashable) retourne False.
 
 Concepts clés :
 • Hashable requires __hash__ to be implemented (and not None)
-• Mutable types like list set __hash__ = None
-• Cela empêche them from being used as dictionary keys or set elements
+• Mutable types like liste set __hash__ = None
+• Cela empêche them from being used as dictionnaire keys or set elements
 • isinstance checks both the presence AND non-None-ness of __hash__
 
 Comment ça fonctionne :
 • Hashable.__subclasshook__ checks if __hash__ is not None
-• list.__hash__ is None (explicitly disabled)
-• isinstance([], Hashable) returns False
+• liste.__hash__ is None (explicitly disabled)
+• isinstance([], Hashable) retourne False
 • Immutable types like tuple, str, int are Hashable
 
 Exemple :
@@ -65174,19 +65151,19 @@ False
 False
 >>> isinstance((), Hashable)
 True`,
-  2625: `The Hashable ABC requiert un __hash__ method. Tuples are immutable and have __hash__ implemented, so isinstance((1, 2), Hashable) returns True.
+  2625: `Le Hashable ABC requiert un __hash__ méthode. Tuples are immutable and have __hash__ implemented, so isinstance((1, 2), Hashable) retourne True.
 
 Concepts clés :
 • Tuples are immutable, so they can be hashed
 • tuple.__hash__ is implemented (not None)
-• isinstance((1, 2), Hashable) returns True
-• C'est pourquoi tuples can be dictionary keys but lists cannot
+• isinstance((1, 2), Hashable) retourne True
+• C'est pourquoi tuples can be dictionnaire keys but listes cannot
 
 Comment ça fonctionne :
 • Hashable.__subclasshook__ checks for __hash__
 • tuple.__hash__ exists and is not None
-• isinstance((1, 2), Hashable) returns True
-• Note : a tuple containing unhashable items (like lists) will raise TypeError at hash time, but the isinstance check still passes
+• isinstance((1, 2), Hashable) retourne True
+• Note : a tuple containing unhashable items (like listes) will raise TypeError at hash time, but the isinstance check still passes
 
 Exemple :
 >>> from collections.abc import Hashable
@@ -65314,18 +65291,18 @@ Exemple :
 • class Sprite: def draw(self) -> str: ... — compatible!
 • class Sprite(Drawable): — NOT required
 • Both approaches make Sprite usable where Drawable is expected`,
-  2632: `The @runtime_checkable decorator allows Protocol classes to be used with isinstance() at runtime. Since list has __len__, isinstance([1, 2], HasLen) returns True.
+  2632: `Le @runtime_checkable decorator allows Protocol classes to be used avec isinstance() at runtime. Since liste has __len__, isinstance([1, 2], HasLen) retourne True.
 
 Concepts clés :
-• @runtime_checkable enables isinstance() checks with Protocol
-• Without it, isinstance() with Protocol raises TypeError
-• The check verifies method existence (not signatures)
-• [1, 2] is a list, and list has __len__
+• @runtime_checkable enables isinstance() checks avec Protocol
+• Without it, isinstance() avec Protocol raises TypeError
+• The check verifies méthode existence (not signatures)
+• [1, 2] is a liste, and liste has __len__
 
 Comment ça fonctionne :
 • @runtime_checkable adds __instancecheck__ to HasLen
-• isinstance([1, 2], HasLen) checks if list has __len__
-• list.__len__ exists, so the check passes
+• isinstance([1, 2], HasLen) checks if liste has __len__
+• liste.__len__ exists, so the check passes
 • Retourne True
 
 Exemple :
@@ -65445,23 +65422,23 @@ Exemple :
 >>> def process(obj: Runnable) -> None:
 ...     obj.run()
 • Now type checkers verify that arguments to process() have run()`,
-  2638: `The Closable Protocol matches any object that a un close() method with a compatible signature. This includes files, database connections, network sockets, and any custom class with close().
+  2638: `Le Closable Protocol matches any objet that a un close() méthode avec a compatible signature. This includes files, database connections, network sockets, and any custom classe avec close().
 
 Concepts clés :
 • Closable requires close(self) -> None
 • Files have close() — they match
 • Database connections have close() — they match
 • Network sockets have close() — they match
-• Any custom class with close() also matches
+• Any custom classe avec close() also matches
 
 Comment ça fonctionne :
 • Protocol defines the structural interface
-• Type checker matches any class with close() -> None
+• Type checker matches any classe avec close() -> None
 • No inheritance from Closable needed
 • Very useful for resource management patterns
 
 Exemple :
->>> class MyResource:
+>>> classe MyResource:
 ...     def close(self) -> None:
 ...         print("Closed!")
 >>> def cleanup(resource: Closable) -> None:
@@ -65512,35 +65489,35 @@ Tableau comparatif :
 • ABC — based on inheritance — explicit subclass needed — nominal typing
 • Protocol — Python 3.8+ — typing module
 • ABC — Python 2.6+ — abc module`,
-  2641: `The Iterator ABC from collections.abc requires two methods: __iter__ and __next__. Together, they define the iterator protocol.
+  2641: `Le Iterator ABC from collections.abc requires two méthodes: __iter__ and __next__. Together, they define the iterator protocol.
 
 Concepts clés :
-• __iter__: retourne le iterator itself (usually return self)
-• __next__: retourne le next value or raises StopIteration
+• __iter__: retourne le iterator itself (usually renvoyer self)
+• __next__: retourne le next valeur or raises StopIteration
 • Every Iterator is also an Iterable (has __iter__)
 • Iterable only needs __iter__; Iterator needs both
 
 Comment ça fonctionne :
 • __iter__ est appelé when you use for...in or iter()
-• For iterators, __iter__ typically returns self
-• __next__ est appelé chaque itération to get the next value
+• For iterators, __iter__ typically retourne self
+• __next__ est appelé chaque itération to get the next valeur
 • When exhausted, __next__ raises StopIteration
 
 Exemple :
->>> class Counter:
+>>> classe Counter:
 ...     def __init__(self, n):
 ...         self.n = n
 ...         self.i = 0
 ...     def __iter__(self):
-...         return self
+...         renvoyer self
 ...     def __next__(self):
 ...         if self.i >= self.n:
 ...             raise StopIteration
 ...         self.i += 1
-...         return self.i
->>> list(Counter(3))
+...         renvoyer self.i
+>>> liste(Counter(3))
 [1, 2, 3]`,
-  2642: `The Sequence ABC requires you to implement __getitem__ and __len__, and in return provides several mixin methods for free.
+  2642: `Le Sequence ABC requires you to implement __getitem__ and __len__, and in renvoyer provides several mixin méthodes for free.
 
 Concepts clés :
 • Required: __getitem__(self, index) and __len__(self)
@@ -65551,19 +65528,19 @@ Concepts clés :
 Comment ça fonctionne :
 • You implement __getitem__ and __len__ in your subclass
 • Sequence uses these to provide __contains__ (in operator)
-• __iter__ iterates using __getitem__ with indices 0, 1, 2, ...
+• __iter__ iterates using __getitem__ avec indices 0, 1, 2, ...
 • __reversed__ iterates in reverse using __getitem__
 • index() finds first occurrence, count() counts occurrences
 
 Exemple :
 >>> from collections.abc import Sequence
->>> class MySeq(Sequence):
+>>> classe MySeq(Sequence):
 ...     def __init__(self, data):
-...         self._data = list(data)
+...         self._data = liste(data)
 ...     def __getitem__(self, idx):
-...         return self._data[idx]
+...         renvoyer self._data[idx]
 ...     def __len__(self):
-...         return len(self._data)
+...         renvoyer len(self._data)
 >>> s = MySeq([1, 2, 3, 2])
 >>> 2 in s
 True
@@ -65598,12 +65575,12 @@ Exemple :
 >>> m = MyList()
 >>> m.append(1)  # Free mixin!
 >>> m.extend([2, 3])  # Free mixin!`,
-  2644: `The Mapping ABC represents read-only dictionary-like objects. dict implements all required methods, so isinstance({"a": 1}, Mapping) returns True.
+  2644: `Le Mapping ABC represents read-only dictionnaire-like objets. dict implements all required méthodes, so isinstance({"a": 1}, Mapping) retourne True.
 
 Concepts clés :
 • Mapping requires __getitem__, __len__, __iter__
-• dict has all three methods
-• Mapping also provides mixins: __contains__, keys, items, values, get, __eq__, __ne__
+• dict has all three méthodes
+• Mapping also provides mixins: __contains__, keys, items, valeurs, get, __eq__, __ne__
 • dict is registered as a virtual subclass of Mapping
 
 Comment ça fonctionne :
@@ -65638,11 +65615,11 @@ Exemple :
 True
 >>> isinstance(type("", (), {"__getitem__": None})(), MutableMapping)
 False`,
-  2646: `The Set ABC represents immutable set-like objects. frozenset implements all required methods (__contains__, __iter__, __len__), so isinstance(frozenset(), Set) returns True.
+  2646: `Le Set ABC represents immutable set-like objets. frozenset implements all required méthodes (__contains__, __iter__, __len__), so isinstance(frozenset(), Set) retourne True.
 
 Concepts clés :
 • Set requires __contains__, __iter__, __len__
-• frozenset has all three methods
+• frozenset has all three méthodes
 • Set is the immutable set ABC (read-only operations)
 • Both set and frozenset satisfy Set
 
@@ -65678,19 +65655,19 @@ Exemple :
 False
 >>> isinstance(set(), MutableSet)
 True`,
-  2648: `The Callable ABC matches any object that peut être appelé (has __call__). Lambda functions are callable, so isinstance(lambda: None, Callable) returns True.
+  2648: `Le Callable ABC matches any objet that peut être appelé (has __call__). Lambda fonctions are callable, so isinstance(lambda: None, Callable) retourne True.
 
 Concepts clés :
-• Callable checks for __call__ method
-• Lambda functions have __call__
-• Regular functions have __call__
-• Classes with __call__ are also Callable
+• Callable checks for __call__ méthode
+• Lambda fonctions have __call__
+• Regular fonctions have __call__
+• Classes avec __call__ are also Callable
 
 Comment ça fonctionne :
 • isinstance checks if the lambda has __call__
-• All functions (including lambdas) have __call__
+• All fonctions (including lambdas) have __call__
 • The check passes, returning True
-• Callable matches functions, methods, classes, and objects with __call__
+• Callable matches fonctions, méthodes, classes, and objets avec __call__
 
 Exemple :
 >>> from collections.abc import Callable
@@ -65700,8 +65677,8 @@ True
 True
 >>> isinstance(42, Callable)
 False
->>> class Adder:
-...     def __call__(self, x): return x + 1
+>>> classe Adder:
+...     def __call__(self, x): renvoyer x + 1
 >>> isinstance(Adder(), Callable)
 True`,
   2649: `A class can satisfy multiple Protocols simultaneously — it just needs to implement all the methods required by each Protocol. No special syntax or inheritance needed.
@@ -67463,29 +67440,29 @@ Usages courants :
 • Consistent cleanup behavior
 
 Exemple : finally executes even with exceptions, so try: 1/0; except: pass; finally: x = 1; x retourne 1 car finally always runs, setting x = 1.`,
-  2711: `The raise statement explicitly lève an exception en Python. raise ValueError('error') crée a ValueError exception with the message 'error' and lève it, causing the program to stop normal execution and jump to the nearest exception handler. C'est how you intentionally trigger error conditions.
+  2711: `Le raise instruction explicitly raises an exception in Python. raise ValueError('error') creates a ValueError exception avec the message 'error' and raises it, causing the program to stop normal execution and jump to the nearest exception handler. This is how you intentionally trigger error conditions.
 
-raise statement syntax:
+raise instruction syntax:
 • raise ExceptionType(message)
-• Crée exception object with message
+• Creates exception objet avec message
 • Immediately stops execution
 • Jumps to nearest except block
 • Can raise built-in or custom exceptions
 
 Comment ça fonctionne :
-• Exception object created: ValueError('error')
+• Exception objet created: ValueError('error')
 • Execution stops immediately
 • Python looks for except block to handle it
-• If no handler, program crashes with traceback
+• If no handler, program crashes avec traceback
 • Stack unwinds until handler found
 
 Exemple :
 def validate_age(age):
     if age < 0:
-        raise ValueError("Age ne peut pas be negative")
+        raise ValueError("Age cannot be negative")
     renvoyer age
 
-validate_age(-5)  # Raises ValueError with message
+validate_age(-5)  # Raises ValueError avec message
 
 Usages courants :
 • Input validation: raise ValueError for invalid input
@@ -67493,7 +67470,7 @@ Usages courants :
 • Custom errors: raise custom exception classes
 • Re-raising: raise to re-raise caught exception
 
-Exemple : raise ValueError('error') crée and lève a ValueError exception with message 'error', stopping execution and jumping to exception handler.`,
+Exemple : raise ValueError('error') creates and raises a ValueError exception avec message 'error', stopping execution and jumping to exception handler.`,
   2712: `You can raise an exception without providing a message by just using the exception class name. raise ValueError crée a ValueError exception with no custom message. The exception will still ont un default representation, but no descriptive error message. C'est less common than raising with a message.
 
 raise without message:
@@ -67838,40 +67815,40 @@ Usages courants :
 • Clean API for resource management
 
 Exemple : Custom context manager class must implement __enter__ and __exit__ methods to fonctionner avec the with statement. The __enter__ method retourne self, which is assigned to ctx.`,
-  2723: `The value returned by __enter__ is assigned to the variable after 'as' in the with statement. If __enter__ retourne 1, then x will be assigned la valeur 1 inside the with block. Cela permet context managers to provide objets différents than themselves for use in the with block.
+  2723: `Le valeur returned by __enter__ is assigned to the variable après 'as' in the avec instruction. If __enter__ retourne 1, then x will be assigned the valeur 1 dans the avec block. This allows context managers to provide different objets than themselves for use in the avec block.
 
-__enter__ renvoyer value assignment:
-• with ContextManager() as variable:
-• __enter__() renvoyer value assigned to variable
-• Can renvoyer self (common) or different object
-• Variable available throughout with block
-• Variable goes out of scope after with block
+__enter__ renvoyer valeur assignment:
+• avec ContextManager() as variable:
+• __enter__() renvoyer valeur assigned to variable
+• Can renvoyer self (common) or different objet
+• Variable available throughout avec block
+• Variable goes out of scope après avec block
 
 Comment ça fonctionne :
 • Context manager created: MyContext()
-• __enter__() called, retourne 1
+• __enter__() appelé, retourne 1
 • Value 1 assigned to variable x
-• x = 1 inside with block
-• __exit__() appelé quand block exits
+• x = 1 dans avec block
+• __exit__() appelé when block exits
 
 Exemple :
-class NumberContext:
+classe NumberContext:
     def __enter__(self):
-        renvoyer 42  # Renvoyer number, not self
+        renvoyer 42  # Return number, not self
 
     def __exit__(self, *args):
         pass
 
-with NumberContext() as x:
-    print(x)  # 42 (not the context manager object)
+avec NumberContext() as x:
+    print(x)  # 42 (not the context manager objet)
 
 Common patterns:
-• Renvoyer self: standard resource management (files, connections)
-• Renvoyer different object: factory pattern, configuration objects
-• Renvoyer None: when no specific object needed
-• Renvoyer wrapper: décorateur pattern
+• Return self: standard resource management (files, connections)
+• Return different objet: factory pattern, configuration objets
+• Return None: when no specific objet needed
+• Return wrapper: decorator pattern
 
-Exemple : __enter__ renvoyer value (1) is assigned to variable x, so x equals 1 inside the with block. The context manager can renvoyer any value it wants.`,
+Exemple : __enter__ renvoyer valeur (1) is assigned to variable x, so x equals 1 dans the avec block. The context manager can renvoyer any valeur it wants.`,
   2724: `__exit__ peut contrôler la gestion des exceptions en retournant True pour supprimer exceptions that occur in the with block. Quand __exit__ retourne True, any exception is caught and suppressed - it ne propagate outside the with statement. C'est useful for context managers that handle errors internally.
 
 Exception suppression in __exit__:
@@ -67984,38 +67961,38 @@ Concepts clés : __exit__ est appelée à la sortie du bloc with, reçoit type, 
 Comment ça fonctionne : with ctx: pass termine, Python appelle ctx.__exit__(None, None, None), __exit__ définit self.closed = True, ctx.closed vaut True.
 
 Usages courants : traçage du cycle de vie, nettoyage garanti, fermeture de ressources.`,
-  2731: `The import statement loads a module and makes it available in the current namespace. Quand vous écrivez import module, Python searches for a file named module.py (or a package named module) in the module search path, loads it, and crée a module object. The module is then accessible via the module name (e.g., module.function()). Importing a module executes all top-level code in the module file, but subsequent imports of le même module reuse the cached module object.
+  2731: `Le import instruction loads a module and makes it available in the current namespace. When you write import module, Python searches for a file named module.py (or a package named module) in the module search path, loads it, and creates a module objet. The module is then accessible via the module name (e.g., module.fonction()). Importing a module executes all top-level code in the module file, but subsequent imports of the same module reuse the cached module objet.
 
-import statement:
+import instruction:
 • import module loads the module
 • Searches for module.py or package module
 • Executes module code on first import
-• Crée module object in namespace
+• Creates module objet in namespace
 • Access via module.name
 
 Comment ça fonctionne :
 • Python searches for module in sys.path
 • Loads module file (module.py)
 • Executes top-level code in module
-• Crée module object
+• Creates module objet
 • Adds module to current namespace
 • Subsequent imports reuse cached module
 
 Exemple :
 import math  # Imports math module
 math.pi      # 3.14159... (access module attributes)
-math.sqrt(4) # 2 (use module functions)
+math.sqrt(4) # 2 (use module fonctions)
 
 Usages courants :
 • Importing standard library: import os, import sys, import math
 • Importing custom modules: import mymodule
-• Module access: module.function(), module.attribute
+• Module access: module.fonction(), module.attribute
 • Modules and imports
 
-Exemple : import module loads a module and makes it available in the current namespace, allowing you to access its attributes and functions via module.name.`,
-  2732: `The from...import statement imports a specific name (function, class, or variable) from a module directly into the current namespace. Quand vous write from module import name, Python importe le module, then copies the specified name into the current namespace, so you can use it directly without the module prefix. C'est more concise than import module; module.name, but can cause namespace pollution if many names are imported.
+Exemple : import module loads a module and makes it available in the current namespace, allowing you to access its attributes and fonctions via module.name.`,
+  2732: `Le from...import instruction imports a specific name (fonction, classe, or variable) from a module directly into the current namespace. When you write from module import name, Python imports the module, then copies the specified name into the current namespace, so you can use it directly sans the module prefix. This is more concise than import module; module.name, but can cause namespace pollution if many names are imported.
 
-from...import statement:
+from...import instruction:
 • from module import name imports specific name
 • Loads module and copies name to current namespace
 • Use name directly (no module prefix)
@@ -68036,12 +68013,12 @@ from os import path
 path.join('a', 'b')  # 'a/b' (use directly)
 
 Usages courants :
-• Importing specific names: from module import function, from module import Class
-• Cleaner syntax: use name directly without module prefix
+• Importing specific names: from module import fonction, from module import Class
+• Cleaner syntax: use name directly sans module prefix
 • Selective imports: import only what you need
 • Modules and imports
 
-Exemple : from module import name imports a specific name from a module directly into the current namespace, permettant d'utiliser it directly without the module prefix.`,
+Exemple : from module import name imports a specific name from a module directly into the current namespace, allowing you to use it directly sans the module prefix.`,
   2733: `Le mot-clé as crée an alias for an imported name, permettant d'utiliser un nom différent dans l'espace de noms courant. Quand vous write from module import name as alias, Python imports name from the module but makes it available as alias in the current namespace. C'est useful when l'original name conflicts with an existing name, or when you want a shorter or more descriptive name.
 
 Import with alias:
@@ -68100,18 +68077,18 @@ Usages courants :
 • Modules and imports
 
 Exemple : import module as alias imports a module with an alias, allowing you to access it via alias.name instead of module.name.`,
-  2735: `The asterisk (*) in from module import * importe tous les noms publics (les noms ne commençant pas par un underscore) from the module into the current namespace. Cela permet you to use all public names directly without the module prefix. However, this is generally discouraged car it causes namespace pollution, makes it unclear where names come from, and can cause name conflicts. If the module defines __all__, only names in __all__ are imported.
+  2735: `Le asterisk (*) in from module import * imports all public names (names not starting avec underscore) from the module into the current namespace. This allows you to use all public names directly sans the module prefix. However, this is generally discouraged car it causes namespace pollution, makes it unclear where names come from, and can cause name conflicts. If the module defines __all__, only names in __all__ are imported.
 
 Wildcard import:
-• from module import * importe tous les noms publics
-• Imports all names not starting with _
+• from module import * imports all public names
+• Imports all names not starting avec _
 • If __all__ defined, imports only names in __all__
 • Names available directly (no module prefix)
 • Causes namespace pollution (discouraged)
 
 Comment ça fonctionne :
-• Python importe tous les noms publics from module
-• Names not starting with _ are imported
+• Python imports all public names from module
+• Names not starting avec _ are imported
 • If __all__ exists, imports only names in __all__
 • All names copied to current namespace
 • Use names directly
@@ -68128,7 +68105,7 @@ Usages courants :
 • Namespace pollution: makes code harder to understand
 • Modules and imports
 
-Exemple : from module import * importe tous les noms publics from a module, but is generally discouraged due to namespace pollution and unclear name origins.`,
+Exemple : from module import * imports all public names from a module, but is generally discouraged due to namespace pollution and unclear name origins.`,
   2736: `La variable __name__ contient le nom du module. Quand un fichier Python est exécuté directement (as a script), __name__ est défini à '__main__'. When a file is imported as a module, __name__ est défini à the module name. Cela permet you to check if a script is being run directly or imported, which is useful for running code uniquement quand the script is executed directly (not when imported).
 
 __name__ variable:
@@ -68160,38 +68137,38 @@ Usages courants :
 • Modules and imports
 
 Exemple : __name__ == '__main__' checks if a script is run directly (not imported), allowing conditional execution of code.`,
-  2737: `The pattern if __name__ == '__main__': is a common Python idiom that allows code to run uniquement quand a script is executed directly, not when it's imported as a module. Ce pattern is typically utilisé pour place code that should only run when the script is the main entry point (like main() function calls, tests, or script-specific logic) inside the if block.
+  2737: `Le pattern if __name__ == '__main__': is a common Python idiom that allows code to run only when a script is executed directly, not when it's imported as a module. This pattern is typically used to place code that should only run when the script is the main entry point (like main() fonction calls, tests, or script-specific logic) dans the if block.
 
 __name__ == '__main__' pattern:
 • if __name__ == '__main__': checks if script is main
-• Code in block runs uniquement quand script executed directly
-• Code ne run when module is imported
+• Code in block runs only when script executed directly
+• Code doesn't run when module is imported
 • Common pattern for script entry points
 • Allows modules to be both importable and executable
 
 Comment ça fonctionne :
 • When script run directly: __name__ = '__main__'
 • When imported: __name__ = 'module_name'
-• if __name__ == '__main__': True uniquement quand run directly
-• Code in block executes uniquement quand True
+• if __name__ == '__main__': True only when run directly
+• Code in block executes only when True
 • Allows conditional execution
 
 Exemple :
 def main():
-    print("Main function")
+    print("Main fonction")
     # Script logic here
 
 if __name__ == '__main__':
-    main()  # Runs uniquement quand script is executed directly
-# Can import this module without running main()
+    main()  # Runs only when script is executed directly
+# Can import this module sans running main()
 
 Usages courants :
 • Script entry points: if __name__ == '__main__': main()
 • Testing: if __name__ == '__main__': unittest.main()
-• Conditional execution: run code uniquement quand script is main
+• Conditional execution: run code only when script is main
 • Modules and imports
 
-Exemple : if __name__ == '__main__': pass is a common pattern that runs code uniquement quand a script is executed directly, not when imported as a module.`,
+Exemple : if __name__ == '__main__': pass is a common pattern that runs code only when a script is executed directly, not when imported as a module.`,
   2738: `sys.path est une liste de chemins de répertoires où Python cherche for modules quand vous les importez. Quand vous écrivez import module, Python searches for the module in chaque directory in sys.path in order until il trouve the module. sys.path is initialized from the current directory, PYTHONPATH environment variable, and standard library paths. You can modifier sys.path to add custom directories to the module search path.
 
 sys.path:
@@ -68318,38 +68295,38 @@ Usages courants :
 • Generators and iterators
 
 Exemple : If def gen(): yield 1; type(gen()), then type(gen()) retourne <class 'generator'> car a function with yield retourne a generator object, not a regular function.`,
-  2742: `The next() function gets the next value from a generator. If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() advances the generator to the next yield statement and retourne the yielded value. Each call to next() on a generator consumes one value. Note that chaque gen() call crée a new generator, so this retourne 1 chaque time, but if you reuse le même generator object, it will raise StopIteration after yielding all values.
+  2742: `Le next() fonction gets the next valeur from a generator. If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() advances the generator to the next yield instruction and retourne the yielded valeur. Each call to next() on a generator consumes one valeur. Note that each gen() call creates a new generator, so this retourne 1 each time, but if you reuse the same generator objet, it will raise StopIteration après yielding all valeurs.
 
-next() with generator:
+next() avec generator:
 • next(gen()) retourne 1
 • next() advances generator to next yield
-• Retourne yielded value (1)
+• Returns yielded valeur (1)
 • Generator state advances
-• Retourne : 1
+• Returns: 1
 
 Comment ça fonctionne :
-• gen() crée new generator object
+• gen() creates new generator objet
 • next(gen()) starts generator execution
 • Generator executes until yield 1
-• next() retourne yielded value: 1
+• next() retourne yielded valeur: 1
 • Generator pauses at yield
-• Retourne : 1
+• Returns: 1
 
 Exemple :
 def gen():
     yield 1
-next(gen())              # 1 (first value)
+next(gen())              # 1 (first valeur)
 g = gen()                # Reuse same generator
 next(g)                  # 1
 next(g)                  # StopIteration (exhausted)
 
 Usages courants :
-• Generator iteration: next(generator) (get next value)
+• Generator iteration: next(generator) (get next valeur)
 • Manual iteration: next() for explicit control
-• Generator values: consume values one at a time
+• Generator valeurs: consume valeurs one at a time
 • Generators and iterators
 
-Exemple : If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() gets the next value from the generator, advancing it to the next yield statement.`,
+Exemple : If def gen(): yield 1; next(gen()), then next(gen()) retourne 1 car next() gets the next valeur from the generator, advancing it to the next yield instruction.`,
   2743: `A generator can yield multiple values. If def gen(): yield 1; yield 2; list(gen()), then list(gen()) retourne [1, 2] car the generator yields both values (1, then 2), and list() consumes all values from the generator, creating une liste with all yielded values. Each yield statement produces one value, and the generator continues until it reaches the end (or a renvoyer statement).
 
 Multiple yields:
@@ -68416,22 +68393,22 @@ Usages courants :
 • Generators and iterators
 
 Exemple : If def gen(): yield 1; return; g = gen(); next(g); next(g), then next(g) lève StopIteration car the generator is exhausted - it n'a pas more values to yield after yielding 1.`,
-  2745: `When a generator a un renvoyer statement with a value, that value becomes la valeur attribute of the StopIteration exception. If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) lève StopIteration with value 'done' car after yielding 1, the generator reaches renvoyer 'done', and the renvoyer value becomes the StopIteration exception's value attribute. Vous pouvez accéder it via except StopIteration as e: e.value.
+  2745: `Quand a generator has a renvoyer instruction avec a valeur, that valeur becomes the valeur attribute of the StopIteration exception. If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) raises StopIteration avec valeur 'done' car après yielding 1, the generator reaches renvoyer 'done', and the renvoyer valeur becomes the StopIteration exception's valeur attribute. You can access it via except StopIteration as e: e.valeur.
 
-Renvoyer value in StopIteration:
-• g.send(None) lève StopIteration with value 'done'
+Return valeur in StopIteration:
+• g.send(None) raises StopIteration avec valeur 'done'
 • Generator retourne 'done'
-• Renvoyer value becomes StopIteration.value
-• Access via except StopIteration as e: e.value
+• Return valeur becomes StopIteration.valeur
+• Access via except StopIteration as e: e.valeur
 • Raises StopIteration
 
 Comment ça fonctionne :
-• g = gen() crée generator
+• g = gen() creates generator
 • next(g) yields 1 (retourne 1)
 • Generator continues, reaches renvoyer 'done'
-• g.send(None) called (same as next(g))
-• Generator exhausted, lève StopIteration
-• StopIteration.value = 'done'
+• g.send(None) appelé (same as next(g))
+• Generator exhausted, raises StopIteration
+• StopIteration.valeur = 'done'
 
 Exemple :
 def gen():
@@ -68442,33 +68419,33 @@ next(g)                  # 1
 try:
     next(g)
 except StopIteration as e:
-    print(e.value)       # 'done'
+    print(e.valeur)       # 'done'
 
 Usages courants :
-• Generator renvoyer values: renvoyer value (becomes StopIteration.value)
-• Exception values: access renvoyer value from StopIteration
-• Generator completion: renvoyer value with final state
+• Generator renvoyer valeurs: renvoyer valeur (becomes StopIteration.valeur)
+• Exception valeurs: access renvoyer valeur from StopIteration
+• Generator completion: renvoyer valeur avec final state
 • Generators and iterators
 
-Exemple : If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) lève StopIteration with value 'done' car the renvoyer value becomes the StopIteration exception's value attribute.`,
-  2746: `The send() method sends a value to a generator, and that value becomes la valeur of the yield expression. If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends 2 to the generator, which becomes la valeur of x = yield 1 (x = 2), then the generator yields x (2). The first next(g) is needed to start the generator and reach les premiers yield before you can send values. After that, send() peut être utilisé pour send values into the generator.
+Exemple : If def gen(): yield 1; renvoyer 'done'; g = gen(); next(g); g.send(None), then g.send(None) raises StopIteration avec valeur 'done' car the renvoyer valeur becomes the StopIteration exception's valeur attribute.`,
+  2746: `Le send() méthode sends a valeur to a generator, and that valeur becomes the valeur of the yield expression. If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends 2 to the generator, which becomes the valeur of x = yield 1 (x = 2), then the generator yields x (2). The first next(g) is needed to start the generator and reach the first yield avant you can send valeurs. After that, send() can be used to send valeurs into the generator.
 
-send() method:
+send() méthode:
 • g.send(2) retourne 2
-• send() sends value to generator
-• Value becomes yield expression value
+• send() sends valeur to generator
+• Value becomes yield expression valeur
 • x = yield 1 becomes x = 2
 • Generator yields x (2)
-• Retourne : 2
+• Returns: 2
 
 Comment ça fonctionne :
-• g = gen() crée generator
+• g = gen() creates generator
 • next(g) starts generator, yields 1 (retourne 1)
 • Generator pauses at x = yield 1
 • g.send(2) sends 2 to generator
-• x = 2 (value of yield expression)
+• x = 2 (valeur of yield expression)
 • Generator continues, yields x (2)
-• Retourne : 2
+• Returns: 2
 
 Exemple :
 def gen():
@@ -68479,12 +68456,12 @@ next(g)                  # 1 (starts generator)
 g.send(2)                # 2 (sends 2, yields x=2)
 
 Usages courants :
-• Two-way communication: send() sends values to generator
-• Coroutines: generators that receive values
-• Generator communication: yield receives values via send()
+• Two-way communication: send() sends valeurs to generator
+• Coroutines: generators that receive valeurs
+• Generator communication: yield receives valeurs via send()
 • Generators and iterators
 
-Exemple : If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends a value to the generator, which becomes la valeur of the yield expression (x = 2), and then the generator yields x.`,
+Exemple : If def gen(): x = yield 1; yield x; g = gen(); next(g); g.send(2), then g.send(2) retourne 2 car send() sends a valeur to the generator, which becomes the valeur of the yield expression (x = 2), and then the generator yields x.`,
   2747: `Une expression génératrice est a compact way to créer a generator, similaire à une compréhension de liste mais avec des parenthèses au lieu of square brackets. If (x**2 for x in [1, 2, 3]), then il retourne a generator expression object, which is a generator that will produce values when iterated over. Generator expressions are paresseux - they ne compute all values at once, making them efficace en mémoire for large sequences.
 
 Generator expression:
@@ -68515,55 +68492,55 @@ Usages courants :
 • Generators and iterators
 
 Exemple : (x**2 for x in [1, 2, 3]) crée a generator expression, which is a generator object that produces values when iterated over.`,
-  2748: `The list() function can consume a generator expression, converting all its values into a list. If list(x**2 for x in [1, 2, 3]), then list() retourne [1, 4, 9] car list() itère sur the generator expression, consuming all values (1**2=1, 2**2=4, 3**2=9) and creating une liste with those values. This est équivalent à [x**2 for x in [1, 2, 3]], but using a generator expression inside list() peut être more efficace en mémoire if you need to process values first.
+  2748: `Le liste() fonction can consume a generator expression, converting all its valeurs into a liste. If liste(x**2 for x in [1, 2, 3]), then liste() retourne [1, 4, 9] car liste() iterates over the generator expression, consuming all valeurs (1**2=1, 2**2=4, 3**2=9) and creating a liste avec those valeurs. This is equivalent to [x**2 for x in [1, 2, 3]], but using a generator expression dans liste() can be more memory-efficient if you need to process valeurs first.
 
-list() consumes generator:
-• list(x**2 for x in [1, 2, 3]) retourne [1, 4, 9]
-• list() itère sur generator expression
-• Consumes all values: 1, 4, 9
-• Crée list with all values
-• Retourne : [1, 4, 9]
+liste() consumes generator:
+• liste(x**2 for x in [1, 2, 3]) retourne [1, 4, 9]
+• liste() iterates over generator expression
+• Consumes all valeurs: 1, 4, 9
+• Creates liste avec all valeurs
+• Returns: [1, 4, 9]
 
 Comment ça fonctionne :
-• (x**2 for x in [1, 2, 3]) crée generator
-• list() itère sur generator
+• (x**2 for x in [1, 2, 3]) creates generator
+• liste() iterates over generator
 • Generator yields: 1 (1**2), 4 (2**2), 9 (3**2)
-• list() collects all values: [1, 4, 9]
-• Retourne : [1, 4, 9]
+• liste() collects all valeurs: [1, 4, 9]
+• Returns: [1, 4, 9]
 
 Exemple :
-list(x**2 for x in [1, 2, 3])    # [1, 4, 9] (consumes generator)
+liste(x**2 for x in [1, 2, 3])    # [1, 4, 9] (consumes generator)
 # Equivalent to:
-[x**2 for x in [1, 2, 3]]        # [1, 4, 9] (list comprehension)
+[x**2 for x in [1, 2, 3]]        # [1, 4, 9] (liste comprehension)
 
 Usages courants :
-• List creation: list(generator) (convert generator to list)
-• Memory efficiency: generator for processing, list() for final result
-• Value consumption: consume all generator values
+• List creation: liste(generator) (convert generator to liste)
+• Memory efficiency: generator for processing, liste() for final result
+• Value consumption: consume all generator valeurs
 • Generators and iterators
 
-Exemple : If list(x**2 for x in [1, 2, 3]), then list() retourne [1, 4, 9] car list() consumes the generator expression, converting all its values into a list.`,
-  2749: `The yield from statement delegates iteration to another iterable. If def gen(): yield from [1, 2, 3]; list(gen()), then list(gen()) retourne [1, 2, 3] car yield from [1, 2, 3] delegates to the list, yielding chaque value from the list. This est équivalent à for item in [1, 2, 3]: yield item, but more concise. yield from is useful for delegating to another generator or iterable, allowing composition of generators.
+Exemple : If liste(x**2 for x in [1, 2, 3]), then liste() retourne [1, 4, 9] car liste() consumes the generator expression, converting all its valeurs into a liste.`,
+  2749: `Le yield from instruction delegates iteration to another iterable. If def gen(): yield from [1, 2, 3]; liste(gen()), then liste(gen()) retourne [1, 2, 3] car yield from [1, 2, 3] delegates to the liste, yielding each valeur from the liste. This is equivalent to for item in [1, 2, 3]: yield item, but more concise. yield from is useful for delegating to another generator or iterable, allowing composition of generators.
 
-yield from statement:
-• yield from [1, 2, 3] delegates to list
-• Yields chaque value from list
+yield from instruction:
+• yield from [1, 2, 3] delegates to liste
+• Yields each valeur from liste
 • Equivalent to for item in [1, 2, 3]: yield item
-• list(gen()) collects all values: [1, 2, 3]
-• Retourne : [1, 2, 3]
+• liste(gen()) collects all valeurs: [1, 2, 3]
+• Returns: [1, 2, 3]
 
 Comment ça fonctionne :
-• gen() crée generator
-• list() itère sur generator
+• gen() creates generator
+• liste() iterates over generator
 • Generator executes: yield from [1, 2, 3]
-• yield from yields chaque value: 1, 2, 3
-• list() collects: [1, 2, 3]
-• Retourne : [1, 2, 3]
+• yield from yields each valeur: 1, 2, 3
+• liste() collects: [1, 2, 3]
+• Returns: [1, 2, 3]
 
 Exemple :
 def gen():
-    yield from [1, 2, 3]  # Delegates to list
-list(gen())              # [1, 2, 3]
+    yield from [1, 2, 3]  # Delegates to liste
+liste(gen())              # [1, 2, 3]
 # Equivalent to:
 def gen():
     for item in [1, 2, 3]:
@@ -68571,11 +68548,11 @@ def gen():
 
 Usages courants :
 • Generator composition: yield from other_generator()
-• Delegation: yield from itérable (delegate iteration)
+• Delegation: yield from iterable (delegate iteration)
 • Concise syntax: yield from instead of for loop
 • Generators and iterators
 
-Exemple : If def gen(): yield from [1, 2, 3]; list(gen()), then list(gen()) retourne [1, 2, 3] car yield from delegates to the iterable, yielding chaque value from it.`,
+Exemple : If def gen(): yield from [1, 2, 3]; liste(gen()), then liste(gen()) retourne [1, 2, 3] car yield from delegates to the iterable, yielding each valeur from it.`,
   2750: `An itérateur class implements __iter__ (retourne self) and __next__ (retourne next value) methods. If class MyIter: def __iter__(self): renvoyer self; def __next__(self): renvoyer 1; type(MyIter()), then type(MyIter()) retourne <class '__main__.MyIter'> car MyIter() crée an instance of MyIter, not a generator. The class is an itérateur car it implements __iter__ and __next__, but it's still a regular class instance. Generators are a specific type of iterator, but custom itérateur classes are also iterators.
 
 Iterator class:
@@ -68987,29 +68964,29 @@ Usages courants : • Combine multiple behaviors
 • Clean separation of concerns
 
 Exemple : Multiple decorators are applied bottom-to-top, so @decorator1 @decorator2 means decorator1(decorator2(func)).`,
-  2761: `The Singleton pattern ensures only one instance of a class exists. By overriding __new__, we control object creation and return le même instance every time. obj1 is obj2 returns True because they reference le même object.
+  2761: `Le Singleton pattern ensures only one instance of a classe exists. By overriding __new__, we control objet creation and renvoyer le même instance every time. obj1 is obj2 retourne True car they reference le même objet.
 
 Singleton pattern implementation:
-• class Singleton: defines singleton class
-• _instance = None: class variable to store single instance
+• classe Singleton: defines singleton classe
+• _instance = None: classe variable to store single instance
 • __new__(cls): controls instance creation
 • if cls._instance is None: creates instance only once
-• return cls._instance: returns same instance always
-• obj1 is obj2: True (same object identity)
+• renvoyer cls._instance: retourne same instance always
+• obj1 is obj2: True (same objet identity)
 
 Comment ça fonctionne : • First Singleton() call creates new instance
 • Instance stored in cls._instance
-• Subsequent calls return existing instance
+• Subsequent calls renvoyer existing instance
 • All instances are identical (obj1 is obj2)
-• Only one object exists in memory
+• Only one objet exists in memory
 
-Exemple : class Singleton:
+Exemple : classe Singleton:
     _instance = None
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-        return cls._instance
+        renvoyer cls._instance
 
 obj1 = Singleton()
 obj2 = Singleton()
@@ -69020,54 +68997,54 @@ Usages courants : • Ensures single instance
 • Memory efficiency
 • Controlled instantiation
 
-Exemple : Singleton.__new__ ensures only one instance exists, so obj1 is obj2 returns True.`,
-  2762: `The Factory pattern fournit un way to create objects without specifying the exact class. The create method takes a type and instantiates it, returning the created object. Factory.create(list) returns [] because list() creates an empty list.
+Exemple : Singleton.__new__ ensures only one instance exists, so obj1 is obj2 retourne True.`,
+  2762: `Le Factory pattern fournit un way to create objets sans specifying the exact classe. The create méthode takes a type and instantiates it, returning the created objet. Factory.create(liste) retourne [] car liste() creates an empty liste.
 
 Factory pattern implementation:
-• class Factory: defines factory class
-• @staticmethod def create(type): static factory method
-• return type(): instantiates the passed type
-• obj = Factory.create(list): creates list instance
-• Factory.create(list) returns [] (empty list)
+• classe Factory: defines factory classe
+• @staticmethod def create(type): static factory méthode
+• renvoyer type(): instantiates the passed type
+• obj = Factory.create(liste): creates liste instance
+• Factory.create(liste) retourne [] (empty liste)
 
-Comment ça fonctionne : • Factory.create(list) calls create method
-• type parameter is list class
-• return type() creates list() → []
-• obj assigned the created object
+Comment ça fonctionne : • Factory.create(liste) calls create méthode
+• type parameter is liste classe
+• renvoyer type() creates liste() → []
+• obj assigned the created objet
 • Retourne new instance each time
 
-Exemple : class Factory:
+Exemple : classe Factory:
     @staticmethod
     def create(obj_type):
-        return obj_type()
+        renvoyer obj_type()
 
 # Create different types
-my_list = Factory.create(list)      # []
+my_list = Factory.create(liste)      # []
 my_dict = Factory.create(dict)      # {}
 my_set = Factory.create(set)        # set()
 
-Usages courants : • Centralized object creation
+Usages courants : • Centralized objet creation
 • Decouples client from specific classes
-• Easy to extend with new types
+• Easy to extend avec new types
 • Consistent creation interface
 
-Exemple : Factory.create(list) returns [] because the factory instantiates the list type, creating an empty list.`,
-  2763: `The Observer pattern allows objects to be notified when another object changes. A subject maintains a list of observers and notifies them when its state changes. [o.update() for o in self._observers] itère sur all observers and calls their update method.
+Exemple : Factory.create(liste) retourne [] car the factory instantiates the liste type, creating an empty liste.`,
+  2763: `Le Observer pattern allows objets to be notified when another objet changes. A subject maintains a liste of observers and notifies them when its state changes. [o.update() for o in self._observers] itère sur all observers and calls their update méthode.
 
 Observer pattern structure:
-• class Observer: defines observer class
-• self._observers = []: list to store observers
-• attach(observer): adds observer to list
+• classe Observer: defines observer classe
+• self._observers = []: liste to store observers
+• attach(observer): adds observer to liste
 • notify(): itère sur observers
 • [o.update() for o in self._observers]: calls update on each
 
-Comment ça fonctionne : • Subject maintains list of observers
-• attach() adds observers to list
+Comment ça fonctionne : • Subject maintains liste of observers
+• attach() adds observers to liste
 • When subject changes, notify() est appelé
 • notify() calls update() on each observer
 • Observers react to the change
 
-Exemple : class NewsPublisher:
+Exemple : classe NewsPublisher:
     def __init__(self):
         self._subscribers = []
 
@@ -69078,112 +69055,112 @@ Exemple : class NewsPublisher:
         for subscriber in self._subscribers:
             subscriber.update(news)
 
-class Subscriber:
+classe Subscriber:
     def update(self, news):
         print(f"Received news: {news}")
 
-Usages courants : • Loose coupling between objects
+Usages courants : • Loose coupling entre objets
 • Automatic notifications
 • Extensible observer system
 • Event-driven architecture
 
 Exemple : Observer pattern where notify() itère sur observers and calls o.update() on each one.`,
-  2764: `The Strategy pattern defines a family of algorithms and makes them interchangeable. StrategyA and StrategyB implement different versions of the execute method, allowing clients to choose different algorithms at runtime.
+  2764: `Le Strategy pattern defines a family of algorithms and makes them interchangeable. StrategyA and StrategyB implement different versions of the execute méthode, allowing clients to choose different algorithms at runtime.
 
 Strategy pattern structure:
-• class Strategy: defines strategy interface
-• def execute(self): pass: abstract method
-• class StrategyA(Strategy): implements strategy A
-• class StrategyB(Strategy): implements strategy B
-• execute() returns different results for each strategy
+• classe Strategy: defines strategy interface
+• def execute(self): pass: abstract méthode
+• classe StrategyA(Strategy): implements strategy A
+• classe StrategyB(Strategy): implements strategy B
+• execute() retourne different results for each strategy
 
-Comment ça fonctionne : • Base Strategy class defines interface
+Comment ça fonctionne : • Base Strategy classe defines interface
 • Concrete strategies implement execute differently
 • Client can switch strategies at runtime
 • Each strategy encapsulates different algorithm
 • Polymorphism allows interchangeable use
 
-Exemple : class SortStrategy:
+Exemple : classe SortStrategy:
     def sort(self, data):
         pass
 
-class BubbleSort(SortStrategy):
+classe BubbleSort(SortStrategy):
     def sort(self, data):
         # Bubble sort implementation
-        return sorted(data)  # simplified
+        renvoyer sorted(data)  # simplified
 
-class QuickSort(SortStrategy):
+classe QuickSort(SortStrategy):
     def sort(self, data):
         # Quick sort implementation
-        return sorted(data)  # simplified
+        renvoyer sorted(data)  # simplified
 
 Usages courants : • Interchangeable algorithms
 • Runtime strategy selection
 • Clean separation of concerns
 • Easy to add new strategies
 
-Exemple : Strategy pattern with StrategyA.execute() returning 'A' and StrategyB.execute() returning 'B' - different algorithms for same interface.`,
-  2765: `The Adapter pattern allows classes with incompatible interfaces to work together. The Adapter wraps an object and provides the expected interface by calling the wrapped object's methods. method() calls self.obj.other_method(), adapting the interface.
+Exemple : Strategy pattern avec StrategyA.execute() returning 'A' and StrategyB.execute() returning 'B' - different algorithms for same interface.`,
+  2765: `Le Adapter pattern allows classes avec incompatible interfaces to work together. The Adapter wraps an objet and provides the expected interface by calling the wrapped objet's méthodes. méthode() calls self.obj.other_method(), adapting the interface.
 
 Adapter pattern structure:
-• class Adapter: adapts incompatible interfaces
-• def __init__(self, obj): stores wrapped object
-• def method(self): provides expected interface
-• return self.obj.other_method(): calls wrapped object's method
+• classe Adapter: adapts incompatible interfaces
+• def __init__(self, obj): stores wrapped objet
+• def méthode(self): provides expected interface
+• renvoyer self.obj.other_method(): calls wrapped objet's méthode
 • Translates interface calls
 
-Comment ça fonctionne : • Adapter wraps incompatible object
+Comment ça fonctionne : • Adapter wraps incompatible objet
 • Provides expected interface to client
-• Translates method calls to wrapped object
-• method() → other_method() translation
+• Translates méthode calls to wrapped objet
+• méthode() → other_method() translation
 • Client uses adapter as if it were compatible
 
-Exemple : class OldSystem:
+Exemple : classe OldSystem:
     def old_method(self):
-        return "old result"
+        renvoyer "old result"
 
-class Adapter:
+classe Adapter:
     def __init__(self, old_system):
         self.old_system = old_system
 
     def new_method(self):  # Expected interface
-        return self.old_system.old_method()  # Adapts call
+        renvoyer self.old_system.old_method()  # Adapts call
 
 old = OldSystem()
 adapter = Adapter(old)
-result = adapter.new_method()  # Works with new interface
+result = adapter.new_method()  # Works avec new interface
 
 Usages courants : • Interface compatibility
 • Legacy system integration
 • Clean API adaptation
 • Third-party library integration
 
-Exemple : Adapter adapts interfaces by wrapping objects and translating method calls - method() calls self.obj.other_method().`,
-  2766: `The Builder pattern separates the construction of complex objects from their representation. The builder accumulates parts and then builds the final object. add() returns self for method chaining, and build() assembles the final result.
+Exemple : Adapter adapts interfaces by wrapping objets and translating méthode calls - méthode() calls self.obj.other_method().`,
+  2766: `Le Builder pattern separates the construction of complex objets from their representation. The builder accumulates parts and then builds the final objet. add() retourne self for méthode chaining, and build() assembles the final result.
 
 Builder pattern structure:
-• class Builder: constructs complex objects
-• self.parts = []: accumulates object parts
-• add(part): adds part and returns self for chaining
-• return self: enables method chaining
-• build(): assembles final object from parts
+• classe Builder: constructs complex objets
+• self.parts = []: accumulates objet parts
+• add(part): adds part and retourne self for chaining
+• renvoyer self: enables méthode chaining
+• build(): assembles final objet from parts
 
 Comment ça fonctionne : • Builder accumulates parts step by step
-• add() adds parts to internal list
-• Retourne self for method chaining
+• add() adds parts to internal liste
+• Retourne self for méthode chaining
 • build() combines all parts
 • ''.join(self.parts) creates final string
 
-Exemple : class StringBuilder:
+Exemple : classe StringBuilder:
     def __init__(self):
         self.parts = []
 
     def add(self, part):
         self.parts.append(part)
-        return self  # Enable chaining
+        renvoyer self  # Enable chaining
 
     def build(self):
-        return ''.join(self.parts)
+        renvoyer ''.join(self.parts)
 
 builder = StringBuilder()
 result = builder.add('Hello').add(' ').add('World').build()
@@ -69191,10 +69168,10 @@ result = builder.add('Hello').add(' ').add('World').build()
 
 Usages courants : • Step-by-step construction
 • Method chaining
-• Complex object assembly
+• Complex objet assembly
 • Clean construction API
 
-Exemple : Builder accumulates parts with add() and assembles them in build() using ''.join(self.parts).`,
+Exemple : Builder accumulates parts avec add() and assembles them in build() using ''.join(self.parts).`,
   2767: `Le pattern Prototype creates new objects by copying existing ones. clone() crée un new instance of le même type using type(self)() constructor. Cela évite expensive initialization and allows creating variations from prototypes.
 
 Prototype pattern structure:
@@ -69227,22 +69204,22 @@ Usages courants : • Avoid expensive object creation
 • Simplified cloning logic
 
 Exemple : Prototype.clone() creates new instance using type(self)(), cloning the object's structure and initial values.`,
-  2768: `The Facade pattern fournit un simplified interface to a complex system. The facade hides the complexity of multiple subsystems and fournit un single operation() method that coordinates calls to subsystem1.method() and subsystem2.method().
+  2768: `Le Facade pattern fournit un simplified interface to a complex system. The facade hides the complexity of multiple subsystems and fournit un single operation() méthode that coordinates calls to subsystem1.méthode() and subsystem2.méthode().
 
 Facade pattern structure:
-• class Facade: provides simplified interface
+• classe Facade: provides simplified interface
 • self.subsystem1 = Subsystem1(): initializes subsystems
 • self.subsystem2 = Subsystem2(): initializes more subsystems
-• def operation(self): single method for complex operations
-• return self.subsystem1.method() + self.subsystem2.method(): coordinates subsystems
+• def operation(self): single méthode for complex operations
+• renvoyer self.subsystem1.méthode() + self.subsystem2.méthode(): coordinates subsystems
 
 Comment ça fonctionne : • Facade wraps multiple complex subsystems
-• Provides single operation() method
-• operation() calls multiple subsystem methods
+• Provides single operation() méthode
+• operation() calls multiple subsystem méthodes
 • Client uses simple facade interface
 • Complexity hidden behind facade
 
-Exemple : class DatabaseFacade:
+Exemple : classe DatabaseFacade:
     def __init__(self):
         self.connection = DatabaseConnection()
         self.query_builder = QueryBuilder()
@@ -69252,7 +69229,7 @@ Exemple : class DatabaseFacade:
         # Complex operations hidden
         query = self.query_builder.build_select(user_id)
         raw_data = self.connection.execute(query)
-        return self.result_formatter.format(raw_data)
+        renvoyer self.result_formatter.format(raw_data)
 
 # Simple interface for complex system
 facade = DatabaseFacade()
@@ -69263,7 +69240,7 @@ Usages courants : • Simplified interface to complex systems
 • Easier to use and maintain
 • Encapsulates system complexity
 
-Exemple : Facade provides simplified operation() that coordinates self.subsystem1.method() + self.subsystem2.method().`,
+Exemple : Facade provides simplified operation() that coordinates self.subsystem1.méthode() + self.subsystem2.méthode().`,
   2769: `Le pattern Command encapsulates requests as objects, allowing parameterization and queuing of operations. L'Invoker stocke a command and calls its execute() method si nécessaire. Cela découple the requester de l'opération réelle.
 
 Command pattern structure:
@@ -69348,33 +69325,33 @@ Usages courants : • Uniform treatment of objects and compositions
 • Complex hierarchies simplified
 
 Exemple : Composite.operation() calls [c.operation() for c in self.children], recursively processing all components in the composition.`,
-  2771: `The metaclass parameter allows you to specify a custom metaclass for a class. If class Meta(type): pass; class MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) returns <class '__main__.Meta'> because MyClass was created using Meta as its metaclass, so type(MyClass) returns Meta (the class's metaclass), not the default type. Classes are instances of their metaclass, so MyClass is an instance of Meta, making type(MyClass) return Meta.
+  2771: `Le metaclass parameter allows you to specify a custom metaclass for a classe. If classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) retourne <classe '__main__.Meta'> car MyClass was created using Meta as its metaclass, so type(MyClass) retourne Meta (the classe's metaclass), not the default type. Classes are instances of their metaclass, so MyClass is an instance of Meta, making type(MyClass) renvoyer Meta.
 
 Custom metaclass:
-• type(MyClass) returns <class '__main__.Meta'>
-• MyClass created with metaclass=Meta
+• type(MyClass) retourne <classe '__main__.Meta'>
+• MyClass created avec metaclass=Meta
 • Classes are instances of their metaclass
 • MyClass is instance of Meta
-• type() returns class's metaclass
-• Retourne : <class '__main__.Meta'>
+• type() retourne classe's metaclass
+• Retourne : <classe '__main__.Meta'>
 
-Comment ça fonctionne : • class MyClass(metaclass=Meta): specifies metaclass
-• Python uses Meta instead of type to create class
+Comment ça fonctionne : • classe MyClass(metaclass=Meta): specifies metaclass
+• Python uses Meta instead of type to create classe
 • MyClass created as instance of Meta
-• type(MyClass) checks class's metaclass
+• type(MyClass) checks classe's metaclass
 • Retourne : Meta (not type)
 
-Exemple : class Meta(type): pass
-class MyClass(metaclass=Meta): pass
-type(MyClass)              # <class '__main__.Meta'> (metaclass)
-type(MyClass())            # <class '__main__.MyClass'> (class)
+Exemple : classe Meta(type): pass
+classe MyClass(metaclass=Meta): pass
+type(MyClass)              # <classe '__main__.Meta'> (metaclass)
+type(MyClass())            # <classe '__main__.MyClass'> (classe)
 
-Usages courants : • Custom metaclasses: class MyClass(metaclass=Meta): (custom class creation)
+Usages courants : • Custom metaclasses: classe MyClass(metaclass=Meta): (custom classe creation)
 • Metaprogramming: control how classes are created
 • Metaclasses
 • Advanced Python
 
-Exemple : If class Meta(type): pass; class MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) returns <class '__main__.Meta'> because the metaclass parameter sets the class's metaclass, making MyClass an instance of Meta.
+Exemple : If classe Meta(type): pass; classe MyClass(metaclass=Meta): pass; type(MyClass), then type(MyClass) retourne <classe '__main__.Meta'> car the metaclass parameter sets the classe's metaclass, making MyClass an instance of Meta.
 `,
   2772: `A metaclass's __new__ method controls class creation. If class Meta(type): def __new__(cls, name, bases, dct): return super().__new__(cls, name, bases, dct); class MyClass(metaclass=Meta): pass, then MyClass est créé using the custom metaclass because Meta.__new__ est appelé when MyClass is being created. The __new__ method reçoit le class name, base classes, and class dictionary, and retourne le created class. Cela permet you to modify or validate the class during creation.
 
@@ -69500,7 +69477,7 @@ Usages courants : • Singleton pattern: metaclass ensures single instance
 
 Exemple : If class SingletonMeta(type): _instances = {}; def __call__(cls, *args, **kwargs): if cls not in cls._instances: cls._instances[cls] = super().__call__(*args, **kwargs); return cls._instances[cls]; class MyClass(metaclass=SingletonMeta): pass; MyClass() is MyClass(), then MyClass() is MyClass() returns True because the metaclass implements the Singleton pattern, ensuring only one instance exists.
 `,
-  2776: `The __slots__ attribute restricts which attributes can be set on instances. If class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError because __slots__ only allows 'x' as an instance attribute. Toute tentative de définir an attribute absent de __slots__ raises an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
+  2776: `Le __slots__ attribute restricts which attributes can be set on instances. If classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError car __slots__ only allows 'x' as an instance attribute. Toute tentative de définir an attribute absent de __slots__ raises an AttributeError. Cela économise la mémoire en évitant la création of __dict__ for instances.
 
 __slots__ restriction:
 • obj.y = 2 raises AttributeError
@@ -69513,9 +69490,9 @@ Comment ça fonctionne : • obj.x = 1 works (x in __slots__)
 • obj.y = 2 attempts to set 'y'
 • 'y' absent de __slots__ = ['x']
 • Attribute not allowed
-• Raises AttributeError: 'MyClass' object n'a pas attribute 'y'
+• Raises AttributeError: 'MyClass' objet n'a pas attribute 'y'
 
-Exemple : class MyClass:
+Exemple : classe MyClass:
     __slots__ = ['x', 'y']
 obj = MyClass()
 obj.x = 1                    # Works (x in __slots__)
@@ -69527,7 +69504,7 @@ Usages courants : • Memory optimization: __slots__ = ['attr1', 'attr2'] (saves
 • Class optimization
 • Memory efficiency
 
-Exemple : If class MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError because __slots__ restricts instance attributes to only those listed, and 'y' is absent de __slots__.
+Exemple : If classe MyClass: __slots__ = ['x']; obj = MyClass(); obj.x = 1; obj.y = 2, then obj.y = 2 raises an AttributeError car __slots__ restricts instance attributes to only those listed, and 'y' is absent de __slots__.
 `,
   2777: `Using __slots__ removes the __dict__ attribute from instances, saving memory. If class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), then '__dict__' in dir(obj) returns False because __slots__ prevents the creation of __dict__ for instances. dir() lists all attributes, and since instances with __slots__ n'a pas __dict__, it's not in the list. C'est the memory-saving benefit of __slots__ - instances n'a pas besoin a dictionary to store attributes.
 
@@ -69562,11 +69539,11 @@ Usages courants : • Memory optimization: __slots__ removes __dict__ (saves mem
 
 Exemple : If class MyClass: __slots__ = ['x']; obj = MyClass(); '__dict__' in dir(obj), then '__dict__' in dir(obj) returns False because __slots__ removes __dict__ from instances, preventing dynamic attribute creation and saving memory.
 `,
-  2778: `The __getattribute__ method intercepts all attribute access (both existing and missing attributes). If class MyClass: def __getattribute__(self, name): return super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError because __getattribute__ est appelé for all attribute access, even if the attribute n'existe pas. In this case, it calls super().__getattribute__(name), which uses the default behavior and raises AttributeError for missing attributes. __getattribute__ est appelé before __getattr__, so it intercepts all attribute access.
+  2778: `Le __getattribute__ méthode intercepts all attribute access (both existing and missing attributes). If classe MyClass: def __getattribute__(self, name): renvoyer super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError car __getattribute__ est appelé for all attribute access, even if the attribute n'existe pas. In this case, it calls super().__getattribute__(name), which uses the default behavior and raises AttributeError for missing attributes. __getattribute__ est appelé avant __getattr__, so it intercepts all attribute access.
 
 __getattribute__ intercepts all access:
 • obj.x raises AttributeError
-• __getattribute__ called for all attribute access
+• __getattribute__ appelé for all attribute access
 • Checks if attribute exists
 • obj n'a pas attribute 'x'
 • super().__getattribute__('x') raises AttributeError
@@ -69574,86 +69551,86 @@ __getattribute__ intercepts all access:
 
 Comment ça fonctionne : • obj.x accesses attribute 'x'
 • Python appelle obj.__getattribute__('x')
-• __getattribute__ executes: return super().__getattribute__('x')
+• __getattribute__ executes: renvoyer super().__getattribute__('x')
 • Default __getattribute__ searches for 'x'
 • 'x' not found on obj
-• Raises AttributeError: 'MyClass' object n'a pas attribute 'x'
+• Raises AttributeError: 'MyClass' objet n'a pas attribute 'x'
 
-Exemple : class MyClass:
+Exemple : classe MyClass:
     def __getattribute__(self, name):
         print(f"Accessing {name}")
-        return super().__getattribute__(name)
+        renvoyer super().__getattribute__(name)
 obj = MyClass()
 obj.x                    # Prints "Accessing x", then AttributeError
 
 Usages courants : • Attribute access control: __getattribute__ can log, validate, or modify access
 • Intercept all access: __getattribute__ catches all attribute access
 • Attribute access hooks
-• Special methods
+• Special méthodes
 
-Exemple : If class MyClass: def __getattribute__(self, name): return super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError because __getattribute__ intercepts all attribute access, and since 'x' n'existe pas, it raises AttributeError.
+Exemple : If classe MyClass: def __getattribute__(self, name): renvoyer super().__getattribute__(name); obj = MyClass(); obj.x, then obj.x raises an AttributeError car __getattribute__ intercepts all attribute access, and since 'x' n'existe pas, it raises AttributeError.
 `,
-  2779: `The __getattr__ method est appelé uniquement quand an attribute is not found through the normal lookup process (not in __dict__, not a descriptor, not a class attribute). If class MyClass: def __getattr__(self, name): return f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x returns 'Missing: x' because 'x' n'existe pas, so Python appelle __getattr__('x'), qui retourne le string 'Missing: x'. C'est different from __getattribute__, which est appelé for all attribute access - __getattr__ is only called as a fallback for missing attributes.
+  2779: `Le __getattr__ méthode est appelé uniquement quand an attribute is not found through the normal lookup process (not in __dict__, not a descriptor, not a classe attribute). If classe MyClass: def __getattr__(self, name): renvoyer f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x retourne 'Missing: x' car 'x' n'existe pas, so Python appelle __getattr__('x'), qui retourne le string 'Missing: x'. C'est different from __getattribute__, which est appelé for all attribute access - __getattr__ is only appelé as a fallback for missing attributes.
 
 __getattr__ fallback:
-• obj.x returns 'Missing: x'
+• obj.x retourne 'Missing: x'
 • Normal attribute lookup fails (x n'existe pas)
 • Python appelle __getattr__('x') as fallback
-• __getattr__ returns f'Missing: x'
+• __getattr__ retourne f'Missing: x'
 • Retourne : 'Missing: x'
 
 Comment ça fonctionne : • obj.x accesses attribute 'x'
 • Python searches: obj.__dict__ (not found) → MyClass.__dict__ (not found)
 • Normal lookup fails
 • Python appelle obj.__getattr__('x')
-• __getattr__ returns f'Missing: x'
+• __getattr__ retourne f'Missing: x'
 • Retourne : 'Missing: x'
 
-Exemple : class MyClass:
+Exemple : classe MyClass:
     def __getattr__(self, name):
-        return f'Missing: {name}'
+        renvoyer f'Missing: {name}'
 obj = MyClass()
 obj.x                    # 'Missing: x' (fallback for missing attribute)
 obj.y                    # 'Missing: y' (fallback)
 
-Usages courants : • Default values: __getattr__ can provide defaults for missing attributes
+Usages courants : • Default valeurs: __getattr__ can provide defaults for missing attributes
 • Dynamic attributes: create attributes on the fly
 • Attribute fallback: handle missing attributes gracefully
-• Special methods
+• Special méthodes
 
-Exemple : If class MyClass: def __getattr__(self, name): return f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x returns 'Missing: x' because __getattr__ est appelé uniquement quand an attribute is not found, providing a fallback value.
+Exemple : If classe MyClass: def __getattr__(self, name): renvoyer f'Missing: {name}'; obj = MyClass(); obj.x, then obj.x retourne 'Missing: x' car __getattr__ est appelé uniquement quand an attribute is not found, providing a fallback valeur.
 `,
-  2780: `The __setattr__ method intercepts all attribute assignment (setting attributes). If class MyClass: def __setattr__(self, name, value): super().__setattr__(name, value * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 10 because __setattr__ intercepts the assignment obj.x = 5, transforms the value (value * 2 = 5 * 2 = 10), and stores 10. Every attribute assignment goes through __setattr__, allowing you to validate, transform, or log assignments.
+  2780: `Le __setattr__ méthode intercepts all attribute assignment (setting attributes). If classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x retourne 10 car __setattr__ intercepts the assignment obj.x = 5, transforms the valeur (valeur * 2 = 5 * 2 = 10), and stores 10. Every attribute assignment goes through __setattr__, allowing you to validate, transform, or log assignments.
 
 __setattr__ intercepts assignment:
 • obj.x = 5 calls __setattr__('x', 5)
-• __setattr__ transforms: value * 2 = 5 * 2 = 10
-• Stores transformed value: obj.x = 10
-• obj.x returns 10
+• __setattr__ transforms: valeur * 2 = 5 * 2 = 10
+• Stores transformed valeur: obj.x = 10
+• obj.x retourne 10
 • Retourne : 10
 
 Comment ça fonctionne : • obj.x = 5 attempts to set attribute
 • Python appelle obj.__setattr__('x', 5)
-• __setattr__ executes: super().__setattr__(name, value * 2)
+• __setattr__ executes: super().__setattr__(name, valeur * 2)
 • Evaluates: 5 * 2 = 10
 • Stores: obj.x = 10
-• obj.x returns 10
+• obj.x retourne 10
 
-Exemple : class MyClass:
-    def __setattr__(self, name, value):
-        if value < 0:
+Exemple : classe MyClass:
+    def __setattr__(self, name, valeur):
+        if valeur < 0:
             raise ValueError("Value must be non-negative")
-        super().__setattr__(name, value * 2)
+        super().__setattr__(name, valeur * 2)
 obj = MyClass()
 obj.x = 5                    # Stores 10 (5 * 2)
-obj.x                        # 10 (transformed value)
+obj.x                        # 10 (transformed valeur)
 
-Usages courants : • Value transformation: __setattr__ can transform values before storing
+Usages courants : • Value transformation: __setattr__ can transform valeurs avant storing
 • Validation: __setattr__ can validate assignments
 • Assignment hooks: intercept all attribute assignments
-• Special methods
+• Special méthodes
 
-Exemple : If class MyClass: def __setattr__(self, name, value): super().__setattr__(name, value * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x returns 10 because __setattr__ intercepts all attribute assignment, transforming the value before storing it (5 * 2 = 10).
+Exemple : If classe MyClass: def __setattr__(self, name, valeur): super().__setattr__(name, valeur * 2); obj = MyClass(); obj.x = 5; obj.x, then obj.x retourne 10 car __setattr__ intercepts all attribute assignment, transforming the valeur avant storing it (5 * 2 = 10).
 `,
   2781: `PEP 8 (Python Enhancement Proposal 8) is the official style guide for Python code. It provides conventions for writing readable, consistent Python code, including naming conventions, code layout, whitespace usage, line length, comments, and more. Following PEP 8 makes code easier to read and maintain, and it's widely adopted in the Python community. While not enforced by the language, PEP 8 is considered best practice and many tools (like linters) can check code against PEP 8 standards.
 
@@ -69713,25 +69690,25 @@ Usages courants : • Type documentation: def func(x: int) -> int (document type
 
 Exemple : def func(x: int) -> int: return x * 2 uses type hints (PEP 484) to specify that x is an int and la fonction retourne an int - these are optional annotations that help with documentation and type checking.
 `,
-  2783: `The typing module provides generic types for type hints. If from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: return {}, then List[int] specifies a list containing integers, and Dict[str, int] specifies a dictionary with string keys and integer values. The typing module provides generic versions of built-in types (like List, Dict, Tuple, Set) that allow you to specify the types of their contents, enabling more precise type hints.
+  2783: `Le typing module provides generic types for type hints. If from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: renvoyer {}, then List[int] specifies a liste containing integers, and Dict[str, int] specifies a dictionnaire avec string keys and integer valeurs. The typing module provides generic versions of built-in types (like List, Dict, Tuple, Set) that allow you to specify the types of their contents, enabling more precise type hints.
 
 Generic type hints:
-• List[int] specifies list of integers
-• Dict[str, int] specifies dict with str keys, int values
+• List[int] specifies liste of integers
+• Dict[str, int] specifies dict avec str keys, int valeurs
 • typing module provides generic types
 • More precise type information
 • Better type checking
 
 Comment ça fonctionne : • from typing import List, Dict imports generic types
-• List[int] indicates list containing ints
-• Dict[str, int] indicates dict with str keys, int values
+• List[int] indicates liste containing ints
+• Dict[str, int] indicates dict avec str keys, int valeurs
 • Generic types allow precise type hints
 • Type checkers use them for validation
 
 Exemple : from typing import List, Dict
 def func(x: List[int]) -> Dict[str, int]:
-    return {}
-func([1, 2, 3])           # Works (list of ints)
+    renvoyer {}
+func([1, 2, 3])           # Works (liste of ints)
 func(['1', '2'])          # Type checker would warn
 
 Usages courants : • Generic types: List[T], Dict[K, V], Tuple[T, ...]
@@ -69739,7 +69716,7 @@ Usages courants : • Generic types: List[T], Dict[K, V], Tuple[T, ...]
 • Type checking: better type validation
 • Best practices
 
-Exemple : from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: return {} uses generic type hints from the typing module to specify that x is a list of integers and la fonction retourne a dictionary with string keys and integer values.
+Exemple : from typing import List, Dict; def func(x: List[int]) -> Dict[str, int]: renvoyer {} uses generic type hints from the typing module to specify that x is a liste of integers and la fonction retourne a dictionnaire avec string keys and integer valeurs.
 `,
   2784: `Type hints fonctionner avec default parameters - you can specify both the type and the default value. If def func(x: int = 1) -> int: return x, then x: int = 1 specifies that parameter x should be an int with a default value of 1. The type hint comes avant le default value, allowing you to document the expected type while providing a default. C'est a common pattern en Python functions.
 
@@ -69884,7 +69861,7 @@ Usages courants : • Function types: Callable[[args], return] (type hint for fu
 
 Exemple : from typing import Callable; def func(f: Callable[[int], int]) -> int: return f(1) uses Callable[[int], int] to specify that f is a function that takes one int argument and retourne un int.
 `,
-  2789: `The @dataclass decorator génère automatiquement common methods like __init__, __repr__, __eq__, and more basé sur les attributs de la classe. If from dataclasses import dataclass; @dataclass; class Point: x: int; y: int; Point(1, 2), then Point(1, 2) crée un Point instance because @dataclass génère automatiquement __init__ basé sur les attributs de la classe (x: int and y: int). Cela élimine boilerplate code for classes that primarily store data, les rendant plus concis and maintainable.
+  2789: `Le @dataclass decorator génère automatiquement common méthodes like __init__, __repr__, __eq__, and more basé sur les attributs de la classe. If from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2), then Point(1, 2) crée un Point instance car @dataclass génère automatiquement __init__ basé sur les attributs de la classe (x: int and y: int). Cela élimine boilerplate code for classes that primarily store data, les rendant plus concis and maintainable.
 
 @dataclass decorator:
 • Point(1, 2) creates Point instance
@@ -69893,8 +69870,8 @@ Exemple : from typing import Callable; def func(f: Callable[[int], int]) -> int:
 • Also generates __repr__, __eq__, etc.
 • Reduces boilerplate code
 
-Comment ça fonctionne : • @dataclass decorates Point class
-• Analyzes class attributes (x: int, y: int)
+Comment ça fonctionne : • @dataclass decorates Point classe
+• Analyzes classe attributes (x: int, y: int)
 • Generates __init__(self, x: int, y: int)
 • Generates __repr__, __eq__, etc.
 • Point(1, 2) uses generated __init__
@@ -69902,19 +69879,19 @@ Comment ça fonctionne : • @dataclass decorates Point class
 
 Exemple : from dataclasses import dataclass
 @dataclass
-class Point:
+classe Point:
     x: int
     y: int
 p = Point(1, 2)          # Uses generated __init__
 print(p)                 # Point(x=1, y=2) (uses generated __repr__)
 p == Point(1, 2)         # True (uses generated __eq__)
 
-Usages courants : • Data classes: @dataclass class Point: x: int; y: int (automatic methods)
+Usages courants : • Data classes: @dataclass classe Point: x: int; y: int (automatic méthodes)
 • Reduce boilerplate: automatic __init__, __repr__, __eq__
-• Clean code: concise class definitions
+• Clean code: concise classe definitions
 • Best practices
 
-Exemple : from dataclasses import dataclass; @dataclass; class Point: x: int; y: int; Point(1, 2) uses @dataclass to automatically generate __init__ and other methods, allowing Point(1, 2) to create a Point instance with x=1 and y=2.
+Exemple : from dataclasses import dataclass; @dataclass; classe Point: x: int; y: int; Point(1, 2) uses @dataclass to automatically generate __init__ and other méthodes, allowing Point(1, 2) to create a Point instance avec x=1 and y=2.
 `,
   2790: `Enum from the enum module creates enumerations - a set of named constants. If from enum import Enum; class Color(Enum): RED = 1; GREEN = 2; Color.RED, then Color.RED returns <Color.RED: 1> because Enum creates named constant objects. Each enum member (like Color.RED) is an instance of the enum class with a name and value. Enum members have both a name (RED) and a value (1), and they can be compared by identity (is) or equality (==).
 
@@ -70391,7 +70368,7 @@ Usages courants : • Non-blocking I/O operations
 • Simplified async code with async/await
 
 Exemple : asyncio.run(fetch()) exécute le async function and returns 'data', le résultat of the coroutine.`,
-  2805: `The "r" mode in open() opens a file for reading only. C'est the default mode, so open("file.txt") and open("file.txt", "r") are equivalent. If the file does not exist, a FileNotFoundError is raised.
+  2805: `Le "r" mode in open() opens a file for reading only. C'est the default mode, so open("file.txt") and open("file.txt", "r") are equivalent. If the file does not exist, a FileNotFoundError is raised.
 
 Concepts clés : • "r" stands for read mode
 • It is the default mode when no mode is specified
@@ -70400,7 +70377,7 @@ Concepts clés : • "r" stands for read mode
 • You can only read from the file, not write to it
 
 Comment ça fonctionne : • open("file.txt", "r") opens file.txt for reading
-• Retourne a file object you can call read(), readline(), or readlines() on
+• Retourne a file objet you can call read(), readline(), or readlines() on
 • The file is opened in text mode by default
 
 Exemple : f = open("file.txt", "r")
@@ -70430,7 +70407,7 @@ f.close()
 Cas limites : • Be careful: "w" mode will destroy existing file contents without warning
 • Use "a" mode if you want to add to existing content
 • Use "x" mode if you want to avoid overwriting`,
-  2807: `The "a" mode opens a file for appending. The file pointer is placed at the end of the file, so any new data written is added après le existing content. If the file does not exist, a new file est créé.
+  2807: `Le "a" mode opens a file for appending. The file pointer is placed at the end of the file, so any new data written is added après le existing content. If the file does not exist, a new file est créé.
 
 Concepts clés : • "a" stands for append mode
 • Writes new data at the end of the file
@@ -70443,18 +70420,18 @@ Comment ça fonctionne : • open("file.txt", "a") opens file.txt for appending
 • New writes go to the end of the file
 
 Exemple : f = open("log.txt", "a")
-f.write("New log entry\\n")
+f.write("New log entry\\\\n")
 f.close()
 
 Usages courants : • Writing to log files
 • Appending records to data files
 • Adding entries to configuration files`,
-  2808: `The "x" mode is for exclusive creation. It crée un new file and opens it for writing, but raises a FileExistsError if the file already exists. C'est useful when you want to ensure you're not accidentally overwriting an existing file.
+  2808: `Le "x" mode is for exclusive creation. It crée un new file and opens it for writing, but raises a FileExistsError if the file already exists. C'est useful when you want to ensure you're not accidentally overwriting an existing file.
 
 Concepts clés : • "x" stands for exclusive creation mode
 • Creates a new file for writing
 • Raises FileExistsError if the file already exists
-• Useful for safely creating new files without overwriting
+• Useful for safely creating new files sans overwriting
 
 Comment ça fonctionne : • open("file.txt", "x") creates file.txt uniquement si it n'existe pas
 • If file.txt already exists, FileExistsError is raised
@@ -70470,140 +70447,140 @@ except FileExistsError:
 Usages courants : • Creating unique output files
 • Preventing accidental data loss
 • Atomic file creation patterns`,
-  2809: `The "rb" mode opens a file for reading in binary mode. Instead of returning text strings, read operations return bytes objects. No encoding/decoding or newline translation is performed.
+  2809: `Le "rb" mode opens a file for reading in binary mode. Instead of returning text strings, read operations renvoyer bytes objets. No encoding/decoding or newline translation is performed.
 
 Concepts clés : • "rb" = read + binary
-• Retourne bytes objects instead of str objects
+• Retourne bytes objets instead of str objets
 • No character encoding/decoding is applied
 • No newline translation occurs
 • Essential for non-text files (images, audio, etc.)
 
 Comment ça fonctionne : • open("file.txt", "rb") opens the file in binary read mode
-• f.read() retourne un bytes object like b"Hello"
+• f.read() retourne un bytes objet like b"Hello"
 • No universal newline translation
 
 Exemple : f = open("image.png", "rb")
-data = f.read()  # Retourne bytes object
-print(type(data))  # <class 'bytes'>
+data = f.read()  # Retourne bytes objet
+print(type(data))  # <classe 'bytes'>
 f.close()
 
 Usages courants : • Reading image, audio, or video files
-• Working with binary protocols
+• Working avec binary protocols
 • Reading files where encoding is unknown
 • Handling serialized binary data`,
-  2810: `The read() method on a file object reads the entire file contents and returns them as a single string (in text mode) or bytes object (in binary mode). After calling read(), the file pointer is at the end of the file.
+  2810: `Le read() méthode on a file objet reads the entire file contents and retourne them as a single string (in text mode) or bytes objet (in binary mode). After calling read(), the file pointer is at the end of the file.
 
 Concepts clés : • read() retourne le entire file as one string
-• The file pointer moves to the end after reading
+• The file pointer moves to the end après reading
 • Can pass an optional size argument: read(n) reads n characters
 • Calling read() again retourne un empty string (pointer at end)
 
 Comment ça fonctionne : • f.read() reads from current position to end of file
 • Retourne everything as a single string
-• Includes newline characters (\\n)
+• Includes newline characters (\\\\n)
 • f.read(10) reads seulement le first 10 characters
 
 Exemple : f = open("file.txt", "r")
-content = f.read()     # "Hello\\nWorld\\n"
+content = f.read()     # "Hello\\\\nWorld\\\\n"
 more = f.read()        # "" (pointer at end)
 f.close()
 
 Cas limites : • On large files, read() loads everything into memory
 • Use readline() or iterate for large files`,
-  2811: `The readline() method reads a single line from the file, including the trailing newline character (\\n). Each subsequent call to readline() retourne le next line. When the end of the file is reached, readline() retourne un empty string.
+  2811: `Le readline() méthode reads a single line from the file, including the trailing newline character (\\\\n). Each subsequent call to readline() retourne le next line. When the end of the file is reached, readline() retourne un empty string.
 
-Concepts clés : • Retourne one line including the \\n at the end
-• Successive calls return successive lines
+Concepts clés : • Retourne one line including the \\\\n at the end
+• Successive calls renvoyer successive lines
 • Retourne "" (empty string) at end of file
-• The last line may or may not ont un trailing \\n
+• The last line may or may not ont un trailing \\\\n
 
-Comment ça fonctionne : • f.readline() reads from current position to the next \\n
-• Includes the \\n in the returned string
+Comment ça fonctionne : • f.readline() reads from current position to the next \\\\n
+• Includes the \\\\n in the returned string
 • Moves the file pointer to the start of the next line
 
-Exemple : # file.txt contains "Hello\\nWorld\\n"
+Exemple : # file.txt contains "Hello\\\\nWorld\\\\n"
 f = open("file.txt", "r")
-line1 = f.readline()  # "Hello\\n"
-line2 = f.readline()  # "World\\n"
+line1 = f.readline()  # "Hello\\\\n"
+line2 = f.readline()  # "World\\\\n"
 line3 = f.readline()  # "" (end of file)
 f.close()
 
-Cas limites : • Empty line returns "\\n"
-• End of file returns ""
-• Last line without newline retourne le text without \\n`,
-  2812: `The readlines() method reads all remaining lines from the file and returns them as a list of strings. Each string in the list includes the trailing newline character (\\n), except possibly the last line.
+Cas limites : • Empty line retourne "\\\\n"
+• End of file retourne ""
+• Last line sans newline retourne le text sans \\\\n`,
+  2812: `Le readlines() méthode reads all remaining lines from the file and retourne them as a liste of strings. Each string in the liste includes the trailing newline character (\\\\n), except possibly the last line.
 
-Concepts clés : • Retourne a list of strings, one per line
-• Each string includes the trailing \\n
+Concepts clés : • Retourne a liste of strings, one per line
+• Each string includes the trailing \\\\n
 • Reads from current position to end of file
-• Equivalent to list(f)
+• Equivalent to liste(f)
 
-Comment ça fonctionne : • f.readlines() reads all lines and retourne un list
-• Each element is a line with its newline character
-• The list préserve le order of lines
+Comment ça fonctionne : • f.readlines() reads all lines and retourne un liste
+• Each element is a line avec its newline character
+• The liste préserve le order of lines
 
-Exemple : # file.txt contains "Hello\\nWorld\\nPython\\n"
+Exemple : # file.txt contains "Hello\\\\nWorld\\\\nPython\\\\n"
 f = open("file.txt", "r")
 lines = f.readlines()
-# ["Hello\\n", "World\\n", "Python\\n"]
+# ["Hello\\\\n", "World\\\\n", "Python\\\\n"]
 f.close()
 
 Usages courants : • Processing all lines of a file at once
 • Quand vous need random access to lines by index
 • Filtering or transforming lines`,
-  2813: `The write() method writes a string to the file and retourne le number of characters written. In binary mode, it writes bytes and retourne le number of bytes written.
+  2813: `Le write() méthode writes a string to the file and retourne le number of characters written. In binary mode, it writes bytes and retourne le number of bytes written.
 
 Concepts clés : • Retourne an integer: the number of characters written
 • Does not automatically add a newline
-• In text mode, writes str objects
-• In binary mode, writes bytes objects
+• In text mode, writes str objets
+• In binary mode, writes bytes objets
 
-Comment ça fonctionne : • f.write("Hello") writes "Hello" and returns 5
-• The return value is the character count of the written string
-• You must add \\n yourself if you want newlines
+Comment ça fonctionne : • f.write("Hello") writes "Hello" and retourne 5
+• The renvoyer valeur is the character count of the written string
+• You must add \\\\n yourself if you want newlines
 
 Exemple : f = open("file.txt", "w")
 n = f.write("Hello")
 print(n)  # 5
-n = f.write("World\\n")
+n = f.write("World\\\\n")
 print(n)  # 6 (5 chars + newline)
 f.close()
 
 Cas limites : • write("") writes nothing et retourne 0
-• The return value matches len() of the string written`,
-  2814: `The writelines() method writes a list (or any iterable) of strings to the file. It does NOT add newline characters or any separator between the strings. Each string is written exactly as-is, concatenated together. You must include \\n in each string yourself if you want separate lines.
+• The renvoyer valeur matches len() of the string written`,
+  2814: `Le writelines() méthode writes a liste (or any iterable) of strings to the file. It does NOT add newline characters or any separator entre the strings. Each string is written exactly as-is, concatenated together. You must include \\\\n in each string yourself if you want separate lines.
 
 Concepts clés : • writelines() does NOT add newlines automatically
 • Writes each string exactly as provided
 • Accepts any iterable of strings
 • Retourne None (not the number of characters)
 
-Comment ça fonctionne : • f.writelines(["a\\n", "b\\n"]) writes "a\\nb\\n" to the file
+Comment ça fonctionne : • f.writelines(["a\\\\n", "b\\\\n"]) writes "a\\\\nb\\\\n" to the file
 • f.writelines(["a", "b"]) writes "ab" (no newlines!)
 • Each string from the iterable is written in order
 
 Exemple : f = open("file.txt", "w")
-f.writelines(["Hello\\n", "World\\n"])
-# File contains: Hello\\nWorld\\n
+f.writelines(["Hello\\\\n", "World\\\\n"])
+# File contains: Hello\\\\nWorld\\\\n
 f.writelines(["No", "Newlines"])
 # Appends: NoNewlines
 f.close()
 
 Cas limites : • writelines([]) writes nothing
 • The name is misleading — it doesn't write "lines", just strings`,
-  2815: `The with statement (context manager) assure que le fichier est fermé automatiquement quand le bloc se termine, qu'il se termine normalement or due to an exception. Without with, you must manually call f.close(), and if an exception occurs before close(), the file may remain open.
+  2815: `Le avec instruction (context manager) assure que le fichier est fermé automatiquement quand le bloc se termine, qu'il se termine normalement or due to an exception. Without avec, you must manually call f.close(), and if an exception occurs avant close(), the file may remain open.
 
-Concepts clés : • with guarantees the file is closed when the block ends
+Concepts clés : • avec guarantees the file is closed when the block ends
 • Handles exceptions: file is closed even if an error occurs
 • No need to call f.close() manually
 • Cleaner and safer than manual open/close
 
-Comment ça fonctionne : • with open("f.txt") as f: opens the file
-• The file object is assigned to f
-• When the with block ends (normally or via exception), f.close() est appelé automatically
+Comment ça fonctionne : • avec open("f.txt") as f: opens the file
+• The file objet is assigned to f
+• When the avec block ends (normally or via exception), f.close() est appelé automatically
 
 Exemple : # Safe approach:
-with open("f.txt") as f:
+avec open("f.txt") as f:
     data = f.read()
 # File is automatically closed here
 
@@ -70612,10 +70589,10 @@ f = open("f.txt")
 data = f.read()  # If this raises, f stays open!
 f.close()
 
-Usages courants : • Always prefer with for file operations
-• Works with any context manager (not just files)
+Usages courants : • Always prefer avec for file operations
+• Works avec any context manager (not just files)
 • Prevents resource leaks`,
-  2816: `The seek() method moves the file pointer (the current read/write position) to a specified position. seek(0) moves the pointer to the very beginning of the file, allowing you to re-read or re-process the file from the start.
+  2816: `Le seek() méthode moves the file pointer (the current read/write position) to a specified position. seek(0) moves the pointer to the very beginning of the file, allowing you to re-read or re-process the file from the start.
 
 Concepts clés : • seek(offset) moves the file pointer to the given position
 • seek(0) moves to the beginning of the file
@@ -70632,23 +70609,23 @@ f.seek(0)              # Move pointer back to start
 content2 = f.read()    # Read everything again
 f.close()
 
-Cas limites : • In text mode, seek with non-zero offset from current/end position may not work as expected
+Cas limites : • In text mode, seek avec non-zero offset from current/end position may not work as expected
 • In binary mode, seek fonctionne avec any offset`,
-  2817: `The tell() method retourne le current position of the file pointer as an integer. Cela indique where the next read or write operation will occur. At the start of a file, tell() returns 0.
+  2817: `Le tell() méthode retourne le current position of the file pointer as an integer. Cela indique where the next read or write operation will occur. At the start of a file, tell() retourne 0.
 
 Concepts clés : • Retourne an integer representing the current position
 • Position 0 means the beginning of the file
 • After reading n characters in text mode, tell() may not equal n (encoding-dependent)
 • In binary mode, tell() retourne le exact byte offset
 
-Comment ça fonctionne : • f.tell() returns where the file pointer currently is
-• After opening a file, tell() returns 0
+Comment ça fonctionne : • f.tell() retourne where the file pointer currently is
+• After opening a file, tell() retourne 0
 • After f.read(), tell() retourne le position at the end
 
 Exemple : f = open("file.txt", "r")
 print(f.tell())  # 0 (beginning)
 f.read(5)
-print(f.tell())  # 5 (after reading 5 chars)
+print(f.tell())  # 5 (après reading 5 chars)
 f.read()
 print(f.tell())  # End of file position
 f.close()
@@ -70656,27 +70633,27 @@ f.close()
 Usages courants : • Tracking read progress
 • Saving and restoring file positions
 • Checking if at end of file`,
-  2818: `The closed attribute on a file object is a boolean that indicates whether the file has been closed. It returns True if the file is closed and False if it is still open.
+  2818: `Le closed attribute on a file objet is a boolean that indicates whether the file has been closed. It retourne True if the file is closed and False if it is still open.
 
-Concepts clés : • f.closed is a property, not a method (no parentheses)
+Concepts clés : • f.closed is a property, not a méthode (no parentheses)
 • Retourne True if the file has been closed
 • Retourne False if the file is still open
-• Useful for checking file state before operations
+• Useful for checking file state avant operations
 
 Comment ça fonctionne : • After opening a file, f.closed is False
 • After calling f.close(), f.closed becomes True
-• After a with block exits, f.closed is True
+• After a avec block exits, f.closed is True
 
 Exemple : f = open("file.txt", "r")
 print(f.closed)  # False
 f.close()
 print(f.closed)  # True
 
-with open("file.txt") as f:
+avec open("file.txt") as f:
     print(f.closed)  # False
-print(f.closed)      # True (after with block)
+print(f.closed)      # True (après avec block)
 
-Cas limites : • You can still access f.closed after closing (it's just a property)
+Cas limites : • You can still access f.closed après closing (it's just a property)
 • Attempting to read/write on a closed file raises ValueError`,
   2819: `Specifying encoding="utf-8" in open() ensures the file is read and written using UTF-8 encoding, regardless of the operating system's default encoding. Without it, Python uses the platform's default encoding, which varies (e.g., UTF-8 on macOS/Linux, cp1252 on Windows).
 
@@ -70737,7 +70714,7 @@ Exemple : with open("file.txt", "r") as f:
 Usages courants : • Processing large files without loading into memory
 • Line-by-line text processing
 • Filtering or transforming file contents`,
-  2822: `The truncate() method resizes the file to at most the specified size. When called without arguments, it truncates the file at the current file pointer position, removing everything after that point. When appelé avec a size argument, it truncates to that many bytes.
+  2822: `Le truncate() méthode resizes the file to at most the specified size. When appelé sans arguments, it truncates the file at the current file pointer position, removing everything après that point. When appelé avec a size argument, it truncates to that many bytes.
 
 Concepts clés : • truncate() removes content après le current position
 • truncate(n) truncates the file to n bytes
@@ -70750,7 +70727,7 @@ Comment ça fonctionne : • f.truncate() cuts the file at the current pointer p
 
 Exemple : f = open("file.txt", "r+")
 f.read(5)        # Read 5 chars, pointer at position 5
-f.truncate()     # Everything after position 5 is removed
+f.truncate()     # Everything après position 5 is removed
 f.close()
 
 # To empty a file:
@@ -70759,128 +70736,128 @@ f.close()
 
 Cas limites : • Requires writable mode ("r+", "w", "a", etc.)
 • If size is larger than current file, behavior is platform-dependent`,
-  2823: `The date.today() class method retourne le current local date as a datetime.date object. It contient le year, month, and day, but no time information.
+  2823: `Le date.today() classe méthode retourne le current local date as a datetime.date objet. It contient le year, month, and day, but no time information.
 
-Concepts clés : • Retourne a date object (not a string, not a datetime)
+Concepts clés : • Retourne a date objet (not a string, not a datetime)
 • Contains year, month, day attributes
 • Based on the local system clock
 • No time zone information
 
 Comment ça fonctionne : • date.today() queries the system clock
-• Retourne a date object with today's year, month, day
+• Retourne a date objet avec today's year, month, day
 • Different from datetime.now() which includes time
 
 Exemple : from datetime import date
 today = date.today()
 print(today)        # e.g., 2024-01-15
-print(type(today))  # <class 'datetime.date'>
+print(type(today))  # <classe 'datetime.date'>
 print(today.year)   # e.g., 2024
 
 Usages courants : • Getting the current date for comparisons
-• Date arithmetic with timedelta
+• Date arithmetic avec timedelta
 • Logging and timestamps`,
-  2824: `The datetime.now() class method retourne le current local date and time as a datetime.datetime object. It contains year, month, day, hour, minute, second, and microsecond.
+  2824: `Le datetime.now() classe méthode retourne le current local date and time as a datetime.datetime objet. It contains year, month, day, hour, minute, second, and microsecond.
 
-Concepts clés : • Retourne a datetime object (date + time combined)
+Concepts clés : • Retourne a datetime objet (date + time combined)
 • Includes year, month, day, hour, minute, second, microsecond
 • Based on the local system clock
 • Can accept an optional timezone argument
 
 Comment ça fonctionne : • datetime.now() queries the system clock
-• Retourne a datetime object with full date and time
+• Retourne a datetime objet avec full date and time
 • Microsecond precision
 
 Exemple : from datetime import datetime
 now = datetime.now()
 print(now)          # e.g., 2024-01-15 10:30:45.123456
-print(type(now))    # <class 'datetime.datetime'>
+print(type(now))    # <classe 'datetime.datetime'>
 print(now.hour)     # e.g., 10
 print(now.minute)   # e.g., 30
 
 Usages courants : • Timestamps for logging
 • Measuring elapsed time
 • Scheduling and time-based logic`,
-  2825: `The .year attribute on a date or datetime object retourne le year as an integer. Date objects store year, month, and day as separate attributes.
+  2825: `Le .year attribute on a date or datetime objet retourne le year as an integer. Date objets store year, month, and day as separate attributes.
 
-Concepts clés : • date(year, month, day) crée un date object
+Concepts clés : • date(year, month, day) crée un date objet
 • .year retourne le year as an integer
 • .month retourne le month (1-12)
 • .day retourne le day (1-31)
 
 Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
 • .year accesses the year component: 2024
-• These are read-only attributes (date objects are immutable)
+• These are read-only attributes (date objets are immutable)
 
 Exemple : from datetime import date
 d = date(2024, 1, 15)
 print(d.year)   # 2024
 print(d.month)  # 1
 print(d.day)    # 15`,
-  2826: `The .month attribute retourne le month component of a date object as an integer from 1 to 12, where 1 is January and 12 is December.
+  2826: `Le .month attribute retourne le month component of a date objet as an integer from 1 to 12, where 1 is January and 12 is December.
 
 Concepts clés : • .month retourne un integer, not a string name
 • Range is 1-12 (January=1, December=12)
-• Date objects are immutable
+• Date objets are immutable
 
 Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
-• .month returns 1 (January)
+• .month retourne 1 (January)
 
 Exemple : from datetime import date
 d = date(2024, 1, 15)
 print(d.month)  # 1
 d2 = date(2024, 12, 25)
 print(d2.month)  # 12`,
-  2827: `The .day attribute retourne le day-of-month component of a date object as an integer. The valid range depends on the month (1-28, 1-29, 1-30, or 1-31).
+  2827: `Le .day attribute retourne le day-of-month component of a date objet as an integer. The valid range depends on the month (1-28, 1-29, 1-30, or 1-31).
 
 Concepts clés : • .day retourne le day of the month as an integer
 • Range varies by month (e.g., 1-31 for January)
 • Leap year affects February's range
 
 Comment ça fonctionne : • date(2024, 1, 15) creates January 15, 2024
-• .day returns 15
+• .day retourne 15
 
 Exemple : from datetime import date
 d = date(2024, 1, 15)
 print(d.day)  # 15
 d2 = date(2024, 2, 29)  # 2024 is a leap year
 print(d2.day)  # 29`,
-  2828: `The .hour attribute retourne le hour component of a datetime object as an integer from 0 to 23 (24-hour format).
+  2828: `Le .hour attribute retourne le hour component of a datetime objet as an integer from 0 to 23 (24-hour format).
 
 Concepts clés : • datetime(year, month, day, hour, minute) crée un datetime
 • .hour retourne le hour as an integer (0-23)
 • 0 = midnight, 12 = noon, 23 = 11 PM
 
 Comment ça fonctionne : • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30
-• .hour returns 10
+• .hour retourne 10
 
 Exemple : from datetime import datetime
 dt = datetime(2024, 1, 15, 10, 30)
 print(dt.hour)    # 10
 print(dt.minute)  # 30
 print(dt.second)  # 0 (default)`,
-  2829: `The .minute attribute retourne le minute component of a datetime object as an integer from 0 to 59.
+  2829: `Le .minute attribute retourne le minute component of a datetime objet as an integer from 0 to 59.
 
 Concepts clés : • .minute retourne le minute as an integer (0-59)
 • Defaults to 0 if not specified in the constructor
 
 Comment ça fonctionne : • datetime(2024, 1, 15, 10, 30) creates Jan 15, 2024 at 10:30
-• .minute returns 30
+• .minute retourne 30
 
 Exemple : from datetime import datetime
 dt = datetime(2024, 1, 15, 10, 30, 45)
 print(dt.minute)  # 30
 print(dt.second)  # 45`,
-  2830: `The timedelta object represents a duration. The .days attribute retourne le days component as an integer. Internally, timedelta stores only days, seconds, and microseconds.
+  2830: `Le timedelta objet represents a duration. The .days attribute retourne le days component as an integer. Internally, timedelta stores only days, seconds, and microseconds.
 
 Concepts clés : • timedelta(days=5) crée un 5-day duration
 • .days retourne le days component
-• timedelta normalizes all values into days, seconds, microseconds
-• Can be created with weeks, days, hours, minutes, seconds, milliseconds, microseconds
+• timedelta normalizes all valeurs into days, seconds, microseconds
+• Can be created avec weeks, days, hours, minutes, seconds, milliseconds, microseconds
 
 Comment ça fonctionne : • timedelta(days=5) crée un duration of 5 days
-• .days returns 5
-• .seconds returns remaining seconds (after full days)
-• .microseconds returns remaining microseconds
+• .days retourne 5
+• .seconds retourne remaining seconds (après full days)
+• .microseconds retourne remaining microseconds
 
 Exemple : from datetime import timedelta
 td = timedelta(days=5)
@@ -70922,7 +70899,7 @@ d2 = date(2024, 1, 10)
 diff = d1 - d2
 print(diff.days)  # 5
 print(type(diff))  # <class 'datetime.timedelta'>`,
-  2833: `The strftime() method formats a date or datetime object as a string according to the specified format codes. %Y = 4-digit year, %m = 2-digit month, %d = 2-digit day.
+  2833: `Le strftime() méthode formats a date or datetime objet as a string according to the specified format codes. %Y = 4-digit year, %m = 2-digit month, %d = 2-digit day.
 
 Concepts clés : • strftime = "string format time"
 • %Y = 4-digit year (2024)
@@ -70939,7 +70916,7 @@ dt = datetime(2024, 1, 15)
 print(dt.strftime("%Y-%m-%d"))    # "2024-01-15"
 print(dt.strftime("%d/%m/%Y"))    # "15/01/2024"
 print(dt.strftime("%B %d, %Y"))   # "January 15, 2024"`,
-  2834: `The format string "%d/%m/%Y" uses day-month-year order with forward slashes as separators. C'est the common European date format.
+  2834: `Le format string "%d/%m/%Y" uses day-month-year order avec forward slashes as separators. C'est the common European date format.
 
 Concepts clés : • %d = zero-padded day (01-31)
 • %m = zero-padded month (01-12)
@@ -70955,35 +70932,35 @@ dt = datetime(2024, 1, 15)
 print(dt.strftime("%d/%m/%Y"))    # "15/01/2024"
 print(dt.strftime("%m/%d/%Y"))    # "01/15/2024" (US format)
 print(dt.strftime("%Y/%m/%d"))    # "2024/01/15" (ISO-like)`,
-  2835: `The strptime() class method parses a string into a datetime object according to a format string. It is the inverse of strftime(). After parsing, you can access .day, .month, .year, etc.
+  2835: `Le strptime() classe méthode parses a string into a datetime objet according to a format string. It is the inverse of strftime(). After parsing, you can access .day, .month, .year, etc.
 
 Concepts clés : • strptime = "string parse time"
 • First argument: the date string to parse
 • Second argument: the format string matching the input
-• Retourne a datetime object
+• Retourne a datetime objet
 • Inverse of strftime()
 
 Comment ça fonctionne : • datetime.strptime("2024-01-15", "%Y-%m-%d") parses the string
 • Creates datetime(2024, 1, 15, 0, 0)
-• .day returns 15
+• .day retourne 15
 
 Exemple : from datetime import datetime
 dt = datetime.strptime("2024-01-15", "%Y-%m-%d")
 print(dt.day)    # 15
 print(dt.month)  # 1
 print(dt.year)   # 2024
-print(type(dt))  # <class 'datetime.datetime'>
+print(type(dt))  # <classe 'datetime.datetime'>
 
 Cas limites : • Raises ValueError if the string doesn't match the format
 • Time components default to 0 when not specified`,
-  2836: `The weekday() method retourne le day of the week as an integer, where Monday is 0 and Sunday is 6. January 15, 2024 was a Monday, so weekday() returns 0.
+  2836: `Le weekday() méthode retourne le day of the week as an integer, where Monday is 0 and Sunday is 6. January 15, 2024 was a Monday, so weekday() retourne 0.
 
 Concepts clés : • Monday = 0, Tuesday = 1, ..., Sunday = 6
 • Different from isoweekday() where Monday = 1 and Sunday = 7
 • Retourne an integer, not a string
 
 Comment ça fonctionne : • date(2024, 1, 15) is January 15, 2024, which is a Monday
-• weekday() returns 0 (Monday = 0)
+• weekday() retourne 0 (Monday = 0)
 
 Exemple : from datetime import date
 d = date(2024, 1, 15)  # Monday
@@ -70993,14 +70970,14 @@ print(d.isoweekday())   # 1 (ISO: Monday=1)
 d2 = date(2024, 1, 14)  # Sunday
 print(d2.weekday())     # 6
 print(d2.isoweekday())  # 7`,
-  2837: `The isoformat() method retourne le date as a string in ISO 8601 format (YYYY-MM-DD). C'est le même format produced by str(date_obj).
+  2837: `Le isoformat() méthode retourne le date as a string in ISO 8601 format (YYYY-MM-DD). C'est le même format produced by str(date_obj).
 
 Concepts clés : • Retourne a string in ISO 8601 format
 • Format is always YYYY-MM-DD
-• Equivalent to str(date_obj) for date objects
-• For datetime objects, includes time: YYYY-MM-DDTHH:MM:SS
+• Equivalent to str(date_obj) for date objets
+• For datetime objets, includes time: YYYY-MM-DDTHH:MM:SS
 
-Comment ça fonctionne : • date(2024, 1, 15).isoformat() returns "2024-01-15"
+Comment ça fonctionne : • date(2024, 1, 15).isoformat() retourne "2024-01-15"
 • Always zero-padded (month 1 becomes "01")
 
 Exemple : from datetime import date, datetime
@@ -71010,38 +70987,38 @@ print(str(d))          # "2024-01-15" (same)
 
 dt = datetime(2024, 1, 15, 10, 30)
 print(dt.isoformat())  # "2024-01-15T10:30:00"`,
-  2838: `When creating a timedelta with hours=25, Python normalizes the value internally. Since 25 hours = 1 day + 1 hour, the .days attribute returns 1. The remaining 1 hour (3600 seconds) is stored in .seconds.
+  2838: `Quand creating a timedelta avec hours=25, Python normalizes the valeur internally. Since 25 hours = 1 day + 1 hour, the .days attribute retourne 1. The remaining 1 hour (3600 seconds) is stored in .seconds.
 
-Concepts clés : • timedelta normalizes all values to days, seconds, microseconds
+Concepts clés : • timedelta normalizes all valeurs to days, seconds, microseconds
 • 25 hours = 1 day + 1 hour
-• .days returns seulement le full days component
+• .days retourne seulement le full days component
 • .seconds retourne le remaining seconds (not total seconds)
 
 Comment ça fonctionne : • timedelta(hours=25) is normalized to 1 day + 3600 seconds
-• .days returns 1
-• .seconds returns 3600 (1 hour in seconds)
-• .total_seconds() returns 90000.0 (25 * 3600)
+• .days retourne 1
+• .seconds retourne 3600 (1 hour in seconds)
+• .total_seconds() retourne 90000.0 (25 * 3600)
 
 Exemple : from datetime import timedelta
 td = timedelta(hours=25)
 print(td.days)            # 1
 print(td.seconds)         # 3600
 print(td.total_seconds()) # 90000.0`,
-  2839: `The .seconds attribute of a timedelta retourne le remaining seconds after accounting for full days. For timedelta(hours=25), that's 25 hours = 1 day + 1 hour, so .seconds returns 3600 (1 hour = 3600 seconds). Note: .seconds is NOT total_seconds().
+  2839: `Le .seconds attribute of a timedelta retourne le remaining seconds après accounting for full days. For timedelta(hours=25), that's 25 hours = 1 day + 1 hour, so .seconds retourne 3600 (1 hour = 3600 seconds). Note: .seconds is NOT total_seconds().
 
-Concepts clés : • .seconds returns remaining seconds after removing full days
+Concepts clés : • .seconds retourne remaining seconds après removing full days
 • Different from .total_seconds() qui retourne le entire duration in seconds
 • .seconds is always in range [0, 86400) (0 to 24 hours)
 • timedelta stores only: days, seconds, microseconds
 
 Comment ça fonctionne : • timedelta(hours=25) normalizes to 1 day + 3600 seconds
 • .days = 1
-• .seconds = 3600 (remaining after 1 full day)
+• .seconds = 3600 (remaining après 1 full day)
 • .total_seconds() = 90000.0 (25 * 3600)
 
 Exemple : from datetime import timedelta
 td = timedelta(hours=25)
-print(td.seconds)          # 3600 (remaining after days)
+print(td.seconds)          # 3600 (remaining après days)
 print(td.total_seconds())  # 90000.0 (total)
 
 td2 = timedelta(days=2, hours=3)
@@ -71151,44 +71128,44 @@ print(re.split(r"\\s+", "hello  world  python"))
 # ["hello", "world", "python"]
 print(re.split(r"[,;]", "a,b;c"))
 # ["a", "b", "c"]`,
-  2846: `The pattern ^\\d+$ anchors the match to the entire string: ^ means start of string, \\d+ means one or more digits, and $ means end of string. "12345" consists entirely of digits, so the pattern matches.
+  2846: `Le pattern ^\\\\d+$ anchors the match to the entire string: ^ means start of string, \\\\d+ means one or more digits, and $ means end of string. "12345" consists entirely of digits, so the pattern matches.
 
 Concepts clés : • ^ anchors to the start of the string
 • $ anchors to the end of the string
-• ^\\d+$ means "entire string is digits"
+• ^\\\\d+$ means "entire string is digits"
 • bool(match_object) is True; bool(None) is False
 
-Comment ça fonctionne : • re.match(r"^\\d+$", "12345") checks if "12345" is all digits
-• "12345" matches: starts with digits and ends with digits
-• Retourne a Match object (truthy)
-• bool(Match object) is True
+Comment ça fonctionne : • re.match(r"^\\\\d+$", "12345") checks if "12345" is all digits
+• "12345" matches: starts avec digits and ends avec digits
+• Retourne a Match objet (truthy)
+• bool(Match objet) is True
 
 Exemple : import re
-print(bool(re.match(r"^\\d+$", "12345")))  # True
-print(bool(re.match(r"^\\d+$", "123a5")))  # False
-print(bool(re.match(r"^\\d+$", "")))        # False (+ needs at least one)`,
-  2847: `The pattern ^\\d+$ requires the entire string to consist of only digits. "123a5" contient le letter "a", which is not a digit, so the pattern does not match. re.match() retourne None, and bool(None) is False.
+print(bool(re.match(r"^\\\\d+$", "12345")))  # True
+print(bool(re.match(r"^\\\\d+$", "123a5")))  # False
+print(bool(re.match(r"^\\\\d+$", "")))        # False (+ needs at least one)`,
+  2847: `Le pattern ^\\\\d+$ requires the entire string to consist of only digits. "123a5" contient le letter "a", which is not a digit, so the pattern does not match. re.match() retourne None, and bool(None) is False.
 
-Concepts clés : • ^\\d+$ requires every character to be a digit
+Concepts clés : • ^\\\\d+$ requires every character to be a digit
 • "a" is not a digit, so the match fails
 • re.match() retourne None when there is no match
 • bool(None) is False
 
-Comment ça fonctionne : • re.match(r"^\\d+$", "123a5") tries to match
-• \\d+ matches "123", but then "a" is not a digit
+Comment ça fonctionne : • re.match(r"^\\\\d+$", "123a5") tries to match
+• \\\\d+ matches "123", but then "a" is not a digit
 • The $ anchor requires digits to go all the way to the end
 • Match fails, retourne None
 • bool(None) is False
 
 Exemple : import re
-print(bool(re.match(r"^\\d+$", "123a5")))  # False
-print(bool(re.match(r"^\\d+$", "12345")))  # True
-print(bool(re.match(r"^\\d+$", " 123")))   # False (space isn't a digit)`,
-  2848: `The character class [aeiou] matches any single character that is a, e, i, o, or u. re.findall() returns all matches, so il trouve every vowel in the string.
+print(bool(re.match(r"^\\\\d+$", "123a5")))  # False
+print(bool(re.match(r"^\\\\d+$", "12345")))  # True
+print(bool(re.match(r"^\\\\d+$", " 123")))   # False (space isn't a digit)`,
+  2848: `Le character classe [aeiou] matches any single character that is a, e, i, o, or u. re.findall() retourne all matches, so il trouve every vowel in the string.
 
-Concepts clés : • [aeiou] is a character class matching any vowel
+Concepts clés : • [aeiou] is a character classe matching any vowel
 • Character classes match a single character from the set
-• findall returns all non-overlapping matches
+• findall retourne all non-overlapping matches
 • Case-sensitive: [aeiou] does not match "A", "E", etc.
 
 Comment ça fonctionne : • In "hello world": h-e-l-l-o-space-w-o-r-l-d
@@ -71201,22 +71178,22 @@ Exemple : import re
 print(re.findall(r"[aeiou]", "hello world"))   # ["e", "o", "o"]
 print(re.findall(r"[aeiou]", "rhythm"))         # [] (no vowels)
 print(re.findall(r"[aeiouAEIOU]", "Hello"))     # ["e", "o"]`,
-  2849: `The pattern \\b\\w+\\b matches complete words. \\b is a word boundary (zero-width assertion between a word character and a non-word character), and \\w+ matches one or more word characters (letters, digits, underscore).
+  2849: `Le pattern \\\\b\\\\w+\\\\b matches complete words. \\\\b is a word boundary (zero-width assertion entre a word character and a non-word character), and \\\\w+ matches one or more word characters (letters, digits, underscore).
 
-Concepts clés : • \\b matches a word boundary (zero-width)
-• \\w matches any word character [a-zA-Z0-9_]
-• \\w+ matches one or more word characters
-• \\b\\w+\\b matches complete words
+Concepts clés : • \\\\b matches a word boundary (zero-width)
+• \\\\w matches any word character [a-zA-Z0-9_]
+• \\\\w+ matches one or more word characters
+• \\\\b\\\\w+\\\\b matches complete words
 
 Comment ça fonctionne : • In "hello world": two words separated by a space
-• First \\b\\w+\\b matches "hello"
-• Second \\b\\w+\\b matches "world"
+• First \\\\b\\\\w+\\\\b matches "hello"
+• Second \\\\b\\\\w+\\\\b matches "world"
 • Résultat : ["hello", "world"]
 
 Exemple : import re
-print(re.findall(r"\\b\\w+\\b", "hello world"))
+print(re.findall(r"\\\\b\\\\w+\\\\b", "hello world"))
 # ["hello", "world"]
-print(re.findall(r"\\b\\w+\\b", "hello, world!"))
+print(re.findall(r"\\\\b\\\\w+\\\\b", "hello, world!"))
 # ["hello", "world"]`,
   2850: `Parentheses in regex create capturing groups. The pattern (\\w+)@(\\w+) has two groups: the part before @ and the part after. The .groups() method returns all captured groups as a tuple.
 
@@ -71236,7 +71213,7 @@ print(m.groups())   # ("user", "host")
 print(m.group(0))   # "user@host" (full match)
 print(m.group(1))   # "user"
 print(m.group(2))   # "host"`,
-  2851: `The .group(n) method renvoie the text matched by the nth capturing group. Group numbers start at 1. Group 0 is special and renvoie the entire match.
+  2851: `Le .group(n) méthode renvoie the text matched by the nth capturing group. Group numbers start at 1. Group 0 is special and renvoie the entire match.
 
 Concepts clés :
 • .group(0) = entire match
@@ -71245,40 +71222,40 @@ Concepts clés :
 • Lève IndexError if group number n'existe pas
 
 Comment ça fonctionne :
-• Pattern: (\\w+)@(\\w+) matches "user@host"
-• Group 1: (\\w+) before @ captures "user"
-• Group 2: (\\w+) after @ captures "host"
+• Pattern: (\\\\w+)@(\\\\w+) matches "user@host"
+• Group 1: (\\\\w+) avant @ captures "user"
+• Group 2: (\\\\w+) après @ captures "host"
 • .group(1) renvoie "user"
 
 Exemple :
 import re
-m = re.match(r"(\\w+)@(\\w+)", "user@host")
+m = re.match(r"(\\\\w+)@(\\\\w+)", "user@host")
 print(m.group(0))  # "user@host"
 print(m.group(1))  # "user"
 print(m.group(2))  # "host"`,
-  2852: `When re.sub() receives a function (or lambda) as the replacement argument, it calls that function for each match, passing the Match object. La function's return value est utilisé as the replacement string.
+  2852: `Quand re.sub() receives a fonction (or lambda) as the replacement argument, it calls that fonction for each match, passing the Match objet. La fonction's renvoyer valeur est utilisé as the replacement string.
 
 Concepts clés :
-• re.sub(pattern, function, string) calls function for each match
-• La function receives a Match object as argument
-• La function's return value replaces the match
+• re.sub(pattern, fonction, string) calls fonction for each match
+• La fonction receives a Match objet as argument
+• La fonction's renvoyer valeur replaces the match
 • m.group() renvoie the matched text
 • .upper() converts a string to uppercase
 
 Comment ça fonctionne :
-• r"(\\w+)" matches each word: "hello", then "world"
+• r"(\\\\w+)" matches each word: "hello", then "world"
 • For "hello": lambda receives match, m.group() = "hello", .upper() = "HELLO"
 • For "world": lambda receives match, m.group() = "world", .upper() = "WORLD"
-• Space between words is not matched, so it's preserved
+• Space entre words is not matched, so it's preserved
 • Résultat : "HELLO WORLD"
 
 Exemple :
 import re
-result = re.sub(r"(\\w+)", lambda m: m.group().upper(), "hello world")
+result = re.sub(r"(\\\\w+)", lambda m: m.group().upper(), "hello world")
 print(result)  # "HELLO WORLD"
 
 # Another example: capitalize first letter
-result = re.sub(r"\\b\\w", lambda m: m.group().upper(), "hello world")
+result = re.sub(r"\\\\b\\\\w", lambda m: m.group().upper(), "hello world")
 print(result)  # "Hello World"`,
   2853: `Le préfixe r crée un littéral de chaîne brute où les backslashes sont traités comme caractères backslash littéraux, not as escape sequences. C'est essential for regex because regex patterns use backslashes extensively (\\d, \\w, \\s, etc.), and without r, Python would try to interpret them first.
 
@@ -71749,17 +71726,17 @@ Usages courants :
 • Writing human-readable JSON config files
 • Debugging JSON data
 • Logging structured data`,
-  2871: `The sort_keys parameter in json.dumps sorts the dictionary keys alphabetically in the output. C'est useful for producing deterministic, reproducible JSON output regardless of insertion order.
+  2871: `Le sort_keys parameter in json.dumps sorts the dictionnaire keys alphabetically in the output. C'est useful for producing deterministic, reproducible JSON output regardless of insertion order.
 
 Concepts clés :
 • sort_keys=True — keys appear in alphabetical order
 • sort_keys=False (default) — keys appear in insertion order
-• Only affects dictionary key ordering, not list element ordering
+• Only affects dictionnaire key ordering, not liste element ordering
 • Useful for comparing JSON outputs or version control
 
 Comment ça fonctionne :
 1. Input dict: {"b": 2, "a": 1} (insertion order: b first)
-2. sort_keys=True sorts keys: "a" before "b"
+2. sort_keys=True sorts keys: "a" avant "b"
 3. Output: '{"a": 1, "b": 2}'
 
 Exemple :
@@ -71954,18 +71931,18 @@ Usages courants :
 • Understanding JSON type limitations
 • Building custom JSON encoders for non-standard types
 • Converting data before serialization`,
-  2879: `The separators parameter in json.dumps controls the characters used between items and between keys and values. The default is (", ", ": ") which includes spaces. Using (",", ":") removes spaces for compact output.
+  2879: `Le separators parameter in json.dumps controls the characters used entre items and entre keys and valeurs. The default is (", ", ": ") which includes spaces. Using (",", ":") removes spaces for compact output.
 
 Concepts clés :
 • separators=(item_separator, key_separator)
-• Default: (", ", ": ") — spaces after commas and colons
+• Default: (", ", ": ") — spaces après commas and colons
 • Compact: (",", ":") — no spaces
 • Useful for minimizing JSON size in network transmission
 
 Comment ça fonctionne :
 1. json.dumps({"a": 1}, separators=(",", ":"))
-2. Item separator "," — no space after comma between key-value pairs
-3. Key separator ":" — no space after colon between key and value
+2. Item separator "," — no space après comma entre key-valeur pairs
+3. Key separator ":" — no space après colon entre key and valeur
 4. Résultat : '{"a":1}' (compact, no extra whitespace)
 
 Exemple :
@@ -72301,11 +72278,11 @@ Usages courants :
 • Converting file formats (change extension before saving)
 • Creating output files with different extensions
 • Generating companion files (.py → .pyc)`,
-  2893: `The string module provides several useful string constants. ascii_lowercase contains all 26 lowercase English letters from 'a' to 'z'.
+  2893: `Le string module provides several useful string constants. ascii_lowercase contains all 26 lowercase English letters from 'a' to 'z'.
 
 Concepts clés :
 • string.ascii_lowercase — "abcdefghijklmnopqrstuvwxyz"
-• It's a constant string, not a function
+• It's a constant string, not a fonction
 • Contains exactly 26 characters
 • Only ASCII letters — no accented characters
 
@@ -72907,19 +72884,19 @@ Usages courants :
 • Logging caught exceptions with full traceback for debugging
 • Production error reporting
 • Preferred over logging.error when you want stack trace details`,
-  2916: `The logging module fournit un robust, flexible framework for emitting log messages, whereas print() simply writes to stdout. Logging has features that print lacks entirely.
+  2916: `Le logging module fournit un robust, flexible framework for emitting log messages, whereas print() simply writes to stdout. Logging has features that print lacks entirely.
 
 Concepts clés :
 • Logging has severity levels (DEBUG through CRITICAL)
 • Logging has handlers (console, file, network, email, etc.)
 • Logging has formatters (custom output format)
 • Logging can be configured externally (config files, dictConfig)
-• print() writes to stdout with no filtering or routing
+• print() writes to stdout avec no filtering or routing
 
 Comment ça fonctionne :
 • print() always outputs to stdout (unless redirected)
 • Logging routes messages through a configurable pipeline
-• Log levels allow filtering without changing code
+• Log levels allow filtering sans changing code
 • Handlers allow routing to multiple destinations
 • Configuration can be changed at deployment time
 
@@ -72932,10 +72909,10 @@ import logging
 logging.info("User logged in")  # Can be filtered, routed, formatted
 
 Usages courants :
-• print() for quick debugging (remove before committing)
+• print() for quick debugging (remove avant committing)
 • logging for production applications
 • logging for libraries (let the consumer configure output)
-• logging for long-running services with structured output`,
+• logging for long-running services avec structured output`,
   2917: `logging.FileHandler crée un handler object that sends log output to a disk file. You attach it to a logger to direct log messages to a file instead of (or in addition to) the console.
 
 Concepts clés :
@@ -73348,19 +73325,19 @@ Usages courants :
 • Documenting known bugs without removing the test
 • Tracking issues that should eventually be fixed
 • Ensuring awareness when a bug is unexpectedly fixed`,
-  2932: `The assert statement evaluates the expression following it. If the expression is truthy, execution continues normally with no effect. If the expression is falsy, it lève an AssertionError.
+  2932: `Le assert instruction evaluates the expression following it. If the expression is truthy, execution continues normally avec no effect. If the expression is falsy, it lève an AssertionError.
 
 Concepts clés :
 • assert expr — lève AssertionError if expr is falsy
 • 1 == 1 evaluates to True
 • True is truthy, so no error is raised
-• The assert statement has zero effect when the condition passes
+• The assert instruction has zero effect when the condition passes
 
 Comment ça fonctionne :
 • Python evaluates 1 == 1
 • Résultat is True
 • Since the condition is truthy, assert ne fait rien
-• Execution continues to the next statement
+• Execution continues to the next instruction
 
 Exemple :
 >>> assert 1 == 1       # passes, no error
@@ -73371,11 +73348,11 @@ Exemple :
 Usages courants :
 • Sanity checks during development
 • Verifying preconditions and postconditions
-• Debugging aids (can be disabled with -O flag)`,
-  2933: `When an assert statement's expression is falsy, Python lève an AssertionError. Since 1 == 2 evaluates to False, the assertion fails and AssertionError is raised.
+• Debugging aids (can be disabled avec -O flag)`,
+  2933: `Quand an assert instruction's expression is falsy, Python lève an AssertionError. Since 1 == 2 evaluates to False, the assertion fails and AssertionError is raised.
 
 Concepts clés :
-• assert with a falsy expression lève AssertionError
+• assert avec a falsy expression lève AssertionError
 • 1 == 2 is False (falsy)
 • AssertionError is a built-in exception
 • It is a subclass of Exception
@@ -73400,7 +73377,7 @@ AssertionError
 
 >>> assert []
 AssertionError`,
-  2934: `The optional second part of an assert statement (après le comma) fournit un custom error message that is included in the AssertionError when the assertion fails.
+  2934: `Le optional second part of an assert instruction (après le comma) fournit un custom error message that is included in the AssertionError when the assertion fails.
 
 Concepts clés :
 • Syntax: assert expression, "error message"
@@ -73426,7 +73403,7 @@ AssertionError: Expected non-negative, got -5
 
 Usages courants :
 • Providing descriptive failure messages
-• Including variable values in failure messages
+• Including variable valeurs in failure messages
 • Making assertion failures self-documenting`,
   2935: `Les instructions assert peuvent être complètement désactivées en exécutant Python avec l'option -O (optimize) flag. When Python runs in optimized mode, all assert statements are removed from the bytecode entirely — they are not executed at all.
 
@@ -73488,7 +73465,7 @@ Usages courants :
 • Conditional debug-only code
 • Performance-sensitive code that skips checks in production
 • Understanding how assert fonctionne en interne`,
-  2937: `The doctest module searches for pieces of text that look like interactive Python sessions in docstrings, and then executes those sessions to verify they work exactly as shown. It serves dual purposes: documentation and testing.
+  2937: `Le doctest module searches for pieces of text that look like interactive Python sessions in docstrings, and then executes those sessions to verify they work exactly as shown. It serves dual purposes: documentation and testing.
 
 Concepts clés :
 • Tests are written as interactive Python sessions in docstrings
@@ -73498,9 +73475,9 @@ Concepts clés :
 
 Comment ça fonctionne :
 • doctest scans docstrings for >>> prompts
-• Extracts the code after >>>
+• Extracts the code après >>>
 • Executes the code
-• Compares actual output with expected output in the docstring
+• Compares actual output avec expected output in the docstring
 • Reports any mismatches
 
 Exemple :
@@ -73514,7 +73491,7 @@ Exemple :
 ...     >>> add(0, 0)
 ...     0
 ...     """
-...     return a + b
+...     renvoyer a + b
 >>>
 >>> import doctest
 >>> doctest.testmod()  # runs all doctests in the module
@@ -73523,7 +73500,7 @@ Usages courants :
 • Self-testing documentation
 • Simple unit tests embedded in docstrings
 • Ensuring code examples in docs stay accurate
-• Quick verification of function behavior`,
+• Quick verification of fonction behavior`,
   2938: `Le bloc try attempts 1/0, which lève ZeroDivisionError. The except clause catches this specific exception and sets x = 0. After the except block, execution continues normally and print(x) outputs 0.
 
 Concepts clés :
@@ -74557,11 +74534,11 @@ Usages courants :
 • Entry point for async applications
 • Running async code from synchronous scripts
 • Testing async functions`,
-  2972: `The 'await' keyword can only be used inside functions defined with 'async def'. Using it outside an async function lève a SyntaxError.
+  2972: `Le 'await' keyword can only be used dans fonctions defined avec 'async def'. Using it à l’extérieur de an async fonction lève a SyntaxError.
 
 Concepts clés :
-• await is only valid inside async def functions
-• Using await outside async def causes SyntaxError
+• await is only valid dans async def fonctions
+• Using await à l’extérieur de async def causes SyntaxError
 • await pauses the coroutine until the awaited result is ready
 • Python 3.10+ REPL allows top-level await as a special case
 
@@ -74572,16 +74549,16 @@ Comment ça fonctionne :
 • The event loop manages the scheduling
 
 Exemple :
-# Valid: await inside async function
+# Valid: await dans async fonction
 async def main():
     result = await some_coroutine()
-    return result
+    renvoyer result
 
 # Invalid: SyntaxError
-# result = await some_coroutine()  # Not inside async def!
+# result = await some_coroutine()  # Not dans async def!
 
 Usages courants :
-• Calling other async functions
+• Calling other async fonctions
 • Waiting for I/O operations
 • Chaining asynchronous operations`,
   2973: `asyncio.run() runs the given coroutine to completion and renvoie whatever the coroutine returns. In this case, f() renvoie 42, so asyncio.run(f()) evaluates to 42.
@@ -74762,7 +74739,7 @@ Usages courants :
 • Async database connections
 • Async file operations (aiofiles)
 • Async locks and semaphores`,
-  2979: `The event loop is the central component of asyncio. It manages the execution of coroutines, handles I/O events, runs callbacks, and schedules tasks. Think of it as a dispatcher that keeps track of all pending operations and runs them when they are ready.
+  2979: `Le event loop is the central component of asyncio. It manages the execution of coroutines, handles I/O events, runs callbacks, and schedules tasks. Think of it as a dispatcher that keeps track of all pending operations and runs them when they are ready.
 
 Concepts clés :
 • One event loop per thread (typically one per program)
@@ -74920,7 +74897,7 @@ Usages courants :
 • Swapping variables in algorithms (sorting, etc.)
 • Rotating values
 • Clean, readable variable exchanges`,
-  2984: `In Python, empty collections (lists, dicts, sets, strings, tuples) are falsy. The Pythonic way to check for emptiness is to use the implicit boolean value: 'if not my_list:' rather than explicitly checking the length.
+  2984: `Dans Python, empty collections (listes, dicts, sets, strings, tuples) are falsy. The Pythonic way to check for emptiness is to use the implicit boolean valeur: 'if not my_list:' rather than explicitly checking the length.
 
 Concepts clés :
 • Empty collections are falsy: [], {}, set(), "", ()
@@ -74929,10 +74906,10 @@ Concepts clés :
 • This also works for strings, dicts, sets, tuples
 
 Comment ça fonctionne :
-• Python appelle __bool__ (or __len__) on the object
-• Empty containers return False / 0
-• Non-empty containers return True / non-zero
-• 'not' inverts the boolean value
+• Python appelle __bool__ (or __len__) on the objet
+• Empty containers renvoyer False / 0
+• Non-empty containers renvoyer True / non-zero
+• 'not' inverts the boolean valeur
 
 Exemple :
 my_list = []
@@ -74944,19 +74921,19 @@ if my_dict:
     print("Dict has items")  # This runs
 
 Usages courants :
-• Checking if a function returned an empty result
+• Checking if a fonction returned an empty result
 • Validating input data
-• Guard clauses in functions`,
-  2985: `The str.join() method is the Pythonic way to concatenate a sequence of strings. Using += in a loop crée un new string object each time, which is O(n^2) for n concatenations. join() is O(n) because it pre-allocates the final string.
+• Guard clauses in fonctions`,
+  2985: `Le str.join() méthode is the Pythonic way to concatenate a sequence of strings. Using += in a loop crée un new string objet each time, which is O(n^2) for n concatenations. join() is O(n) car it pre-allocates the final string.
 
 Concepts clés :
 • "".join(parts) concatenates all strings in parts
-• The separator goes before .join()
+• The separator goes avant .join()
 • Much faster than repeated += (O(n) vs O(n^2))
-• Works with any iterable of strings
+• Works avec any iterable of strings
 
 Comment ça fonctionne :
-• separator.join(iterable) joins all elements with separator
+• separator.join(iterable) joins all elements avec separator
 • "".join(["a","b","c"]) produces "abc"
 • ", ".join(["a","b","c"]) produces "a, b, c"
 • Pre-allocates memory for the final string
@@ -74968,14 +74945,14 @@ result = "".join(parts)  # "Hello World!"
 words = ["Python", "is", "great"]
 sentence = " ".join(words)  # "Python is great"
 
-# Bad (slow for large lists):
+# Bad (slow for large listes):
 # s = ""
 # for part in parts: s += part
 
 Usages courants :
-• Building strings from lists of words
+• Building strings from listes of words
 • CSV row construction
-• Path building with os.path.join()`,
+• Path building avec os.path.join()`,
   2986: `isinstance() is the Pythonic way to check types because it respects inheritance. type(x) == int only matches exactly int, not subclasses. isinstance() also accepts a tuple of types for checking multiple types at once.
 
 Concepts clés :
@@ -75005,18 +74982,18 @@ Usages courants :
 • Input validation
 • Type checking in functions
 • Duck typing exceptions where type matters`,
-  2987: `The Pythonic way to check for None is using 'is None' (identity comparison) rather than '== None' (equality comparison). None is a singleton object, meaning there is only one instance of it in memory.
+  2987: `Le Pythonic way to check for None is using 'is None' (identity comparison) rather than '== None' (equality comparison). None is a singleton objet, meaning there is only one instance of it in memory.
 
 Concepts clés :
-• None is a singleton — only one None object exists
-• 'is' checks object identity (same object in memory)
+• None is a singleton — only one None objet exists
+• 'is' checks objet identity (same objet in memory)
 • '==' checks equality (can be overridden by __eq__)
 • 'is None' is safer and faster than '== None'
 
 Comment ça fonctionne :
-• x is None checks if x points to the exact None object
+• x is None checks if x points to the exact None objet
 • x == None calls x.__eq__(None), which can be customized
-• A class could override __eq__ to return True for None incorrectly
+• A classe could override __eq__ to renvoyer True for None incorrectly
 • 'is None' cannot be fooled by custom __eq__
 
 Exemple :
@@ -75030,14 +75007,14 @@ if result is None:
 if result == None:
     print("No result")
 
-# Also bad — catches other falsy values too
+# Also bad — catches other falsy valeurs too
 if not result:
     print("This catches 0, '', [], False AND None!")
 
 Usages courants :
-• Checking function return values
+• Checking fonction renvoyer valeurs
 • Default parameter handling
-• Optional value checking`,
+• Optional valeur checking`,
   2988: `List comprehensions are generally considered more Pythonic than map() with lambda functions. They are more readable, often faster, and can include filtering. map() is acceptable when using a named function.
 
 Concepts clés :

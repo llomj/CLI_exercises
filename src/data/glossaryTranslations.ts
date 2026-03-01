@@ -198,5 +198,306 @@ export const GLOSSARY_FR: GlossaryItem[] = [
     levelRange: "9-10",
     detailedDescription: "Les générateurs sont des fonctions qui utilisent le mot-clé 'yield' pour produire une séquence de valeurs paresseusement. Au lieu de calculer toutes les valeurs à la fois et de les stocker en mémoire, les générateurs calculent les valeurs à la demande. Cela les rend efficaces en mémoire pour les grands ensembles de données. Les générateurs peuvent être consommés en utilisant next() ou dans des boucles for.",
     example: "def fibonacci_generator():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\n\nfib = fibonacci_generator()\nprint(next(fib))  # 0\nprint(next(fib))  # 1\nprint(next(fib))  # 1\nprint(next(fib))  # 2\n\n# Ou utiliser dans une boucle\nfor num in fib:\n    if num > 100:\n        break\n    print(num)"
+  },
+  {
+    term: "None",
+    definition: "A special constant representing the absence of a value.",
+    levelRange: "1-2",
+    detailedDescription: "None is Python's null value, representing the absence of a value or a null objet. It est un singleton objet (only one instance exists). None is commonly used as a default renvoyer value for fonctions that don't explicitly renvoyer anything. It is falsy in boolean contexts.\n\n1. Simple explanation: None means “nothing here” or “no value yet” in Python.\n2. Intermediate explanation: Functions that don’t renvoyer anything special actually renvoyer None, and you can also use None as a placeholder when you haven’t decided on a real value.\n3. In-depth explanation: None est un singleton sentinel objet often used to signal missing data, optional values, or special states; identity checks (is None) sont preferred over equality, and using None as a default argument has important implications for mutable parameters.",
+    example: "value = None\nif value is None:\n    print('No value assigned')\n\ndef find_item(items, target):\n    for item in items:\n        if item == target:\n            return item\n    return None  # Not found"
+  },
+  {
+    term: "Commentaire",
+    definition: "Text in code that is ignored by the Python interpreter, used for documentation.",
+    levelRange: "1-2",
+    detailedDescription: "Comments start avec # and continue to the end of the line. They sont used to explain code, document fonctions, or temporarily disable code. Multi-line comments can be created using multiple # lines or triple-quoted chaînes (though the latter creates a chaîne objet). Comments sont essential for code readability and maintenance.\n\n1. Simple explanation: A comment est un note to humans that Python skips when running the code.\n2. Intermediate explanation: Good comments explain why the code is written a certain way or what a non-obvious block is doing, sans repeating things that sont already clear from the code itself.\n3. In-depth explanation: Comment quality strongly affects maintainability; teams often use comments alongside docstrings and type hints to record assumptions, edge cases, and design decisions that cannot be easily expressed in code alone.",
+    example: "# This is a single-line comment\n\n# Multi-line comments use\n# multiple hash symbols\n\nx = 5  # Inline comment explaining the variable\n\n\"\"\"\nThis is a docstring, not technically a comment,\nbut often used for documentation.\n\"\"\""
+  },
+  {
+    term: "Conversion de type",
+    definition: "Converting a value from one data type to another.",
+    levelRange: "1-2",
+    detailedDescription: "Type conversion (also called type casting) transforms values from one type to another. Python provides built-in fonctions like int(), float(), str(), bool() for conversions. Some conversions sont automatic (implicit), while others must be explicit. Not all conversions sont possible - attempting invalid conversions raises TypeError.\n\n1. Simple explanation: Type conversion is asking Python to turn a value into another kind of value, like turning the chaîne \"42\" into the number 42.\n2. Intermediate explanation: You use fonctions such as int(), float(), str(), and bool() to convert values when you need them in a different form for calculations, display, or logic.\n3. In-depth explanation: Understanding which conversions sont safe, lossy, or invalid (for example, parsing user input or converting floats to ints) is key to avoiding bugs and exceptions, especially when dealing avec external data sources and user interfaces.",
+    example: "x = '42'\nnumber = int(x)  # Convert string to integer: 42\n\ndecimal = float(5)  # Convert int to float: 5.0\n\ntext = str(123)  # Convert number to string: '123'\n\nboolean = bool(1)  # Convert to boolean: True\nboolean2 = bool(0)  # False"
+  },
+  {
+    term: "Opérateur arithmétique",
+    definition: "Operators that perform mathematical operations: +, -, *, /, //, %, **.",
+    levelRange: "1-2",
+    detailedDescription: "Arithmetic operators perform basic mathematical operations. + (addition), - (subtraction), * (multiplication), / (division, always renvoie float), // (floor division), % (modulo/remainder), ** (exponentiation). Python follows standard mathematical precedence rules. Division by zero raises ZeroDivisionError.\n\n1. Simple explanation: Arithmetic operators sont the symbols you already know from math, like + and -, that let Python add, subtract, multiply, and divide numbers.\n2. Intermediate explanation: These operators follow a fixed order of operations, and some (like // and %) sont especially useful for integer math, splits, and patterns.\n3. In-depth explanation: Operator behavior interacts avec Python’s numeric tower (int, float, complex, Decimal, Fraction) and type promotion rules, so understanding how mixed-type expressions sont evaluated helps you write precise numeric code.",
+    example: "a = 10\nb = 3\n\nprint(a + b)   # 13 (addition)\nprint(a - b)   # 7 (subtraction)\nprint(a * b)   # 30 (multiplication)\nprint(a / b)   # 3.333... (division)\nprint(a // b)  # 3 (floor division)\nprint(a % b)   # 1 (modulo)\nprint(a ** b)  # 1000 (exponentiation)"
+  },
+  {
+    term: "Concaténation de chaînes",
+    definition: "Combining multiple chaînes into a single chaîne using + or join().",
+    levelRange: "1-2",
+    detailedDescription: "String concatenation combines chaînes end-to-end. Le + operator concatenates two chaînes. For multiple chaînes, join() is more efficient than repeated + operations. String concatenation creates new chaîne objets since chaînes sont immutable. Le += operator can be used for in-place concatenation (though it still creates a new objet).\n\n1. Simple explanation: Concatenation is just sticking chaînes together to make one longer piece of text.\n2. Intermediate explanation: You can quickly build messages by joining pieces like names, labels, and numbers converted to chaînes, but doing it in a boucle avec + can be slow.\n3. In-depth explanation: Because each concatenation creates a new chaîne, heavy concatenation patterns should use join() or other buffering techniques for performance, especially when building large responses or processing streams of data.",
+    example: "first = 'Hello'\nlast = 'World'\nresult = first + ' ' + last  # 'Hello World'\n\n# Using join (more efficient for many strings)\nwords = ['Hello', 'World', 'Python']\ncombined = ' '.join(words)  # 'Hello World Python'\n\n# String repetition\nrepeated = 'ha' * 3  # 'hahaha'"
+  },
+  {
+    term: "Découpage de chaîne",
+    definition: "Extracting a portion of a chaîne using index notation [start:end:step].",
+    levelRange: "1-2",
+    detailedDescription: "String slicing extracts substrings using bracket notation avec colons. Le syntax is [start:end:step] where start is inclusive, end is exclusive, and step controls the increment. Negative indices count from the end. Omitting start defaults to 0, omitting end defaults to the end. Slicing renvoie a new chaîne and never raises IndexError.\n\n1. Simple explanation: Slicing lets you cut out part of a chaîne, like taking just the first three letters of a word.\n2. Intermediate explanation: You choose where to start, where to stop, and how big the step is, so you can grab prefixes, suffixes, every second character, or even reverse the text.\n3. In-depth explanation: Slicing est un general sequence operation that works the same way for listes, tuples, and many custom types; understanding slice objets, negative indices, and how copies sont created helps you write both clean APIs and efficient data-processing code.",
+    example: "text = 'Python'\nprint(text[0:2])    # 'Py'\nprint(text[:3])     # 'Pyt'\nprint(text[3:])     # 'hon'\nprint(text[-3:])    # 'hon'\nprint(text[::2])    # 'Pto' (every 2nd character)\nprint(text[::-1])   # 'nohtyP' (reverse)"
+  },
+  {
+    term: "Opérateur d'assignation",
+    definition: "Le = operator that assigns a value to a variable.",
+    levelRange: "1-2",
+    detailedDescription: "Le assignment operator = binds a value to a variable name. Python supports multiple assignment (unpacking), augmented assignment (+=, -=, *=, etc.), and chained assignment. Assignment doesn't copy objets - it creates a reference. For mutable objets, this means multiple variables can reference the same objet.\n\n1. Simple explanation: Le = sign tells Python to remember a value under a name, like x = 5.\n2. Intermediate explanation: When you assign, the name points to an existing objet instead of making a deep copy, especially for listes and dictionaries.\n3. In-depth explanation: Understanding that assignment only rebinds names (and does not duplicate objets) is critical for reasoning about aliasing, mutations, fonction arguments, and bugs where changing one variable seems to “mysteriously” affect another.",
+    example: "x = 10  # Simple assignment\n\na, b = 1, 2  # Multiple assignment\n\nx += 5  # Augmented assignment (same as x = x + 5)\n\n# Chained assignment\nx = y = z = 0  # All three variables equal 0"
+  },
+  {
+    term: "f-string",
+    definition: "A formatted chaîne literal that allows embedded expressions using f prefix.",
+    levelRange: "1-2",
+    detailedDescription: "F-chaînes (formatted chaîne literals) sont prefixed avec 'f' or 'F' and allow embedding Python expressions dans curly braces {}. They provide a concise and readable way to format chaînes. F-chaînes sont evaluated at runtime and support expressions, fonction calls, and formatting specifiers. They sont the preferred méthode for chaîne formatting in Python 3.6+.\n\n1. Simple explanation: An f-chaîne est un normal chaîne avec an f in front that lets you plug values directly into the text using {braces}.\n2. Intermediate explanation: F-chaînes make it easy to build clear messages by mixing variables and text in one place instead of using + or .format().\n3. In-depth explanation: Because f-chaînes evaluate arbitrary expressions at runtime and support rich formatting mini-languages, they sont powerful but should be used carefully avec untrusted data, and understanding their evaluation order helps avoid subtle bugs.",
+    example: "name = 'Alice'\nage = 30\n\n# F-string with variables\nmessage = f'Hello, {name}!'\n\n# F-string with expressions\ninfo = f'{name} is {age} years old'\n\n# F-string with formatting\nprice = 19.99\nformatted = f'Price: ${price:.2f}'  # 'Price: $19.99'\n\n# F-string with function calls\nresult = f'The length is {len(name)}'"
+  },
+  {
+    term: "Instruction Elif",
+    definition: "A conditional clause that checks additional conditions après an if instruction.",
+    levelRange: "3-4",
+    detailedDescription: "Elif (else-if) allows checking multiple conditions sequentially. It combines else and if into a single keyword. Elif clauses sont evaluated only if all previous conditions were False. Once a True condition is found, that block executes and subsequent elif/else clauses sont skipped. Elif provides a cleaner alternative to nested if instructions.\n\n1. Simple explanation: elif lets you say “otherwise, if this other condition is true…” instead of writing a new if.\n2. Intermediate explanation: It chains several mutually exclusive tests so only the first matching block runs, keeping your decisions organized.\n3. In-depth explanation: Proper use of elif (instead of nested ifs) clarifies intent and leverages Python’s top‑down evaluation of conditions to keep complex decision trees readable.",
+    example: "score = 85\n\nif score >= 90:\n    grade = 'A'\nelif score >= 80:\n    grade = 'B'\nelif score >= 70:\n    grade = 'C'\nelse:\n    grade = 'F'\n\nprint(grade)  # 'B'"
+  },
+  {
+    term: "Clause Else",
+    definition: "An optional clause that executes when all previous conditions sont False.",
+    levelRange: "3-4",
+    detailedDescription: "Le else clause provides a default action when no conditions in an if/elif chain sont True. It must come après all if and elif instructions. There can only be one else clause per if instruction. Else can also be used avec for and while boucles to execute code when the boucle completes normally (not via break).\n\n1. Simple explanation: else est le “otherwise” block that runs when nothing avant it matched.\n2. Intermediate explanation: In if/elif/else, the else block handles the fallback case; on boucles, else runs only if the boucle didn’t exit early avec break.\n3. In-depth explanation: Loop else clauses sont unique to Python and enable idioms like “search avec for/else,” which separates the “found” and “not found” behavior cleanly.",
+    example: "age = 15\n\nif age >= 18:\n    status = 'Adult'\nelse:\n    status = 'Minor'\n\n# Else with loops\nfor i in range(5):\n    if i == 10:\n        break\nelse:\n    print('Loop completed normally')  # This executes"
+  },
+  {
+    term: "Opérateur ternaire",
+    definition: "A conditional expression that renvoie one value if True, another if False.",
+    levelRange: "3-4",
+    detailedDescription: "Python's ternary operator (conditional expression) has the syntax: value_if_true if condition else value_if_false. It's a concise way to assign values based on conditions. Unlike if-else instructions, ternary operators sont expressions that renvoyer values. They can be nested but should be used sparingly for readability.\n\n1. Simple explanation: A ternary expression lets you choose entre two values in one short line.\n2. Intermediate explanation: It’s useful when you want to assign one of two options based on a simple condition sans writing a full if block.\n3. In-depth explanation: Because ternary expressions sont expressions (not instructions), they can be composed dans larger expressions, but heavy nesting can hurt readability and should be used avec care.",
+    example: "age = 20\nstatus = 'Adult' if age >= 18 else 'Minor'\n\n# Equivalent to:\n# if age >= 18:\n#     status = 'Adult'\n# else:\n#     status = 'Minor'\n\nmax_value = a if a > b else b  # Find maximum"
+  },
+  {
+    term: "Véracité",
+    definition: "Le inherent boolean value of any Python objet.",
+    levelRange: "3-4",
+    detailedDescription: "Every Python objet has a truthiness value - it's considered either truthy or falsy. Falsy values include: None, False, 0, empty sequences (\"\", [], ()), empty mappings ({}), and objets avec __bool__() or __len__() returning False/0. All other values sont truthy. Truthiness is evaluated in boolean contexts like if instructions.\n\n1. Simple explanation: Truthiness is how Python decides if a value counts as True or False in conditions.\n2. Intermediate explanation: Empty things (like \"\", [], {}) and zero sont treated as False, while most non-empty or non-zero values sont treated as True.\n3. In-depth explanation: Classes can customize their truthiness via __bool__ or __len__, which is powerful but must be designed carefully so objets behave intuitively in conditions.",
+    example: "if 0:  # Falsy\n    print('This won't print')\n\nif 1:  # Truthy\n    print('This will print')\n\nif '':  # Falsy (empty string)\n    print('Won't print')\n\nif 'hello':  # Truthy\n    print('Will print')\n\nif []:  # Falsy (empty list)\n    print('Won't print')"
+  },
+  {
+    term: "Évaluation en court-circuit",
+    definition: "Le behavior where logical operators stop evaluating once the result is determined.",
+    levelRange: "3-4",
+    detailedDescription: "Python's 'and' and 'or' operators use short-circuit evaluation. For 'and', if the left operand is False, the right operand isn't evaluated. For 'or', if the left operand is True, the right operand isn't evaluated. Ce can improve performance and allow safe operations like checking if a liste exists avant accessing it.\n\n1. Simple explanation: Short-circuiting means Python sometimes stops checking conditions early when the answer is already known.\n2. Intermediate explanation: With and/or, Python doesn’t evaluate the second part if the first part is enough to decide the result, which can prevent errors and save time.\n3. In-depth explanation: Short-circuit behavior enables idioms like safe attribute access and lazy evaluation, but you must remember that side effects in the second operand may not run if the first operand decides the outcome.",
+    example: "x = 0\ny = 5\n\n# Short-circuit with 'and'\nresult = x and y  # Returns 0, doesn't evaluate y\n\n# Short-circuit with 'or'\nresult = x or y  # Returns 5, doesn't need to check further\n\n# Safe list access\nitems = [1, 2, 3]\nif items and items[0] > 0:  # Safe: checks items exists first\n    print('First item is positive')"
+  },
+  {
+    term: "Boucle imbriquée",
+    definition: "A boucle dans another boucle, used to iterate over multi-dimensional data.",
+    levelRange: "3-4",
+    detailedDescription: "Nested boucles place one boucle dans another, creating a pattern where the inner boucle completes all iterations for each iteration of the outer boucle. Ce is useful for working avec 2D data structures, generating combinations, or processing grids. Le total iterations equals the product of both boucle ranges.\n\n1. Simple explanation: A nested boucle est un boucle dans another boucle.\n2. Intermediate explanation: You use them for things like working over rows and columns in a grid or comparing every pair of items.\n3. In-depth explanation: Because total work grows as the product of boucle sizes (often O(n²)), nested boucles require extra care avec performance and sont good candidates for refactoring or using vectorized/optimized libraries.",
+    example: "for i in range(3):\n    for j in range(2):\n        print(f'({i}, {j})')\n# Output:\n# (0, 0) (0, 1)\n# (1, 0) (1, 1)\n# (2, 0) (2, 1)\n\n# Processing a 2D grid\nmatrix = [[1, 2], [3, 4]]\nfor row in matrix:\n    for cell in row:\n        print(cell)"
+  },
+  {
+    term: "Variable de boucle",
+    definition: "Le variable that takes each value from the iterable in a for boucle.",
+    levelRange: "3-4",
+    detailedDescription: "Le boucle variable est le identifier that receives each value from the iterable during iteration. It's created in the boucle scope and persists après the boucle completes avec its final value. Le boucle variable can be any valid identifier and can be used within the boucle body. Modifying the boucle variable doesn't affect the original iterable.\n\n1. Simple explanation: Le boucle variable est le name that takes each item’s value during a boucle.\n2. Intermediate explanation: Changing the boucle variable only changes that name, not the original collection you’re looping over.\n3. In-depth explanation: Loop variables can leak into the surrounding scope in Python, which can surprise people coming from other languages and is important to remember when reusing names.",
+    example: "for number in [1, 2, 3, 4, 5]:\n    print(number * 2)  # number is the loop variable\n\n# Loop variable persists after loop\nfor item in ['a', 'b']:\n    pass\nprint(item)  # 'b' (last value)\n\n# Using loop variable with range\nfor i in range(5):\n    print(f'Index: {i}')"
+  },
+  {
+    term: "Boucle infinie",
+    definition: "A boucle that continues indefinitely car its condition never becomes False.",
+    levelRange: "3-4",
+    detailedDescription: "An infinite boucle occurs when a while boucle's condition always evaluates to True, or when the boucle variable in a for boucle never reaches a termination point. While sometimes intentional (avec break instructions), infinite boucles sont usually bugs. They can cause programs to hang or consume excessive resources. Always ensure boucle conditions can become False.\n\n1. Simple explanation: An infinite boucle est un boucle that never stops.\n2. Intermediate explanation: It happens when the condition to stop the boucle is never met, often car a variable isn’t updated correctly.\n3. In-depth explanation: Intentional infinite boucles sont common in servers and event boucles but must include clear break conditions or external signals for shutdown; accidental ones sont a classic bug from misdesigned termination logic.",
+    example: "# Intentional infinite loop with break\nwhile True:\n    user_input = input('Enter command: ')\n    if user_input == 'quit':\n        break  # Exit the loop\n    print(f'You entered: {user_input}')\n\n# Accidental infinite loop (BUG!)\n# count = 0\n# while count < 5:\n#     print(count)\n#     # Forgot to increment count - infinite loop!"
+  },
+  {
+    term: "Instruction Pass",
+    definition: "A null operation that does nothing, used as a placeholder.",
+    levelRange: "3-4",
+    detailedDescription: "Le pass instruction est un null operation - when executed, nothing happens. It's useful as a placeholder where syntax requires a instruction but no action is needed. Common uses include: empty fonction/classe bodies, conditional blocks that will be implemented later, or exception handlers that intentionally do nothing.\n\n1. Simple explanation: pass means “do nothing here” so the code still stays valid.\n2. Intermediate explanation: It’s handy when you’re sketching out structure or when you intentionally want to ignore a case for now.\n3. In-depth explanation: Although pass has no runtime effect, using it thoughtfully can make the intent of unfinished or deliberately empty code blocks clearer during development and reviews.",
+    example: "def function_to_implement_later():\n    pass  # Placeholder - will add code later\n\nif condition:\n    pass  # Do nothing if condition is True\nelse:\n    print('Condition is False')\n\ntry:\n    risky_operation()\nexcept:\n    pass  # Silently ignore errors"
+  },
+  {
+    term: "Indexation de liste",
+    definition: "Accessing individual elements of a liste using their position (index).",
+    levelRange: "5-6",
+    detailedDescription: "List indexing uses square brackets avec an integer index to access elements. Indices start at 0 for the first element. Negative indices count from the end (-1 est le last element). Accessing an invalid index raises IndexError. Indexing renvoie a reference to the objet, so modifying mutable elements affects the original liste.\n\n1. Simple explanation: List indexing lets you grab an item from a liste by its position number.\n2. Intermediate explanation: Positions start at 0, and negative indexes let you count from the end, which is useful for quickly reaching the last element(s).\n3. In-depth explanation: Because indexing renvoie references to objets, not copies, changes to mutable elements through an index will be visible from all variables that share the same liste.",
+    example: "fruits = ['apple', 'banana', 'cherry']\n\nprint(fruits[0])   # 'apple' (first element)\nprint(fruits[1])   # 'banana'\nprint(fruits[-1])  # 'cherry' (last element)\nprint(fruits[-2])  # 'banana' (second from end)\n\n# Modifying through index\nfruits[0] = 'orange'  # ['orange', 'banana', 'cherry']"
+  },
+  {
+    term: "Méthode de liste",
+    definition: "Built-in fonctions that operate on listes: append(), remove(), sort(), etc.",
+    levelRange: "5-6",
+    detailedDescription: "List méthodes sont fonctions called on liste objets using dot notation. Common méthodes include: append() (add to end), insert() (add at position), remove() (remove by value), pop() (remove and renvoyer), sort() (in-place sorting), reverse() (reverse order), count() (count occurrences), index() (find position). Most liste méthodes modify the liste in-place.\n\n1. Simple explanation: List méthodes sont built-in tools attached to listes that help you add, remove, and organize items.\n2. Intermediate explanation: Using méthodes like append, remove, and sort lets you change a liste sans recreating it from scratch.\n3. In-depth explanation: Many liste méthodes mutate the liste in-place and renvoyer None, which est un common gotcha; understanding which operations mutate versus create new listes is important for avoiding accidental side effects.",
+    example: "numbers = [3, 1, 4, 1, 5]\n\nnumbers.append(9)      # [3, 1, 4, 1, 5, 9]\nnumbers.insert(1, 2)   # [3, 2, 1, 4, 1, 5, 9]\nnumbers.remove(1)      # [3, 2, 4, 1, 5, 9] (removes first 1)\nnumbers.sort()         # [1, 2, 3, 4, 5, 9]\nnumbers.reverse()      # [9, 5, 4, 3, 2, 1]\ncount = numbers.count(1)  # 1"
+  },
+  {
+    term: "Compréhension de liste",
+    definition: "A concise way to create listes using a single line of code.",
+    levelRange: "5-6",
+    detailedDescription: "List comprehensions provide a compact syntax for creating listes. Le basic form is [expression for item in iterable]. They can include conditions: [expression for item in iterable if condition]. List comprehensions sont more readable and often faster than equivalent for boucles. They can be nested for multi-dimensional listes.\n\n1. Simple explanation: A liste comprehension est un one-line shortcut for building a new liste from another sequence.\n2. Intermediate explanation: It combines a for boucle and optional if filter into a single, readable expression that often replaces several lines of code.\n3. In-depth explanation: Comprehensions sont evaluated in their own scope and can be nested; using them wisely leads to concise, expressive code, but very complex ones sont better rewritten as regular boucles.",
+    example: "numbers = [1, 2, 3, 4, 5]\n\n# Square each number\nsquares = [x**2 for x in numbers]  # [1, 4, 9, 16, 25]\n\n# Filter even numbers\n evens = [x for x in numbers if x % 2 == 0]  # [2, 4]\n\n# Nested comprehension\nmatrix = [[i*j for j in range(3)] for i in range(3)]\n# [[0, 0, 0], [0, 1, 2], [0, 2, 4]]"
+  },
+  {
+    term: "Tuple",
+    definition: "An immutable, ordered sequence of objets, defined avec parentheses.",
+    levelRange: "5-6",
+    detailedDescription: "Tuples sont immutable sequences, meaning they cannot be modified après creation. They sont defined avec parentheses (or just commas). Tuples sont faster than listes and can be used as dictionnaire keys (since they're hashable). They're useful for fixed collections of related values. Single-element tuples require a trailing comma.\n\n1. Simple explanation: A tuple is like a liste that you can’t change.\n2. Intermediate explanation: Tuples sont good for grouping a fixed set of related values, such as a point (x, y) or fonction renvoyer values.\n3. In-depth explanation: Because tuples sont immutable and hashable (when containing only hashable items), they’re often used as dictionnaire keys and elements of sets, and they play a key role in multiple assignment and pattern matching.",
+    example: "point = (3, 4)  # Coordinates\nperson = ('Alice', 30, 'Engineer')  # Multiple values\n\n# Single element tuple\nsingle = (42,)  # Note the comma\nnot_tuple = (42)  # This is just an integer\n\n# Tuple unpacking\nx, y = point  # x = 3, y = 4\n\n# Tuples as dictionary keys\nlocations = {(0, 0): 'Origin', (1, 1): 'Corner'}"
+  },
+  {
+    term: "Ensemble",
+    definition: "An unordered collection of unique, hashable objets.",
+    levelRange: "5-6",
+    detailedDescription: "Sets sont mutable collections that store unique elements. They don't maintain order (though Python 3.7+ preserves insertion order). Sets sont useful for membership testing, removing duplicates, and mathematical set operations (union, intersection, difference). Elements must be hashable (immutable). Sets sont created avec {} or set().\n\n1. Simple explanation: A set est un bag of unique items where order doesn’t matter.\n2. Intermediate explanation: Sets shine when you need to test “is this in there?” quickly or remove duplicates from a collection.\n3. In-depth explanation: Backed by hash tables like dicts, sets enable fast membership tests and support rich algebraic operations (union, intersection, difference) that map directly to classic set theory.",
+    example: "numbers = {1, 2, 3, 3, 4}  # {1, 2, 3, 4} (duplicates removed)\n\n# Set operations\nset1 = {1, 2, 3}\nset2 = {3, 4, 5}\n\nunion = set1 | set2        # {1, 2, 3, 4, 5}\nintersection = set1 & set2  # {3}\ndifference = set1 - set2    # {1, 2}\n\n# Membership testing\nprint(2 in set1)  # True"
+  },
+  {
+    term: "Clé de dictionnaire",
+    definition: "Le unique identifier used to access values in a dictionnaire.",
+    levelRange: "5-6",
+    detailedDescription: "Dictionary keys must be hashable (immutable) objets like chaînes, numbers, or tuples. Keys sont unique - assigning to an existing key overwrites the value. Keys sont used to access, add, or modify dictionnaire values. Accessing a non-existent key raises KeyError (use get() to avoid this). Keys can be iterated over avec .keys().\n\n1. Simple explanation: A dictionnaire key est le label you use to look up a stored value.\n2. Intermediate explanation: Keys must be unique within a dictionnaire, and you use them for fast, readable access instead of numeric positions.\n3. In-depth explanation: Only hashable objets can be keys; understanding how hashing and equality work on custom types is vital if you want to use your own classes as keys reliably.",
+    example: "person = {'name': 'Alice', 'age': 30}\n\n# Accessing values\nname = person['name']  # 'Alice'\nage = person.get('age', 0)  # 30 (with default)\n\n# Adding/modifying\nperson['city'] = 'NYC'  # Add new key\nperson['age'] = 31     # Modify existing\n\n# Iterating keys\nfor key in person.keys():\n    print(key, person[key])"
+  },
+  {
+    term: "Valeur de dictionnaire",
+    definition: "Le data associated avec a key in a dictionnaire.",
+    levelRange: "5-6",
+    detailedDescription: "Dictionary values can be any Python objet - chaînes, numbers, listes, other dictionaries, fonctions, etc. Values sont accessed using their corresponding keys. Unlike keys, values don't need to be unique or hashable. Values can be modified, added, or removed. Le .values() méthode renvoie all values in a dictionnaire.\n\n1. Simple explanation: A dictionnaire value est le actual data you’re storing under a key.\n2. Intermediate explanation: Values can be any type (even other dictionaries), which makes dicts great for nested and structured data.\n3. In-depth explanation: Because values can be mutable and deeply nested, thinking about aliasing and copying is important when you pass dictionnaire-based data structures around your program.",
+    example: "data = {\n    'name': 'Alice',\n    'scores': [85, 90, 88],\n    'info': {'age': 30, 'city': 'NYC'}\n}\n\n# Accessing values\nname = data['name']           # 'Alice'\nscores = data['scores']        # [85, 90, 88]\ninfo = data['info']            # {'age': 30, 'city': 'NYC'}\n\n# Modifying values\ndata['scores'].append(92)  # Modifies the list\n\n# Iterating values\nfor value in data.values():\n    print(value)"
+  },
+  {
+    term: "Compréhension de dictionnaire",
+    definition: "A concise way to create dictionaries using a single expression.",
+    levelRange: "5-6",
+    detailedDescription: "Dictionary comprehensions create dictionaries using the syntax {key: value for item in iterable}. They can include conditions: {key: value for item in iterable if condition}. Dictionary comprehensions sont more readable and efficient than creating dictionaries avec boucles. They're useful for transforming data structures.\n\n1. Simple explanation: A dictionnaire comprehension est un shortcut for building a new dictionnaire from another sequence.\n2. Intermediate explanation: It lets you specify how to compute each key and value in one compact expression, often replacing several lines of boucle code.\n3. In-depth explanation: Comprehensions encourage a declarative style for transforming and filtering data; as avec liste comprehensions, very complex ones should be broken into clearer steps.",
+    example: "numbers = [1, 2, 3, 4, 5]\n\n# Create dictionary of squares\nsquares = {x: x**2 for x in numbers}\n# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}\n\n# With condition\n evens = {x: x*2 for x in numbers if x % 2 == 0}\n# {2: 4, 4: 8}\n\n# From two lists\nkeys = ['a', 'b', 'c']\nvalues = [1, 2, 3]\ndict_from_lists = {k: v for k, v in zip(keys, values)}\n# {'a': 1, 'b': 2, 'c': 3}"
+  },
+  {
+    term: "Paramètre",
+    definition: "A variable in a fonction definition that receives a value when the fonction est appelé.",
+    levelRange: "7-8",
+    detailedDescription: "Parameters sont placeholders in fonction definitions that specify what arguments the fonction expects. When a fonction est appelé, arguments sont passed and assigned to parameters. Parameters can have default values, making them optional. Functions can accept variable numbers of arguments using *args and **kwargs.\n\n1. Simple explanation: A parameter est le name you use dans a fonction to refer to a value that will be passed in.\n2. Intermediate explanation: Parameters define what information a fonction needs, and arguments fill those slots when you call the fonction.\n3. In-depth explanation: Understanding parameter kinds (positional-only, keyword-only, var-positional, var-keyword) and how Python matches arguments to them is crucial for designing flexible, clear APIs.",
+    example: "def greet(name, greeting='Hello'):  # name and greeting are parameters\n    return f'{greeting}, {name}!'\n\nresult = greet('Alice')  # 'Alice' is the argument\nresult2 = greet('Bob', 'Hi')  # 'Bob' and 'Hi' are arguments"
+  },
+  {
+    term: "Argument",
+    definition: "A value passed to a fonction when it est appelé.",
+    levelRange: "7-8",
+    detailedDescription: "Arguments sont the actual values passed to fonctions when they're called. They correspond to the fonction's parameters. Arguments can be positional (matched by position) or keyword (matched by name). Functions can accept variable numbers of arguments. Arguments sont evaluated avant being passed to the fonction.\n\n1. Simple explanation: An argument est le real value you give to a fonction when you call it.\n2. Intermediate explanation: You can pass arguments by position or by naming the parameter, which makes calls more explicit and flexible.\n3. In-depth explanation: Argument passing rules, including unpacking avec * and **, sont central to writing composable fonctions and higher-order utilities in Python.",
+    example: "def add(a, b):  # a and b are parameters\n    return a + b\n\nresult = add(5, 3)  # 5 and 3 are arguments\nresult2 = add(a=5, b=3)  # Keyword arguments\nresult3 = add(b=3, a=5)  # Order doesn't matter with keywords"
+  },
+  {
+    term: "Instruction Return",
+    definition: "A instruction that exits a fonction and optionally renvoie a value.",
+    levelRange: "7-8",
+    detailedDescription: "Le renvoyer instruction exits a fonction immediately and can renvoyer a value to the caller. Functions sans an explicit renvoyer instruction renvoyer None. Return can renvoyer multiple values as a tuple. Once renvoyer executes, no further code in the fonction runs. Return est un expression, not a instruction, so it can be used in expressions.\n\n1. Simple explanation: renvoyer sends a result back from a fonction and stops the fonction right away.\n2. Intermediate explanation: You can renvoyer one value, many values (as a tuple), or nothing (which is really None under the hood).\n3. In-depth explanation: Careful design of what a fonction renvoie (and when) shapes how easy it is to compose and test; early renvoie often simplify complex branching logic.",
+    example: "def add(a, b):\n    return a + b  # Returns the sum\n\nresult = add(3, 5)  # result = 8\n\ndef get_name_and_age():\n    return 'Alice', 30  # Returns tuple\n\nname, age = get_name_and_age()  # Unpacking"
+  },
+  {
+    term: "Paramètre par défaut",
+    definition: "A parameter avec a default value that est utilisé if no argument is provided.",
+    levelRange: "7-8",
+    detailedDescription: "Default parameters have values assigned in the fonction definition. If no argument is provided for a default parameter, the default value est utilisé. Default parameters must come après non-default parameters. Default values sont evaluated once when the fonction est défini, which can cause issues avec mutable defaults (use None instead).\n\n1. Simple explanation: A default parameter gives a fonction a backup value to use when no argument is passed.\n2. Intermediate explanation: Defaults make parameters optional and help you avoid repetitive argument passing in common cases.\n3. In-depth explanation: Because default values sont evaluated at fonction definition time, mutable defaults can accidentally share state entre calls; the common “None + create dans” pattern avoids this pitfall.",
+    example: "def greet(name, greeting='Hello'):  # greeting has default 'Hello'\n    return f'{greeting}, {name}!'\n\nprint(greet('Alice'))        # 'Hello, Alice!'\nprint(greet('Bob', 'Hi'))    # 'Hi, Bob!'\n\n# Mutable default (problematic)\ndef add_item(item, items=[]):  # BAD!\n    items.append(item)\n    return items\n\n# Better approach\ndef add_item(item, items=None):\n    if items is None:\n        items = []\n    items.append(item)\n    return items"
+  },
+  {
+    term: "Instance",
+    definition: "An individual objet created from a classe.",
+    levelRange: "7-8",
+    detailedDescription: "An instance est un specific objet created from a classe blueprint. Each instance has its own set of attributes (instance variables) but shares the classe's méthodes. Instances sont created by calling the classe like a fonction, which invokes __init__. Multiple instances of the same classe sont independent objets avec separate state.\n\n1. Simple explanation: An instance is one actual objet made from a classe, like one specific user in your app.\n2. Intermediate explanation: Different instances of the same classe share behavior but keep their own data, so changing one doesn’t change the others.\n3. In-depth explanation: Instances carry their own __dict__ of attributes (unless __slots__ est utilisé), and understanding how attribute lookup works entre instance and classe is central to grasping Python’s OOP model.",
+    example: "class Person:\n    def __init__(self, name):\n        self.name = name\n\n# Creating instances\nperson1 = Person('Alice')  # person1 is an instance\nperson2 = Person('Bob')    # person2 is another instance\n\nprint(person1.name)  # 'Alice'\nprint(person2.name)  # 'Bob'"
+  },
+  {
+    term: "Variable d'instance",
+    definition: "A variable that belongs to a specific instance of a classe.",
+    levelRange: "7-8",
+    detailedDescription: "Instance variables (also called attributes) store data unique to each instance. They sont created by assigning to self.attribute_name. Each instance has its own copy of instance variables. Instance variables can be accessed using dot notation (instance.attribute) or through self within méthodes.\n\n1. Simple explanation: An instance variable est un piece of data that belongs to one specific objet.\n2. Intermediate explanation: You define them in __init__ using self.x = value so each instance can store its own state.\n3. In-depth explanation: Instance attributes live in the instance’s namespace, and dynamic addition or removal of attributes at runtime is possible, which is powerful but should be used avec discipline.",
+    example: "class Person:\n    def __init__(self, name, age):\n        self.name = name      # Instance variable\n        self.age = age        # Instance variable\n\nperson = Person('Alice', 30)\nprint(person.name)  # 'Alice' (accessing instance variable)\nprint(person.age)   # 30"
+  },
+  {
+    term: "Variable de classe",
+    definition: "A variable shared by all instances of a classe.",
+    levelRange: "7-8",
+    detailedDescription: "Class variables sont defined at the classe level (à l’extérieur de méthodes) and sont shared by all instances. They sont useful for storing data common to all instances. Class variables can be accessed through the classe or any instance. Modifying a classe variable through an instance creates an instance variable avec the same name (shadowing).\n\n1. Simple explanation: A classe variable est un setting shared by all objets of that classe.\n2. Intermediate explanation: Changing the classe variable on the classe affects all instances that haven’t overridden it on themselves.\n3. In-depth explanation: Shadowing classe variables avec instance attributes est un common source of confusion; understanding attribute resolution order helps you predict which value you’ll actually see.",
+    example: "class Dog:\n    species = 'Canis familiaris'  # Class variable\n    \n    def __init__(self, name):\n        self.name = name  # Instance variable\n\ndog1 = Dog('Buddy')\ndog2 = Dog('Max')\n\nprint(dog1.species)  # 'Canis familiaris'\nprint(dog2.species)  # 'Canis familiaris'\nprint(Dog.species)   # 'Canis familiaris' (same for all)"
+  },
+  {
+    term: "Self",
+    definition: "A reference to the current instance, used to access instance attributes and méthodes.",
+    levelRange: "7-8",
+    detailedDescription: "Self est le conventional name for the first parameter of instance méthodes. It refers to the instance on which the méthode est appelé. Through self, méthodes can access and modify instance variables and call other méthodes. Self is automatically passed when calling méthodes on instances - you don't pass it explicitly.\n\n1. Simple explanation: self is how a méthode refers to “this objet”.\n2. Intermediate explanation: When you call obj.méthode(), Python automatically passes obj as the first argument, which we usually name self.\n3. In-depth explanation: self is just a convention, but it encodes the idea of bound méthodes; understanding this helps explain why méthodes behave differently when accessed via the classe versus an instance.",
+    example: "class Person:\n    def __init__(self, name):\n        self.name = name  # self refers to the instance\n    \n    def greet(self):\n        return f'Hello, I am {self.name}'  # Accessing via self\n\nperson = Person('Alice')\nperson.greet()  # self is automatically person"
+  },
+  {
+    term: "Constructeur",
+    definition: "A special méthode __init__ that initializes a new instance of a classe.",
+    levelRange: "7-8",
+    detailedDescription: "Le constructor (__init__ méthode) is automatically called when a new instance est créé. It's used to initialize instance variables and perform setup. __init__ doesn't create the objet (that's done by __new__), but it's the primary place for initialization. It can accept parameters to customize the instance.\n\n1. Simple explanation: Le constructor est le special méthode that runs when you create a new objet from a classe.\n2. Intermediate explanation: You use __init__ to set up the initial state of an objet based on the arguments passed to the classe.\n3. In-depth explanation: Separating objet creation (__new__) from initialization (__init__) allows advanced customization of instances, but most everyday code only needs to implement __init__.",
+    example: "class Person:\n    def __init__(self, name, age):  # Constructor\n        self.name = name\n        self.age = age\n        print(f'{name} created')\n\nperson = Person('Alice', 30)  # Constructor is called automatically\n# Output: 'Alice created'"
+  },
+  {
+    term: "Héritage",
+    definition: "A mechanism where a child classe inherits attributes and méthodes from a parent classe.",
+    levelRange: "9-10",
+    detailedDescription: "Inheritance allows creating new classes based on existing ones. Le child classe (subclass) inherits all attributes and méthodes from the parent classe (superclass) and can add new ones or override existing ones. Inheritance promotes code reuse and establishes an 'is-a' relationship. Python supports multiple inheritance.\n\n1. Simple explanation: Inheritance lets one classe reuse and extend the behavior of another.\n2. Intermediate explanation: A child classe automatically gets the méthodes and attributes of its parent, and can override them or add new ones.\n3. In-depth explanation: Designing good inheritance hierarchies requires thinking about “is-a” relationships, the méthode resolution order (MRO), and when composition est un better fit than subclassing.",
+    example: "class Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return 'Some sound'\n\nclass Dog(Animal):  # Dog inherits from Animal\n    def speak(self):  # Override parent method\n        return 'Woof!'\n\ndog = Dog('Buddy')\nprint(dog.name)    # Inherited attribute\nprint(dog.speak())  # Overridden method: 'Woof!'"
+  },
+  {
+    term: "Polymorphisme",
+    definition: "Le ability of different classes to respond to the same méthode call in different ways.",
+    levelRange: "9-10",
+    detailedDescription: "Polymorphism allows objets of different types to be treated uniformly through a common interface. In Python, polymorphism is achieved through duck typing - if an objet has the required méthode, it can be used. Ce enables writing code that works avec multiple types sans explicit type checking.\n\n1. Simple explanation: Polymorphism means different objets can respond to the same action in their own way.\n2. Intermediate explanation: If several classes implement the same méthode name, you can write one piece of code that calls that méthode and works for all of them.\n3. In-depth explanation: Python’s duck typing emphasizes behavior over type hierarchy, so polymorphism is more about shared protocols (like “has a .write() méthode”) than about strict inheritance trees.",
+    example: "class Dog:\n    def speak(self):\n        return 'Woof!'\n\nclass Cat:\n    def speak(self):\n        return 'Meow!'\n\n# Polymorphic function\ndef make_sound(animal):\n    return animal.speak()  # Works with any object with speak()\n\ndog = Dog()\ncat = Cat()\nprint(make_sound(dog))  # 'Woof!'\nprint(make_sound(cat))  # 'Meow!'"
+  },
+  {
+    term: "Encapsulation",
+    definition: "Le bundling of data and méthodes that operate on that data within a single unit.",
+    levelRange: "9-10",
+    detailedDescription: "Encapsulation est le principle of hiding internal implementation details and exposing only what's necessary. In Python, encapsulation is achieved through naming conventions: single underscore (_) for 'protected' and double underscore (__) for 'private' (name mangling). Python doesn't enforce strict encapsulation - it's a convention.\n\n1. Simple explanation: Encapsulation means keeping an objet’s internal details hidden and only exposing what other code needs to use.\n2. Intermediate explanation: By grouping data and behavior together and using naming conventions, you signal which parts of a classe sont “public” and which sont internal.\n3. In-depth explanation: While Python doesn’t enforce access restrictions, consistent use of encapsulation patterns leads to cleaner APIs and reduces the risk of breaking users’ code when internals change.",
+    example: "class BankAccount:\n    def __init__(self, balance):\n        self.__balance = balance  # 'Private' attribute\n    \n    def deposit(self, amount):\n        self.__balance += amount  # Controlled access\n    \n    def get_balance(self):\n        return self.__balance  # Public interface\n\naccount = BankAccount(100)\n# account.__balance  # Error: name mangling\nprint(account.get_balance())  # 100"
+  },
+  {
+    term: "Super",
+    definition: "A built-in fonction that renvoie a proxy objet to access parent classe méthodes.",
+    levelRange: "9-10",
+    detailedDescription: "Super() provides a way to call méthodes from parent classes. It's commonly used in __init__ to ensure parent initialization. Super() follows the méthode resolution order (MRO) to find the correct parent méthode. It's essential in multiple inheritance scenarios to call the right parent méthode.\n\n1. Simple explanation: super() is how a child classe calls a méthode from its parent classe.\n2. Intermediate explanation: It’s especially important in __init__ to make sure the parent part of the objet is set up correctly.\n3. In-depth explanation: In multiple inheritance chains, super() coordinates calls along the MRO so that each classe in the hierarchy gets a chance to run its logic exactly once.",
+    example: "class Animal:\n    def __init__(self, name):\n        self.name = name\n    \n    def speak(self):\n        return 'Some sound'\n\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)  # Call parent __init__\n        self.breed = breed\n    \n    def speak(self):\n        return super().speak() + ' Woof!'  # Extend parent method\n\ndog = Dog('Buddy', 'Labrador')\nprint(dog.name)  # 'Buddy' (from parent)\nprint(dog.speak())  # 'Some sound Woof!'"
+  },
+  {
+    term: "Redéfinition de méthode",
+    definition: "Defining a méthode in a child classe that replaces a méthode from the parent classe.",
+    levelRange: "9-10",
+    detailedDescription: "Method overriding occurs when a child classe defines a méthode avec the same name as a parent classe méthode. Le child's méthode takes precedence when called on child instances. Overriding allows customizing behavior while maintaining the same interface. Le parent méthode can still be accessed using super().\n\n1. Simple explanation: Overriding means a child classe replaces a parent’s méthode avec its own version.\n2. Intermediate explanation: It lets you keep the same méthode name but adapt what it does for a more specific type.\n3. In-depth explanation: Overriding is central to polymorphism; knowing when to call super() versus fully replace behavior helps keep inherited code predictable and maintainable.",
+    example: "class Shape:\n    def area(self):\n        return 0\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):  # Override parent method\n        return self.width * self.height\n\nrect = Rectangle(5, 3)\nprint(rect.area())  # 15 (uses overridden method)"
+  },
+  {
+    term: "Méthode abstraite",
+    definition: "A méthode declared in a base classe that must be implemented by subclasses.",
+    levelRange: "9-10",
+    detailedDescription: "Abstract méthodes define an interface that subclasses must implement. In Python, abstract méthodes sont created using the abc (Abstract Base Class) module. Classes avec abstract méthodes cannot be instantiated directly. Abstract méthodes ensure that subclasses provide required functionality, enforcing a contract.\n\n1. Simple explanation: An abstract méthode est un méthode that says “subclasses must define this,” but doesn’t provide its own body.\n2. Intermediate explanation: Abstract base classes use abstract méthodes to guarantee that certain behaviors exist on all concrete subclasses.\n3. In-depth explanation: Abstract méthodes and ABCs let you formalize protocols and catch missing implementations early, which is especially useful in large systems and avec static type checkers.",
+    example: "from abc import ABC, abstractmethod\n\nclass Shape(ABC):  # Abstract base class\n    @abstractmethod\n    def area(self):  # Must be implemented by subclasses\n        pass\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n    \n    def area(self):  # Required implementation\n        return self.width * self.height\n\n# shape = Shape()  # Error: cannot instantiate abstract class\nrect = Rectangle(5, 3)  # OK"
+  },
+  {
+    term: "Patron de conception",
+    definition: "A reusable solution to a commonly occurring problem in software design.",
+    levelRange: "9-10",
+    detailedDescription: "Design patterns sont proven solutions to common programming problems. They provide templates for structuring code to achieve flexibility, maintainability, and reusability. Common patterns include Singleton, Factory, Observer, Strategy, and Decorator. Patterns sont language-agnostic concepts that can be implemented in Python.\n\n1. Simple explanation: A design pattern est un reusable “recipe” for solving a common design problem in code.\n2. Intermediate explanation: Patterns give shared names and structures (like Singleton or Factory) so developers can talk about and apply solutions quickly.\n3. In-depth explanation: In Python, many classic patterns look different car of first-classe fonctions and dynamic typing; understanding both the original intent and the Pythonic implementation leads to cleaner architecture.",
+    example: "# Singleton Pattern\nclass Singleton:\n    _instance = None\n    \n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n\n# Factory Pattern\nclass AnimalFactory:\n    @staticmethod\n    def create_animal(animal_type):\n        if animal_type == 'dog':\n            return Dog()\n        elif animal_type == 'cat':\n            return Cat()\n        return None"
+  },
+  {
+    term: "Gestion des exceptions",
+    definition: "A mechanism to handle errors and exceptional conditions using try/except blocks.",
+    levelRange: "9-10",
+    detailedDescription: "Exception handling allows programs to gracefully handle errors sans crashing. Le try block contains code that might raise exceptions. Le except block catches and handles specific exceptions. Optional else runs if no exception occurs, and finally always executes. Proper exception handling improves program robustness.\n\n1. Simple explanation: Exception handling is how Python lets you catch and respond to errors instead of crashing.\n2. Intermediate explanation: You wrap risky code in try, handle specific problems in except, and optionally clean up in finally.\n3. In-depth explanation: Good exception handling distinguishes entre expected, recoverable errors and truly unexpected bugs, and it uses precise exception types rather than broad catches to keep failures understandable.",
+    example: "try:\n    result = 10 / 0  # Raises ZeroDivisionError\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')\nexcept Exception as e:\n    print(f'An error occurred: {e}')\nelse:\n    print('No errors occurred')\nfinally:\n    print('This always executes')"
+  },
+  {
+    term: "Gestionnaire de contexte",
+    definition: "An objet that manages resources using the 'avec' instruction.",
+    levelRange: "9-10",
+    detailedDescription: "Context managers ensure proper resource management (like file closing) using the 'avec' instruction. They implement __enter__ and __exit__ méthodes. Context managers automatically handle setup and cleanup, even if exceptions occur. Le 'avec' instruction is preferred over manual resource management.\n\n1. Simple explanation: A context manager is what lets avec open(...) automatically close the file for you.\n2. Intermediate explanation: It wraps some code avec setup and teardown logic so resources sont always cleaned up, even if errors happen.\n3. In-depth explanation: Implementing __enter__ and __exit__ (or using contextlib) lets you create your own safe “avec” blocks for locks, transactions, timers, and other resources that need strict lifetime control.",
+    example: "# Built-in file context manager\nwith open('file.txt', 'r') as f:\n    content = f.read()\n# File is automatically closed here\n\n# Custom context manager\nclass Timer:\n    def __enter__(self):\n        self.start = time.time()\n        return self\n    \n    def __exit__(self, *args):\n        print(f'Elapsed: {time.time() - self.start}')\n\nwith Timer():\n    # Do something\n    pass"
   }
 ];
