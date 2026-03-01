@@ -27,7 +27,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Python Exercises Learn">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5968/5968350.png">
 
@@ -40,8 +40,11 @@
             background-color: #0f172a;
             color: #f8fafc;
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on mobile */
-            padding-top: max(2.75rem, env(safe-area-inset-top, 44px));
             padding-bottom: env(safe-area-inset-bottom, 0);
+        }
+        /* Mobile PWA: push content below status bar (iPhone notch/ Dynamic Island) */
+        @media (max-width: 768px) {
+            body { padding-top: 3.5rem; }
         }
         .code-font {
             font-family: 'Fira Code', monospace;
