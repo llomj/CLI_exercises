@@ -63,6 +63,7 @@ export interface RandomModeStats {
 export interface UserStats {
   currentLevel: number;
   xp: number;
+  totalAttempts?: number;
   completedQuestionIds: number[];
   highestUnlockedLevel: number;
   levelProgress: Record<number, number>;

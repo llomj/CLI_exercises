@@ -12,6 +12,7 @@ const LOCAL_STORAGE_KEY = 'python_exercises_learn_stats_v3_offline';
 const INITIAL_STATS: UserStats = {
   currentLevel: 1,
   xp: 0,
+  totalAttempts: 0,
   completedQuestionIds: [],
   highestUnlockedLevel: 1,
   levelProgress: {},
@@ -78,6 +79,7 @@ const App: React.FC = () => {
         if (!parsed.history) parsed.history = [];
         if (!parsed.completedQuestionIds) parsed.completedQuestionIds = [];
         if (!parsed.idLog) parsed.idLog = [];
+        if (parsed.totalAttempts === undefined) parsed.totalAttempts = parsed.history.length || 0;
         // Migration: derive acquiredStars from levelProgress when missing or partial
         const levelProgress = parsed.levelProgress || {};
         const existingStars = parsed.acquiredStars || {};
@@ -168,6 +170,7 @@ const App: React.FC = () => {
   const recordAttempt = (attempt: QuestionAttempt) => {
     setStats(prev => ({
       ...prev,
+      totalAttempts: (prev.totalAttempts ?? 0) + 1,
       history: [attempt, ...prev.history].slice(0, 1000),
       completedQuestionIds: attempt.isCorrect && !prev.completedQuestionIds.includes(attempt.id)
         ? [...prev.completedQuestionIds, attempt.id]
@@ -310,13 +313,13 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <button
-            onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-            className="ml-auto w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/10 transition-all"
-            title={t('settings.settings')}
+          <div
+            className="ml-auto flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+            title="Answer Count"
           >
-            <i className="fas fa-gear"></i>
-          </button>
+            <i className="fas fa-hashtag text-slate-400 text-sm"></i>
+            <span className="text-sm font-bold text-slate-200">{(stats.totalAttempts ?? stats.history.length).toLocaleString()}</span>
+          </div>
         </div>
 
       </nav>
