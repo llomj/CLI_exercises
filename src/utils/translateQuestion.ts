@@ -8,6 +8,8 @@ export const translateQuestionText = (text: string, language: string): string =>
   const questionTranslations: Record<string, string> = {
     'What is': "Qu'est-ce que c'est",
     'What is?': "Qu'est-ce que c'est ?",
+    'What does': "Qu'est-ce que",
+    'What?': 'Que ?',
     'What happens when you': 'Que se passe-t-il quand vous',
     'What happens when': 'Que se passe-t-il quand',
     'What happens if': 'Que se passe-t-il si',
@@ -40,5 +42,7 @@ export const translateQuestionText = (text: string, language: string): string =>
       translated = translated.replace(pattern, fr);
     }
   }
+  // Translate "return?" in "What does X return?" → "renvoie ?"
+  translated = translated.replace(/\s+return\s*\?/g, ' renvoie ?');
   return translated;
 };
