@@ -615,6 +615,28 @@ const splitQuestion = (text: string, language: string = 'en') => {
   }
 };
 
+const shouldVisualizeOptionWhitespace = (options: string[]): boolean => {
+  const normalized = new Map<string, Set<string>>();
+
+  for (const option of options) {
+    const key = option.replace(/\s+/g, ' ').trim();
+    if (!normalized.has(key)) normalized.set(key, new Set<string>());
+    normalized.get(key)!.add(option);
+  }
+
+  const hasWhitespaceSensitiveVariants = Array.from(normalized.values()).some(variants => variants.size > 1);
+  const hasSignificantWhitespace = options.some(option => /^\s|\s$| {2,}|\t|\n/.test(option));
+
+  return hasWhitespaceSensitiveVariants || hasSignificantWhitespace;
+};
+
+const visualizeWhitespace = (text: string): string => {
+  return text
+    .replace(/ /g, '·')
+    .replace(/\t/g, '⇥')
+    .replace(/\n/g, '↵\n');
+};
+
 interface QuizViewProps {
   level: number;
   currentProgress: number;
@@ -793,6 +815,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
   const currentQuestion = questions[currentIndex];
   const isIdSaved = savedIdLogIds.includes(currentQuestion.id) || justSavedId === currentQuestion.id;
+  const showWhitespaceHints = shouldVisualizeOptionWhitespace(currentQuestion.options);
 
   // Live evolution score for Random mode: base stats + session progress
   // Use sessionCorrectRef so it updates immediately (score state may lag)
@@ -958,7 +981,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
                     }`}>
                     {String.fromCharCode(65 + idx)}
                   </div>
-                  <span className="font-semibold text-sm md:text-base">{option}</span>
+                  <span className={`font-semibold text-sm md:text-base whitespace-pre-wrap break-words ${showWhitespaceHints ? 'font-mono' : ''}`}>
+                    {showWhitespaceHints ? visualizeWhitespace(option) : option}
+                  </span>
                 </div>
                 {isAnswered && idx === currentQuestion.correct_option_index && (
                   <i className="fas fa-check-circle text-emerald-500 animate-in zoom-in duration-300"></i>

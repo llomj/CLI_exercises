@@ -209,6 +209,27 @@ Before moving to the next level:
 - Add function to format code snippets with proper indentation (newlines and spaces)
 - Detect and format code in question strings for display
 
+## ✅ Fixed: Whitespace-Only Option Ambiguity (IDs like 96/97/98 and similar)
+
+**Problem**: Some multiple-choice options differ only by leading/trailing/multiple spaces, which can look identical in the UI because normal HTML text rendering collapses or hides spacing differences.
+
+**User-impact examples**:
+- Questions where options contain padded strings can appear visually identical.
+- This can make users think there are duplicate options when they are actually different by whitespace.
+
+**Implemented fix (global, not ID-specific)**:
+- In `QuizView`, option rendering now detects whitespace-sensitive answer sets.
+- If whitespace-sensitive options are detected, the UI switches to a whitespace-visualized display:
+  - space → `·`
+  - tab → `⇥`
+  - newline → `↵`
+- This ensures options that differ by padding/spacing are always visually distinct.
+
+**Detection rule**:
+- Trigger visualization when:
+  1. Two or more options normalize to the same value after whitespace collapsing and trimming, **or**
+  2. Any option has significant whitespace (`leading/trailing`, `double spaces`, tab, newline).
+
 ## 🔴 URGENT CRITICAL BUG: Vague "What is?" Questions
 
 **STATUS: ⚠️ IN PROGRESS - PARTIALLY FIXED**
