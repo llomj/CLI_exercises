@@ -145,7 +145,17 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Common items
+  // Common items (Methods also when on quiz/log - always in settings)
+  if (onShowMethods && (view === 'quiz' || view === 'log')) {
+    menuItems.push({
+      icon: 'fa-code',
+      label: t('app.methods'),
+      onClick: () => {
+        onShowMethods();
+        onClose();
+      }
+    });
+  }
   if (onShowLevelSelector) {
     menuItems.push({
       icon: 'fa-layer-group',

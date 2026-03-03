@@ -415,7 +415,7 @@ const App: React.FC = () => {
           randomMode={randomMode}
           onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
           onShowGlossary={view === 'hub' ? () => setView('glossary') : undefined}
-          onShowMethods={view === 'hub' || view === 'glossary' ? () => setShowMethods(true) : undefined}
+          onShowMethods={() => setShowMethods(true)}
           onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
           onShowIdLog={view === 'hub' ? () => setShowIdLog(true) : undefined}
           onShowLearningLog={view === 'hub' ? () => setView('log') : undefined}
@@ -524,8 +524,6 @@ const App: React.FC = () => {
           <EvolutionHub
             stats={stats}
             onStartQuiz={handleStartEvolution}
-            onShowGlossary={() => setView('glossary')}
-            onShowMethods={() => setShowMethods(true)}
           />
         )}
       </main>
