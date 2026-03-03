@@ -11,6 +11,7 @@ interface SettingsMenuProps {
   onToggleRandomMode?: () => void;
   onShowGlossary?: () => void;
   onShowMethods?: () => void;
+  onShowFlow?: () => void;
   onShowIdSearch?: () => void;
   onShowIdLog?: () => void;
   onShowLearningLog?: () => void;
@@ -29,6 +30,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleRandomMode,
   onShowGlossary,
   onShowMethods,
+  onShowFlow,
   onShowIdSearch,
   onShowIdLog,
   onShowLearningLog,
@@ -62,6 +64,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         label: t('app.methods'),
         onClick: () => {
           onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlow) {
+      menuItems.push({
+        icon: 'fa-diagram-project',
+        label: t('app.flow'),
+        onClick: () => {
+          onShowFlow();
           onClose();
         }
       });
@@ -109,16 +121,28 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Glossary view: show Methods (reference views)
-  if (view === 'glossary' && onShowMethods) {
-    menuItems.push({
-      icon: 'fa-code',
-      label: t('app.methods'),
-      onClick: () => {
-        onShowMethods();
-        onClose();
-      }
-    });
+  // Glossary view: show Methods and Flow (reference views)
+  if (view === 'glossary') {
+    if (onShowMethods) {
+      menuItems.push({
+        icon: 'fa-code',
+        label: t('app.methods'),
+        onClick: () => {
+          onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlow) {
+      menuItems.push({
+        icon: 'fa-diagram-project',
+        label: t('app.flow'),
+        onClick: () => {
+          onShowFlow();
+          onClose();
+        }
+      });
+    }
   }
 
   // Quiz view items
@@ -145,16 +169,28 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Common items (Methods also when on quiz/log - always in settings)
-  if (onShowMethods && (view === 'quiz' || view === 'log')) {
-    menuItems.push({
-      icon: 'fa-code',
-      label: t('app.methods'),
-      onClick: () => {
-        onShowMethods();
-        onClose();
-      }
-    });
+  // Common items (Methods and Flow when on quiz/log - always in settings)
+  if ((onShowMethods || onShowFlow) && (view === 'quiz' || view === 'log')) {
+    if (onShowMethods) {
+      menuItems.push({
+        icon: 'fa-code',
+        label: t('app.methods'),
+        onClick: () => {
+          onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlow) {
+      menuItems.push({
+        icon: 'fa-diagram-project',
+        label: t('app.flow'),
+        onClick: () => {
+          onShowFlow();
+          onClose();
+        }
+      });
+    }
   }
   if (onShowLevelSelector) {
     menuItems.push({

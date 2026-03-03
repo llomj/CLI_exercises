@@ -342,7 +342,13 @@ Before moving to the next level:
 
 ---
 
-### 🔴 ROOT CAUSE: GITHUB REPO HAS OLD CODE (v11)
+### ✅ RESOLVED (2025-03-03) — Methods visible after push
+
+**What fixed it**: Committed and pushed to `origin main`. The live site serves from GitHub; local-only changes never deploy.
+
+---
+
+### 🔴 ROOT CAUSE: GITHUB REPO HAD OLD CODE (v11)
 
 **Verified 2025-03-03**:
 - **Live site** `https://llomj.github.io/python-exercises-learn/sw.js` → **v11** (CACHE_NAME v11, `_v=11` static)
@@ -360,6 +366,38 @@ git push origin main
 ```
 
 Then wait 2–5 min for GitHub Actions deploy. After that, clear-sw + re-add PWA on phone.
+
+---
+
+## Flow View (Settings → Flow)
+
+**Added**: Icon "Flow" in Settings under Methods. Explains loops, indentation, workflow order (inner then outer), return vs print, global vs local, closures, OOP workflow. Verbose but simple, step-by-step. Full French version included.
+
+**Location**: Settings → Flow (fa-diagram-project icon). Same views as Methods: hub, glossary, quiz, log.
+
+---
+
+## ⚠️ DEPLOYMENT RULE — PREVENT "NOTHING UPDATES" (MANDATORY)
+
+**The live site** `https://llomj.github.io/python-exercises-learn/` **serves from GitHub `origin/main`.** Local changes do **not** appear until pushed.
+
+### Before saying "deploy" or "it should work":
+
+1. **Check**: `git status` — any uncommitted changes? `git log origin/main..HEAD` — any unpushed commits?
+2. **If yes**: `git add` → `git commit` → `git push origin main`
+3. **Wait** 2–5 min for GitHub Actions
+4. **Verify**: Open `https://llomj.github.io/python-exercises-learn/` (or `?nocache=<timestamp>`) — footer shows SW v13? New features visible?
+
+### Agents: When making PWA/SW/app changes
+
+- **Always push to `origin`** after committing. Do not assume the user will push.
+- **Remote**: `origin` = `python-exercises-learn` (the deployed repo). `v1` = `python-exercisesV1` (different repo).
+
+### If user reports "still nothing" after changes
+
+**First check**: Is it on GitHub?  
+- `https://raw.githubusercontent.com/llomj/python-exercises-learn/main/public/sw.js` — does it match local?
+- If not → push was missed. Commit and push.
 
 ---
 
