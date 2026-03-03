@@ -509,6 +509,7 @@ const translateText = (text: string, language: string): string => {
 const hasCodeLikeContent = (text: string): boolean => {
   if (!text || text.length < 2) return false;
   return (
+    /f["']/.test(text) ||                    // f-strings f"..." f'...'
     /["'][^"']*["']/.test(text) ||           // String literals
     /[a-zA-Z_]\w*\s*\(/.test(text) ||         // Function/method calls
     /[\[\(\{]/.test(text) ||                  // Brackets
@@ -546,9 +547,19 @@ const splitQuestion = (text: string, language: string = 'en') => {
       }
     }
 
-    // For "What does X return?" / "Qu'est-ce que X renvoie ?" — don't split; show full question
-    if (/\s+(return|renvoie)\s*\?\s*$/.test(enhancedText)) {
-      return { prefix: enhancedText, code: '' };
+    // For "What does X return?" / "Qu'est-ce que X renvoie ?" — extract X as code for syntax highlighting
+    const returnSuffixEn = enhancedText.match(/\s+return\s*\?\s*$/i);
+    const returnSuffixFr = enhancedText.match(/\s+renvoie\s*\?\s*$/i);
+    const returnSuffix = returnSuffixEn || returnSuffixFr;
+    if (returnSuffix) {
+      const beforeReturn = enhancedText.substring(0, enhancedText.length - returnSuffix[0].length).trim();
+      const doesMatch = beforeReturn.match(/^What does\s+(.+)$/i);
+      const queMatch = beforeReturn.match(/^Qu'est-ce que\s+(.+)$/i);
+      const extracted = doesMatch?.[1] || queMatch?.[1];
+      if (extracted && hasCodeLikeContent(extracted)) {
+        const prefix = returnSuffixEn ? 'What does … return?' : "Qu'est-ce que … renvoie ?";
+        return { prefix, code: extracted };
+      }
     }
 
     // For single-line questions, find where code starts
