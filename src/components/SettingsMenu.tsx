@@ -109,6 +109,18 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
+  // Glossary view: show Methods (reference views)
+  if (view === 'glossary' && onShowMethods) {
+    menuItems.push({
+      icon: 'fa-code',
+      label: t('app.methods'),
+      onClick: () => {
+        onShowMethods();
+        onClose();
+      }
+    });
+  }
+
   // Quiz view items
   if (view === 'quiz') {
     if (onShowOperations) {
