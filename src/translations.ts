@@ -40,7 +40,7 @@ export const translations = {
     // Quiz View
     quiz: {
       mutationOf: "MUTATION {current} OF {total}",
-      evolutionPoints: "Evolution Points",
+      evolutionPoints: "Evolution",
       stabilizingGenome: "Stabilizing Genome...",
       sequencingPatterns: "Sequencing 15 unique logic patterns for Stage {level}.",
       sequenceError: "Sequence Error",
@@ -282,7 +282,7 @@ export const translations = {
     // Quiz View
     quiz: {
       mutationOf: "MUTATION {current} SUR {total}",
-      evolutionPoints: "Points d'Évolution",
+      evolutionPoints: "Evolution",
       stabilizingGenome: "Stabilisation du Génome...",
       sequencingPatterns: "Séquençage de 15 motifs logiques uniques pour l'Étape {level}.",
       sequenceError: "Erreur de Séquence",
