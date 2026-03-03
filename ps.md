@@ -243,10 +243,10 @@ Before moving to the next level:
 - [ ] **Phone after clear-sw** — Close app fully, reopen from Home Screen
 - [ ] **Test Q174** — French mode, ID 174: should show `Qu'est-ce que "   ".strip() renvoie ?`
 
-### FIXED IN CODE (v11)
-- CACHE_NAME v10 → v11
-- sw.js?v=10 → sw.js?v=11
-- Document fetch: `?_v=11` + `cache: 'no-store'`
+### FIXED IN CODE (v12)
+- CACHE_NAME v11 → v12
+- sw.js?v=11 → sw.js?v=12
+- Document fetch: `?_v=12` + `cache: 'no-store'`
 - clear-sw.html fetch: `cache: 'no-store'`
 - clear-sw.html shows current URL for user to copy
 
@@ -290,7 +290,7 @@ Before moving to the next level:
 | **GitHub Pages CDN** | Caches `index.html`, JS, CSS at edge nodes | ❌ No — cannot set headers |
 | **CDN propagation** | Can take 2–10+ min after deploy | ❌ No |
 | **Browser cache** | User's phone caches responses | Partially — SW, meta tags |
-| **Service Worker** | Our SW caches assets | ✅ Yes — v11, network-first |
+| **Service Worker** | Our SW caches assets | ✅ Yes — v12, network-first |
 
 **Key insight**: If GitHub's CDN serves **stale** `index.html` to the phone, the phone will load old script URLs → old JS → old app. Clearing browser history does **not** purge GitHub's CDN.
 
@@ -305,7 +305,7 @@ Before moving to the next level:
 #### 2. Confirm What's Live on GitHub
 - [ ] On **computer**, open: `https://llomj.github.io/python-exercises-learn/`
 - [ ] Hard refresh: **Cmd+Shift+R** (Mac) or **Ctrl+Shift+R** (Win)
-- [ ] Check footer: does it show **SW v11**?
+- [ ] Check footer: does it show **SW v12**?
 - [ ] If computer shows old version → deploy didn't work or CDN not updated
 - [ ] If computer shows new version but phone doesn't → phone/CDN edge issue
 
