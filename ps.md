@@ -24,7 +24,16 @@ When adding new content, add both languages in the same commit. Never ship Engli
 
 ## GitHub Pages deploy (Actions red / failed)
 
-If the "Deploy to GitHub Pages" workflow fails (red in Actions):
+**If the "Deploy to GitHub Pages" workflow is red (fails):**
 
-1. **Source must be GitHub Actions**: Repo **Settings → Pages → Build and deployment → Source** must be **"GitHub Actions"** (not "Deploy from a branch"). Otherwise the deploy step can fail with exit code 1.
-2. The workflow uses two jobs: `build` (checkout, npm ci, build, upload artifact) and `deploy` (needs: build, then deploy-pages). The deploy job must run after build so the artifact is available.
+1. **Source must be GitHub Actions**  
+   Repo **Settings → Pages → Build and deployment → Source** must be **"GitHub Actions"** (not "Deploy from a branch").
+
+2. **Use a single job for build + deploy**  
+   The workflow in `.github/workflows/deploy.yml` must do **build, upload artifact, and deploy in one job**. If you split into two jobs (e.g. `build` and `deploy` with `needs: build`), the deploy job often fails with **"No artifacts named 'github-pages' were found"** because the Pages artifact is not visible across jobs in some GitHub backend states. Fix: keep one job that runs in order: checkout → setup Node → `npm ci` → `npm run build` → **configure-pages** → **upload-pages-artifact** (path: `dist`) → **deploy-pages**.
+
+3. **Concurrency**  
+   Use `cancel-in-progress: false` so an in-progress deployment is not cancelled when a new run starts; this avoids flaky failures.
+
+4. **Action versions**  
+   Use `actions/upload-pages-artifact@v3` with `actions/deploy-pages@v4`; `actions/configure-pages@v4` must run in the same job **before** the upload step.
