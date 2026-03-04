@@ -16,7 +16,13 @@ export interface Question {
   options: string[];
   correct_option_index: number;
   explanation: string;
-  detailedExplanation?: string; // Optional detailed, verbose explanation for learning
+  detailedExplanation?: string; // Optional detailed, verbose explanation for learning (fallback for all levels)
+  /** Beginner-level explanation (simpler). Falls back to detailedExplanation if absent. */
+  detailedExplanationBeginner?: string;
+  /** Intermediate-level explanation. Falls back to detailedExplanation if absent. */
+  detailedExplanationIntermediate?: string;
+  /** Expert-level explanation (very in-depth). Falls back to detailedExplanation if absent. */
+  detailedExplanationExpert?: string;
   subLevel?: SubLevel; // Optional for backwards compatibility, required for new questions
   questionFormat?: QuestionFormat; // Optional for new formats
 }

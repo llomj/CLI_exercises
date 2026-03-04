@@ -38,7 +38,10 @@ const generateLevel = (level: number, stage: PersonaStage, patterns: ((i: number
       options: pattern.o,
       correct_option_index: pattern.c,
       explanation: pattern.e,
-      detailedExplanation: pattern.de || undefined
+      detailedExplanation: pattern.de || undefined,
+      detailedExplanationBeginner: pattern.deBeginner ?? pattern.de ?? undefined,
+      detailedExplanationIntermediate: pattern.deIntermediate ?? pattern.de ?? undefined,
+      detailedExplanationExpert: pattern.deExpert ?? pattern.de ?? undefined,
     } as Question;
   });
 };

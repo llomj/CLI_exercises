@@ -7,35 +7,45 @@ const beginner = [
     o: ["Refreshes package index from repositories", "Updates all packages", "Updates apt itself", "Updates kernel"],
     c: 0,
     e: "apt update fetches latest package lists. Run before apt upgrade.",
-    de: "Updates /var/lib/apt/lists/. Does not install. apt update && apt upgrade for full update."
+    de: "Updates /var/lib/apt/lists/. Does not install. apt update && apt upgrade for full update.",
+    deBeginner: "`apt update` contacts all configured repositories and refreshes the local package index under /var/lib/apt/lists/, but it does not install or upgrade any packages by itself.",
+    deExpert: "Refresh APT index only (lists/); no upgrades. Always run before upgrade."
   }),
   (_i: number) => ({
     q: "What does `apt upgrade` do?",
     o: ["Upgrades installed packages to latest versions", "Updates repository list", "Upgrades system", "Upgrades kernel only"],
     c: 0,
     e: "apt upgrade installs newest versions of installed packages. Run apt update first.",
-    de: "Won't remove packages. apt full-upgrade may remove to resolve conflicts. Requires root."
+    de: "Won't remove packages. apt full-upgrade may remove to resolve conflicts. Requires root.",
+    deBeginner: "`apt upgrade` looks at the updated index and upgrades currently installed packages to newer versions when possible, but it refuses to remove packages to resolve dependency changes.",
+    deExpert: "Upgrade in-place, no removals; safer than full-upgrade. Needs fresh apt update + root."
   }),
   (_i: number) => ({
     q: "What does `apt install package` do?",
     o: ["Installs package and dependencies", "Installs package only", "Downloads package", "Configures package"],
     c: 0,
     e: "apt install fetches and installs package plus any dependencies. Requires root.",
-    de: "apt install nginx. Resolves deps automatically. -y for non-interactive."
+    de: "apt install nginx. Resolves deps automatically. -y for non-interactive.",
+    deBeginner: "`apt install package` downloads the chosen package and any dependencies it needs, then unpacks and configures them so they are ready to use (usually requires sudo).",
+    deExpert: "Resolve + fetch + unpack + configure deps; apt install [-y] package."
   }),
   (_i: number) => ({
     q: "What does `apt remove package` do?",
     o: ["Removes package but keeps config files", "Removes package and config", "Removes dependencies", "Removes all related"],
     c: 0,
     e: "apt remove uninstalls package. Config files remain. apt purge to remove configs too.",
-    de: "apt remove nginx. Leaves /etc/nginx. apt purge nginx removes config. apt autoremove cleans orphan deps."
+    de: "apt remove nginx. Leaves /etc/nginx. apt purge nginx removes config. apt autoremove cleans orphan deps.",
+    deBeginner: "`apt remove package` uninstalls the program’s files but leaves its configuration (like files under /etc) on disk so you can reinstall later and keep your settings.",
+    deExpert: "Remove binaries only; config stays. Use purge + autoremove to fully clean."
   }),
   (_i: number) => ({
     q: "What does `apt search keyword` do?",
     o: ["Searches package names and descriptions", "Searches names only", "Searches installed", "Searches repos"],
     c: 0,
     e: "apt search finds packages matching keyword. apt update first for fresh index.",
-    de: "apt search nginx. apt show package for details. apt list for listing."
+    de: "apt search nginx. apt show package for details. apt list for listing.",
+    deBeginner: "`apt search keyword` scans the local package index for names and descriptions containing that word so you can discover which packages exist for a topic.",
+    deExpert: "Text search over names/descriptions in local APT index; follow with apt show."
   }),
   (_i: number) => ({
     q: "What does `dnf install package` do?",
@@ -112,63 +122,81 @@ const beginner = [
     o: ["Removes orphaned dependencies", "Removes all unused", "Auto removes packages", "Removes old kernels"],
     c: 0,
     e: "apt autoremove removes packages no longer needed by any installed package.",
-    de: "After apt remove, dependencies may be orphaned. autoremove cleans them. Safe to run."
+    de: "After apt remove, dependencies may be orphaned. autoremove cleans them. Safe to run.",
+    deBeginner: "`apt autoremove` finds libraries and helper packages that were pulled in as dependencies but are no longer needed by any installed package, and safely uninstalls them to reclaim space.",
+    deExpert: "Garbage-collect auto-installed orphans after removals; trims the dep tree without touching manually marked packages."
   }),
   (_i: number) => ({
     q: "What does `apt purge package` do?",
     o: ["Removes package and its config files", "Purges package", "Removes and purges", "Deletes package"],
     c: 0,
     e: "apt purge removes package and deletes configuration files. Stronger than remove.",
-    de: "apt purge nginx. Config in /etc removed. Use when you want clean uninstall."
+    de: "apt purge nginx. Config in /etc removed. Use when you want clean uninstall.",
+    deBeginner: "`apt purge package` completely removes the package and also deletes its configuration files (for example in /etc), which is useful when you want a totally clean uninstall or a fresh reinstall later.",
+    deExpert: "Full removal including /etc configs and dpkg state; pair with autoremove to wipe deps."
   }),
   (_i: number) => ({
     q: "What does `which program` show?",
     o: ["Path to executable", "Program location", "Which program", "Executable path"],
     c: 0,
     e: "which shows path of command that would run. Searches PATH.",
-    de: "which python. type python gives more (alias, function). whereis for binary, source, man."
+    de: "which python. type python gives more (alias, function). whereis for binary, source, man.",
+    deBeginner: "`which program` searches the directories listed in your PATH and prints the exact executable file that would run if you typed that command.",
+    deExpert: "PATH resolver only; use `type` for aliases/functions and `whereis` for broader bin/src/man search."
   }),
   (_i: number) => ({
     q: "What does `whereis program` show?",
     o: ["Paths to binary, source, and man pages", "Program location", "Where is program", "Binary path"],
     c: 0,
     e: "whereis finds binary, source, man. whereis ls. Broader than which.",
-    de: "whereis -b ls for binary only. Searches standard locations."
+    de: "whereis -b ls for binary only. Searches standard locations.",
+    deBeginner: "`whereis program` prints the locations of the program’s binary, source code (if present), and its manual pages by scanning standard system directories.",
+    deExpert: "Multi-path lookup (bin/src/man) in fixed locations; `whereis -b prog` narrows to binaries."
   }),
   (_i: number) => ({
     q: "What does `ldconfig` do?",
     o: ["Updates shared library cache", "Links config", "Loads config", "Library config"],
     c: 0,
     e: "ldconfig updates ld.so.cache for shared library lookup. Run after installing libs.",
-    de: "ldconfig. /etc/ld.so.conf. Needed when adding libs to /usr/local/lib. Requires root."
+    de: "ldconfig. /etc/ld.so.conf. Needed when adding libs to /usr/local/lib. Requires root.",
+    deBeginner: "`ldconfig` scans library directories listed in /etc/ld.so.conf (and friends) and refreshes the dynamic linker’s cache so new or moved shared libraries can be found when programs start.",
+    deExpert: "Rebuild ld.so.cache from ld.so.conf.d; run after dropping .so files into non-standard lib dirs."
   }),
   (_i: number) => ({
     q: "What does `make install` typically do?",
     o: ["Installs built files to system directories", "Installs make", "Installs build", "Installs to prefix"],
     c: 0,
     e: "make install copies binaries, libs, headers to prefix (often /usr/local).",
-    de: "./configure --prefix=/usr. make. sudo make install. Installs to prefix/bin, lib, etc."
+    de: "./configure --prefix=/usr. make. sudo make install. Installs to prefix/bin, lib, etc.",
+    deBeginner: "`make install` copies the binaries, libraries, and headers that were built into the installation prefix (for example /usr/local/bin and /usr/local/lib) so they become part of your system.",
+    deExpert: "Executes the install target for the configured prefix; often needs root and is best wrapped in packaging (checkinstall, distro tools)."
   }),
   (_i: number) => ({
     q: "What does `make clean` do?",
     o: ["Removes built files (object files, etc.)", "Cleans make", "Removes source", "Cleans build"],
     c: 0,
     e: "make clean removes compiled objects. Fresh build: make clean && make.",
-    de: "Removes .o, binaries from build dir. Doesn't touch source. make distclean for more."
+    de: "Removes .o, binaries from build dir. Doesn't touch source. make distclean for more.",
+    deBeginner: "`make clean` deletes compiled object files and built binaries from the build directory so the next `make` starts from a clean slate, without touching your original source files.",
+    deExpert: "Target to drop build artifacts (.o, binaries); `make distclean` usually goes further and removes generated config/Makefiles."
   }),
   (_i: number) => ({
     q: "What does `rpm -qa` show?",
     o: ["All installed RPM packages", "Query all", "RPM packages", "Installed RPMs"],
     c: 0,
     e: "rpm -qa lists all installed packages. rpm -qi package for info.",
-    de: "rpm -qa | grep nginx. rpm -ql package for files. Low-level on RHEL/Fedora."
+    de: "rpm -qa | grep nginx. rpm -ql package for files. Low-level on RHEL/Fedora.",
+    deBeginner: "`rpm -qa` prints every package that the RPM database currently considers installed, which you can then filter with tools like `grep`.",
+    deExpert: "Global RPM inventory (query all); pair with -qi/-ql/-qf to drill into metadata and file lists."
   }),
   (_i: number) => ({
     q: "What does `rpm -ql package` show?",
     o: ["Files installed by package", "Package list", "Query list", "Package files"],
     c: 0,
     e: "rpm -ql lists files belonging to package. rpm -qf file for reverse (which package).",
-    de: "rpm -ql nginx. rpm -qf /usr/bin/nginx finds owning package."
+    de: "rpm -ql nginx. rpm -qf /usr/bin/nginx finds owning package.",
+    deBeginner: "`rpm -ql package` shows every file path that was installed on the system by that RPM package, so you can see exactly what it put where.",
+    deExpert: "Forward mapping from pkg → installed paths; reverse is `rpm -qf /path`."
   }),
   (_i: number) => ({
     q: "What does `brew update` do?",
