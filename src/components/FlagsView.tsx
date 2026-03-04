@@ -4,7 +4,10 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // Bash syntax highlighting for flags reference: oneDark base, comment neutral (per AGENTS.md)
-const COMMENT_NEUTRAL = 'hsl(0, 0%, 55%)';
+const COMMENT_NEUTRAL = 'hsl(0, 0%, 50%)';
+const FLAG_OPTION = 'hsl(207, 82%, 66%)';
+const STRING_DESC = 'hsl(39, 77%, 69%)';
+const PUNCT = 'hsl(220, 14%, 71%)';
 
 const flagsStyle = {
   ...oneDark,
@@ -12,7 +15,28 @@ const flagsStyle = {
   comment: { color: COMMENT_NEUTRAL, fontStyle: 'normal' as const },
   prolog: { color: COMMENT_NEUTRAL },
   cdata: { color: COMMENT_NEUTRAL },
-  // Keep oneDark colors for punctuation, keyword, string, etc. so flags and options are clearly highlighted
+  string: { color: STRING_DESC },
+  builtin: { color: FLAG_OPTION },
+  selector: { color: STRING_DESC },
+  inserted: { color: STRING_DESC },
+  regex: { color: STRING_DESC },
+  char: { color: STRING_DESC },
+  'attr-value': { color: STRING_DESC },
+  punctuation: { color: PUNCT },
+  keyword: { color: 'hsl(286, 60%, 67%)' },
+  variable: { color: FLAG_OPTION },
+  operator: { color: PUNCT },
+  function: { color: FLAG_OPTION },
+  constant: { color: STRING_DESC },
+  number: { color: STRING_DESC },
+  'attr-name': { color: FLAG_OPTION },
+  'class-name': { color: STRING_DESC },
+  boolean: { color: STRING_DESC },
+  property: { color: FLAG_OPTION },
+  tag: { color: FLAG_OPTION },
+  symbol: { color: PUNCT },
+  entity: { color: PUNCT },
+  doctype: { color: PUNCT },
 };
 
 interface FlagsViewProps {
@@ -476,7 +500,7 @@ export const FlagsView: React.FC<FlagsViewProps> = ({ onBack }) => {
         </button>
       </div>
 
-      <div className="flags-code-block glass rounded-2xl p-6 border border-emerald-500/20 overflow-x-auto">
+      <div className="flags-code-block glass rounded-2xl p-6 border border-emerald-500/20 overflow-x-auto text-slate-300 [&_code]:!text-slate-300">
         <SyntaxHighlighter
           language="bash"
           style={flagsStyle}
@@ -487,7 +511,8 @@ export const FlagsView: React.FC<FlagsViewProps> = ({ onBack }) => {
             background: 'transparent',
             fontSize: '0.8rem',
             lineHeight: '1.6',
-            fontFamily: "'Fira Code', monospace"
+            fontFamily: "'Fira Code', monospace",
+            color: PUNCT
           }}
           codeTagProps={{
             style: {

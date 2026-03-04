@@ -56,7 +56,13 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* Flags/Commands code blocks: neutral selection (match dark theme, not green) */
+        /* Flags/Commands code blocks: never all green; default text slate, selection neutral */
+        .flags-code-block,
+        .flags-code-block pre,
+        .flags-code-block code {
+            color: #cbd5e1 !important; /* slate-300 fallback */
+        }
+        .flags-code-block .token.comment { color: hsl(0, 0%, 50%) !important; }
         .flags-code-block ::selection {
             background: rgba(255, 255, 255, 0.2);
             color: inherit;
