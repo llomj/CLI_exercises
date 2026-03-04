@@ -2,11 +2,12 @@ export const translations = {
   en: {
     // Navigation & App
     app: {
-      title: "PYTHON",
+      title: "CLI",
       subtitle: "EXERCISES",
       rank: "Rank",
       glossary: "Glossary",
-      methods: "Methods",
+      methods: "Commands",
+      flags: "Flags",
       flow: "Flow",
       learningLog: "Learning Log",
       operations: "Operations & Math",
@@ -26,7 +27,7 @@ export const translations = {
       globalProgress: "Global Progress",
       mastery: "Mastery",
       mutationsRemaining: "{count} mutations remaining for next evolution.",
-      absorbText: "Absorb 15 new logic structures to strengthen your Python DNA.",
+      absorbText: "Absorb 15 new CLI commands to strengthen your terminal skills.",
       conceptsText: "unique concepts across the ocean.",
       // Random mode
       randomModeLabel: "Random Mode",
@@ -115,7 +116,7 @@ export const translations = {
     
     // Glossary View
     glossary: {
-      title: "PYTHON GLOSSARY",
+      title: "CLI GLOSSARY",
       searchPlaceholder: "Search glossary...",
       levelConcept: "Level {range} Concept",
       levelSection: "Level {level}",
@@ -140,7 +141,7 @@ export const translations = {
     
     // Footer
     footer: {
-      copyright: "© 2024 Python Exercises Learn. Interactive Learning Platform.",
+      copyright: "© 2024 CLI Exercises Learn. Interactive Learning Platform.",
     },
     
     // Persona Stages (these might stay as is, but we can translate)
@@ -228,18 +229,19 @@ export const translations = {
       continueEvolution: "CONTINUE EVOLUTION",
     },
     
-    // Level Descriptions
+    // Level Descriptions (CLI)
     levels: {
-      level1: "Basic data types and variable assignment. Learn to store and manipulate simple values.",
-      level2: "Mathematical operations and expression evaluation. Master arithmetic and precedence rules.",
-      level3: "Decision-making with if/elif/else. Understand boolean logic and truth values.",
-      level4: "Repetitive execution with for and while loops. Learn to iterate over sequences.",
-      level5: "Ordered collections and list operations. Master mutable sequences.",
-      level6: "Associative arrays and fast lookups. Learn unordered key-value mappings.",
-      level7: "Reusable code blocks with parameters and return values. Master function design.",
-      level8: "Object-oriented programming basics. Learn to create and use custom types.",
-      level9: "Advanced OOP concepts. Understand class hierarchies and behavior inheritance.",
-      level10: "Professional-level patterns and practices. Master scalable code design.",
+      level0: "Complete beginner. Learn what a terminal is, what a command is, and basic computer terms—no prior knowledge assumed.",
+      level1: "Terminal and shell foundations. Learn what a terminal is, how the shell works, and basic navigation.",
+      level2: "Filesystem and storage. Master paths, permissions, inodes, and symbolic links.",
+      level3: "File and text processing. Learn cat, grep, redirection, and pipes.",
+      level4: "Process management. Master ps, top, kill, cron, and daemons.",
+      level5: "Package management. Learn apt, dnf, brew, and building from source.",
+      level6: "Networking basics. Master IP, ports, DNS, curl, and remote tools.",
+      level7: "Advanced networking. Learn ip, firewalls, and web protocols.",
+      level8: "Security and hardening. Users, PAM, SSH hardening, and encryption.",
+      level9: "Hacking and pentest concepts. Recon, enumeration, and exploit frameworks.",
+      level10: "Containers, Git, boot process, and Unix philosophy.",
     },
   },
   
@@ -250,7 +252,8 @@ export const translations = {
       subtitle: "EXERCICES",
       rank: "Rang",
       glossary: "Glossaire",
-      methods: "Méthodes",
+      methods: "Commandes",
+      flags: "Options",
       flow: "Flux",
       learningLog: "Journal d'apprentissage",
       operations: "Opérations et Mathématiques",
@@ -270,7 +273,7 @@ export const translations = {
       globalProgress: "Progression Globale",
       mastery: "Maîtrise",
       mutationsRemaining: "{count} mutations restantes pour la prochaine évolution.",
-      absorbText: "Absorbez 15 nouvelles structures logiques pour renforcer votre ADN Python.",
+      absorbText: "Absorbez 15 nouvelles commandes CLI pour renforcer vos compétences terminal.",
       conceptsText: "concepts uniques à travers l'océan.",
       // Random mode
       randomModeLabel: "Mode Aléatoire",
@@ -359,7 +362,7 @@ export const translations = {
     
     // Glossary View
     glossary: {
-      title: "GLOSSAIRE PYTHON",
+      title: "GLOSSAIRE CLI",
       searchPlaceholder: "Rechercher dans le glossaire...",
       levelConcept: "Concept Niveau {range}",
       levelSection: "Niveau {level}",
@@ -384,7 +387,7 @@ export const translations = {
     
     // Footer
     footer: {
-      copyright: "© 2024 Python Exercises Learn. Plateforme d'Apprentissage Interactive.",
+      copyright: "© 2024 CLI Exercises Learn. Plateforme d'Apprentissage Interactive.",
     },
     
     // Persona Stages
@@ -472,18 +475,19 @@ export const translations = {
       continueEvolution: "CONTINUER L'ÉVOLUTION",
     },
     
-    // Level Descriptions
+    // Level Descriptions (CLI)
     levels: {
-      level1: "Types de données de base et assignation de variables. Apprenez à stocker et manipuler des valeurs simples.",
-      level2: "Opérations mathématiques et évaluation d'expressions. Maîtrisez l'arithmétique et les règles de précédence.",
-      level3: "Prise de décision avec if/elif/else. Comprenez la logique booléenne et les valeurs de vérité.",
-      level4: "Exécution répétitive avec les boucles for et while. Apprenez à itérer sur des séquences.",
-      level5: "Collections ordonnées et opérations sur les listes. Maîtrisez les séquences mutables.",
-      level6: "Tableaux associatifs et recherches rapides. Apprenez les mappages clé-valeur non ordonnés.",
-      level7: "Blocs de code réutilisables avec paramètres et valeurs de retour. Maîtrisez la conception de fonctions.",
-      level8: "Bases de la programmation orientée objet. Apprenez à créer et utiliser des types personnalisés.",
-      level9: "Concepts OOP avancés. Comprenez les hiérarchies de classes et l'héritage de comportement.",
-      level10: "Modèles et pratiques de niveau professionnel. Maîtrisez la conception de code évolutif.",
+      level0: "Débutant complet. Apprenez ce qu'est un terminal, une commande et les termes de base—aucune connaissance préalable requise.",
+      level1: "Terminal et bases du shell. Apprenez ce qu'est un terminal, comment le shell fonctionne et la navigation de base.",
+      level2: "Système de fichiers et stockage. Maîtrisez les chemins, permissions, inodes et liens symboliques.",
+      level3: "Traitement de fichiers et texte. Apprenez cat, grep, redirection et pipes.",
+      level4: "Gestion des processus. Maîtrisez ps, top, kill, cron et les daemons.",
+      level5: "Gestion des paquets. Apprenez apt, dnf, brew et la compilation depuis les sources.",
+      level6: "Bases du réseau. Maîtrisez IP, ports, DNS, curl et les outils distants.",
+      level7: "Réseau avancé. Apprenez ip, pare-feu et protocoles web.",
+      level8: "Sécurité et durcissement. Utilisateurs, PAM, durcissement SSH et chiffrement.",
+      level9: "Concepts de hacking et pentest. Recon, énumération et frameworks d'exploitation.",
+      level10: "Conteneurs, Git, processus de démarrage et philosophie Unix.",
     },
   },
 };

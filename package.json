@@ -1,12 +1,14 @@
 {
-  "name": "python-exercises-learn",
-  "version": "1.0.1",
-  "description": "Interactive Python learning platform with evolutionary progression",
+  "name": "cli-exercises-learn",
+  "version": "1.0.0",
+  "description": "Interactive terminal and CLI commands learning platform with evolutionary progression",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export-questions": "tsx scripts/export_questions.ts",
+    "validate-questions": "tsx scripts/export_questions.ts && python3 scripts/validate_cli_questions.py"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
@@ -16,6 +18,7 @@
     "react-syntax-highlighter": "^16.1.0"
   },
   "devDependencies": {
+    "tsx": "^4.19.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.2.0",

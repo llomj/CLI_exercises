@@ -3,13 +3,13 @@ import { UserStats, PersonaStage, QuestionAttempt } from './types';
 import { EvolutionHub } from './components/EvolutionHub';
 import { SettingsMenu } from './components/SettingsMenu';
 import { IdLogEntry } from './types';
-import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsFromProgress, getRandomModeScore, getPersonaFromRandomScore } from './constants';
+import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsFromProgress, getRandomModeScore, getPersonaFromRandomScore, PERSONA_EMOJI } from './constants';
 import { useLanguage } from './contexts/LanguageContext';
 import { formatTranslation } from './translations';
 
-const LOCAL_STORAGE_KEY = 'python_exercises_learn_stats_v3_offline';
+const LOCAL_STORAGE_KEY = 'cli_exercises_learn_stats_v1';
 
-const playStarCelebrationSound = () => {
+const playStarCelebrationSound = async () => {
   if (typeof window === 'undefined') return;
 
   const AudioContextClass = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
@@ -17,7 +17,7 @@ const playStarCelebrationSound = () => {
 
   const audioContext = new AudioContextClass();
   if (audioContext.state === 'suspended') {
-    void audioContext.resume();
+    await audioContext.resume();
   }
   const now = audioContext.currentTime;
   const masterGain = audioContext.createGain();
@@ -75,7 +75,7 @@ const playStarCelebrationSound = () => {
 };
 
 const INITIAL_STATS: UserStats = {
-  currentLevel: 1,
+  currentLevel: 0,
   xp: 0,
   totalAttempts: 0,
   completedQuestionIds: [],
@@ -93,6 +93,7 @@ const HistoryLog = lazy(() => import('./components/HistoryLog').then((module) =>
 const GlossaryView = lazy(() => import('./components/GlossaryView').then((module) => ({ default: module.GlossaryView })));
 const OperationsView = lazy(() => import('./components/OperationsView').then((module) => ({ default: module.OperationsView })));
 const MethodsView = lazy(() => import('./components/MethodsView').then((module) => ({ default: module.MethodsView })));
+const FlagsView = lazy(() => import('./components/FlagsView').then((module) => ({ default: module.FlagsView })));
 const FlowView = lazy(() => import('./components/FlowView').then((module) => ({ default: module.FlowView })));
 const IdSearchModal = lazy(() => import('./components/IdSearchModal').then((module) => ({ default: module.IdSearchModal })));
 const IdLogView = lazy(() => import('./components/IdLogView').then((module) => ({ default: module.IdLogView })));
@@ -122,6 +123,7 @@ const App: React.FC = () => {
   const randomMode = stats.randomMode ?? false;
   const [showOperations, setShowOperations] = useState(false);
   const [showMethods, setShowMethods] = useState(false);
+  const [showFlags, setShowFlags] = useState(false);
   const [showFlow, setShowFlow] = useState(false);
   const [showIdSearch, setShowIdSearch] = useState(false);
   const [showIdLog, setShowIdLog] = useState(false);
@@ -149,11 +151,19 @@ const App: React.FC = () => {
         if (!parsed.completedQuestionIds) parsed.completedQuestionIds = [];
         if (!parsed.idLog) parsed.idLog = [];
         if (parsed.totalAttempts === undefined) parsed.totalAttempts = parsed.history.length || 0;
+        // Migration: shift question IDs when Level 0 was added (old 1–3000 → 301–3300)
+        const stateVersion = parsed.stateVersion ?? 0;
+        if (stateVersion < 2 && Array.isArray(parsed.completedQuestionIds)) {
+          parsed.completedQuestionIds = parsed.completedQuestionIds.map((id: number) =>
+            id >= 1 && id <= 3000 ? id + 300 : id
+          );
+          parsed.stateVersion = 2;
+        }
         // Migration: derive acquiredStars from levelProgress when missing or partial
         const levelProgress = parsed.levelProgress || {};
         const existingStars = parsed.acquiredStars || {};
         const migratedStars: Record<number, number> = { ...existingStars };
-        for (const level of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
+        for (const level of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
           const progress = levelProgress[level] || 0;
           const derivedStars = getStarsFromProgress(progress);
           if (derivedStars > (existingStars[level] || 0)) {
@@ -179,7 +189,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (showResult?.starEarned) {
-      playStarCelebrationSound();
+      void playStarCelebrationSound();
     }
   }, [showResult?.starEarned]);
 
@@ -188,22 +198,6 @@ const App: React.FC = () => {
     ? getPersonaFromRandomScore(getRandomModeScore(stats.randomModeStats))
     : currentLevelInfo.persona;
   const currentProgress = stats.levelProgress[stats.currentLevel] || 0;
-
-  const getPersonaIcon = (persona: PersonaStage): string => {
-    const personaIcons: Record<PersonaStage, string> = {
-      [PersonaStage.PLANKTON]: "fa-microbe",
-      [PersonaStage.SHRIMP]: "fa-shrimp",
-      [PersonaStage.CRAB]: "fa-crab",
-      [PersonaStage.SMALL_FISH]: "fa-fish",
-      [PersonaStage.OCTOPUS]: "fa-octopus",
-      [PersonaStage.SEAL]: "fa-seal",
-      [PersonaStage.DOLPHIN]: "fa-dolphin",
-      [PersonaStage.SHARK]: "fa-shark",
-      [PersonaStage.WHALE]: "fa-whale",
-      [PersonaStage.GOD_WHALE]: "fa-globe",
-    };
-    return personaIcons[persona] || 'fa-fish';
-  };
 
   const handleStartEvolution = () => {
     setView('quiz');
@@ -359,22 +353,22 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30 pb-28">
+    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-emerald-500/30 pb-28">
       <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex w-full items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('hub')}>
-            <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <i className="fas fa-terminal text-white text-xs"></i>
             </div>
-            <span className="font-bold text-lg tracking-tight hidden sm:inline">{t('app.title')}<span className="text-indigo-400">{t('app.subtitle')}</span></span>
+            <span className="font-bold text-lg tracking-tight hidden sm:inline">{t('app.title')}<span className="text-emerald-400">{t('app.subtitle')}</span></span>
           </div>
 
           <div className="h-8 w-[1px] bg-white/10 mx-2 hidden sm:block"></div>
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-sm">
-                <i className={`fas ${getPersonaIcon(currentPersona)} text-white`}></i>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-sm">
+                <span className="text-white">{PERSONA_EMOJI[currentPersona] ?? '🐟'}</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">{t('app.rank')}</span>
@@ -384,7 +378,7 @@ const App: React.FC = () => {
 
             <div className="flex items-center gap-2">
               <i className="fas fa-bolt text-amber-400 text-sm"></i>
-              <span className="text-sm font-bold text-indigo-400">{stats.xp.toLocaleString()}</span>
+              <span className="text-sm font-bold text-emerald-400">{stats.xp.toLocaleString()}</span>
             </div>
           </div>
 
@@ -418,6 +412,7 @@ const App: React.FC = () => {
           onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
           onShowGlossary={view === 'hub' ? () => setView('glossary') : undefined}
           onShowMethods={() => setShowMethods(true)}
+          onShowFlags={() => setShowFlags(true)}
           onShowFlow={() => setShowFlow(true)}
           onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
           onShowIdLog={view === 'hub' ? () => setShowIdLog(true) : undefined}
@@ -506,7 +501,7 @@ const App: React.FC = () => {
               {showResult.randomMode && showResult.prevScore !== undefined && showResult.newScore !== undefined && showResult.newPersona && (
                 <div className="w-full mt-2 pt-2 border-t border-white/10">
                   <div className="text-xs text-slate-500 uppercase font-bold mb-1 tracking-wider">{t('result.evolutionScore')}</div>
-                  <div className="text-lg font-black text-indigo-400">
+                  <div className="text-lg font-black text-emerald-400">
                     {showResult.prevScore} → {showResult.newScore} <span className="text-slate-400 font-normal">({showResult.newPersona})</span>
                   </div>
                 </div>
@@ -517,7 +512,7 @@ const App: React.FC = () => {
               onClick={() => setShowResult(null)}
               className={`w-full py-4 rounded-2xl font-bold text-white transition-all transform active:scale-95 shadow-xl relative z-10 ${showResult.starEarned
                   ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-950 text-lg'
-                  : 'bg-indigo-500 hover:bg-indigo-600 shadow-indigo-500/30'
+                  : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/30'
                 }`}
             >
               {showResult.starEarned ? t('subLevels.continueEvolution') : t('result.backToHub')}
@@ -553,6 +548,17 @@ const App: React.FC = () => {
           <div className="container mx-auto px-4 py-8 max-w-4xl">
             <Suspense fallback={<ViewLoading />}>
               <MethodsView onBack={() => setShowMethods(false)} />
+            </Suspense>
+          </div>
+        </div>
+      )}
+
+      {/* Flags View Modal */}
+      {showFlags && (
+        <div className="fixed inset-0 z-[100] bg-slate-950 overflow-y-auto">
+          <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <Suspense fallback={<ViewLoading />}>
+              <FlagsView onBack={() => setShowFlags(false)} />
             </Suspense>
           </div>
         </div>
@@ -607,7 +613,7 @@ const App: React.FC = () => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="glass rounded-3xl p-8 max-w-md w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
             <div className="text-center space-y-4">
-              <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl ${randomMode ? 'bg-indigo-500/20 text-indigo-400' : 'bg-green-500/20 text-green-400'
+              <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl ${randomMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-green-500/20 text-green-400'
                 }`}>
                 <i className={`fas ${randomMode ? 'fa-layer-group' : 'fa-shuffle'}`}></i>
               </div>
@@ -628,7 +634,7 @@ const App: React.FC = () => {
               <button
                 onClick={randomMode ? confirmLevelMode : confirmRandomMode}
                 className={`flex-1 py-3 rounded-xl font-bold text-white transition-all ${randomMode
-                  ? 'bg-indigo-500 hover:bg-indigo-600 shadow-xl shadow-indigo-500/30'
+                  ? 'bg-emerald-500 hover:bg-emerald-600 shadow-xl shadow-emerald-500/30'
                   : 'bg-green-500 hover:bg-green-600 shadow-xl shadow-green-500/30'
                   }`}
               >

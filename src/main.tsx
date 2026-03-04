@@ -10,10 +10,10 @@ if ('serviceWorker' in navigator) {
       const basePath = import.meta.env.BASE_URL || '/';
       navigator.serviceWorker.register(`${basePath}sw.js?v=13`)
         .then(registration => {
-          console.log('Python Exercises Learn SW registered: ', registration);
+          console.log('CLI Exercises Learn SW registered: ', registration);
         })
         .catch(registrationError => {
-          console.log('Python Exercises Learn SW registration failed: ', registrationError);
+          console.log('CLI Exercises Learn SW registration failed: ', registrationError);
         });
     } else {
       navigator.serviceWorker.getRegistrations().then(registrations => {

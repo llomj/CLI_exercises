@@ -11,6 +11,7 @@ interface SettingsMenuProps {
   onToggleRandomMode?: () => void;
   onShowGlossary?: () => void;
   onShowMethods?: () => void;
+  onShowFlags?: () => void;
   onShowFlow?: () => void;
   onShowIdSearch?: () => void;
   onShowIdLog?: () => void;
@@ -30,6 +31,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleRandomMode,
   onShowGlossary,
   onShowMethods,
+  onShowFlags,
   onShowFlow,
   onShowIdSearch,
   onShowIdLog,
@@ -64,6 +66,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         label: t('app.methods'),
         onClick: () => {
           onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlags) {
+      menuItems.push({
+        icon: 'fa-flag',
+        label: t('app.flags'),
+        onClick: () => {
+          onShowFlags();
           onClose();
         }
       });
@@ -121,7 +133,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Glossary view: show Methods and Flow (reference views)
+  // Glossary view: show Methods, Flags and Flow (reference views)
   if (view === 'glossary') {
     if (onShowMethods) {
       menuItems.push({
@@ -129,6 +141,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         label: t('app.methods'),
         onClick: () => {
           onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlags) {
+      menuItems.push({
+        icon: 'fa-flag',
+        label: t('app.flags'),
+        onClick: () => {
+          onShowFlags();
           onClose();
         }
       });
@@ -169,14 +191,24 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Common items (Methods and Flow when on quiz/log - always in settings)
-  if ((onShowMethods || onShowFlow) && (view === 'quiz' || view === 'log')) {
+  // Common items (Methods, Flags and Flow when on quiz/log - always in settings)
+  if ((onShowMethods || onShowFlags || onShowFlow) && (view === 'quiz' || view === 'log')) {
     if (onShowMethods) {
       menuItems.push({
         icon: 'fa-code',
         label: t('app.methods'),
         onClick: () => {
           onShowMethods();
+          onClose();
+        }
+      });
+    }
+    if (onShowFlags) {
+      menuItems.push({
+        icon: 'fa-flag',
+        label: t('app.flags'),
+        onClick: () => {
+          onShowFlags();
           onClose();
         }
       });
@@ -243,7 +275,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               className={`
                 w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left
                 ${item.active 
-                  ? 'bg-indigo-500/20 text-indigo-400' 
+                  ? 'bg-emerald-500/20 text-emerald-400' 
                   : 'text-slate-300 hover:bg-white/10 hover:text-white'
                 }
               `}

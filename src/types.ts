@@ -33,6 +33,7 @@ export interface QuestionAttempt {
 }
 
 export enum PersonaStage {
+  TADPOLE = "Tadpole",
   PLANKTON = "Plankton",
   SHRIMP = "Shrimp",
   CRAB = "Crab",
@@ -74,6 +75,7 @@ export interface UserStats {
   acquiredStars?: Record<number, number>; // Maps level ID to number of stars (1 = Beginner, 2 = Intermediate, 3 = Expert)
   randomModeStats?: RandomModeStats;
   randomMode?: boolean; // Persisted preference: Level vs Random mode
+  stateVersion?: number; // For migrations (e.g. question ID shift when adding Level 0)
 }
 
 export interface LevelInfo {

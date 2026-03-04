@@ -23,7 +23,7 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
     <div className="space-y-6 animate-in slide-in-from-right duration-500">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-black text-white flex items-center gap-3">
-          <i className="fas fa-book-open text-indigo-400"></i> {t('history.learningLog')}
+          <i className="fas fa-book-open text-emerald-400"></i> {t('history.learningLog')}
         </h2>
         <button 
           onClick={onBack}
@@ -71,7 +71,7 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
                           <p className="text-slate-200 font-bold px-3 pt-3 pb-1 leading-tight">{prefix}</p>
                         )}
                         <SyntaxHighlighter
-                          language="python"
+                          language="bash"
                           style={oneDark}
                           customStyle={{
                             padding: '0.75rem 1rem',
@@ -93,7 +93,7 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
                     return (
                       <div className="rounded-lg bg-slate-800/50 overflow-hidden">
                         <SyntaxHighlighter
-                          language="python"
+                          language="bash"
                           style={oneDark}
                           customStyle={{
                             padding: '0.75rem 1rem',

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Star Celebration Sound Preview</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      background: linear-gradient(to bottom right, #10b981, #059669);
+      color: white;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+    button:hover { opacity: 0.9; }
+    button:active { transform: scale(0.98); }
+    p { color: #94a3b8; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Star Celebration Sound</h1>
+  <p>Click the button to hear the tune that plays when you earn a star</p>
+  <button onclick="playSound()">Play preview</button>
+
+  <script>
+    async function playSound() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) {
+        alert('Web Audio API not supported');
+        return;
+      }
+
+      const audioContext = new AudioContextClass();
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      const now = audioContext.currentTime;
+      const masterGain = audioContext.createGain();
+
+      masterGain.connect(audioContext.destination);
+      masterGain.gain.setValueAtTime(0.0001, now);
+      masterGain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+      masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.72);
+
+      const scheduleTone = (frequency, startOffset, duration, type, volume = 0.12) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const start = now + startOffset;
+        const end = start + duration;
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, start);
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(volume, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+        osc.connect(gain);
+        gain.connect(masterGain);
+        osc.start(start);
+        osc.stop(end + 0.02);
+      };
+
+      const leadNotes = [
+        { freq: 587.33, at: 0.0, len: 0.07 },   // D5
+        { freq: 739.99, at: 0.08, len: 0.07 },  // F#5
+        { freq: 880.0, at: 0.16, len: 0.08 },   // A5
+        { freq: 1108.73, at: 0.25, len: 0.1 },   // C#6
+        { freq: 1318.51, at: 0.37, len: 0.24 }   // E6
+      ];
+
+      leadNotes.forEach((note) => {
+        scheduleTone(note.freq, note.at, note.len, 'square', 0.07);
+        scheduleTone(note.freq * 0.5, note.at, note.len, 'triangle', 0.035);
+        scheduleTone(note.freq * 1.5, note.at + 0.01, note.len * 0.55, 'triangle', 0.015);
+      });
+
+      scheduleTone(146.83, 0.0, 0.18, 'sawtooth', 0.028);
+      scheduleTone(185.0, 0.18, 0.18, 'sawtooth', 0.028);
+      scheduleTone(220.0, 0.36, 0.24, 'sawtooth', 0.028);
+
+      setTimeout(() => audioContext.close(), 900);
+    }
+  </script>
+</body>
+</html>

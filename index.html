@@ -7,7 +7,7 @@
         // so cached old app (no stars, no random mode) is never served.
         if (typeof window === 'undefined' || window.location.hostname !== 'localhost') return;
         if (!('serviceWorker' in navigator)) return;
-        var key = 'python-exercises-sw-cleared';
+        var key = 'cli-exercises-sw-cleared';
         if (sessionStorage.getItem(key)) return;
         navigator.serviceWorker.getRegistrations().then(function(regs) {
           if (regs.length === 0) return;
@@ -21,14 +21,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Python Exercises Learn v1.1</title>
+    <title>CLI Exercises Learn v1.0</title>
     
     <!-- PWA & iOS Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Python Exercises Learn">
+    <meta name="apple-mobile-web-app-title" content="CLI Exercises Learn">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5968/5968350.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,10 +42,10 @@
             overscroll-behavior-y: contain;
             padding-bottom: env(safe-area-inset-bottom, 0);
         }
-        /* iOS PWA standalone: env(safe-area-inset-top) often 0 - force padding so nav clears status bar */
-        @media (display-mode: standalone) {
+        /* iOS PWA: env(safe-area-inset-top) often 0 - force padding so nav clears status bar (4rem for Dynamic Island) */
+        @media (display-mode: standalone), (display-mode: minimal-ui) {
             body {
-                padding-top: max(3rem, env(safe-area-inset-top, 3rem));
+                padding-top: max(4rem, env(safe-area-inset-top, 4rem));
             }
         }
         .code-font {
@@ -56,8 +56,13 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        /* Flags/Commands code blocks: neutral selection (match dark theme, not green) */
+        .flags-code-block ::selection {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
         .evolution-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
         /* Mobile specific adjustments */
         @media (max-width: 640px) {

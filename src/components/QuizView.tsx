@@ -851,9 +851,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] space-y-6 text-center">
         <div className="relative">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-500"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <i className="fas fa-dna text-indigo-400 animate-pulse"></i>
+            <i className="fas fa-dna text-emerald-400 animate-pulse"></i>
           </div>
         </div>
         <div className="space-y-2">
@@ -870,7 +870,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     <div className="text-center p-12 glass rounded-3xl">
       <p className="text-rose-400 font-bold mb-4">{t('quiz.sequenceError')}</p>
       <p className="text-slate-400 text-sm mb-6">{t('quiz.couldNotRetrieve')}</p>
-      <button onClick={onExit} className="px-6 py-2 bg-indigo-500 rounded-xl font-bold">{t('quiz.returnToHub')}</button>
+      <button onClick={onExit} className="px-6 py-2 bg-emerald-500 rounded-xl font-bold">{t('quiz.returnToHub')}</button>
     </div>
   );
 
@@ -900,7 +900,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
         <div className="flex-1 min-w-0 px-6 overflow-x-auto overflow-y-hidden">
           <div className="flex justify-between items-center gap-6 text-[10px] font-black tracking-[0.2em] mb-1.5 min-w-max">
             <div className="flex items-center gap-3 shrink-0">
-              <span className="text-indigo-400">
+              <span className="text-emerald-400">
                 {currentQuestion.subLevel === 'Beginner' && t('subLevels.beginnerCaps')}
                 {currentQuestion.subLevel === 'Intermediate' && t('subLevels.intermediateCaps')}
                 {currentQuestion.subLevel === 'Expert' && t('subLevels.expertCaps')}
@@ -924,23 +924,23 @@ export const QuizView: React.FC<QuizViewProps> = ({
             </div>
             <div className="flex gap-4 items-center shrink-0">
               {liveEvolutionScore !== null && (
-                <span className="text-indigo-400">
+                <span className="text-emerald-400">
                   {t('quiz.evolutionPoints')}: {liveEvolutionScore}
                 </span>
               )}
-              <span className="text-indigo-400">
+              <span className="text-emerald-400">
                 {formatTranslation(t('quiz.mutationOf'), { current: currentIndex + 1, total: questions.length })}
               </span>
               <span className="text-slate-400">{Math.round(((currentIndex + 1) / questions.length) * 100)}%</span>
             </div>
           </div>
-          <ProgressBar current={currentIndex + 1} total={questions.length} colorClass="bg-indigo-500" />
+          <ProgressBar current={currentIndex + 1} total={questions.length} colorClass="bg-emerald-500" />
         </div>
       </div>
 
       <div className="glass rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl relative overflow-hidden">
         <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] border border-indigo-500/20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-[0.2em] border border-emerald-500/20">
             {currentQuestion.concept}
           </div>
           <button
@@ -976,7 +976,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                     {/* Code snippet below with proper formatting */}
                     <div className="overflow-x-auto flex-1">
                       <SyntaxHighlighter
-                        language="python"
+                        language="bash"
                         style={oneDark}
                         customStyle={{
                           padding: '1rem',
@@ -1006,7 +1006,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                 return (
                   <div className="overflow-x-auto flex-1">
                     <SyntaxHighlighter
-                      language="python"
+                      language="bash"
                       style={oneDark}
                       customStyle={{
                         padding: '1rem',
@@ -1047,7 +1047,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
             </div>
           )}
           {currentQuestion.options.map((option, idx) => {
-            let colorClass = "bg-slate-800/50 border-white/5 hover:border-indigo-500/50 hover:bg-slate-800";
+            let colorClass = "bg-slate-800/50 border-white/5 hover:border-emerald-500/50 hover:bg-slate-800";
             if (isAnswered) {
               if (idx === currentQuestion.correct_option_index) {
                 colorClass = "bg-emerald-500/20 border-emerald-500 text-emerald-400 shadow-lg shadow-emerald-500/10";
@@ -1067,7 +1067,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
               >
                 <div className="flex items-center gap-4">
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors ${isAnswered && idx === currentQuestion.correct_option_index ? 'bg-emerald-500 text-white' :
-                    isAnswered && idx === selectedOption ? 'bg-rose-500 text-white' : 'bg-white/5 text-slate-400 group-hover:bg-indigo-500 group-hover:text-white'
+                    isAnswered && idx === selectedOption ? 'bg-rose-500 text-white' : 'bg-white/5 text-slate-400 group-hover:bg-emerald-500 group-hover:text-white'
                     }`}>
                     {String.fromCharCode(65 + idx)}
                   </div>
@@ -1088,23 +1088,23 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
         {isAnswered && (
           <div className="animate-in slide-in-from-bottom-4 duration-500 space-y-6 pt-4">
-            <div className="p-6 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
+            <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
               {currentQuestion.detailedExplanation ? (
                 <button
                   onClick={() => setShowDetailedExplanation(!showDetailedExplanation)}
-                  className="w-full flex items-center justify-between gap-2 mb-3 text-indigo-400 hover:text-indigo-300 transition-colors group cursor-pointer"
+                  className="w-full flex items-center justify-between gap-2 mb-3 text-emerald-400 hover:text-emerald-300 transition-colors group cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
                     <i className="fas fa-lightbulb text-sm"></i>
                     <h4 className="font-black text-[10px] uppercase tracking-[0.2em]">{t('idLog.codonExplanation')}</h4>
-                    <span className="text-[9px] text-indigo-500/70 font-normal normal-case">
+                    <span className="text-[9px] text-emerald-500/70 font-normal normal-case">
                       {showDetailedExplanation ? `(${t('quiz.hideExplanation')})` : `(${t('quiz.showExplanation')})`}
                     </span>
                   </div>
                   <i className={`fas fa-chevron-${showDetailedExplanation ? 'up' : 'down'} text-xs transition-transform group-hover:scale-110`}></i>
                 </button>
               ) : (
-                <div className="flex items-center gap-2 mb-3 text-indigo-400">
+                <div className="flex items-center gap-2 mb-3 text-emerald-400">
                   <i className="fas fa-lightbulb text-sm"></i>
                   <h4 className="font-black text-[10px] uppercase tracking-[0.2em]">{t('idLog.codonExplanation')}</h4>
                 </div>
@@ -1118,7 +1118,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                   return currentQuestion.explanation.match(/\b(def|print|for|if|while|class|import)\b/) ? (
                     <div className="overflow-x-auto bg-slate-900 rounded-lg">
                       <SyntaxHighlighter
-                        language="python"
+                        language="bash"
                         style={oneDark}
                         customStyle={{
                           padding: '1rem',
@@ -1147,9 +1147,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
                   );
                 })()}
                 {showDetailedExplanation && currentQuestion.detailedExplanation && (
-                  <div className="animate-in slide-in-from-top-4 duration-300 pt-4 border-t border-indigo-500/20 space-y-6">
+                  <div className="animate-in slide-in-from-top-4 duration-300 pt-4 border-t border-emerald-500/20 space-y-6">
                     <div className="space-y-3">
-                      <h5 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                      <h5 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] flex items-center gap-2">
                         <i className="fas fa-graduation-cap text-xs"></i>
                         {t('glossary.inDepthDescription')}
                       </h5>
@@ -1180,7 +1180,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                       const apps = (tRaw(`quiz.codeVersatility.${appsKey}`) as string[] | undefined) || [];
                       const bestPractices = (tRaw(`quiz.codeVersatility.${bestKey}`) as string[] | undefined) || [];
                       return (
-                        <div className="space-y-4 pt-4 border-t border-indigo-500/20">
+                        <div className="space-y-4 pt-4 border-t border-emerald-500/20">
                           <h5 className="text-[10px] font-black text-amber-400 uppercase tracking-[0.2em] flex items-center gap-2">
                             <i className="fas fa-code-branch text-xs"></i>
                             {t('quiz.codeVersatility.title')}
@@ -1193,8 +1193,8 @@ export const QuizView: React.FC<QuizViewProps> = ({
                               </h6>
                               <p className="text-slate-300 text-xs leading-relaxed">{versatilityText}</p>
                             </div>
-                            <div className="bg-slate-900/50 rounded-xl p-4 border border-indigo-500/20">
-                              <h6 className="text-[9px] font-bold text-indigo-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <div className="bg-slate-900/50 rounded-xl p-4 border border-emerald-500/20">
+                              <h6 className="text-[9px] font-bold text-emerald-300 uppercase tracking-wider mb-2 flex items-center gap-2">
                                 <i className="fas fa-globe text-[10px]"></i>
                                 {t('quiz.codeVersatility.realWorldApplications')}
                               </h6>
@@ -1222,7 +1222,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
             <button
               onClick={handleNext}
-              className="w-full py-5 bg-indigo-500 hover:bg-indigo-600 rounded-2xl font-black text-lg text-white transition-all transform active:scale-95 shadow-2xl shadow-indigo-500/30 flex items-center justify-center gap-3"
+              className="w-full py-5 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-black text-lg text-white transition-all transform active:scale-95 shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3"
             >
               {currentIndex === questions.length - 1 ? t('quiz.finishEvolution') : t('hub.continueMutation')}
               <i className="fas fa-arrow-right text-sm"></i>

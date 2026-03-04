@@ -1,12 +1,50 @@
-# Python Exercises Learn — Development Planning & Roadmap
+# CLI Exercises Learn — Development Planning & Roadmap
 
 > An iterative planning document for evolving the app. **Platform**: Mobile-first (PWA). Prioritise touch, small screens, on-the-go use. Add ideas, refine them, and track what’s done vs. what’s next.
 
 ---
 
-## Next Task (TBD)
+## CLI Transformation (Current Focus)
 
-Random Mode and French translations are complete. See Improvement Ideas below for possible next work.
+**Goal**: Transform from Python Exercises to **Terminal & CLI Commands Learning App**. Same layout, evolution system, and bilingual (EN/FR) parity. Replace all Python content with CLI/terminal questions.
+
+### Topic-to-Level Mapping
+
+| Level | Persona | Domain | Topics (sample) |
+|-------|---------|--------|------------------|
+| 1 | Plankton | Terminal & Shell Foundations | Terminal, shell, bash/zsh, PATH, exit codes, history, globbing, quoting, aliases |
+| 2 | Shrimp | Filesystem & Storage | FHS, paths, inodes, links, permissions, ownership, mount, disk usage |
+| 3 | Crab | File & Text Processing | cat, less, head, tail, wc, sort, uniq, cut, grep, sed, awk, redirection, pipes |
+| 4 | Small Fish | Process Management | ps, top, kill, nice, cron, daemons, systemd, load, memory, swap |
+| 5 | Octopus | Package Management | apt, dnf, brew, snap, flatpak, make, configure |
+| 6 | Seal | Networking Basics | TCP/IP, IP, ports, DNS, ping, curl, wget, ssh, scp, rsync |
+| 7 | Dolphin | Advanced Networking | ip, iptables, nftables, bridges, VLANs, HTTP, REST, load balancing |
+| 8 | Shark | Security & Hardening | Users, PAM, SSH hardening, firewall, SELinux, GPG, encryption |
+| 9 | Whale | Hacking & Pentest Concepts | Recon, enumeration, Metasploit, privilege escalation, XSS, SQLi, Hashcat |
+| 10 | God Whale | Containers, Git, Boot, Kernel, Philosophy | Docker, Kubernetes, Git, boot process, syscalls, Unix philosophy |
+
+### CLI Enhancement Suggestions
+
+1. **Topic-based navigation**: Optional filter by topic (e.g. "grep", "permissions") within a level.
+2. **Command reference panel**: Replace MethodsView with a searchable CLI command reference (man-style summaries).
+3. **Practical exercises**: Add "fill-in-the-blank" or "order the command" formats for variety.
+4. **Platform notes**: Tag questions as Linux/macOS where behavior differs (e.g. `sed -i`).
+5. **Cheat sheet export**: Allow users to export a personal cheat sheet from completed levels.
+6. **Offline-first**: Ensure glossary and questions load from cache for offline phone use.
+7. **Accessibility**: Screen reader labels, focus management, font-size option.
+8. **Monetization**: Premium tier for advanced topics (Hacking, Containers) or ad-free experience.
+
+### Implementation Phases
+
+1. **Phase 0**: Update ps.md (blank + EN/FR rule), update planning.md — DONE
+2. **Phase 1**: Branding (index.html, package.json, manifest, translations, localStorage key)
+3. **Phase 2**: Replace glossary (glossary.md, GLOSSARY, glossaryTranslations)
+4. **Phase 3**: Update LEVELS in constants.ts with CLI concepts/descriptions
+5. **Phase 4**: Create Level 1 CLI questions (100 Beginner) and wire into questionsBank
+6. **Phase 5**: Change syntax highlighting to bash; adapt MethodsView/FlowView
+7. **Phase 6**: Add French translations for Level 1 (short + detailed)
+8. **Phase 7**: Expand to full 3000 questions across all levels (iterative)
+9. **Phase 8**: Update validation scripts; test PWA on phone
 
 ---
 

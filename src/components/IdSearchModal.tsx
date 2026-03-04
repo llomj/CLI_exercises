@@ -199,7 +199,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
       <div className="glass rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-black text-white flex items-center gap-3">
-            <i className="fas fa-hashtag text-indigo-400"></i> {t('idSearch.searchById')}
+            <i className="fas fa-hashtag text-emerald-400"></i> {t('idSearch.searchById')}
           </h2>
           <button
             onClick={onClose}
@@ -217,13 +217,13 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
               onChange={(e) => setIdInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t('idSearch.enterId')}
-              className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
+              className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               min="1"
               max="3000"
             />
             <button
               onClick={handleSearch}
-              className="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl font-bold transition-all"
+              className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all"
             >
               <i className="fas fa-search mr-2"></i>{t('idSearch.search')}
             </button>
@@ -239,7 +239,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
             <div className="space-y-4 p-6 bg-white/5 rounded-2xl border border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg text-xs font-bold">
+                  <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-bold">
                     ID: {question.id}
                   </span>
                   <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs font-bold">
@@ -271,7 +271,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                             )}
                             <div className="overflow-x-auto flex-1">
                               <SyntaxHighlighter
-                                language="python"
+                                language="bash"
                                 style={oneDark}
                                 customStyle={{
                                   padding: '1rem',
@@ -300,7 +300,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                         return (
                           <div className="overflow-x-auto flex-1">
                             <SyntaxHighlighter
-                              language="python"
+                              language="bash"
                               style={oneDark}
                               customStyle={{
                                 padding: '1rem',
@@ -370,7 +370,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                   </p>
                   {question.detailedExplanation && (
                     <details className="mt-3">
-                      <summary className="cursor-pointer text-sm text-indigo-400 hover:text-indigo-300 font-bold">
+                      <summary className="cursor-pointer text-sm text-emerald-400 hover:text-emerald-300 font-bold">
                         {t('idSearch.showDetailedExplanation')}
                       </summary>
                       <p className="mt-2 text-sm text-slate-400 leading-relaxed whitespace-pre-line">
