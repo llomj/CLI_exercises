@@ -415,8 +415,8 @@ const App: React.FC = () => {
           onShowFlags={() => setShowFlags(true)}
           onShowFlow={() => setShowFlow(true)}
           onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
-          onShowIdLog={view === 'hub' ? () => setShowIdLog(true) : undefined}
-          onShowLearningLog={view === 'hub' ? () => setView('log') : undefined}
+          onShowIdLog={() => setShowIdLog(true)}
+          onShowLearningLog={() => setView('log')}
           onShowOperations={view === 'quiz' ? () => setShowOperations(true) : undefined}
           onShowLevelSelector={() => setShowLevelSelector(true)}
           onToggleLanguage={toggleLanguage}

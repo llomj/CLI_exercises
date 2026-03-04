@@ -191,6 +191,31 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
+  // Keep ID Log and Learning Log accessible from settings outside hub too
+  if (view !== 'hub') {
+    if (onShowIdLog) {
+      menuItems.push({
+        icon: 'fa-list',
+        label: t('settings.idLog'),
+        onClick: () => {
+          onShowIdLog();
+          onClose();
+        }
+      });
+    }
+    if (onShowLearningLog) {
+      menuItems.push({
+        icon: 'fa-book-open',
+        label: t('app.learningLog'),
+        onClick: () => {
+          onShowLearningLog();
+          onClose();
+        },
+        active: view === 'log'
+      });
+    }
+  }
+
   // Common items (Methods, Flags and Flow when on quiz/log - always in settings)
   if ((onShowMethods || onShowFlags || onShowFlow) && (view === 'quiz' || view === 'log')) {
     if (onShowMethods) {
