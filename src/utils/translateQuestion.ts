@@ -1169,9 +1169,19 @@ export const translateOptionText = (text: string, language: string): string => {
   };
   for (const [en, fr] of Object.entries(wordMap)) {
     const esc = en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const re = new RegExp(`\\b${esc}\\b`, 'g');
+    const re = new RegExp(`\\b${esc}\\b`, 'gi');
     result = result.replace(re, (match) => (match[0] === match[0].toUpperCase() ? fr.charAt(0).toUpperCase() + fr.slice(1) : fr));
   }
+
+  // Final fallback for any natural-language option text still containing common English words.
+  // This keeps A/B/C/D choices in French mode even when a phrase was not covered above.
+  if (
+    /\b(the|a|an|and|or|with|without|for|from|to|of|what|which|show|shows|list|create|delete|copy|move|running|current|directory|file|command|output|error|user|system)\b/i.test(result) &&
+    /[A-Za-z]/.test(result)
+  ) {
+    result = translateQuestionText(result, 'fr');
+  }
+
   return result;
 };
 
