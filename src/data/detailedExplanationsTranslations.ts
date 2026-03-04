@@ -9,359 +9,270 @@ import { containsEnglishProse, normalizeFrenchProse } from '../utils/frenchText'
  */
 
 export const DETAILED_EXPLANATIONS_FR: Record<number, string> = {
-  1: `La fonction type() retourne le type (classe) de tout objet en Python. Lorsque vous appelez type(42), Python identifie que 42 est un littéral entier. En Python, les entiers sont des objets de la classe int intégrée.
-
-Concepts clés :
-• Les entiers (int) représentent les nombres entiers : -3, 0, 42, 1000
-• Contrairement à certains langages, les entiers Python ont une précision illimitée
-• type() retourne le format <class 'type_name'>
-• C'est fondamental pour comprendre la nature orientée objet de Python où tout est un objet
-
-Exemple : type(42) retourne <class 'int'> car 42 est un littéral entier. Vous pouvez vérifier : isinstance(42, int) retourne True.`,
-  2: `Les nombres à virgule flottante en Python sont représentés par le type float. Tout nombre avec un point décimal est automatiquement un float, même s'il s'agit d'un nombre entier comme 3.0.
-
-Concepts clés :
-• float représente les nombres réels (décimaux) : 3.14, 2.0, -0.5, 1e10
-• Les floats utilisent la représentation à double précision (64 bits)
-• La division produit toujours un float en Python 3 : 10 / 2 = 5.0
-• La précision des floats peut causer des arrondis : 0.1 + 0.2 ≈ 0.30000000000000004
-
-Exemple : type(3.14) retourne <class 'float'>. Même 3.0 est un float, pas un int. Pour créer un entier à partir d'un float, utilisez int(3.14) qui tronque à 3.`,
-  3: `Les chaînes en Python sont des séquences de caractères entre guillemets. Python prend en charge les guillemets simples ('hello') et doubles ("hello") - ils sont identiques. Les chaînes sont des séquences immuables de caractères Unicode.
-
-Concepts clés :
-• str (string) représente les données texte
-• Les chaînes sont immuables - vous ne pouvez pas les modifier sur place
-• Les chaînes supportent l'indexation : "hello"[0] = 'h'
-• Les chaînes supportent le découpage : "hello"[1:3] = 'el'
-• Les triples guillemets (''' ou """) créent des chaînes multi-lignes
-• Python n'a pas de type 'char' séparé - les caractères uniques sont des chaînes de longueur 1
-
-Exemple : type("hello") retourne <class 'str'>. Les chaînes sont l'un des types de données les plus puissants de Python avec de nombreuses méthodes comme .upper(), .split(), .find(), etc.`,
-  4: `Les valeurs booléennes en Python sont représentées par le type bool, qui est en fait une sous-classe de int. True et False sont les deux seules valeurs booléennes, et ce sont en fait des instances de int (True == 1 et False == 0).
-
-Concepts clés :
-• bool représente les valeurs de vérité : True et False
-• bool est une sous-classe de int : isinstance(True, int) retourne True
-• True équivaut à 1, False équivaut à 0 dans les contextes numériques
-• De nombreuses valeurs sont "truthy" (évaluées à True) ou "falsy" (évaluées à False)
-• Valeurs falsy : False, None, 0, "", [], {}, (), set()
-• Tout le reste est truthy
-
-Exemple : type(True) retourne <class 'bool'>. Intéressant : bool(1) est True et bool(0) est False, montrant la relation entre les bools et les entiers.`,
-  5: `None est la valeur null de Python - elle représente l'absence de valeur. None est un objet singleton (il n'y a qu'un seul objet None en Python) et possède son propre type appelé NoneType.
-
-Concepts clés :
-• None représente "aucune valeur" ou "rien"
-• NoneType est le type de None - il n'existe qu'un seul objet None
-• None est falsy : bool(None) est False
-• Les fonctions sans return retournent implicitement None
-• Utilisez None pour indiquer des valeurs manquantes ou non définies
-• None != False, None != 0, None != "" - c'est une valeur distincte
-• Usage courant : les paramètres optionnels ont None par défaut
-
-Exemple : type(None) retourne <class 'NoneType'>. None est souvent utilisé comme valeur par défaut : def func(x=None): pass. Pour vérifier None, utilisez 'is' : if x is None: (pas x == None).`,
-  6: `Les listes sont des séquences ordonnées et mutables d'éléments entre crochets. Les listes peuvent contenir des éléments de tout type, y compris des types mélangés. Elles sont l'une des structures de données les plus polyvalentes de Python.
-
-Concepts clés :
-• Les listes sont des collections ordonnées : les éléments ont un ordre défini
-• Les listes sont mutables : vous pouvez les modifier après création
-• Les listes peuvent contenir des doublons
-• Les listes sont hétérogènes : [1, "hello", 3.14, [1,2]] est valide
-• Les listes supportent l'indexation et le découpage comme les chaînes
-• Méthodes courantes : .append(), .extend(), .insert(), .remove(), .pop()
-• Liste vide [] est falsy ; listes non vides sont truthy
-
-Exemple : type([]) retourne <class 'list'>. Les listes se créent avec [] ou list(). Vous pouvez accéder aux éléments : [1, 2, 3][0] = 1. Les listes sont mutables : my_list = [1, 2]; my_list.append(3) change my_list en [1, 2, 3].`,
-  7: `Les tuples sont des séquences ordonnées et immuables entre parenthèses. Comme les listes, ils peuvent contenir des éléments de tout type, mais contrairement aux listes, ils ne peuvent pas être modifiés après création. Cette immutabilité les rend hashables (utilisables comme clés de dictionnaire).
-
-Concepts clés :
-• Les tuples sont des collections ordonnées comme les listes
-• Les tuples sont immuables : une fois créés, impossible de les modifier
-• Les tuples se créent avec () ou tuple()
-• Tuple vide () nécessite des parenthèses : () pas juste ,
-• Tuple à un élément nécessite une virgule finale : (1,) pas (1)
-• Les tuples sont plus rapides que les listes pour l'itération
-• Les tuples peuvent être des clés de dictionnaire (les listes ne peuvent pas)
-• Déballage de tuple : a, b = (1, 2)
-
-Exemple : type(()) retourne <class 'tuple'>. Les parenthèses vides () créent un tuple vide. Pour un tuple à un élément, vous avez besoin de (1,) - la virgule est requise, sinon (1) est juste le nombre 1.`,
-  8: `Les dictionnaires sont des collections non ordonnées de paires clé-valeur. Un {} vide crée un dictionnaire vide. Les dictionnaires sont l'implémentation Python des tables de hachage, permettant des recherches très rapides par clé.
-
-Concepts clés :
-• Les dictionnaires stockent des paires clé-valeur : {'name': 'Alice', 'age': 30}
-• Les clés doivent être immuables (chaînes, nombres, tuples)
-• Les valeurs peuvent être de tout type
-• Les dictionnaires sont mutables et non ordonnés (Python 3.7+ maintient l'ordre d'insertion)
-• Dict vide {} est falsy ; dicts non vides sont truthy
-• Accès aux valeurs : my_dict['key'] ou my_dict.get('key')
-• Méthodes : .keys(), .values(), .items()
-
-Exemple : type({}) retourne <class 'dict'>. Les accolades vides {} créent un dictionnaire vide. Pour vérifier si vide : if not my_dict: print("empty"). Les dictionnaires sont incroyablement utiles pour représenter des données structurées et des mappages.`,
-  9: `Les ensembles sont des collections non ordonnées d'éléments uniques. Quand vous utilisez des accolades avec des valeurs (pas des paires clé-valeur), Python crée un ensemble. Les ensembles sont utiles pour tester l'appartenance, supprimer les doublons et les opérations mathématiques sur ensembles.
-
-Concepts clés :
-• Les ensembles ne contiennent que des éléments uniques - les doublons sont automatiquement supprimés
-• Les ensembles sont non ordonnés (pas d'indexation)
-• Les ensembles sont mutables (on peut ajouter/supprimer des éléments)
-• Les ensembles supportent : union, intersection, différence
-• Les ensembles utilisent des tables de hachage pour des tests d'appartenance en O(1)
-• L'ensemble vide doit être créé avec set(), pas {} (c'est un dict)
-• Les ensembles ne peuvent contenir que des éléments hashables (immuables)
-
-Exemple : type({1, 2, 3}) retourne <class 'set'>. Notez la différence : {} est un dict, {1, 2, 3} est un ensemble. Les ensembles suppriment automatiquement les doublons : {1, 1, 2, 2} devient {1, 2}. Utilisez les ensembles pour des tests d'appartenance rapides : if item in my_set: (très rapide).`,
-  10: `Le préfixe b devant une chaîne littérale crée un objet bytes - une séquence immuable d'octets (entiers de 0-255). Les bytes représentent des données binaires, tandis que les chaînes représentent du texte. En Python 3, il y a une distinction claire entre texte (str) et données binaires (bytes).
-
-Concepts clés :
-• bytes représente les données binaires (séquences d'octets 0-255)
-• Les objets bytes sont immuables comme les chaînes
-• Le préfixe b crée des bytes à partir d'une chaîne ASCII : b'hello'
-• Utilisez bytes pour les données binaires : I/O fichier, protocoles réseau, formats binaires
-• str pour le texte ; bytes pour les données binaires
-• Convertir str en bytes : "hello".encode() → b'hello'
-• Convertir bytes en str : b'hello'.decode() → "hello"
-• bytes n'accepte que l'ASCII sous forme littérale
-
-Exemple : type(b'hello') retourne <class 'bytes'>. Les bytes sont essentiels pour les fichiers binaires, la communication réseau et la sérialisation.`,
-  11: `Les noms de variables Python doivent suivre des règles spécifiques : ils peuvent contenir des lettres (a-z, A-Z), des chiffres (0-9) et des underscores (_), mais ne peuvent pas commencer par un chiffre. 'my_variable' respecte parfaitement toutes ces règles.
-
-Règles pour les identifiants Python valides :
-• Peut contenir lettres (a-z, A-Z), chiffres (0-9), underscores (_)
-• Ne peut pas commencer par un chiffre
-• Sensible à la casse : myVar, MyVar et MYVAR sont différents
-• Ne peut pas être un mot-clé Python (if, def, class, etc.)
-• Pas d'espaces ni de caractères spéciaux sauf underscore
-• Pas de limite de longueur (mais restez raisonnable !)
-
-Exemple : my_variable = 42 est valide. Ce style (minuscules avec underscores) s'appelle "snake_case" et est recommandé par PEP 8 (le guide de style Python) pour les noms de variables.`,
-  12: `Les identifiants Python ne peuvent pas commencer par un chiffre. Cette règle évite l'ambiguïté entre noms de variables et littéraux numériques. Si Python permettait des noms commençant par un chiffre, il serait impossible de distinguer la variable 2variable du nombre 2 suivi de la variable variable.
-
-Pourquoi cette règle existe :
-• Évite la confusion avec les littéraux numériques
-• Rend l'analyse syntaxique non ambiguë : 2var est-il une variable ou "2" + "var" ?
-• Standard dans la plupart des langages
-• Rend le code plus lisible
-
-Solutions de contournement :
-• Utilisez un préfixe lettre : two_variable, var2, number2_variable
-• Utilisez des noms descriptifs : second_variable, variable_2
-
-Exemple : 2variable = 5 lève SyntaxError. Utilisez variable2 ou two_variable à la place.`,
-  13: `Les traits d'union (-) ne sont pas autorisés dans les noms de variables Python car le trait d'union est l'opérateur de soustraction. Python interpréterait my-variable comme "my" moins "variable" (ce qui causerait un NameError sauf si les deux sont définis).
-
-Séparateurs autorisés :
-• Underscore (_) : my_variable ✓
-• CamelCase : myVariable ✓
-• PascalCase : MyVariable ✓
-
-Non autorisés :
-• Trait d'union : my-variable ✗ (interprété comme soustraction)
-• Espace : my variable ✗ (erreur de syntaxe)
-• Point : my.variable ✗ (accès d'attribut, pas un nom de variable)
-
-Exemple : my-variable = 5 lève SyntaxError car Python voit "my" - "variable". Utilisez my_variable ou myVariable à la place.`,
-  14: `'class' est l'un des mots-clés réservés de Python (aussi appelés mots réservés). Les mots-clés ont une signification spéciale et ne peuvent pas être utilisés comme noms de variables, fonctions ou classes. Ils font partie de la syntaxe Python.
-
-Mots-clés Python (ne peuvent pas être utilisés comme identifiants) :
-• Contrôle de flux : if, else, elif, for, while, break, continue, pass, return
-• Fonctions/classes : def, class, lambda, yield
-• Logique : and, or, not, in, is
-• Gestion d'exceptions : try, except, finally, raise, assert
-• Import : import, from, as
-• Vérification de type : isinstance, type
-• Et autres : del, global, nonlocal, with, async, await, etc.
-
-Pour vérifier : import keyword; print(keyword.kwlist) affiche tous les mots-clés.
-
-Exemple : class = 5 lève SyntaxError. Utilisez class_name, cls ou klass à la place.`,
-  15: `'def' est un mot-clé Python utilisé pour définir des fonctions. Il ne peut pas être utilisé comme nom de variable car il a un rôle syntaxique spécifique. Quand Python voit 'def', il s'attend à une définition de fonction.
-
-Le mot-clé 'def' :
-• Utilisé pour définir des fonctions : def my_function(): pass
-• Fait partie de la syntaxe Python, pas une fonction en soi
-• Ne peut pas être réassigné ou utilisé comme identifiant
-• Signifie "define" - indique le début d'une définition de fonction
-
-Pourquoi les mots-clés sont réservés :
-• Évite les conflits avec la syntaxe du langage
-• Assure que le code est non ambigu
-• Maintient la cohérence du langage
-
-Exemple : def = 5 lève SyntaxError. Utilisez func, definition ou define_func si vous avez besoin d'un nom de variable.`,
-  16: `'if' est un mot-clé Python pour les instructions conditionnelles. Il ne peut pas être utilisé comme nom de variable car il fait partie de la syntaxe de flux de contrôle.
-
-L'instruction 'if' :
-• Utilisée pour l'exécution conditionnelle : if condition: code
-• Peut être suivie de elif et else
-• Évalue la vérité de la condition
-• L'une des structures de contrôle les plus fondamentales de Python
-
-Alternatives courantes si vous avez besoin d'un nom de variable :
-• condition, check, flag, state
-• Utilisez des noms descriptifs : is_valid, has_permission
-
-Exemple : if = 5 lève SyntaxError. Pour stocker une condition : condition = True ou check = False à la place.`,
-  17: `Les noms de variables Python sont sensibles à la casse et peuvent commencer par n'importe quelle lettre (majuscule ou minuscule). 'MyVariable' suit la convention PascalCase, qui est valide mais généralement réservée aux noms de classes selon PEP 8.
-
-Conventions de nommage en Python (PEP 8) :
-• snake_case : pour les variables et fonctions (my_variable, calculate_total)
-• PascalCase : pour les classes (MyClass, DataProcessor)
-• UPPER_CASE : pour les constantes (PI, MAX_SIZE)
-• _leading_underscore : usage privé/interne (_internal_method)
-• __double_underscore__ : name mangling ou méthodes spéciales (__init__)
-
-Sensibilité à la casse :
-• myVariable, MyVariable, MYVARIABLE sont tous différents
-• Python est sensible à la casse : age ≠ Age ≠ AGE
-
-Exemple : MyVariable = 42 est valide. Cependant, PEP 8 recommande d'utiliser snake_case pour les variables (my_variable) et de réserver PascalCase pour les classes.`,
-  18: `Un underscore initial est une convention Python indiquant qu'un nom est destiné à un usage interne. C'est une syntaxe valide et signale aux autres programmeurs (et outils) que ce nom doit être traité comme non public.
-
-Conventions underscore :
-• _single_leading : convention "usage interne" (non imposée par Python)
-• __double_leading : déclenche le name mangling dans les classes (spécifique à la classe)
-• __double_leading_trailing__ : méthodes spéciales Python (__init__, __str__)
-• single_trailing_ : évite les conflits avec les mots-clés (class_ au lieu de class)
-
-Convention de visibilité :
-• _private_var suggère "ne pas utiliser en dehors du module/classe"
-• Ce n'est pas vraiment privé - Python n'a pas de vraie notion de confidentialité
-• Plutôt un contrat entre développeurs
-• Contrôles d'import : from module import * n'importe pas les noms _*
-
-Exemple : _private = 42 est valide. C'est une convention, pas une règle - cela indique aux autres développeurs "usage interne, utilisez à vos risques".`,
-  19: `Les noms avec doubles underscores avant et après (__special__) sont réservés aux méthodes et attributs spéciaux de Python. Techniquement utilisables, c'est fortement déconseillé car cela fait partie du système des "magic methods".
-
-Méthodes spéciales (magic methods) :
-• __init__ : constructeur, appelé à la création de l'objet
-• __str__ : représentation en chaîne, utilisée par str() et print()
-• __repr__ : représentation pour développeurs, utilisée par repr()
-• __len__ : longueur, utilisée par len()
-• __add__ : opérateur d'addition, utilisé par +
-• __eq__ : égalité, utilisé par ==
-• Et bien d'autres...
-
-Notes importantes :
-• Ce sont des noms de méthodes, pas de variables
-• Python les appelle automatiquement dans certains contextes
-• Ne créez pas de variables avec ces noms sans en comprendre les conséquences
-• Les utiliser pourrait interférer avec les mécanismes internes de Python
-
-Exemple : __special__ = 42 est techniquement valide mais dangereux. Cela pourrait interférer avec le name mangling ou la résolution des méthodes spéciales de Python.`,
-  20: `Les espaces ne sont pas autorisés dans les identifiants Python car ils servent à séparer les tokens du langage. Python utilise les espaces (et tabulations) pour l'indentation et la séparation des tokens, donc inclure des espaces dans les noms rendrait l'analyse impossible.
-
-Pourquoi les espaces ne sont pas autorisés :
-• Les espaces servent à l'indentation (la façon dont Python groupe le code)
-• Les espaces séparent les tokens : if x > 5 (espaces séparent 'if', 'x', '>', '5')
-• Causeraient une ambiguïté d'analyse
-• Rendraient le code illisible et impossible à parser
-
-Solutions :
-• Utilisez l'underscore : variable_name
-• Utilisez le CamelCase : variableName
-• Utilisez des mots descriptifs : variablename (déconseillé si peu clair)
-
-Exemple de séparation des tokens :
-• variable name = 5 serait parsé comme : variable, name, =, 5
-• Python verrait deux identifiants distincts et lèverait SyntaxError
-
-Exemple : variable name = 5 lève SyntaxError. Utilisez variable_name = 5 ou variableName = 5 à la place.`,
-  21: `La fonction len() retourne le nombre d'éléments dans une séquence ou une collection. Pour les chaînes, elle compte chaque caractère, y compris espaces, ponctuation et caractères spéciaux. C'est l'une des fonctions intégrées les plus utilisées de Python.
-
-Comment len() fonctionne :
-• len(string) compte les caractères : len("hello") = 5
-• Compte tous les caractères : len("a b") = 3 (inclut l'espace)
-• Fonctionne sur beaucoup de types : listes, tuples, dicts, sets, chaînes
-• Retourne un entier (0 ou positif)
-• Lève TypeError pour les types non-séquence (comme int)
-
-Visualisation de l'indexation des chaînes :
-"hello" a les indices : h(0), e(1), l(2), l(3), o(4)
-Longueur = 5, indices valides : 0-4
-
-Exemple : len("hello") retourne 5. Note : len("") retourne 0 (chaîne vide). Aussi : len("Python!") = 7 (inclut le point d'exclamation).`,
-  22: `L'opérateur + effectue la concaténation de chaînes en Python, les joignant bout à bout. Il n'ajoute pas automatiquement d'espaces - les chaînes sont jointes telles quelles, sans séparateur sauf si vous en fournissez un explicitement.
-
-Concaténation de chaînes :
-• L'opérateur + joint les chaînes : "Hello" + "World" = "HelloWorld"
-• Crée une nouvelle chaîne (les chaînes sont immuables)
-• Pas d'espacement automatique - vous devez ajouter les espaces manuellement
-• Peut concaténer plusieurs chaînes : "A" + "B" + "C" = "ABC"
-• + ne fonctionne qu'avec des chaînes (convertir les autres types d'abord)
-
-Pour ajouter des espaces :
-• "Hello" + " " + "World" = "Hello World"
-• "Hello " + "World" = "Hello World" (espace après la première chaîne)
-• "Hello" + " World" = "Hello World" (espace avant la deuxième chaîne)
-
-Alternatives :
-• Méthode join() : " ".join(["Hello", "World"]) = "Hello World"
-• f-strings : f"{'Hello'} {'World'}" = "Hello World"
-
-Exemple : "Hello" + "World" donne "HelloWorld" (pas d'espace). Pour un espace : "Hello" + " " + "World" ou "Hello " + "World".`,
-  23: `L'opérateur * peut multiplier une chaîne par un entier, répétant la chaîne le nombre de fois spécifié. C'est pratique pour créer des motifs répétés ou du remplissage.
-
-Multiplication de chaînes :
-• string * integer répète la chaîne
-• "Hi" * 3 = "HiHiHi" (chaîne répétée 3 fois)
-• integer * string fonctionne pareil : 3 * "Hi" = "HiHiHi"
-• string * 0 = "" (chaîne vide)
-• string * nombre négatif = "" (chaîne vide)
-• Ne fonctionne qu'avec des entiers (pas des floats)
-
-Cas d'usage courants :
-• Créer des séparateurs : "-" * 50 crée une ligne de tirets
-• Remplissage : " " * 10 crée 10 espaces
-• Motifs : "ab" * 3 = "ababab"
-• Mise en forme visuelle dans la sortie
-
-Important : string * string ne fonctionne pas (lève TypeError). Vous ne pouvez multiplier les chaînes que par des entiers.
-
-Exemple : "Hi" * 3 donne "HiHiHi". Aussi : 5 * "=" = "=====" (utile pour créer des séparateurs visuels).`,
-  24: `Python utilise l'indexation à partir de zéro, ce qui signifie que le premier caractère a l'index 0, pas 1. C'est cohérent pour toutes les séquences Python (listes, tuples, chaînes). Comprendre l'indexation à partir de zéro est fondamental en programmation Python.
-
-Indexation à partir de zéro :
-• Premier caractère à l'index 0 : "Python"[0] = 'P'
-• Deuxième caractère à l'index 1 : "Python"[1] = 'y'
-• Dernier caractère à l'index len(string) - 1
-• Index hors limite lève IndexError
-
-Indices de la chaîne "Python" :
-P(0), y(1), t(2), h(3), o(4), n(5)
-Longueur = 6, indices valides : 0-5
-
-Pourquoi à partir de zéro ?
-• Élégant mathématiquement : l'index représente le décalage depuis le début
-• Cohérent avec l'arithmétique des pointeurs dans les langages de bas niveau
-• Standard dans la plupart des langages (C, Java, JavaScript, etc.)
-• Rend le slicing plus intuitif : string[:3] obtient les 3 premiers caractères (indices 0, 1, 2)
-
-Exemple : "Python"[0] retourne 'P'. Pour le dernier caractère avec indexation positive : "Python"[5] = 'n' (longueur 6, donc index 5).`,
-  25: `Python supporte l'indexation négative, permettant d'accéder aux éléments depuis la fin d'une séquence. L'index -1 est le dernier élément, -2 l'avant-dernier, etc. C'est très utile pour accéder à la fin des séquences sans calculer la longueur.
-
-Concepts clés :
-• -1 = dernier caractère : "Python"[-1] = 'n'
-• -2 = avant-dernier : "Python"[-2] = 'o'
-• -len(string) = premier caractère : "Python"[-6] = 'P'
-• -0 est identique à 0 (pas de signification séparée)
-
-Chaîne "Python" avec indices négatifs :
-P(-6), y(-5), t(-4), h(-3), o(-2), n(-1)
-Positifs :  0     1     2     3     4     5
-
-Comment ça fonctionne :
-• L'index -1 référence le dernier élément de la séquence
-• Les indices négatifs comptent à rebours depuis la fin
-• "Python"[-1] accède à l'élément à la position len-1
-• Retourne la valeur à cette position : 'n'
-
-Exemple : "Python"[-1] retourne 'n' (dernier caractère). "Python"[-2] retourne 'o' (avant-dernier). C'est plus pratique que "Python"[len("Python")-1].
-
-Usages courants :
-• Accéder au dernier élément : last = items[-1]
-• Obtenir les éléments de fin : second_last = data[-2]
-• Accès pratique aux extrémités
-• Pas besoin de connaître la longueur`,
+  1: `Le terminal est une fenêtre dans laquelle vous contrôlez l'ordinateur en tapant des instructions en texte au lieu de cliquer sur des icônes.
+
+Idées clés :
+• On l'appelle aussi ligne de commande ou CLI (Interface en Ligne de Commande).
+• Vous tapez une commande et appuyez sur Entrée ; l'ordinateur l'exécute et peut afficher du texte.
+• Il est différent d'une interface graphique (fenêtres, icônes, souris).
+
+Exemple : Quand vous ouvrez une application nommée Terminal, Invite de commandes ou similaire, vous obtenez un terminal. Apprendre à s'en servir permet d'utiliser des outils puissants et d'automatiser des tâches.`,
+  2: `Une commande est l'instruction que vous tapez pour que l'ordinateur fasse quelque chose.
+
+Idées clés :
+• Les commandes sont en général de courts mots ou expressions (p. ex. ls, cd, pwd) que vous tapez puis validez avec Entrée.
+• L'ordinateur exécute la commande et peut afficher un résultat ou modifier quelque chose (p. ex. ouvrir un dossier, lister des fichiers).
+• Si vous tapez quelque chose qui n'est pas une commande valide, vous pouvez voir une erreur comme « command not found ».
+
+Exemple : Taper ls et appuyer sur Entrée est une commande. Vous apprendrez de nombreuses commandes pas à pas dans cette application.`,
+  3: `C'est la touche Entrée (ou Retour) que vous utilisez pour exécuter la commande que vous venez de taper.
+
+Idées clés :
+• Tant que vous n'avez pas appuyé sur Entrée, la commande n'est pas exécutée — vous pouvez encore modifier ou supprimer ce que vous avez tapé.
+• Après avoir appuyé sur Entrée, l'ordinateur exécute la commande et peut afficher le résultat sur les lignes suivantes.
+• Sur la plupart des claviers la touche s'appelle Entrée ou est marquée d'une flèche courbée.
+
+Exemple : Tapez une commande, puis appuyez une fois sur Entrée. Ne maintenez pas la touche enfoncée ; une pression suffit.`,
+  4: `Un répertoire est un emplacement qui peut contenir des fichiers et d'autres répertoires (sous-dossiers). C'est la même chose qu'un dossier.
+
+Idées clés :
+• Dans le terminal on dit en général « répertoire » plutôt que « dossier », mais cela revient au même.
+• Les répertoires peuvent être imbriqués : un répertoire peut contenir d'autres répertoires, qui peuvent contenir encore des fichiers et répertoires.
+• Des commandes comme ls listent le contenu d'un répertoire ; cd permet d'entrer dans un répertoire.
+
+Exemple : Votre dossier Documents est un répertoire. Dedans vous pouvez avoir d'autres dossiers (répertoires) et des fichiers.`,
+  5: `Un fichier est une donnée enregistrée sous un nom sur l'ordinateur (p. ex. un document, une image ou un script).
+
+Idées clés :
+• Les fichiers se trouvent dans des répertoires. Chaque fichier a un nom et souvent une extension (p. ex. .txt, .jpg).
+• Dans le terminal vous pouvez lister, lire, créer, copier, déplacer ou supprimer des fichiers avec des commandes.
+• Un fichier est différent d'un répertoire : un répertoire contient d'autres éléments ; un fichier contient les données.
+
+Exemple : report.txt est un fichier. Le terminal peut l'afficher dans une liste, l'ouvrir ou le modifier avec les bonnes commandes.`,
+  6: `L'invite (prompt) est le court texte qui apparaît au début de la ligne où vous tapez. Elle se termine souvent par $ ou %.
+
+Idées clés :
+• Elle signifie « l'ordinateur est prêt pour votre prochaine commande ». Vous tapez après l'invite.
+• Elle peut afficher votre nom d'utilisateur, le répertoire courant ou le nom de l'ordinateur — selon la configuration du terminal.
+• Vous ne tapez pas l'invite elle-même ; vous tapez votre commande après elle.
+
+Exemple : Si vous voyez user@machine:~$ alors user@machine:~$ est l'invite. Vous tapez votre commande après l'espace.`,
+  7: `« Command not found » signifie que l'ordinateur ne reconnaît pas ce que vous avez tapé comme une commande valide.
+
+Idées clés :
+• Causes fréquentes : une faute de frappe (p. ex. ls vs lls), un mauvais nom de commande, ou une commande qui n'est pas installée sur votre système.
+• L'ordinateur n'exécute que les commandes qu'il connaît. Vérifiez l'orthographe et que vous utilisez un vrai nom de commande.
+• Dans cette application vous apprendrez les bons noms de commandes (ls, cd, pwd, etc.) pour éviter cette erreur.
+
+Exemple : Si vous tapez lls au lieu de ls, vous pouvez voir « command not found ». Corrigez la faute et réessayez.`,
+  8: `Le curseur est la ligne ou le bloc clignotant qui indique où le prochain caractère apparaîtra quand vous tapez.
+
+Idées clés :
+• Vous tapez au niveau du curseur. Il se déplace vers la droite quand vous tapez et quand vous utilisez les flèches du clavier.
+• Ce n'est pas le pointeur de la souris ; il reste sur la ligne où vous saisissez le texte.
+• Avant d'appuyer sur Entrée, vous pouvez déplacer le curseur pour corriger des fautes ou ajouter du texte.
+
+Exemple : Quand vous voyez une ligne clignotante après l'invite, c'est le curseur. Tout ce que vous tapez apparaît à cet endroit.`,
+  9: `Non. Le terminal et un navigateur web sont différents.
+
+Idées clés :
+• Un navigateur web (Chrome, Firefox, etc.) sert à ouvrir des pages web et à cliquer sur des liens. On l'utilise pour surfer sur internet.
+• Le terminal sert à taper des commandes pour contrôler l'ordinateur : exécuter des programmes, gérer des fichiers, utiliser des outils sans interface graphique.
+• Vous ouvrez le terminal comme une application à part (p. ex. Terminal, Invite de commandes, ou une app nommée « terminal »).
+
+Exemple : Pour utiliser le terminal, ouvrez l'application Terminal ou Invite de commandes — pas le navigateur.`,
+  10: `L'endroit où vous tapez les commandes s'appelle la ligne de commande. La fenêtre entière est le terminal.
+
+Idées clés :
+• La ligne de commande est la ligne où vous voyez l'invite et tapez votre commande. Le terminal est toute la fenêtre (invite, votre saisie et la sortie).
+• On utilise souvent « ligne de commande » et « terminal » pour dire la même chose : l'interface en texte où vous exécutez des commandes.
+• Vous interagissez en tapant sur la ligne de commande et en lisant la sortie qui s'affiche en dessous.
+
+Exemple : Quand on dit « utilise la ligne de commande », cela signifie : ouvre le terminal et tape des commandes dedans.`,
+  11: `Le répertoire courant est le dossier dans lequel le terminal se trouve « actuellement ». Beaucoup de commandes l'utilisent par défaut.
+
+Idées clés :
+• Quand vous ouvrez un terminal, il démarre dans un dossier par défaut (souvent votre dossier personnel). Vous pouvez changer le répertoire courant avec des commandes comme cd.
+• Les commandes qui listent ou créent des fichiers le font souvent dans le répertoire courant sauf si vous indiquez un autre chemin.
+• Savoir où vous êtes (répertoire courant) aide à comprendre où les fichiers seront créés ou listés.
+
+Exemple : Si vous êtes « dans » Documents, le répertoire courant est Documents. Une commande qui liste les fichiers listera le contenu de Documents.`,
+  12: `Le répertoire personnel (home) est votre dossier principal sur l'ordinateur. C'est en général là que sont stockés vos documents et paramètres.
+
+Idées clés :
+• Sur beaucoup de systèmes le chemin ressemble à /home/nom_utilisateur (Linux) ou C:\\Users\\VotreNom (Windows). Le terminal y démarre souvent à l'ouverture.
+• Chaque utilisateur a un répertoire personnel. C'est l'emplacement de haut niveau pour vos propres fichiers.
+• Vous apprendrez une commande pour revenir à votre répertoire personnel depuis n'importe où (p. ex. cd sans argument).
+
+Exemple : Quand vous ouvrez un nouveau terminal, vous êtes souvent déjà dans votre répertoire personnel.`,
+  13: `« Lister » signifie afficher les noms des fichiers et dossiers dans un répertoire pour voir ce qu'il contient.
+
+Idées clés :
+• Vous n'ouvrez ni n'exécutez chaque fichier — vous voyez seulement leurs noms (et parfois des détails comme la taille ou la date).
+• Dans le terminal vous utiliserez une commande appelée ls (list) pour faire ça. C'est une des premières commandes que vous apprendrez.
+• Lister est en lecture seule : ça ne modifie, supprime ni déplace rien.
+
+Exemple : Lister un dossier affiche par exemple : file1.txt, file2.txt, MonDossier. C'est la liste de ce qu'il y a dedans.`,
+  14: `Naviguer signifie passer d'un dossier à un autre — par exemple entrer dans un sous-dossier ou remonter au dossier parent.
+
+Idées clés :
+• Vous êtes toujours « dans » un répertoire à la fois (le répertoire courant). Naviguer change de répertoire.
+• Dans le terminal vous utilisez une commande comme cd (change directory) pour naviguer : cd nomDossier entre dedans, cd .. remonte.
+• Naviguer ne déplace ni ne copie de fichiers ; ça change seulement votre position dans l'arborescence.
+
+Exemple : Passer de Documents à Documents/Projets, c'est naviguer. Vous êtes maintenant « dans » Projets.`,
+  15: `Un chemin (path) est l'« adresse » d'un fichier ou d'un dossier — il décrit où il se trouve dans l'arborescence.
+
+Idées clés :
+• Les chemins ressemblent à dossier1/dossier2/fichier.txt ou C:\\Nom\\fichier.txt. Ils identifient un seul fichier ou dossier.
+• Un chemin peut être absolu (depuis la racine du disque) ou relatif (depuis votre répertoire courant).
+• Quand vous exécutez des commandes, vous donnez souvent un chemin pour préciser quel fichier ou dossier utiliser.
+
+Exemple : Documents/rapport.txt est un chemin. Ça veut dire le fichier rapport.txt dans le dossier Documents.`,
+  16: `Dans le terminal vous utilisez le clavier pour taper les commandes et le texte, corriger les fautes et appuyer sur Entrée pour exécuter les commandes.
+
+Idées clés :
+• Le terminal est piloté au clavier : vous tapez puis appuyez sur Entrée. La souris est moins importante pour l'usage de base.
+• Les flèches déplacent le curseur pour éditer la ligne avant d'appuyer sur Entrée. Retour arrière supprime le caractère avant le curseur.
+• Touches spéciales : Entrée exécute la commande, Tab peut compléter les mots, Échap peut annuler la ligne (selon le terminal).
+
+Exemple : Pour exécuter une commande vous la tapez au clavier et appuyez sur Entrée. Pas besoin de cliquer sur un bouton « Exécuter ».`,
+  17: `Un dossier (répertoire) peut contenir des fichiers et d'autres dossiers. Un fichier est une donnée nommée — il ne contient pas d'autres fichiers ni dossiers.
+
+Idées clés :
+• Voyez les dossiers comme des tiroirs ou des boîtes : ils contiennent des choses (fichiers et dossiers). Un fichier est le document ou la donnée réelle.
+• Dans le terminal, les commandes les traitent souvent différemment : on peut lister le contenu d'un répertoire mais lire ou éditer un fichier.
+• Les deux ont un nom et un chemin ; la différence est qu'un répertoire « contient » alors qu'un fichier « contient des données ».
+
+Exemple : Documents est un dossier ; rapport.txt dedans est un fichier. Le dossier contient le fichier.`,
+  18: `Exécuter (run) une commande signifie demander à l'ordinateur de faire ce que la commande dit — en général en appuyant sur Entrée après l'avoir tapée.
+
+Idées clés :
+• Taper la commande ne fait que la préparer. L'exécution a lieu quand vous appuyez sur Entrée ; l'ordinateur l'exécute alors.
+• Après l'exécution, l'ordinateur peut afficher une sortie, modifier des fichiers ou autre. En cas de problème, un message d'erreur peut s'afficher.
+• Vous pouvez exécuter la même commande plusieurs fois ; à chaque Entrée, elle s'exécute à nouveau.
+
+Exemple : Vous tapez ls et appuyez sur Entrée. Appuyer sur Entrée, c'est ce qui « exécute » la commande. L'ordinateur liste ensuite les fichiers.`,
+  19: `La sortie (output) est le texte (ou autre résultat) que l'ordinateur affiche après l'exécution d'une commande.
+
+Idées clés :
+• Elle apparaît en général sur les lignes suivantes dans la même fenêtre du terminal, sous la ligne où vous avez tapé la commande.
+• La sortie peut être une liste de fichiers, un message, une erreur ou tout texte produit par la commande.
+• Lire la sortie vous dit ce que la commande a fait. Parfois il n'y a pas de sortie — ça peut quand même signifier que la commande a réussi.
+
+Exemple : Si vous exécutez une commande qui liste les fichiers, la liste des noms est la sortie. Vous la lisez à l'écran.`,
+  20: `L'entrée (input) est ce que vous donnez à l'ordinateur — les commandes et le texte que vous tapez au clavier.
+
+Idées clés :
+• Vous fournissez l'entrée en tapant. L'ordinateur utilise cette entrée (p. ex. pour exécuter une commande) et peut produire une sortie en réponse.
+• L'entrée vient de vous ; la sortie vient de l'ordinateur. Vous tapez l'entrée, l'ordinateur affiche la sortie.
+• L'entrée peut être une seule commande, ou plus tard vous verrez des commandes qui lisent l'entrée depuis un fichier ou une autre commande (pipes).
+
+Exemple : Quand vous tapez ls et appuyez sur Entrée, « ls » et la touche Entrée sont votre entrée. La liste de fichiers que l'ordinateur affiche est la sortie.`,
+  21: `Un programme est un logiciel qui accomplit une tâche. Les commandes du terminal exécutent souvent des programmes.
+
+Idées clés :
+• Quand vous tapez une commande comme ls, vous exécutez un petit programme qui liste les fichiers.
+• Les programmes peuvent afficher du texte, modifier des fichiers, ou faire d'autres actions.
+• Le terminal est un moyen de lancer des programmes en tapant leur nom au lieu de cliquer sur une icône.
+
+Exemple : La commande ls est un programme. En l'exécutant, vous lancez ce programme et voyez le résultat à l'écran.`,
+  22: `Le shell est le programme qui lit ce que vous tapez, l'interprète comme des commandes et les exécute.
+
+Idées clés :
+• La fenêtre du terminal exécute un shell (p. ex. Bash ou Zsh). Vous tapez ; le shell exécute les commandes et affiche la sortie.
+• Le shell comprend les noms de commandes, les arguments et les caractères spéciaux (comme * pour le globbing ou | pour les pipes).
+• C'est l'« interpréteur » entre vous et le système : vous tapez des commandes, le shell les transforme en actions.
+
+Exemple : Quand vous tapez ls et appuyez sur Entrée, le shell exécute le programme ls et affiche la liste des fichiers. Sans le shell, ce que vous tapez ne ferait rien.`,
+  23: `La fenêtre du terminal est la fenêtre de l'application où vous voyez l'invite, tapez les commandes et voyez la sortie.
+
+Idées clés :
+• Vous l'ouvrez depuis le menu du système ou en lançant une application nommée Terminal, Invite de commandes ou similaire. C'est une fenêtre parmi d'autres (navigateur, éditeur, etc.).
+• Elle contient le shell : la fenêtre est le « cadre », le shell est le programme à l'intérieur qui exécute vos commandes.
+• Vous pouvez avoir plusieurs fenêtres ou onglets de terminal ouverts, chacun avec sa propre invite et son répertoire courant.
+
+Exemple : Sur Mac vous pouvez ouvrir « Terminal » depuis Applications/Utilitaires. La fenêtre qui s'ouvre est la fenêtre du terminal.`,
+  24: `La touche Retour arrière (ou Suppr sur certains claviers) supprime le caractère avant le curseur.
+
+Idées clés :
+• Utilisez Retour arrière pour corriger les fautes avant d'appuyer sur Entrée. Après Entrée, la commande est déjà exécutée et vous ne pouvez pas « annuler » la ligne.
+• Le curseur indique où le prochain caractère ira ; Retour arrière supprime le caractère à gauche du curseur.
+• Sur certains claviers la touche s'appelle Suppr ou a une flèche vers la gauche. Elle ne supprime pas toute la ligne — seulement un caractère à la fois.
+
+Exemple : Si vous tapez lls par erreur, placez le curseur après le l en trop et appuyez une fois sur Retour arrière pour obtenir ls.`,
+  25: `Ouvrir un fichier signifie le charger pour pouvoir le consulter ou l'éditer — par exemple dans un éditeur de texte ou un autre programme.
+
+Idées clés :
+• Dans un environnement graphique vous double-cliquez sur un fichier pour l'ouvrir. Dans le terminal vous pouvez exécuter une commande ou un programme qui lit le fichier et l'affiche ou l'édite.
+• Ouvrir ne modifie pas le fichier tant que vous n'enregistrez pas. Ça rend juste le contenu visible ou éditable.
+• Certaines commandes du terminal « ouvrent » un fichier en le lisant : une commande qui affiche le contenu est une façon de l'« ouvrir » et de le voir.
+
+Exemple : Vous pouvez taper une commande comme cat fichier.txt pour ouvrir (voir) le fichier dans le terminal, ou open fichier.txt pour l'ouvrir dans l'application par défaut.`,
+  26: `Créer un fichier signifie en faire un nouveau qui n'existait pas avant — avec un nom et éventuellement du contenu.
+
+Idées clés :
+• Le fichier apparaît sur le disque (ou dans le répertoire courant) avec le nom que vous lui donnez. Tant que vous ne l'avez pas créé, ce nom ne désigne rien.
+• Vous pouvez créer un fichier depuis le terminal avec des commandes ou un éditeur de texte. Certaines commandes créent des fichiers vides ; d'autres écrivent du contenu.
+• Créer n'écrase pas un fichier existant sauf si la commande est conçue pour — faites attention aux noms pour ne pas écraser par erreur.
+
+Exemple : Plus tard vous utiliserez des commandes ou des éditeurs pour créer des fichiers depuis le terminal. Le nouveau fichier apparaît quand vous listez le répertoire.`,
+  27: `Supprimer un fichier signifie le retirer pour qu'il ne soit plus sur le disque. En général il est parti définitivement sauf si vous avez une sauvegarde.
+
+Idées clés :
+• Les commandes du terminal peuvent supprimer des fichiers. Il n'y a souvent pas d'« annuler » ou de corbeille comme en graphique — la suppression est immédiate et définitive.
+• Attention : revérifiez le nom et le chemin du fichier avant de supprimer. Une faute de frappe peut faire supprimer le mauvais fichier.
+• Vous apprendrez une commande (p. ex. rm) qui supprime les fichiers. Certains systèmes ont des options pour demander une confirmation ou envoyer à la corbeille.
+
+Exemple : Supprimer rapport.txt le retire du dossier. Vous ne pouvez pas le récupérer sauf si vous en avez une copie ailleurs.`,
+  28: `Copier un fichier signifie en faire un doublon. L'original reste où il est ; vous avez deux exemplaires (l'original et le nouveau).
+
+Idées clés :
+• Vous pouvez copier vers un autre dossier ou donner au exemplaire un nouveau nom dans le même dossier. Le terminal a des commandes (p. ex. cp) pour ça.
+• Copier ne supprime ni ne modifie l'original. L'ancien et le nouveau fichier existent après la copie.
+• Si vous copiez vers un chemin où un fichier porte déjà ce nom, le fichier existant peut être écrasé — vérifiez avant de copier.
+
+Exemple : Copier rapport.txt en sauvegarde.txt vous donne deux fichiers : rapport.txt et sauvegarde.txt avec le même contenu.`,
+  29: `Déplacer un fichier signifie changer son emplacement (ou son nom). Le fichier ne reste plus à l'ancien endroit — il est maintenant au nouveau ou sous le nouveau nom.
+
+Idées clés :
+• Déplacer, c'est comme couper-coller : un fichier, un nouvel emplacement. Le même fichier n'existe qu'à un seul endroit après le déplacement.
+• Sur beaucoup de systèmes la même commande (p. ex. mv) sert à déplacer et à renommer. Renommer, c'est déplacer vers le même dossier avec un nouveau nom.
+• Déplacer sur le même disque est en général rapide (seul le nom/emplacement est mis à jour). Déplacer vers un autre disque peut copier puis supprimer l'original.
+
+Exemple : Déplacer fichier.txt de Documents vers Téléchargements signifie que fichier.txt est maintenant dans Téléchargements et plus dans Documents.`,
+  30: `Renommer un fichier signifie changer son nom tout en le gardant au même endroit (même dossier).
+
+Idées clés :
+• Le contenu du fichier ne change pas — seul le nom. L'ancien nom n'existe plus ; le nouveau nom désigne le même fichier.
+• Dans le terminal, renommer et déplacer se font souvent avec la même commande (p. ex. mv ancien_nom nouveau_nom). Si vous utilisez un nouveau nom dans le même dossier, c'est un renommage.
+• Attention à la casse : sur les systèmes sensibles à la casse, Fichier.txt et fichier.txt sont des noms différents. Renommer de l'un à l'autre peut être délicat.
+
+Exemple : Renommer rapport.txt en rapport_ancien.txt laisse un fichier dans le même dossier, maintenant appelé rapport_ancien.txt.`,
+  31: `Les majuscules sont les lettres capitales : A, B, C, … (par opposition aux minuscules a, b, c).
+
+Idées clés :
+• Sur un système sensible à la casse, FICHIER et fichier sont différents. Le terminal et beaucoup de systèmes traitent majuscules et minuscules comme des caractères distincts.
+• Les commandes et noms de fichiers utilisent souvent des minuscules par convention. Mauvaise casse = « command not found » ou « file not found ».
+• En tapant des commandes, faites attention à la casse. Par exemple, LS n'est pas la même chose que ls sur Linux et macOS.
+
+Exemple : Le mot « Hello » a une majuscule (H) et quatre minuscules (ello).`,
+  32: `Les minuscules sont les petites lettres : a, b, c, … (par opposition aux majuscules A, B, C).
+
+Idées clés :
+• Beaucoup de commandes et de noms de fichiers du terminal n'utilisent que des minuscules. Ça évite les erreurs de casse.
+• Sur un système sensible à la casse, file et File sont deux noms différents. Utiliser des minuscules de façon cohérente aide à éviter les confusions.
+• Quand vous tapez des commandes, vérifiez la casse : souvent tout est en minuscules.
+
+Exemple : La commande ls est en minuscules. Taper LS peut donner « command not found » sur Linux et macOS.`,
+  33: `Un caractère est une seule unité de texte : une lettre, un chiffre, un espace ou un symbole comme @ ou #.
+
+Idées clés :
+• Tout ce que vous tapez est une séquence de caractères. Les commandes sont sensibles à la casse, donc chaque caractère compte.
+• Un caractère peut être une lettre (a, B), un chiffre (5), un espace, ou un symbole (., @, #). Le terminal traite le texte caractère par caractère.
+• Une faute d'un seul caractère (typo) peut faire échouer une commande ou ouvrir le mauvais fichier.
+
+Exemple : Le mot « ls » a deux caractères : l et s. Si vous tapez « lls » (trois caractères), la commande peut ne pas être reconnue.`,
   26: `Le découpage de chaîne extrait une sous-chaîne avec la syntaxe string[start:stop]. L'index start est inclusif, l'index stop est exclusif - on inclut start mais on s'arrête avant stop. Cette convention "fin exclusive" est importante à comprendre.
 
 Syntaxe du découpage : string[start:stop]

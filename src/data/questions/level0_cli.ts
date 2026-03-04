@@ -7,147 +7,147 @@ const beginner = [
     o: ["A window where you type text commands for the computer", "A type of computer", "A programming language", "A kind of cable"],
     c: 0,
     e: "A terminal is a text-based window where you type commands instead of clicking with a mouse.",
-    de: "The terminal (also called command line or CLI) lets you control the computer by typing instructions. It is different from a graphical interface where you click icons."
+    de: "The terminal is a window where you control the computer by typing text instructions instead of clicking icons.\n\nKey ideas:\n• It is also called the command line or CLI (Command Line Interface).\n• You type a command and press Enter; the computer runs it and may show text output.\n• It is different from a graphical interface (windows, icons, mouse).\n\nExample: When you open an app named Terminal, Command Prompt, or similar, you get a terminal. Learning to use it helps you run powerful tools and automate tasks."
   }),
   (_i: number) => ({
     q: "What do we call an instruction you type for the computer to run?",
     o: ["A command", "A click", "A file", "A window"],
     c: 0,
     e: "A command is the instruction you type. The computer then runs it.",
-    de: "Commands are short words or phrases you type and press Enter. Examples you will learn later: ls, cd, pwd."
+    de: "A command is the instruction you type so the computer does something.\n\nKey ideas:\n• Commands are usually short words or phrases (e.g. ls, cd, pwd) that you type and then press Enter.\n• The computer runs the command and may print output or change something (e.g. open a folder, list files).\n• If you type something that is not a valid command, you may see an error like 'command not found'.\n\nExample: Typing ls and pressing Enter is one command. You will learn many commands step by step in this app."
   }),
   (_i: number) => ({
     q: "Which key do you usually press to run the command you just typed?",
     o: ["Enter (or Return)", "Space", "Escape", "Tab"],
     c: 0,
     e: "Pressing Enter tells the computer to run the command you typed.",
-    de: "After typing a command, pressing Enter sends it to the computer. Until you press Enter, you can still edit the line."
+    de: "You press Enter (or Return) to run the command you just typed.\n\nKey ideas:\n• Until you press Enter, the command is not run—you can still edit or delete what you typed.\n• After you press Enter, the computer runs the command and may show output on the next lines.\n• On most keyboards the key is labeled Enter or has a bent arrow.\n\nExample: Type a command, then press Enter once. Do not hold the key; one press is enough."
   }),
   (_i: number) => ({
     q: "What is a directory?",
     o: ["A folder that can hold files and other folders", "A type of file", "A command", "A key on the keyboard"],
     c: 0,
     e: "A directory is the same as a folder—a place that can contain files and other folders.",
-    de: "In the terminal we usually say 'directory' instead of 'folder,' but they mean the same thing."
+    de: "A directory is a place that can hold files and other directories (subfolders). It is the same as a folder.\n\nKey ideas:\n• In the terminal we usually say 'directory' instead of 'folder,' but they mean the same thing.\n• Directories can be nested: a directory can contain other directories, which can contain more files and directories.\n• Commands like ls list the contents of a directory; cd lets you move into a directory.\n\nExample: Your Documents folder is a directory. Inside it you might have more folders (directories) and files."
   }),
   (_i: number) => ({
     q: "What is a file?",
     o: ["Data saved with a name (e.g. document, image)", "A command", "The blinking line in the terminal", "A key"],
     c: 0,
     e: "A file is data stored with a name, like a document or a picture.",
-    de: "Files live inside directories. The terminal can list them, open them, and create new ones."
+    de: "A file is data saved under a name on the computer (e.g. a document, a picture, or a script).\n\nKey ideas:\n• Files live inside directories. Each file has a name and often an extension (e.g. .txt, .jpg).\n• In the terminal you can list files, read them, create them, copy them, move them, or delete them using commands.\n• A file is different from a directory: a directory contains other items; a file holds the actual data.\n\nExample: report.txt is a file. The terminal can show it in a listing, open it, or change it with the right commands."
   }),
   (_i: number) => ({
     q: "What is the prompt?",
     o: ["The text that appears before the place where you type", "A command to run", "An error message", "The title of the window"],
     c: 0,
     e: "The prompt is the short text (often ending with $ or %) that shows where you type.",
-    de: "The prompt often shows your username and current folder. It means 'the computer is ready for your next command.'"
+    de: "The prompt is the short text that appears at the start of the line where you type. It often ends with $ or %.\n\nKey ideas:\n• It means 'the computer is ready for your next command.' You type after the prompt.\n• It may show your username, the current directory, or the computer name—depending on how the terminal is set up.\n• You do not type the prompt itself; you type your command after it.\n\nExample: If you see user@machine:~$ then user@machine:~$ is the prompt. You type your command after the space."
   }),
   (_i: number) => ({
     q: "If you see 'command not found' after typing something, what does it usually mean?",
     o: ["The computer does not recognize the word you typed as a command", "The command worked", "The file was deleted", "You need to press Enter"],
     c: 0,
     e: "It means the name you typed is not a known command—maybe a typo or a command that is not installed.",
-    de: "Check your spelling. Later you will learn real command names like ls and cd."
+    de: "'Command not found' means the computer does not recognize what you typed as a valid command.\n\nKey ideas:\n• Common causes: a typo (e.g. ls vs ls), a wrong command name, or a command that is not installed on your system.\n• The computer only runs commands it knows. Check your spelling and that you are using a real command name.\n• In this app you will learn correct command names (e.g. ls, cd, pwd) so you can avoid this error.\n\nExample: If you type lls instead of ls, you may see 'command not found.' Fix the typo and try again."
   }),
   (_i: number) => ({
     q: "What is the cursor in the terminal?",
     o: ["The blinking line or block where your typing appears", "The mouse pointer", "The first line of text", "A command"],
     c: 0,
     e: "The cursor is the blinking spot that shows where the next character will appear when you type.",
-    de: "You type at the cursor. It moves as you type or use the arrow keys."
+    de: "The cursor is the blinking line or block that shows where the next character will appear when you type.\n\nKey ideas:\n• You type at the cursor. It moves to the right as you type and moves when you use the arrow keys.\n• It is not the mouse pointer; it stays on the line where you are entering text.\n• Before you press Enter, you can move the cursor to fix typos or add more text.\n\nExample: When you see a blinking line after the prompt, that is the cursor. Everything you type appears at that spot."
   }),
   (_i: number) => ({
     q: "Is the terminal the same as a web browser?",
     o: ["No", "Yes", "Only on Windows", "Only on Mac"],
     c: 0,
     e: "No. A browser shows web pages; the terminal is for typing commands.",
-    de: "You open a terminal as a separate app (e.g. Terminal, Command Prompt, or an app named 'terminal')."
+    de: "No. The terminal and a web browser are different.\n\nKey ideas:\n• A web browser (e.g. Chrome, Firefox) is for opening web pages and clicking links. You use it to surf the internet.\n• The terminal is for typing commands to control the computer: run programs, manage files, and use tools that do not have a graphical interface.\n• You open the terminal as a separate app (e.g. Terminal, Command Prompt, or an app named 'terminal').\n\nExample: To use the terminal, open the Terminal or Command Prompt app—not the browser."
   }),
   (_i: number) => ({
     q: "What do we call the place where you type commands?",
     o: ["The command line (or terminal)", "The desktop", "The menu bar", "The taskbar"],
     c: 0,
     e: "The command line is the line in the terminal where you type; the whole window is the terminal.",
-    de: "People often say 'command line' and 'terminal' to mean the same thing: the text interface for commands."
+    de: "The place where you type commands is called the command line. The whole window is the terminal.\n\nKey ideas:\n• The command line is the line where you see the prompt and type your command. The terminal is the full window (prompt, your typing, and output).\n• People often use 'command line' and 'terminal' to mean the same thing: the text interface where you run commands.\n• You interact by typing on the command line and reading the output that appears below.\n\nExample: When someone says 'use the command line,' they mean: open the terminal and type commands there."
   }),
   (_i: number) => ({
     q: "What is the 'current directory'?",
     o: ["The folder you are in right now", "The first folder on the computer", "The desktop", "A file you just opened"],
     c: 0,
     e: "The current directory is the folder the terminal is 'in' at the moment. Commands often apply to this folder.",
-    de: "When you open a terminal it starts in a default folder (often your home folder). You can change it with commands."
+    de: "The current directory is the folder the terminal is 'in' right now. Many commands use it by default.\n\nKey ideas:\n• When you open a terminal it starts in a default folder (often your home folder). You can change the current directory with commands like cd.\n• Commands that list or create files often do so in the current directory unless you specify another path.\n• Knowing where you are (current directory) helps you understand where files will be created or listed.\n\nExample: If you are 'in' Documents, the current directory is Documents. A command that lists files will list the contents of Documents."
   }),
   (_i: number) => ({
     q: "What is the home directory?",
     o: ["Your personal folder (often for your documents and files)", "The main folder of the computer", "The desktop", "A temporary folder"],
     c: 0,
     e: "The home directory is your personal main folder, usually where your documents and settings live.",
-    de: "On many systems it has a path like /home/username or C:\\Users\\YourName. The terminal often starts there."
+    de: "The home directory is your personal main folder on the computer. It is usually where your documents and settings are stored.\n\nKey ideas:\n• On many systems it has a path like /home/username (Linux) or C:\\Users\\YourName (Windows). The terminal often starts there when you open it.\n• Each user has one home directory. It is the top-level place for your own files.\n• You will learn a command to go back to your home directory from anywhere (e.g. cd with no arguments).\n\nExample: When you open a new terminal, you are often already in your home directory."
   }),
   (_i: number) => ({
     q: "What does 'to list' mean when we talk about files?",
     o: ["To show the names of files and folders", "To delete them", "To copy them", "To create them"],
     c: 0,
     e: "ToList means to show the names of files and folders in a directory.",
-    de: "Later you will use a command called ls (list) to do this in the terminal."
+    de: "'To list' means to show the names of files and folders in a directory so you can see what is there.\n\nKey ideas:\n• You do not open or run each file—you just see their names (and sometimes details like size or date).\n• In the terminal you will use a command called ls (list) to do this. It is one of the first commands you will learn.\n• Listing is read-only: it does not change, delete, or move anything.\n\nExample: Listing a folder shows you something like: file1.txt, file2.txt, MyFolder. That is a list of what is inside."
   }),
   (_i: number) => ({
     q: "What does 'to navigate' mean in the context of folders?",
     o: ["To move from one folder to another", "To delete folders", "To rename files", "To create files"],
     c: 0,
     e: "To navigate means to move from folder to folder (e.g. going 'into' or 'up' from a folder).",
-    de: "You will use a command like cd (change directory) to navigate in the terminal."
+    de: "To navigate means to move from one folder to another—for example, going 'into' a subfolder or 'up' to the parent folder.\n\nKey ideas:\n• You are always 'in' one directory at a time (the current directory). Navigating changes which directory that is.\n• In the terminal you use a command like cd (change directory) to navigate: cd folderName goes in, cd .. goes up.\n• Navigating does not move or copy files; it only changes where you are in the folder tree.\n\nExample: Going from Documents into Documents/Projects is navigating. You are now 'in' Projects."
   }),
   (_i: number) => ({
     q: "What is a path?",
     o: ["The location of a file or folder (e.g. which folders it is inside)", "A command", "A type of file", "The prompt"],
     c: 0,
     e: "A path describes where something is—for example, which folders you go through to reach a file.",
-    de: "Paths look like folder1/folder2/file.txt or C:\\Users\\Name\\file.txt. They uniquely identify a file or folder."
+    de: "A path is the 'address' of a file or folder—it describes where it is in the folder tree.\n\nKey ideas:\n• Paths look like folder1/folder2/file.txt or C:\\Users\\Name\\file.txt. They uniquely identify one file or folder.\n• A path can be absolute (from the root of the disk) or relative (from your current directory).\n• When you run commands, you often give a path to say which file or folder to use.\n\nExample: Documents/report.txt is a path. It means the file report.txt inside the Documents folder."
   }),
   (_i: number) => ({
     q: "What is the keyboard used for in the terminal?",
     o: ["Typing commands and text", "Only for Enter", "Only for Escape", "Nothing"],
     c: 0,
     e: "You use the keyboard to type commands, fix typos, and press Enter to run them.",
-    de: "The terminal is keyboard-driven. You type, then press Enter. Arrow keys can move the cursor; Backspace deletes."
+    de: "In the terminal you use the keyboard to type commands and text, fix typos, and press Enter to run commands.\n\nKey ideas:\n• The terminal is keyboard-driven: you type, then press Enter. The mouse is less important for basic use.\n• Arrow keys move the cursor so you can edit the line before pressing Enter. Backspace deletes the character before the cursor.\n• Special keys: Enter runs the command, Tab can complete words, Escape may cancel the line (depending on the terminal).\n\nExample: To run a command you type it with the keyboard and press Enter. No need to click a 'Run' button."
   }),
   (_i: number) => ({
     q: "What is the difference between a file and a folder (directory)?",
     o: ["A folder can contain files and other folders; a file holds data", "They are the same", "A file is bigger", "A folder is always empty"],
     c: 0,
     e: "A folder (directory) can contain files and other folders. A file is a single named piece of data.",
-    de: "Think of folders as drawers and files as documents inside them. The terminal works with both."
+    de: "A folder (directory) can contain files and other folders. A file is a single named piece of data—it does not contain other files or folders.\n\nKey ideas:\n• Think of folders as drawers or boxes: they hold things (files and other folders). A file is the actual document or data.\n• In the terminal, commands often treat them differently: for example, you might list the contents of a directory but read or edit a file.\n• Both have names and paths; the difference is that a directory 'contains' while a file 'holds data'.\n\nExample: Documents is a folder; report.txt inside it is a file. The folder contains the file."
   }),
   (_i: number) => ({
     q: "What does 'to run' or 'to execute' a command mean?",
     o: ["To tell the computer to do what the command says", "To type it again", "To delete it", "To copy it"],
     c: 0,
     e: "To run (or execute) a command means to press Enter so the computer performs that instruction.",
-    de: "Typing the command only prepares it. Running it happens when you press Enter and the computer carries it out."
+    de: "To run (or execute) a command means to tell the computer to do what the command says—usually by pressing Enter after typing it.\n\nKey ideas:\n• Typing the command only prepares it. Running it happens when you press Enter; then the computer carries it out.\n• After you run a command, the computer may print output, change files, or do something else. If something goes wrong, you may see an error message.\n• You can run the same command many times; each time you press Enter, it runs again.\n\nExample: You type ls and press Enter. Pressing Enter is what 'runs' the command. The computer then lists the files."
   }),
   (_i: number) => ({
     q: "What is 'output' in the terminal?",
     o: ["The text the computer prints after you run a command", "The command you type", "An error", "The prompt"],
     c: 0,
     e: "Output is the text that appears on the screen as a result of running a command.",
-    de: "For example, if you run a command that lists files, the list of names is the output."
+    de: "Output is the text (or other result) the computer prints or shows after you run a command.\n\nKey ideas:\n• It usually appears on the next lines in the same terminal window, below the line where you typed the command.\n• Output can be a list of files, a message, an error, or any text the command produces.\n• Reading the output tells you what the command did. Sometimes there is no output—that can still mean the command succeeded.\n\nExample: If you run a command that lists files, the list of names is the output. You read it on the screen."
   }),
   (_i: number) => ({
     q: "What is 'input' in the terminal?",
     o: ["What you type (your commands and key presses)", "What the computer prints", "The prompt", "A file"],
     c: 0,
     e: "Input is what you give to the computer—the commands and text you type.",
-    de: "You provide input by typing; the computer produces output by printing text (or doing something) in response."
+    de: "Input is what you give to the computer—the commands and text you type with the keyboard.\n\nKey ideas:\n• You provide input by typing. The computer then uses that input (e.g. to run a command) and may produce output in response.\n• Input is your side; output is the computer's side. You type input, the computer prints output.\n• Input can be a single command, or later you will see commands that read input from a file or from another command (pipes).\n\nExample: When you type ls and press Enter, 'ls' and the Enter key are your input. The list of files the computer prints is the output."
   }),
   (_i: number) => ({
     q: "What is a program?",
     o: ["Software that does a specific job (e.g. list files, edit text)", "A file only", "A folder", "The terminal"],
     c: 0,
     e: "A program is software that performs a task. Commands in the terminal often run programs.",
-    de: "When you type a command like ls, you are running a small program that lists files."
+    de: "A program is software that does a specific job—for example, list files, edit text, or search the web.\n\nKey ideas:\n• When you type a command like ls, you are running a small program that lists files. Each command is usually a program.\n• Programs can show text, change files, or do other work. The terminal is a way to start programs by typing their name instead of clicking an icon.\n• Many tools you will learn (ls, cd, grep, etc.) are programs. The terminal runs them when you type the command and press Enter.\n\nExample: The ls command is a program. When you run it, you start that program and see its output on the screen."
   }),
   (_i: number) => ({
     q: "What is an operating system?",
@@ -245,84 +245,84 @@ const beginner = [
     o: ["The program that reads your commands and runs them", "The terminal window", "The operating system", "A type of file"],
     c: 0,
     e: "The shell is the program that takes what you type, interprets it as commands, and runs them.",
-    de: "The terminal window runs a shell (e.g. Bash or Zsh). You type; the shell runs the commands and shows output."
+    de: "The shell is the program that reads what you type, interprets it as commands, and runs them.\n\nKey ideas:\n• The terminal window runs a shell (e.g. Bash or Zsh). You type; the shell runs the commands and shows output.\n• The shell understands command names, arguments, and special characters (like * for globbing or | for pipes).\n• It is the 'interpreter' between you and the system: you type in human-like commands, the shell turns them into actions.\n\nExample: When you type ls and press Enter, the shell runs the ls program and prints the list of files. Without the shell, your typing would do nothing."
   }),
   (_i: number) => ({
     q: "What is the terminal window?",
     o: ["The application window where you see the prompt and type commands", "The whole operating system", "A file", "The desktop"],
     c: 0,
     e: "The terminal window is the app window that shows the prompt, your typing, and the output.",
-    de: "You open it from the system menu or by running an app named Terminal, Command Prompt, or similar."
+    de: "The terminal window is the application window where you see the prompt, type commands, and see the output.\n\nKey ideas:\n• You open it from the system menu or by running an app named Terminal, Command Prompt, or similar. It is one window among others (browser, editor, etc.).\n• It contains the shell: the window is the 'frame,' the shell is the program inside that runs your commands.\n• You can have several terminal windows or tabs open, each with its own prompt and current directory.\n\nExample: On Mac you might open 'Terminal' from Applications/Utilities. The window that opens is the terminal window."
   }),
   (_i: number) => ({
     q: "What key is often used to delete the character before the cursor?",
     o: ["Backspace", "Enter", "Escape", "Tab"],
     c: 0,
     e: "Backspace (or Delete on some keyboards) deletes the character before the cursor.",
-    de: "Use Backspace to fix typos before you press Enter. After Enter, the command has already run."
+    de: "Backspace (or Delete on some keyboards) deletes the character before the cursor.\n\nKey ideas:\n• Use Backspace to fix typos before you press Enter. After Enter, the command has already run and you cannot 'undo' the line.\n• The cursor shows where the next character will go; Backspace removes the character to the left of the cursor.\n• On some keyboards the key is labeled Delete or has a left-pointing arrow. It does not delete the whole line—only one character at a time.\n\nExample: If you type lls by mistake, move the cursor after the extra l and press Backspace once to get ls."
   }),
   (_i: number) => ({
     q: "What does 'to open' a file usually mean?",
     o: ["To load it so you can view or edit it", "To create it", "To delete it", "To copy it"],
     c: 0,
     e: "To open a file means to load it—for example, to view its contents or edit it in a program.",
-    de: "In the terminal you might 'open' a file by running a program that reads it, or by typing a command that shows its contents."
+    de: "To open a file means to load it so you can view or edit it—for example, in a text editor or another program.\n\nKey ideas:\n• In a graphical environment you double-click a file to open it. In the terminal you might run a command or program that reads the file and shows or edits it.\n• Opening does not change the file unless you save changes. It just makes the contents available to view or edit.\n• Some terminal commands 'open' a file in the sense of reading it: for example, a command that prints the file contents is a way to 'open' and view it.\n\nExample: You might type a command like cat file.txt to open (view) the file in the terminal, or open file.txt to open it in the default app."
   }),
   (_i: number) => ({
     q: "What does 'to create' a file mean?",
     o: ["To make a new file that did not exist before", "To open it", "To delete it", "To rename it"],
     c: 0,
     e: "To create a file means to make a new file (with a name and optional content).",
-    de: "Later you will use commands or editors to create files from the terminal."
+    de: "To create a file means to make a new file that did not exist before—with a name and optional content.\n\nKey ideas:\n• The file appears on disk (or in the current directory) with the name you give it. Until you create it, that name does not refer to anything.\n• You can create a file from the terminal with commands or with a text editor. Some commands create empty files; others write content.\n• Creating does not overwrite an existing file unless the command is designed to do so—be careful with names so you do not overwrite by mistake.\n\nExample: Later you will use commands or editors to create files from the terminal. The new file then appears when you list the directory."
   }),
   (_i: number) => ({
     q: "What does 'to delete' a file mean?",
     o: ["To remove it so it is no longer on the disk", "To hide it", "To move it", "To copy it"],
     c: 0,
     e: "To delete means to remove the file. Usually it is gone for good unless you have a backup.",
-    de: "Terminal commands can delete files. Be careful: there is often no 'undo' like in a graphical trash."
+    de: "To delete a file means to remove it so it is no longer on the disk. Usually it is gone for good unless you have a backup.\n\nKey ideas:\n• Terminal commands can delete files. There is often no 'undo' or recycle bin like in a graphical interface—deletion is immediate and permanent.\n• Be careful: double-check the file name and path before deleting. It is easy to delete the wrong file by a typo.\n• You will learn a command (e.g. rm) that deletes files. Some systems have options to ask for confirmation or move to a trash.\n\nExample: Deleting report.txt removes it from the folder. You cannot get it back unless you have a copy elsewhere."
   }),
   (_i: number) => ({
     q: "What does 'to copy' a file mean?",
     o: ["To make a duplicate with a new name or location", "To delete the original", "To move it", "To open it"],
     c: 0,
     e: "To copy means to make a duplicate. The original stays; you have two copies.",
-    de: "You might copy a file to another folder or give the copy a new name. The terminal has commands for this."
+    de: "To copy a file means to make a duplicate. The original stays where it is; you have two copies (the original and the new one).\n\nKey ideas:\n• You might copy to another folder or give the copy a new name in the same folder. The terminal has commands (e.g. cp) for this.\n• Copying does not remove or change the original. Both the old and the new file exist after the copy.\n• If you copy to a path that already has a file with that name, the existing file may be overwritten—check before copying.\n\nExample: Copying report.txt to backup.txt gives you two files: report.txt and backup.txt with the same content."
   }),
   (_i: number) => ({
     q: "What does 'to move' a file mean?",
     o: ["To change its location (or rename it); the file no longer stays in the old place)", "To copy it", "To delete it", "To open it"],
     c: 0,
     e: "To move means to put the file somewhere else (or give it a new name). The old location no longer has it.",
-    de: "Moving is like cut-and-paste: one file, new location. Some systems use the same command for move and rename."
+    de: "To move a file means to change its location (or rename it). The file no longer stays in the old place—it is now in the new place or under the new name.\n\nKey ideas:\n• Moving is like cut-and-paste: one file, new location. The same file exists in one place only after the move.\n• On many systems the same command (e.g. mv) is used for both move and rename. Renaming is moving to the same folder with a new name.\n• Moving within the same disk is usually fast (just the name/location is updated). Moving to another disk may copy then delete the original.\n\nExample: Moving file.txt from Documents to Downloads means file.txt is now in Downloads and no longer in Documents."
   }),
   (_i: number) => ({
     q: "What does 'to rename' a file mean?",
     o: ["To change its name but keep it in the same place", "To move it", "To copy it", "To delete it"],
     c: 0,
     e: "To rename means to change the file's name. It stays in the same folder.",
-    de: "In the terminal, renaming and moving are often done with the same command (e.g. mv oldname newname)."
+    de: "To rename a file means to change its name but keep it in the same place (same folder).\n\nKey ideas:\n• The file content does not change—only the name. The old name no longer exists; the new name refers to the same file.\n• In the terminal, renaming and moving are often done with the same command (e.g. mv oldname newname). If you use a new name in the same folder, that is a rename.\n• Be careful with case: on case-sensitive systems, File.txt and file.txt are different names. Renaming between them can be tricky.\n\nExample: Renaming report.txt to report_old.txt leaves one file in the same folder, now called report_old.txt."
   }),
   (_i: number) => ({
     q: "What is uppercase?",
     o: ["Capital letters (A, B, C)", "Small letters (a, b, c)", "Numbers", "Symbols"],
     c: 0,
     e: "Uppercase means capital letters: A, B, C, etc.",
-    de: "In a case-sensitive system, FILE and file are different. Commands and filenames often use lowercase."
+    de: "Uppercase means capital letters: A, B, C, … (as opposed to lowercase a, b, c).\n\nKey ideas:\n• In a case-sensitive system, FILE and file are different. The terminal and many systems treat uppercase and lowercase as different characters.\n• Commands and filenames often use lowercase by convention. Using the wrong case can lead to 'command not found' or 'file not found'.\n• When typing commands, pay attention to case. For example, LS is not the same as ls on Linux and macOS.\n\nExample: The word 'Hello' has one uppercase letter (H) and four lowercase (ello)."
   }),
   (_i: number) => ({
     q: "What is lowercase?",
     o: ["Small letters (a, b, c)", "Capital letters", "Numbers only", "The first letter of a sentence"],
     c: 0,
     e: "Lowercase means small letters: a, b, c, etc.",
-    de: "Many terminal commands and file names use only lowercase. It avoids case-sensitivity mistakes."
+    de: "Lowercase means small letters: a, b, c, … (as opposed to uppercase A, B, C).\n\nKey ideas:\n• Many terminal commands and file names use only lowercase. Using lowercase consistently avoids case-sensitivity mistakes.\n• On a case-sensitive system, file and File are two different names. Sticking to lowercase for commands and filenames helps avoid 'file not found' or 'command not found'.\n• When you type commands, check the case: often everything is lowercase (e.g. ls, cd, pwd).\n\nExample: The command ls is lowercase. Typing LS may give 'command not found' on Linux and macOS."
   }),
   (_i: number) => ({
     q: "What is a character?",
     o: ["A single letter, digit, or symbol (e.g. A, 5, @)", "A whole word", "A command", "A file"],
     c: 0,
     e: "A character is one unit of text: a letter, a number, a space, or a symbol like @ or #.",
-    de: "Everything you type is a sequence of characters. Commands are case-sensitive, so each character matters."
+    de: "A character is one unit of text: a letter, a number, a space, or a symbol like @ or #.\n\nKey ideas:\n• Everything you type is a sequence of characters. Commands are case-sensitive, so each character matters.\n• A character can be a letter (a, B), a digit (5), a space, or a symbol (., @, #). The terminal treats text character by character.\n• Getting one character wrong (a typo) can make a command fail or open the wrong file.\n\nExample: The word 'ls' has two characters: l and s. If you type 'lls' (three characters), the command may not be recognized."
   }),
   (_i: number) => ({
     q: "What is a space?",

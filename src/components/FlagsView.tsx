@@ -3,27 +3,16 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-// Hacking green theme for Flags reference - flag names and options in terminal green
-const HACKING_GREEN = '#00ff41';  // Classic phosphor green
-const HACKING_GREEN_DIM = '#39ff14';
-const HACKING_GREEN_MUTED = '#4ade80';  // Softer for descriptions
+// Bash syntax highlighting for flags reference: oneDark base, comment neutral (per AGENTS.md)
+const COMMENT_NEUTRAL = 'hsl(0, 0%, 55%)';
 
 const flagsStyle = {
   ...oneDark,
-  comment: { color: 'hsl(120, 10%, 50%)', fontStyle: 'normal' as const },
-  prolog: { color: 'hsl(120, 10%, 50%)' },
-  cdata: { color: 'hsl(120, 10%, 50%)' },
-  // Flag names (-l, -a, --color) - hacking green
-  punctuation: { color: HACKING_GREEN },
-  'attr-name': { color: HACKING_GREEN },
-  keyword: { color: HACKING_GREEN_DIM },
-  builtin: { color: HACKING_GREEN_MUTED },
-  string: { color: HACKING_GREEN_MUTED },
-  constant: { color: HACKING_GREEN_MUTED },
-  property: { color: HACKING_GREEN },
-  operator: { color: HACKING_GREEN_MUTED },
-  variable: { color: HACKING_GREEN_MUTED },
-  function: { color: HACKING_GREEN_MUTED },
+  // Section headers (# ----------------- ls -----------------) — neutral so they don’t dominate
+  comment: { color: COMMENT_NEUTRAL, fontStyle: 'normal' as const },
+  prolog: { color: COMMENT_NEUTRAL },
+  cdata: { color: COMMENT_NEUTRAL },
+  // Keep oneDark colors for punctuation, keyword, string, etc. so flags and options are clearly highlighted
 };
 
 interface FlagsViewProps {
@@ -498,8 +487,7 @@ export const FlagsView: React.FC<FlagsViewProps> = ({ onBack }) => {
             background: 'transparent',
             fontSize: '0.8rem',
             lineHeight: '1.6',
-            fontFamily: "'Fira Code', monospace",
-            color: HACKING_GREEN_MUTED
+            fontFamily: "'Fira Code', monospace"
           }}
           codeTagProps={{
             style: {
