@@ -13,6 +13,7 @@ import { getTranslatedShortExplanation, SHORT_EXPLANATIONS_FR } from '../data/sh
 import { getDetailedExplanationForLevel, type DetailedExplanationLevel } from '../utils/detailedExplanationLevel';
 import { balanceDisplayedOptionLengths } from '../utils/optionLengthBalancer';
 import { playCorrectSound, playIncorrectSound, triggerHaptic } from '../utils/sounds';
+import { useSound } from '../contexts/SoundContext';
 
 // Function to format code snippets with proper Python indentation
 // Ensures newline after : and 4-space indentation for the next line
@@ -508,22 +509,18 @@ const translateText = (text: string, language: string): string => {
   return translated;
 };
 
-// Check if text contains any code-like content (for syntax highlighting)
+/** CLI-focused: only matches terminal commands, flags, etc. Not prose like "for strings". */
 const hasCodeLikeContent = (text: string): boolean => {
   if (!text || text.length < 2) return false;
   return (
-    /f["']/.test(text) ||                    // f-strings f"..." f'...'
-    /["'][^"']*["']/.test(text) ||           // String literals
-    /[a-zA-Z_]\w*\s*\(/.test(text) ||         // Function/method calls
-    /[\[\(\{]/.test(text) ||                  // Brackets
-    /\.[a-zA-Z_]\w*\s*\(/.test(text) ||       // Method calls .name(
-    /\b(def|class|for|while|if|with|import|from|print)\s+/.test(text) ||  // Keywords
-    /\b(and|or|not)\b/.test(text) ||          // Boolean operators
-    /[=!<>]=|[<>]/.test(text) ||             // Comparison operators ==, !=, <=, >=, <, >
-    /\[\d*:?-?\d*:?-?\d*\]/.test(text) ||     // Indexing/slicing [0], [0:3]
-    /[\+\-\*\/\%]/.test(text) ||             // Arithmetic operators
-    /\*\*/.test(text) ||                      // Power operator
-    /\b(True|False|None)\b/.test(text)        // Python literals
+    /`[^`]+`/.test(text) ||                   // Backtick-wrapped commands
+    /[a-zA-Z_][\w-]*\s+-[\w-]/.test(text) || // Command with flag: grep -n, ls -la
+    /\b(for\s+\w+\s+in|while|if|then|do|done)\s+/.test(text) ||  // Bash keywords (not bare "for")
+    /\[\[.*\]\]/.test(text) ||                // [[ condition ]]
+    /\$\{[\w@*#?-]+\}/.test(text) ||          // ${var}
+    /[<>|&;]/.test(text) ||                   // Redirects, pipes, etc.
+    /[=!<>]=|[<>]/.test(text) ||              // Comparison operators
+    /[\+\-\*\/\%]=/.test(text)                // Assignment operators
   );
 };
 
@@ -541,8 +538,8 @@ const splitQuestion = (text: string, language: string = 'en') => {
       // Find first line that looks like code (has indentation or code keywords)
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        // If line has indentation or starts with code keywords, split here
-        if (/^\s{2,}/.test(line) || /^\s*(def|class|for|while|if|with|import|from)\s+/.test(line)) {
+        // If line has indentation or starts with code keywords (bash for-loop, not bare "for")
+        if (/^\s{2,}/.test(line) || /^\s*(for\s+\w+\s+in|while|if|with|import|from|def|class)\s+/.test(line)) {
           const code = lines.slice(i).join('\n');
           return {
             prefix: lines.slice(0, i).join('\n').trim(),
@@ -605,8 +602,8 @@ const splitQuestion = (text: string, language: string = 'en') => {
       // If remaining text has function calls, brackets, or other code patterns, treat as code
       // This catches cases like "type(None)", "print('hello')", "[1, 2, 3]", "Python"[0], "5 == 5 and 5 > 10", etc.
       // IMPORTANT: Use ALL remaining text as code to avoid dropping parts (like "Python" in "Python"[0])
-      const functionCallPattern = /[a-zA-Z_]\w*\s*\(/;
-      const codeKeywordPattern = /\b(def|class|for|while|if|with|import|from|print)\s+/;
+      const functionCallPattern = /[a-zA-Z_][\w-]*\s*\(/;
+      const codeKeywordPattern = /\b(for\s+\w+\s+in|while|if|with|import|from|print)\s+|\b(ls|grep|cat|cd|echo|chmod)\s+(-|\w)/;
       const bracketPattern = /[\[\(\{]/;
       const comparisonPattern = /[=!<>]=|[<>]/;  // ==, !=, <=, >=, <, >
       const booleanKeywordPattern = /\b(and|or|not)\b/;
@@ -627,7 +624,7 @@ const splitQuestion = (text: string, language: string = 'en') => {
 
     // Fallback: look for common code patterns anywhere in the text
     const codePatterns = [
-      /\b(def|class|for|while|if|with|import|from)\s+/,  // Code keywords
+      /\b(for\s+\w+\s+in|while|if|with|import|from)\s+/,  // Code keywords (not bare "for")
       /print\s*\(/,                                      // Print statements
       /[a-zA-Z_]\w*\s*\(/,                               // Function calls (more lenient)
     ];
@@ -722,6 +719,7 @@ interface QuizViewProps {
   randomizeTrigger?: number; // Add trigger to force re-randomization
   randomMode?: boolean; // Random mode: questions from all levels
   randomModeStats?: { totalAnswered: number; totalCorrect: number }; // Base stats for live score display
+  drillLevels?: number[]; // Weak spot drill: only questions from these levels
   soundEnabled?: boolean; // Play correct/incorrect sounds
   hapticEnabled?: boolean; // Play haptic feedback
 }
@@ -739,10 +737,12 @@ export const QuizView: React.FC<QuizViewProps> = ({
   randomizeTrigger,
   randomMode = false,
   randomModeStats,
+  drillLevels,
   soundEnabled = true,
   hapticEnabled = true
 }) => {
   const { t, tRaw, language } = useLanguage();
+  const { playTapSound } = useSound();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -785,7 +785,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
       try {
         setLoading(true);
         // Fetch questions based on mode: level-specific or random from all levels
-        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode);
+        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode, drillLevels);
         // Shuffle options for each question so correct answer isn't always first
         const shuffledQuestions = data.map(shuffleOptions);
         setQuestions(shuffledQuestions);
@@ -805,7 +805,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     fetchQuestions();
     // Dependency on 'level', 'randomizeTrigger', and 'randomMode'. If any changes, we reset.
     // If completedIds (passed from props) changes, we do NOT re-run this.
-  }, [level, randomizeTrigger, randomMode]);
+  }, [level, randomizeTrigger, randomMode, drillLevels]);
 
   const handleOptionClick = (index: number) => {
     if (isAnswered) return;
@@ -888,7 +888,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     <div className="text-center p-12 glass rounded-3xl">
       <p className="text-rose-400 font-bold mb-4">{t('quiz.sequenceError')}</p>
       <p className="text-slate-400 text-sm mb-6">{t('quiz.couldNotRetrieve')}</p>
-      <button onClick={onExit} className="px-6 py-2 bg-emerald-500 rounded-xl font-bold">{t('quiz.returnToHub')}</button>
+      <button onClick={() => { playTapSound(); onExit(); }} className="px-6 py-2 bg-emerald-500 rounded-xl font-bold">{t('quiz.returnToHub')}</button>
     </div>
   );
 
@@ -924,7 +924,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-        <button onClick={onExit} className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/5">
+        <button onClick={() => { playTapSound(); onExit(); }} className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/5">
           <i className="fas fa-times"></i>
         </button>
         <div className="flex-1 min-w-0 px-6 overflow-x-auto overflow-y-hidden">
@@ -966,7 +966,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
             {currentQuestion.concept}
           </div>
           <button
-            onClick={handleSaveCurrentId}
+            onClick={() => { playTapSound(); handleSaveCurrentId(); }}
             className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border transition-colors ${
               isIdSaved
                 ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
@@ -1023,36 +1023,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                   </div>
                 );
               }
-              // No split, but question has code-like content — use syntax highlighting for entire question
-              if (hasCodeLikeContent(displayText)) {
-                return (
-                  <div className="overflow-x-auto flex-1">
-                    <SyntaxHighlighter
-                      language="bash"
-                      style={oneDark}
-                      customStyle={{
-                        padding: '1rem',
-                        margin: 0,
-                        background: 'transparent',
-                        fontSize: '0.875rem',
-                        lineHeight: '1.75',
-                        fontFamily: "'Fira Code', monospace"
-                      }}
-                      codeTagProps={{
-                        style: {
-                          fontFamily: "'Fira Code', monospace",
-                          whiteSpace: 'pre-wrap',
-                          display: 'block'
-                        }
-                      }}
-                      PreTag="div"
-                    >
-                      {formatCodeSnippet(displayText)}
-                    </SyntaxHighlighter>
-                  </div>
-                );
-              }
-              // No code detected, show as regular question
+              // No code detected — show as plain white text (prose, not Python/terminal)
               return (
                 <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 pt-4">
                   {displayText}
@@ -1084,7 +1055,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
               <button
                 key={idx}
                 disabled={isAnswered}
-                onClick={() => handleOptionClick(idx)}
+                onClick={() => { playTapSound(); handleOptionClick(idx); }}
                 className={`group w-full p-4 md:p-5 rounded-2xl border-2 text-left transition-all duration-300 flex items-center justify-between ${colorClass} ${!isAnswered && 'active:scale-[0.98]'}`}
               >
                 <div className="flex items-center gap-4">
@@ -1113,7 +1084,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
             <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
               {currentQuestion.detailedExplanation ? (
                 <button
-                  onClick={() => setShowDetailedExplanation(!showDetailedExplanation)}
+                  onClick={() => { playTapSound(); setShowDetailedExplanation(!showDetailedExplanation); }}
                   className="w-full flex items-center justify-between gap-2 mb-3 text-emerald-400 hover:text-emerald-300 transition-colors group cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
@@ -1264,7 +1235,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
             </div>
 
             <button
-              onClick={handleNext}
+              onClick={() => { playTapSound(); handleNext(); }}
               className="w-full py-5 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-black text-lg text-white transition-all transform active:scale-95 shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3"
             >
               {currentIndex === questions.length - 1 ? t('quiz.finishEvolution') : t('hub.continueMutation')}

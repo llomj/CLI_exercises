@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSound } from '../contexts/SoundContext';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -47,6 +48,7 @@ const Key: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 
 export const FlowView: React.FC<FlowViewProps> = ({ onBack }) => {
   const { language } = useLanguage();
+  const { playTapSound } = useSound();
   const isFr = language === 'fr';
 
   return (
@@ -57,7 +59,7 @@ export const FlowView: React.FC<FlowViewProps> = ({ onBack }) => {
           {isFr ? 'Flux shell et pipelines' : 'Shell Flow & Pipelines'}
         </h2>
         <button
-          onClick={onBack}
+          onClick={() => { playTapSound(); onBack(); }}
           className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold transition-colors"
         >
           {isFr ? 'Retour' : 'Back'}

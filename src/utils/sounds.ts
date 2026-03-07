@@ -57,6 +57,21 @@ const scheduleTone = (
   osc.stop(end + 0.01);
 };
 
+/** Cute short tap/chime for UI buttons (settings, mutation, etc.) */
+export const playUITapSound = async () => {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') await ctx.resume();
+  const now = ctx.currentTime;
+  const masterGain = ctx.createGain();
+  masterGain.connect(ctx.destination);
+  masterGain.gain.setValueAtTime(0.001, now);
+  masterGain.gain.exponentialRampToValueAtTime(0.2, now + 0.01);
+  masterGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  scheduleTone(ctx, masterGain, now, 880, 0, 0.06, 'sine', 0.5);   // A5
+  scheduleTone(ctx, masterGain, now, 1046.5, 0.05, 0.08, 'sine', 0.4); // C6
+};
+
 /** Play happy chime when answer is correct */
 export const playCorrectSound = async () => {
   const ctx = getAudioContext();

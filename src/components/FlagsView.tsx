@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSound } from '../contexts/SoundContext';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -482,6 +483,7 @@ daemon-reload    Recharger config
 --oneline    Format log court`;
 
 export const FlagsView: React.FC<FlagsViewProps> = ({ onBack }) => {
+  const { playTapSound } = useSound();
   const { language } = useLanguage();
   const content = language === 'fr' ? FLAGS_FR : FLAGS_EN;
 
@@ -493,7 +495,7 @@ export const FlagsView: React.FC<FlagsViewProps> = ({ onBack }) => {
           {language === 'fr' ? 'Référence des options' : 'Flags Reference'}
         </h2>
         <button
-          onClick={onBack}
+          onClick={() => { playTapSound(); onBack(); }}
           className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold transition-colors"
         >
           {language === 'fr' ? 'Retour' : 'Back'}

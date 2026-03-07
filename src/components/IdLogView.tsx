@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSound } from '../contexts/SoundContext';
 import { IdLogEntry } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
@@ -6,7 +7,7 @@ import { QUESTIONS_BANK } from '../questionsBank';
 import { translateQuestionText, getQuestionDisplay } from '../utils/translateQuestion';
 import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
 import { getDetailedExplanationForLevel, type DetailedExplanationLevel } from '../utils/detailedExplanationLevel';
-import { splitQuestion, hasCodeLikeContent } from '../utils/splitQuestion';
+import { splitQuestion } from '../utils/splitQuestion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -91,6 +92,7 @@ interface IdLogViewProps {
 
 export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
   const { t, language } = useLanguage();
+  const { playTapSound } = useSound();
   const [expandedEntries, setExpandedEntries] = useState<Set<string>>(new Set());
   const sortedEntries = [...entries].sort((a, b) => b.timestamp - a.timestamp);
 
@@ -122,7 +124,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
             <i className="fas fa-list text-emerald-400"></i> {t('idSearch.idLog')}
           </h2>
           <button
-            onClick={onClose}
+            onClick={() => { playTapSound(); onClose(); }}
             className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
           >
             <i className="fas fa-times"></i>
@@ -157,10 +159,11 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
               <div
                 key={entryKey}
                 className="glass rounded-2xl p-5 border-l-4 border-l-emerald-500 transition-all hover:translate-x-1 cursor-pointer"
-                onClick={() => toggleCodonExplanation(entryKey)}
+                onClick={() => { playTapSound(); toggleCodonExplanation(entryKey); }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
+                    playTapSound();
                     toggleCodonExplanation(entryKey);
                   }
                 }}
@@ -217,34 +220,6 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
                                 {formatCodeSnippet(code)}
                               </SyntaxHighlighter>
                             </div>
-                          </div>
-                        );
-                      }
-                      if (hasCodeLikeContent(displayText)) {
-                        return (
-                          <div className="overflow-x-auto flex-1">
-                            <SyntaxHighlighter
-                              language="bash"
-                              style={oneDark}
-                              customStyle={{
-                                padding: '1rem',
-                                margin: 0,
-                                background: 'transparent',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.75',
-                                fontFamily: "'Fira Code', monospace"
-                              }}
-                              codeTagProps={{
-                                style: {
-                                  fontFamily: "'Fira Code', monospace",
-                                  whiteSpace: 'pre-wrap',
-                                  display: 'block'
-                                }
-                              }}
-                              PreTag="div"
-                            >
-                              {formatCodeSnippet(displayText)}
-                            </SyntaxHighlighter>
                           </div>
                         );
                       }

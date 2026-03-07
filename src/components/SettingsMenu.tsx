@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSound } from '../contexts/SoundContext';
 
 interface SettingsMenuProps {
   isOpen: boolean;
@@ -17,6 +18,8 @@ interface SettingsMenuProps {
   onShowLearningLog?: () => void;
   onShowOperations?: () => void;
   onShowLevelSelector?: () => void;
+  onShowWeakSpotDrills?: () => void;
+  onShowPlatform?: () => void;
   onToggleLanguage?: () => void;
   soundEnabled?: boolean;
   onToggleSound?: () => void;
@@ -51,6 +54,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onShowLearningLog,
   onShowOperations,
   onShowLevelSelector,
+  onShowWeakSpotDrills,
+  onShowPlatform,
   onToggleLanguage,
   soundEnabled = true,
   onToggleSound,
@@ -59,6 +64,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onResetApp
 }) => {
   const { t, language } = useLanguage();
+  const { playTapSound } = useSound();
   const [rulesExpanded, setRulesExpanded] = useState(false);
 
   useEffect(() => {
@@ -133,6 +139,20 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
         onClick: () => { onShowOperations(); onClose(); }
       });
     }
+    if (onShowWeakSpotDrills) {
+      rulesSubItems.push({
+        icon: 'fa-bullseye',
+        label: t('rules.weakSpotDrills'),
+        onClick: () => { onShowWeakSpotDrills(); onClose(); }
+      });
+    }
+    if (onShowPlatform) {
+      rulesSubItems.push({
+        icon: 'fa-laptop',
+        label: t('rules.platform'),
+        onClick: () => { onShowPlatform(); onClose(); }
+      });
+    }
     if (rulesSubItems.length > 0) {
       menuItems.push({
         type: 'rules',
@@ -143,54 +163,31 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Hub view items (Search, ID Log, Learning Log, Flow)
-  if (view === 'hub') {
-    if (onShowIdSearch) {
-      menuItems.push({
-        type: 'item',
-        icon: 'fa-hashtag',
-        label: t('settings.searchById'),
-        onClick: () => { onShowIdSearch(); onClose(); }
-      });
-    }
-    if (onShowIdLog) {
-      menuItems.push({
-        type: 'item',
-        icon: 'fa-list',
-        label: t('settings.idLog'),
-        onClick: () => { onShowIdLog(); onClose(); }
-      });
-    }
-    if (onShowLearningLog) {
-      menuItems.push({
-        type: 'item',
-        icon: 'fa-book-open',
-        label: t('app.learningLog'),
-        onClick: () => { onShowLearningLog(); onClose(); },
-        active: view === 'log'
-      });
-    }
+  // Search, ID Log, Learning Log — show in all views for consistent access
+  if (onShowIdSearch) {
+    menuItems.push({
+      type: 'item',
+      icon: 'fa-hashtag',
+      label: t('settings.searchById'),
+      onClick: () => { onShowIdSearch(); onClose(); }
+    });
   }
-
-  // Non-hub: ID Log, Learning Log
-  if (view !== 'hub') {
-    if (onShowIdLog) {
-      menuItems.push({
-        type: 'item',
-        icon: 'fa-list',
-        label: t('settings.idLog'),
-        onClick: () => { onShowIdLog(); onClose(); }
-      });
-    }
-    if (onShowLearningLog) {
-      menuItems.push({
-        type: 'item',
-        icon: 'fa-book-open',
-        label: t('app.learningLog'),
-        onClick: () => { onShowLearningLog(); onClose(); },
-        active: view === 'log'
-      });
-    }
+  if (onShowIdLog) {
+    menuItems.push({
+      type: 'item',
+      icon: 'fa-list',
+      label: t('settings.idLog'),
+      onClick: () => { onShowIdLog(); onClose(); }
+    });
+  }
+  if (onShowLearningLog) {
+    menuItems.push({
+      type: 'item',
+      icon: 'fa-book-open',
+      label: t('app.learningLog'),
+      onClick: () => { onShowLearningLog(); onClose(); },
+      active: view === 'log'
+    });
   }
 
   // Language
@@ -241,7 +238,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       return (
         <div key={index}>
           <button
-            onClick={() => setRulesExpanded(prev => !prev)}
+            onClick={() => { playTapSound(); setRulesExpanded(prev => !prev); }}
             className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
           >
             <div className="flex items-center gap-3">
@@ -255,7 +252,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               {item.subItems.map((sub, i) => (
                 <button
                   key={i}
-                  onClick={sub.onClick}
+                  onClick={() => { playTapSound(); sub.onClick(); }}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-slate-400 hover:bg-white/10 hover:text-white"
                 >
                   <i className={`fas ${sub.icon} text-sm w-5 flex-shrink-0`}></i>
@@ -271,7 +268,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       return (
         <button
           key={index}
-          onClick={item.onClick}
+          onClick={() => { playTapSound(); item.onClick!(); }}
           className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left text-slate-300 hover:bg-white/10 hover:text-white"
         >
           <div className="flex items-center gap-3">
@@ -288,7 +285,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       return (
         <button
           key={index}
-          onClick={item.onClick}
+          onClick={() => { playTapSound(); item.onClick!(); }}
           className={`
             w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left
             ${item.active
@@ -307,14 +304,14 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop - z-[110] so Settings stays above modals (z-[100]) */}
       <div
-        className="fixed inset-0 z-40"
+        className="fixed inset-0 z-[110]"
         onClick={onClose}
       />
 
       {/* Menu - near top-right on mobile, below trigger on desktop */}
-      <div className={`z-50 min-w-[200px] ${anchorBottom ? 'fixed top-[max(4rem,env(safe-area-inset-top))] right-4' : 'absolute top-full right-0 mt-2'}`}>
+      <div className={`z-[110] min-w-[200px] ${anchorBottom ? 'fixed top-[max(4rem,env(safe-area-inset-top))] right-4' : 'absolute top-full right-0 mt-2'}`}>
         <div className="glass rounded-2xl p-2 shadow-2xl border border-white/10 animate-in slide-in-from-top-2 duration-200 !bg-slate-900/[0.02]">
           {menuItems.map((item, index) => renderItem(item, index))}
 
@@ -324,7 +321,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
               <div className="my-2 border-t border-white/10" />
               <button
                 onClick={() => {
-                  onResetApp();
+                  playTapSound();
+                  onResetApp?.();
                   onClose();
                 }}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left text-amber-400 hover:bg-amber-500/10 hover:text-amber-300"

@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSound } from '../contexts/SoundContext';
 import { QuestionAttempt } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
-import { splitQuestion, hasCodeLikeContent } from '../utils/splitQuestion';
+import { splitQuestion } from '../utils/splitQuestion';
 import { translateQuestionText } from '../utils/translateQuestion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -17,6 +18,7 @@ interface HistoryLogProps {
 
 export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
   const { t, language } = useLanguage();
+  const { playTapSound } = useSound();
   const sortedHistory = [...history].sort((a, b) => b.timestamp - a.timestamp);
 
   return (
@@ -26,7 +28,7 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
           <i className="fas fa-book-open text-emerald-400"></i> {t('history.learningLog')}
         </h2>
         <button 
-          onClick={onBack}
+          onClick={() => { playTapSound(); onBack(); }}
           className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold transition-colors"
         >
           {t('history.backToHub')}
@@ -85,28 +87,6 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
                           PreTag="div"
                         >
                           {code}
-                        </SyntaxHighlighter>
-                      </div>
-                    );
-                  }
-                  if (hasCodeLikeContent(displayText)) {
-                    return (
-                      <div className="rounded-lg bg-slate-800/50 overflow-hidden">
-                        <SyntaxHighlighter
-                          language="bash"
-                          style={oneDark}
-                          customStyle={{
-                            padding: '0.75rem 1rem',
-                            margin: 0,
-                            background: 'transparent',
-                            fontSize: '0.8rem',
-                            lineHeight: '1.5',
-                            fontFamily: "'Fira Code', monospace"
-                          }}
-                          codeTagProps={{ style: { fontFamily: "'Fira Code', monospace", whiteSpace: 'pre-wrap' } }}
-                          PreTag="div"
-                        >
-                          {displayText}
                         </SyntaxHighlighter>
                       </div>
                     );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSound } from '../contexts/SoundContext';
 import { Question } from '../types';
 import { QUESTIONS_BANK } from '../questionsBank';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -7,7 +8,7 @@ import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTr
 import { translateQuestionText, getQuestionDisplay } from '../utils/translateQuestion';
 import { getTranslatedShortExplanation } from '../data/shortExplanationsTranslations';
 import { getDetailedExplanationForLevel, type DetailedExplanationLevel } from '../utils/detailedExplanationLevel';
-import { splitQuestion, hasCodeLikeContent } from '../utils/splitQuestion';
+import { splitQuestion } from '../utils/splitQuestion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -145,6 +146,7 @@ interface IdSearchModalProps {
 
 export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToLog }) => {
   const { t, language } = useLanguage();
+  const { playTapSound } = useSound();
   const [idInput, setIdInput] = useState('');
   const [question, setQuestion] = useState<Question | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -154,7 +156,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
 
   const handleSearch = () => {
     const id = parseInt(idInput.trim());
-    if (isNaN(id) || id < 1 || id > 3000) {
+    if (isNaN(id) || id < 1 || id > 3300) {
       setError(t('idSearch.invalidId'));
       setQuestion(null);
       return;
@@ -205,7 +207,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
             <i className="fas fa-hashtag text-emerald-400"></i> {t('idSearch.searchById')}
           </h2>
           <button
-            onClick={onClose}
+            onClick={() => { playTapSound(); onClose(); }}
             className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
           >
             <i className="fas fa-times"></i>
@@ -216,16 +218,17 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
           <div className="flex gap-2">
             <input
               type="number"
+              inputMode="numeric"
               value={idInput}
               onChange={(e) => setIdInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t('idSearch.enterId')}
               className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               min="1"
-              max="3000"
+              max="3300"
             />
             <button
-              onClick={handleSearch}
+              onClick={() => { playTapSound(); handleSearch(); }}
               className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all"
             >
               <i className="fas fa-search mr-2"></i>{t('idSearch.search')}
@@ -251,7 +254,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                 </div>
                 <button
                   id="save-confirm"
-                  onClick={handleSave}
+                  onClick={() => { playTapSound(); handleSave(); }}
                   className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl text-sm font-bold transition-all flex items-center gap-2"
                 >
                   <i className="fas fa-bookmark"></i> {t('idSearch.saveToLog')}
@@ -296,34 +299,6 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                                 {formatCodeSnippet(code)}
                               </SyntaxHighlighter>
                             </div>
-                          </div>
-                        );
-                      }
-                      if (hasCodeLikeContent(displayText)) {
-                        return (
-                          <div className="overflow-x-auto flex-1">
-                            <SyntaxHighlighter
-                              language="bash"
-                              style={oneDark}
-                              customStyle={{
-                                padding: '1rem',
-                                margin: 0,
-                                background: 'transparent',
-                                fontSize: '0.875rem',
-                                lineHeight: '1.75',
-                                fontFamily: "'Fira Code', monospace"
-                              }}
-                              codeTagProps={{
-                                style: {
-                                  fontFamily: "'Fira Code', monospace",
-                                  whiteSpace: 'pre-wrap',
-                                  display: 'block'
-                                }
-                              }}
-                              PreTag="div"
-                            >
-                              {formatCodeSnippet(displayText)}
-                            </SyntaxHighlighter>
                           </div>
                         );
                       }

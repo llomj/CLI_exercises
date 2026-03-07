@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSound } from '../contexts/SoundContext';
 import { formatTranslation } from '../translations';
 import { useTranslatedOperations, OperationItem } from '../hooks/useTranslatedData';
 
@@ -230,6 +231,7 @@ interface OperationsViewProps {
 }
 
 export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
+  const { playTapSound } = useSound();
   const { t } = useLanguage();
   const translatedData = useTranslatedOperations(OPERATIONS_DATA, MATH_CONCEPTS_DATA);
   const [search, setSearch] = useState('');
@@ -264,13 +266,13 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
           {/* Backdrop */}
           <div 
             className="fixed inset-0 bg-slate-950/85 backdrop-blur-md transition-opacity" 
-            onClick={() => setSelectedItem(null)}
+            onClick={() => { playTapSound(); setSelectedItem(null); }}
           ></div>
           
           {/* Content Box */}
           <div className="glass w-full max-w-2xl my-4 sm:my-8 rounded-3xl p-6 sm:p-10 shadow-2xl relative z-10 border-emerald-500/30 animate-in fade-in zoom-in duration-300">
             <button 
-              onClick={() => setSelectedItem(null)}
+              onClick={() => { playTapSound(); setSelectedItem(null); }}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/10"
             >
               <i className="fas fa-times"></i>
@@ -310,7 +312,7 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
 
               <div className="pt-4 pb-2">
                 <button 
-                  onClick={() => setSelectedItem(null)}
+                  onClick={() => { playTapSound(); setSelectedItem(null); }}
                   className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 active:scale-95"
                 >
                   {t('operations.gotIt')}
@@ -326,7 +328,7 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
           <i className="fas fa-calculator text-emerald-400"></i>           {t('operations.title')}
         </h2>
         <button 
-          onClick={onBack}
+          onClick={() => { playTapSound(); onBack(); }}
           className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold transition-colors"
         >
           {t('operations.back')}
@@ -337,6 +339,7 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
       <div className="flex gap-2 mb-6 bg-white/5 p-1 rounded-2xl border border-white/10">
         <button
           onClick={() => {
+            playTapSound();
             setActiveTab('operations');
             setSearch('');
             setSelectedItem(null);
@@ -351,6 +354,7 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
         </button>
         <button
           onClick={() => {
+            playTapSound();
             setActiveTab('math');
             setSearch('');
             setSelectedItem(null);
@@ -382,7 +386,7 @@ export const OperationsView: React.FC<OperationsViewProps> = ({ onBack }) => {
         {filteredData.map((item, idx) => (
           <div 
             key={idx}
-            onClick={() => setSelectedItem(item)}
+            onClick={() => { playTapSound(); setSelectedItem(item); }}
             className="glass p-5 rounded-2xl space-y-2 hover:border-emerald-500/40 hover:bg-slate-800/80 transition-all cursor-pointer group active:scale-[0.98]"
           >
             <div className="flex justify-between items-start">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { UserStats, PersonaStage } from '../types';
+import { useSound } from '../contexts/SoundContext';
 import { LEVELS, QUESTIONS_PER_LEVEL, TOTAL_QUESTIONS, getStarsFromAccuracy, getStarsFromRandomCorrect, getRandomModeScore, getPersonaFromRandomScore, getNextRandomModeThreshold } from '../constants';
 import { PersonaBadge } from './PersonaBadge';
 import { ProgressBar } from './ProgressBar';
@@ -12,6 +13,7 @@ interface EvolutionHubProps {
 }
 
 export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }) => {
+  const { playTapSound } = useSound();
   const { t } = useLanguage();
   const randomMode = stats.randomMode ?? false;
   const rm = stats.randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
@@ -30,12 +32,15 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
     : null;
 
   // Stars: level mode = accuracy per level; random mode = correct vs TOTAL_QUESTIONS (harder)
+  // When no progress in level, never show stars (avoids stale acquiredStars highlighting)
   const earnedStars = randomMode
     ? getStarsFromRandomCorrect(rm.totalCorrect)
-    : (stats.acquiredStars?.[stats.currentLevel] ?? getStarsFromAccuracy(
-        stats.correctPerLevel?.[stats.currentLevel] || 0,
-        progress
-      ));
+    : progress === 0
+      ? 0
+      : (stats.acquiredStars?.[stats.currentLevel] ?? getStarsFromAccuracy(
+          stats.correctPerLevel?.[stats.currentLevel] || 0,
+          progress
+        ));
 
   const displayPersona = randomMode ? randomPersona : currentLevelInfo.persona;
 
@@ -180,7 +185,10 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           </div>
 
           <button
-            onClick={onStartQuiz}
+            onClick={() => {
+              playTapSound();
+              onStartQuiz();
+            }}
             className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl shadow-emerald-500/40 flex items-center justify-center gap-3"
           >
             {t('hub.continueMutation')} <i className="fas fa-chevron-right text-sm"></i>

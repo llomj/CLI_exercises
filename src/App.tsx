@@ -7,7 +7,8 @@ import { IdLogEntry } from './types';
 import { LEVELS, XP_PER_QUESTION, QUESTIONS_PER_LEVEL, getStarsFromProgress, getStarsFromAccuracy, getStarsFromRandomCorrect, getRandomModeScore, getPersonaFromRandomScore, PERSONA_EMOJI } from './constants';
 import { useLanguage } from './contexts/LanguageContext';
 import { formatTranslation } from './translations';
-import { playStarMelodyShort, playStarMelodyLong, triggerHaptic } from './utils/sounds';
+import { playStarMelodyShort, playStarMelodyLong, playUITapSound, triggerHaptic } from './utils/sounds';
+import { SoundProvider } from './contexts/SoundContext';
 
 const LOCAL_STORAGE_KEY = 'cli_exercises_learn_stats_v1';
 const SOUND_STORAGE_KEY = 'cli_exercises_sound_v1';
@@ -68,6 +69,8 @@ const OperationsView = lazy(() => import('./components/OperationsView').then((mo
 const MethodsView = lazy(() => import('./components/MethodsView').then((module) => ({ default: module.MethodsView })));
 const FlagsView = lazy(() => import('./components/FlagsView').then((module) => ({ default: module.FlagsView })));
 const FlowView = lazy(() => import('./components/FlowView').then((module) => ({ default: module.FlowView })));
+const WeakSpotDrillsView = lazy(() => import('./components/WeakSpotDrillsView').then((module) => ({ default: module.WeakSpotDrillsView })));
+const PlatformView = lazy(() => import('./components/PlatformView').then((module) => ({ default: module.PlatformView })));
 const IdSearchModal = lazy(() => import('./components/IdSearchModal').then((module) => ({ default: module.IdSearchModal })));
 const IdLogView = lazy(() => import('./components/IdLogView').then((module) => ({ default: module.IdLogView })));
 const LevelSelectorModal = lazy(() => import('./components/LevelSelectorModal').then((module) => ({ default: module.LevelSelectorModal })));
@@ -101,6 +104,9 @@ const App: React.FC = () => {
   const [showIdSearch, setShowIdSearch] = useState(false);
   const [showIdLog, setShowIdLog] = useState(false);
   const [showLevelSelector, setShowLevelSelector] = useState(false);
+  const [showWeakSpotDrills, setShowWeakSpotDrills] = useState(false);
+  const [showPlatform, setShowPlatform] = useState(false);
+  const [drillLevels, setDrillLevels] = useState<number[] | null>(null);
   const [showSettingsMenu, setShowSettingsMenu] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(() => {
@@ -208,6 +214,14 @@ const App: React.FC = () => {
   const currentProgress = stats.levelProgress[stats.currentLevel] || 0;
 
   const handleStartEvolution = () => {
+    setView('quiz');
+    setShowResult(null);
+    setDrillLevels(null);
+  };
+
+  const handleStartDrill = (levels: number[]) => {
+    setDrillLevels(levels);
+    setShowWeakSpotDrills(false);
     setView('quiz');
     setShowResult(null);
   };
@@ -373,10 +387,11 @@ const App: React.FC = () => {
   };
 
   return (
+    <SoundProvider soundEnabled={soundEnabled} onPlay={() => void playUITapSound()}>
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-emerald-500/30 pb-28">
       <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex w-full items-center gap-4">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('hub')}>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => { if (soundEnabled) void playUITapSound(); setView('hub'); }}>
             <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
               <i className="fas fa-terminal text-white text-xs"></i>
             </div>
@@ -415,11 +430,14 @@ const App: React.FC = () => {
 
       </nav>
 
-      {/* Settings at bottom - pb lifts gear above iPhone home-indicator; min 2rem when env is 0 in PWA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-slate-950 to-transparent">
+      {/* Settings at bottom - z-[110] so gear stays above modals (z-[100]); always accessible */}
+      <div className="fixed bottom-0 left-0 right-0 z-[110] flex justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-2 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none">
         <button
-          onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-          className="w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all shadow-lg min-w-[64px] min-h-[64px]"
+          onClick={() => {
+            if (soundEnabled) void playUITapSound();
+            setShowSettingsMenu(!showSettingsMenu);
+          }}
+          className="w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all shadow-lg min-w-[64px] min-h-[64px] pointer-events-auto"
           title={t('settings.settings')}
         >
           <i className="fas fa-gear text-xl"></i>
@@ -436,11 +454,13 @@ const App: React.FC = () => {
           onShowMethods={() => setShowMethods(true)}
           onShowFlags={() => setShowFlags(true)}
           onShowFlow={() => setShowFlow(true)}
-          onShowIdSearch={view === 'hub' ? () => setShowIdSearch(true) : undefined}
+          onShowIdSearch={() => setShowIdSearch(true)}
           onShowIdLog={() => setShowIdLog(true)}
           onShowLearningLog={() => setView('log')}
           onShowOperations={() => setShowOperations(true)}
           onShowLevelSelector={() => setShowLevelSelector(true)}
+          onShowWeakSpotDrills={() => setShowWeakSpotDrills(true)}
+          onShowPlatform={() => setShowPlatform(true)}
           onToggleLanguage={toggleLanguage}
           soundEnabled={soundEnabled}
           onToggleSound={toggleSound}
@@ -455,10 +475,14 @@ const App: React.FC = () => {
             <QuizView
               level={stats.currentLevel}
               currentProgress={currentProgress}
-              levelStars={randomMode ? getStarsFromRandomCorrect(stats.randomModeStats?.totalCorrect ?? 0) : (stats.acquiredStars?.[stats.currentLevel] ?? getStarsFromAccuracy(stats.correctPerLevel?.[stats.currentLevel] ?? 0, currentProgress))}
+              levelStars={randomMode ? getStarsFromRandomCorrect(stats.randomModeStats?.totalCorrect ?? 0) : currentProgress === 0 ? 0 : (stats.acquiredStars?.[stats.currentLevel] ?? getStarsFromAccuracy(stats.correctPerLevel?.[stats.currentLevel] ?? 0, currentProgress))}
               completedIds={stats.completedQuestionIds}
+              drillLevels={drillLevels ?? undefined}
               onAttempt={recordAttempt}
-              onComplete={handleQuizComplete}
+              onComplete={(score) => {
+                handleQuizComplete(score);
+                setDrillLevels(null);
+              }}
               onExit={() => setView('hub')}
               randomizeTrigger={randomizeTrigger}
               randomMode={randomMode}
@@ -537,7 +561,7 @@ const App: React.FC = () => {
             </div>
 
             <button
-              onClick={() => setShowResult(null)}
+              onClick={() => { if (soundEnabled) void playUITapSound(); setShowResult(null); }}
               className={`w-full py-4 rounded-2xl font-bold text-white transition-all transform active:scale-95 shadow-xl relative z-10 ${showResult.starEarned
                   ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-950 text-lg'
                   : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/30'
@@ -556,7 +580,7 @@ const App: React.FC = () => {
 
       <footer className="mt-auto border-t border-white/5 p-8 text-center text-slate-600 text-sm">
         <p>{t('footer.copyright')}</p>
-        <p className="mt-1 text-[10px] text-slate-700">SW v13</p>
+        <p className="mt-1 text-[10px] text-slate-700">SW v15</p>
       </footer>
 
       {/* Operations View Modal */}
@@ -603,6 +627,32 @@ const App: React.FC = () => {
         </div>
       )}
 
+      {/* Weak Spot Drills Modal */}
+      {showWeakSpotDrills && (
+        <div className="fixed inset-0 z-[100] bg-slate-950 overflow-y-auto">
+          <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <Suspense fallback={<ViewLoading />}>
+              <WeakSpotDrillsView
+                history={stats.history}
+                onBack={() => setShowWeakSpotDrills(false)}
+                onStartDrill={handleStartDrill}
+              />
+            </Suspense>
+          </div>
+        </div>
+      )}
+
+      {/* Platform (Linux vs macOS) Modal */}
+      {showPlatform && (
+        <div className="fixed inset-0 z-[100] bg-slate-950 overflow-y-auto">
+          <div className="container mx-auto px-4 py-8 max-w-4xl">
+            <Suspense fallback={<ViewLoading />}>
+              <PlatformView onBack={() => setShowPlatform(false)} />
+            </Suspense>
+          </div>
+        </div>
+      )}
+
       {/* Reset App Confirmation Modal */}
       {showResetModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
@@ -620,13 +670,13 @@ const App: React.FC = () => {
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() => setShowResetModal(false)}
+                onClick={() => { if (soundEnabled) void playUITapSound(); setShowResetModal(false); }}
                 className="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-bold text-white transition-all border border-white/10"
               >
                 {t('resetModal.cancel')}
               </button>
               <button
-                onClick={confirmResetApp}
+                onClick={() => { if (soundEnabled) void playUITapSound(); confirmResetApp(); }}
                 className="flex-1 py-3 bg-amber-500 hover:bg-amber-600 rounded-xl font-bold text-white transition-all shadow-xl shadow-amber-500/30"
               >
                 {t('resetModal.confirm')}
@@ -654,13 +704,13 @@ const App: React.FC = () => {
             </div>
             <div className="flex gap-3">
               <button
-                onClick={() => setShowRandomModeModal(false)}
+                onClick={() => { if (soundEnabled) void playUITapSound(); setShowRandomModeModal(false); }}
                 className="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl font-bold text-white transition-all border border-white/10"
               >
                 {t('randomMode.cancel')}
               </button>
               <button
-                onClick={randomMode ? confirmLevelMode : confirmRandomMode}
+                onClick={() => { if (soundEnabled) void playUITapSound(); (randomMode ? confirmLevelMode : confirmRandomMode)(); }}
                 className={`flex-1 py-3 rounded-xl font-bold text-white transition-all ${randomMode
                   ? 'bg-emerald-500 hover:bg-emerald-600 shadow-xl shadow-emerald-500/30'
                   : 'bg-green-500 hover:bg-green-600 shadow-xl shadow-green-500/30'
@@ -710,6 +760,7 @@ const App: React.FC = () => {
         </Suspense>
       )}
     </div>
+    </SoundProvider>
   );
 };
 

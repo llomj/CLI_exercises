@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSound } from '../contexts/SoundContext';
 import { LEVELS, PERSONA_EMOJI, getStarsFromAccuracy, getStarsFromRandomCorrect } from '../constants';
 import { PersonaStage, RandomModeStats } from '../types';
 import { TadpoleIcon } from './TadpoleIcon';
@@ -29,8 +30,10 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
   randomModeStats
 }) => {
   const { t } = useLanguage();
+  const { playTapSound } = useSound();
 
   const handleLevelSelect = (level: number) => {
+    playTapSound();
     if (level <= highestUnlockedLevel) {
       onSelectLevel(level);
       onClose();
@@ -50,7 +53,7 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
             <i className="fas fa-layer-group text-emerald-400"></i> {t('levelSelector.selectLevel')}
           </h2>
           <button
-            onClick={onClose}
+            onClick={() => { playTapSound(); onClose(); }}
             className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
           >
             <i className="fas fa-times"></i>
@@ -64,7 +67,8 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
             const isUnlocked = levelInfo.level <= highestUnlockedLevel;
             const progress = levelProgress[levelInfo.level] || 0;
             const correct = correctPerLevel[levelInfo.level] || 0;
-            const stars = acquiredStars[levelInfo.level] ?? getStarsFromAccuracy(correct, progress);
+            // When no progress, never show stars (avoids stale acquiredStars highlighting)
+            const stars = progress === 0 ? 0 : (acquiredStars[levelInfo.level] ?? getStarsFromAccuracy(correct, progress));
 
             return (
               <button
