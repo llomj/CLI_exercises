@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { UserStats, PersonaStage, QuestionAttempt } from './types';
+import { TadpoleIcon } from './components/TadpoleIcon';
 import { EvolutionHub } from './components/EvolutionHub';
 import { SettingsMenu } from './components/SettingsMenu';
 import { IdLogEntry } from './types';
@@ -386,8 +387,10 @@ const App: React.FC = () => {
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-sm">
-                <span className="text-white">{PERSONA_EMOJI[currentPersona] ?? '🐟'}</span>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-sm text-white">
+                {currentPersona === PersonaStage.TADPOLE
+                  ? <TadpoleIcon size={22} className="fill-current" />
+                  : <span>{PERSONA_EMOJI[currentPersona] ?? '🐟'}</span>}
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">{t('app.rank')}</span>

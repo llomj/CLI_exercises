@@ -1,6 +1,7 @@
 import React from 'react';
 import { LEVELS, PERSONA_EMOJI, getStarsFromAccuracy, getStarsFromRandomCorrect } from '../constants';
 import { PersonaStage, RandomModeStats } from '../types';
+import { TadpoleIcon } from './TadpoleIcon';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
 
@@ -36,8 +37,10 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
     }
   };
 
-  const getPersonaEmoji = (persona: PersonaStage): string =>
-    PERSONA_EMOJI[persona] ?? '🐟';
+  const renderPersona = (persona: PersonaStage) =>
+    persona === PersonaStage.TADPOLE
+      ? <TadpoleIcon size={28} className="fill-current" />
+      : (PERSONA_EMOJI[persona] ?? '🐟');
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -90,20 +93,18 @@ export const LevelSelectorModal: React.FC<LevelSelectorModalProps> = ({
                         ? 'bg-slate-700'
                         : 'bg-slate-800'
                     }`}>
-                    <span className={isCurrent ? 'text-white' : isUnlocked ? 'text-slate-400' : 'text-slate-600'}>
-                      {getPersonaEmoji(levelInfo.persona)}
+                    <span className={`inline-flex items-center justify-center ${isCurrent ? 'text-white' : isUnlocked ? 'text-slate-400' : 'text-slate-600'}`}>
+                      {renderPersona(levelInfo.persona)}
                     </span>
                   </div>
-                  {isUnlocked && (
-                    <div className="flex gap-0.5">
-                      {[1, 2, 3, 4, 5].map(starNum => (
-                        <i
-                          key={starNum}
-                          className={`fas fa-star text-[9px] ${starNum <= stars ? 'text-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]' : 'text-slate-700/50'}`}
-                        ></i>
-                      ))}
-                    </div>
-                  )}
+                  <div className="flex gap-0.5">
+                    {[1, 2, 3, 4, 5].map(starNum => (
+                      <i
+                        key={starNum}
+                        className={`fas fa-star text-[9px] ${starNum <= stars ? 'text-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.4)]' : 'text-slate-600/60'}`}
+                      ></i>
+                    ))}
+                  </div>
                   <div className="text-center">
                     <div className={`text-sm font-black ${isCurrent ? 'text-emerald-400' : isUnlocked ? 'text-white' : 'text-slate-500'
                       }`}>
