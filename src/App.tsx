@@ -14,18 +14,18 @@ const LOCAL_STORAGE_KEY = 'cli_exercises_learn_stats_v1';
 const SOUND_STORAGE_KEY = 'cli_exercises_sound_v1';
 const HAPTIC_STORAGE_KEY = 'cli_exercises_haptic_v1';
 
-const FallingStars: React.FC = () => {
-  const stars = React.useMemo(
-    () =>
-      Array.from({ length: 20 }, (_, i) => ({
-        id: i,
-        left: `${5 + (i * 4.5)}%`,
-        delay: `${(i % 5) * 0.4}s`,
-        duration: `${2.2 + (i % 4) * 0.3}s`,
-        size: 10 + (i % 6)
-      })),
-    []
-  );
+/** Falling stars celebration: many=true for 5-star (many stars + happier melody), many=false for 1–4 stars. */
+const FallingStars: React.FC<{ many?: boolean }> = ({ many = false }) => {
+  const stars = React.useMemo(() => {
+    const count = many ? 28 : 8;
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      left: `${2 + (i * (96 / Math.max(1, count - 1)))}%`,
+      delay: `${(i % 4) * 0.35}s`,
+      duration: `${2 + (i % 3) * 0.4}s`,
+      size: many ? 12 + (i % 8) : 10 + (i % 4)
+    }));
+  }, [many]);
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {stars.map((s) => (
@@ -503,9 +503,9 @@ const App: React.FC = () => {
           </Suspense>
         ) : showResult ? (
           <div className="max-w-md mx-auto p-10 glass rounded-3xl text-center space-y-6 animate-in zoom-in duration-500 shadow-2xl relative overflow-hidden">
-            {showResult.starEarned === 5 && (
-              <FallingStars />
-            )}
+            {showResult.starEarned ? (
+              <FallingStars many={showResult.starEarned === 5} />
+            ) : null}
             {showResult.starEarned && showResult.starEarned < 5 && (
               <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-amber-500/10 animate-pulse"></div>

@@ -784,8 +784,8 @@ export const QuizView: React.FC<QuizViewProps> = ({
     const fetchQuestions = async () => {
       try {
         setLoading(true);
-        // Fetch questions based on mode: level-specific or random from all levels
-        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode, drillLevels);
+        // Level mode: pass randomMode=false so we only get questions for this level. Random mode: pass true for all levels.
+        const data = await quizService.getBatch(level, 15, initialCompletedIds.current, randomMode ?? false, drillLevels);
         // Shuffle options for each question so correct answer isn't always first
         const shuffledQuestions = data.map(shuffleOptions);
         setQuestions(shuffledQuestions);
