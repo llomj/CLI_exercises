@@ -60,7 +60,7 @@ const INITIAL_STATS: UserStats = {
   history: [],
   idLog: [],
   randomModeStats: { totalAnswered: 0, totalCorrect: 0 },
-  randomMode: false
+  randomMode: true
 };
 
 const QuizView = lazy(() => import('./components/QuizView').then((module) => ({ default: module.QuizView })));
@@ -184,7 +184,7 @@ const App: React.FC = () => {
         if (!parsed.randomModeStats) {
           parsed.randomModeStats = { totalAnswered: 0, totalCorrect: 0 };
         }
-        if (parsed.randomMode === undefined) parsed.randomMode = false;
+        if (parsed.randomMode === undefined) parsed.randomMode = true;
         if (parsed.randomModeXp === undefined) parsed.randomModeXp = 0;
         setStats(parsed);
       } catch (e) {
