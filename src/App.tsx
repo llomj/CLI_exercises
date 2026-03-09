@@ -11,6 +11,7 @@ import { playStarMelodyShort, playStarMelodyLong, playUITapSound, triggerHaptic 
 import { SoundProvider } from './contexts/SoundContext';
 
 const LOCAL_STORAGE_KEY = 'cli_exercises_learn_stats_v1';
+const RANDOM_DEFAULT_MIGRATED_KEY = 'cli_random_default_migrated_v1';
 const SOUND_STORAGE_KEY = 'cli_exercises_sound_v1';
 const HAPTIC_STORAGE_KEY = 'cli_exercises_haptic_v1';
 
@@ -60,7 +61,7 @@ const INITIAL_STATS: UserStats = {
   history: [],
   idLog: [],
   randomModeStats: { totalAnswered: 0, totalCorrect: 0 },
-  randomMode: true
+  randomMode: false
 };
 
 const QuizView = lazy(() => import('./components/QuizView').then((module) => ({ default: module.QuizView })));
@@ -184,8 +185,13 @@ const App: React.FC = () => {
         if (!parsed.randomModeStats) {
           parsed.randomModeStats = { totalAnswered: 0, totalCorrect: 0 };
         }
-        if (parsed.randomMode === undefined) parsed.randomMode = true;
+        if (parsed.randomMode === undefined) parsed.randomMode = false;
         if (parsed.randomModeXp === undefined) parsed.randomModeXp = 0;
+        // Migration: default must be level mode (AGENTS.md §0a). One-time reset for users who had random from old default.
+        if (typeof window !== 'undefined' && !localStorage.getItem(RANDOM_DEFAULT_MIGRATED_KEY) && parsed.randomMode === true) {
+          parsed.randomMode = false;
+          localStorage.setItem(RANDOM_DEFAULT_MIGRATED_KEY, '1');
+        }
         setStats(parsed);
       } catch (e) {
         console.error("Corrupted state, resetting", e);

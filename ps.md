@@ -14,6 +14,8 @@
 
 **Rule:** Level 0 = easiest, Level 10 = hardest. Difficulty **must** increase across levels. Otherwise the game defeats its purpose. See AGENTS.md §1b.
 
+**Audit procedure:** Scan each level file for misplaced hard questions. Move any advanced topics (kubectl, nmap, SQLi, pentest, async/await, Metasploit, containers, security tooling) from Level 0–2 to Level 8–10. Level 0 must be absolute beginner only.
+
 - **Level 0**: Absolute beginner—no prior terminal knowledge. "What is a terminal?", "Which key runs the command?", "What is a directory?". No pentest, kubectl, nmap, async, or advanced concepts.
 - **Levels 1–3**: Basic shell, filesystem, file/text processing.
 - **Levels 4–7**: Processes, packages, networking.

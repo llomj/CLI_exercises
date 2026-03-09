@@ -1,5 +1,8 @@
 # CLI Exercises Learn - AI Agent Operational Rules
 
+## 0a. Default First Page (MANDATORY)
+- **Rule**: The first/default page must be in **level mode**, not random mode. New users and fresh loads must see level mode (level-based quiz). Never default to random mode. Migration: users with old randomMode:true from prior default are one-time reset to level mode.
+
 ## 0. Offline-First (URGENT)
 - **Goal**: The app must run **fully offline**. If there is no internet, the app must still run. The purpose of this app is to use it offline.
 - **Rule**: No runtime dependency on the network. All assets (HTML, JS, CSS, fonts, icons) must be local or bundled. The service worker must serve the app from cache when offline. Do not add CDN scripts, external fonts, or external images that are required for the app to load or render. Any feature that requires the network must degrade gracefully when offline.
