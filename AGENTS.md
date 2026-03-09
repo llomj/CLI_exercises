@@ -11,6 +11,13 @@
 - **Rule**: All 3000 questions must be unique. Every question must be a unique logical challenge. No repetitive patterns. Repetitive patterns are considered a failure of educational integrity.
 - **No Placeholder Options**: Multiple-choice options must be meaningful answers to the question. Never use "Option A", "Option B", "Option C", "Option D" or similar placeholders. Each option must be a plausible, content-specific answer. Wrong options should be plausible distractors, not generic labels.
 
+## 1b. Question Difficulty Progression (MANDATORY)
+- **Goal**: Difficulty **must increase** with levels. Otherwise the game defeats its purpose.
+- **Rule**: Level 0 = **easiest** (absolute beginner: what is a terminal, what is a command, Enter key, etc.). Level 10 = **hardest** (containers, kubectl, Git, advanced topics).
+- **Level 0 requirements**: Very simple, no prior terminal knowledge. Examples: "What is a terminal?", "Which key runs the command?", "What is a directory?". No pentest, kubectl, async, nmap, or advanced CLI concepts.
+- **Hard questions belong in higher levels**: Questions about kubectl, nmap, SQLi, Metasploit, hashcat, async/await, advanced networking, etc. belong in Level 8–10, **never** in Level 0–2.
+- **When adding or rearranging questions**: Ensure each level's content matches its intended difficulty. Audit for misplaced questions and swap them so Level 0 stays easiest and Level 10 stays hardest.
+
 ## 2. Consent & Modification Rules
 - **Explicit Consent**: No changes shall be made to the source code without explicit user approval.
 - **Layout Preservation**: Do not deviate from the existing visual identity.

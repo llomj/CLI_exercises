@@ -12,7 +12,14 @@
 
 ## Question difficulty progression
 
-**Rule:** Level 0 = easiest, Level 10 = hardest. Difficulty must increase across levels. Each level has Beginner (easiest third), Intermediate, Expert (hardest third). See `questionsBank.ts` and `constants.ts` LEVELS. Do not reorder levels or mix difficulty.
+**Rule:** Level 0 = easiest, Level 10 = hardest. Difficulty **must** increase across levels. Otherwise the game defeats its purpose. See AGENTS.md §1b.
+
+- **Level 0**: Absolute beginner—no prior terminal knowledge. "What is a terminal?", "Which key runs the command?", "What is a directory?". No pentest, kubectl, nmap, async, or advanced concepts.
+- **Levels 1–3**: Basic shell, filesystem, file/text processing.
+- **Levels 4–7**: Processes, packages, networking.
+- **Levels 8–10**: Security, pentest, containers, kubectl, Git.
+
+Each level has Beginner (easiest third), Intermediate, Expert (hardest third). See `questionsBank.ts` and `constants.ts` LEVELS. Do not reorder levels or mix difficulty. **Audit for misplaced questions**: if a hard question (e.g. kubectl explain, async with, nmap scripts) appears in Level 0–2, swap it to the appropriate higher level.
 
 ---
 
