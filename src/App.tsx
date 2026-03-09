@@ -50,6 +50,7 @@ const FallingStars: React.FC<{ many?: boolean }> = ({ many = false }) => {
 const INITIAL_STATS: UserStats = {
   currentLevel: 0,
   xp: 0,
+  randomModeXp: 0,
   totalAttempts: 0,
   completedQuestionIds: [],
   highestUnlockedLevel: 1,
@@ -184,6 +185,7 @@ const App: React.FC = () => {
           parsed.randomModeStats = { totalAnswered: 0, totalCorrect: 0 };
         }
         if (parsed.randomMode === undefined) parsed.randomMode = false;
+        if (parsed.randomModeXp === undefined) parsed.randomModeXp = 0;
         setStats(parsed);
       } catch (e) {
         console.error("Corrupted state, resetting", e);
@@ -288,9 +290,9 @@ const App: React.FC = () => {
     const xpGained = score * XP_PER_QUESTION;
 
     if (randomMode) {
-      // Random mode: update randomModeStats only; levelProgress unchanged
+      // Random mode: update randomModeStats and randomModeXp only; level xp unchanged
       setStats(prev => {
-        const newXp = prev.xp + xpGained;
+        const currentRandomXp = prev.randomModeXp ?? 0;
         const rm = prev.randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
         const newTotalAnswered = rm.totalAnswered + total;
         const newTotalCorrect = rm.totalCorrect + score;
@@ -301,11 +303,9 @@ const App: React.FC = () => {
           lastSessionScore: score,
           lastSessionTotal: total
         };
-        const prevScore = getRandomModeScore(rm);
-        const newScore = getRandomModeScore(newRm);
         return {
           ...prev,
-          xp: newXp,
+          randomModeXp: currentRandomXp + xpGained,
           randomModeStats: newRm,
           lastSessionScore: score,
           lastSessionTotal: total
@@ -417,7 +417,7 @@ const App: React.FC = () => {
 
             <div className="flex items-center gap-2">
               <i className="fas fa-bolt text-amber-400 text-sm"></i>
-              <span className="text-sm font-bold text-emerald-400">{stats.xp.toLocaleString()}</span>
+              <span className="text-sm font-bold text-emerald-400">{(randomMode ? (stats.randomModeXp ?? 0) : stats.xp).toLocaleString()}</span>
             </div>
           </div>
 

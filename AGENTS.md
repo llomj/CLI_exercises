@@ -49,10 +49,11 @@
 
 ## 9. Level Mode vs Random Mode (SEPARATE SYSTEMS)
 - **Separation**: Level mode and Random mode are **fully separate**. When the user is in level mode they have level progress, level stars, and level points; when they switch to random mode they have **separate** random-mode stats. Example: if in level mode the user has 130 (e.g. progress or points), switching to random does **not** use that—random mode has its own point and star system.
-- **Level mode**: Uses `levelProgress`, `correctPerLevel`, `acquiredStars` per level. Stars from accuracy (correct/total answered in that level): 10%, 40%, 65%, 80%, 95% thresholds. Points/XP are shared (global XP).
-- **Random mode**: Uses `randomModeStats` only (`totalAnswered`, `totalCorrect`). **Stars are different**: based on correct answers **out of TOTAL_QUESTIONS (3300)**. Over 10% correct (of 3300) → 1 star; over 20% → 2 stars; over 40% → 3 stars; over 65% → 4 stars; **over 90% correct → 5 stars**. So it is much harder to earn stars in random mode. Do not use level `acquiredStars` or `levelProgress` for random mode display or logic.
-- **Implementation**: Quiz completion in level mode updates only level state; in random mode updates only `randomModeStats`. See `ps.md` for reference.
+- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars` per level. Stars from accuracy in that level: 10%, 40%, 65%, 80%, 95%. When user switches to random mode, level XP is **not** shown—random has its own.
+- **Random mode**: Uses `randomModeXp` and `randomModeStats` only (`totalAnswered`, `totalCorrect`). XP starts at 0 until user completes a random quiz. **Stars**: ≥10% correct (of 3300) → 1★ … ≥90% → 5★. Do not use level `xp`, `acquiredStars`, or `levelProgress` for random mode.
+- **Implementation**: Level mode adds XP to `xp`; random mode adds XP to `randomModeXp`. Nav displays the XP for the current mode. See `ps.md`.
 
 ## 10. Scope and Restraint
 - **Do not do things the user never asked for.** Implement only what is explicitly requested. Do not add extra features, change unrelated code, or "improve" things without being asked.
 - **Flags/Commands reference:** Keep syntax highlighting aesthetic (bash colors). Avoid half-sections in green—override comment color to neutral so `#` headers and descriptions blend with the rest.
+- **Quiz questions:** Always plain white text—no syntax highlighting (no colored keywords like "for", "is" in question text). Explanations may use highlighting for code blocks.

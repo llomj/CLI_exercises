@@ -982,54 +982,10 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
         <div className="space-y-4 pt-8">
           <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden bg-slate-800 rounded-lg">
-            {(() => {
-              const { prefix, code } = splitQuestion(displayQuestion, language);
-              const displayText = displayQuestion;
-              // If we detected code, show prefix at top and code below with syntax highlighting
-              if (code) {
-                return (
-                  <div className="flex flex-col">
-                    {/* Question text always grouped at the top */}
-                    {prefix && (
-                      <div className="px-4 pt-4 pb-2 border-b border-slate-700/50">
-                        <p className="text-white text-lg font-medium leading-relaxed">{prefix}</p>
-                      </div>
-                    )}
-                    {/* Code snippet below with proper formatting */}
-                    <div className="overflow-x-auto flex-1">
-                      <SyntaxHighlighter
-                        language="bash"
-                        style={oneDark}
-                        customStyle={{
-                          padding: '1rem',
-                          margin: 0,
-                          background: 'transparent',
-                          fontSize: '0.875rem',
-                          lineHeight: '1.75',
-                          fontFamily: "'Fira Code', monospace"
-                        }}
-                        codeTagProps={{
-                          style: {
-                            fontFamily: "'Fira Code', monospace",
-                            whiteSpace: 'pre',
-                            display: 'block'
-                          }
-                        }}
-                        PreTag="div"
-                      >
-                        {formatCodeSnippet(code)}
-                      </SyntaxHighlighter>
-                    </div>
-                  </div>
-                );
-              }
-              // No code detected — show as plain white text (prose, not Python/terminal)
-              return (
-                <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 pt-4">
-                  {displayText}
-                </h2>
-              );
-            })()}
+            {/* Questions always plain white text—no syntax highlighting (per AGENTS.md / user preference) */}
+            <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 py-4 whitespace-pre-wrap break-words">
+              {displayQuestion}
+            </h2>
           </div>
         </div>
 

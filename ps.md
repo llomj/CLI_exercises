@@ -2,11 +2,17 @@
 
 ## Level Mode vs Random Mode (separate systems)
 
-**Rule:** Level mode and random mode are **separate**. Points and stars are **not** shared.
+**Rule:** Level mode and random mode are **separate**. Points (XP), stars, and progress are **not** shared.
 
-- **Level mode**: Progress and stars are per level (`levelProgress`, `correctPerLevel`, `acquiredStars`). Stars from accuracy in that level (10%, 40%, 65%, 80%, 95%). If the user has e.g. 130 progress in level mode, that does **not** apply in random mode.
-- **Random mode**: Uses **only** `randomModeStats` (`totalAnswered`, `totalCorrect`). Stars are based on **correct answers out of 3300 (TOTAL_QUESTIONS)**: ≥10% → 1★, ≥20% → 2★, ≥40% → 3★, ≥65% → 4★, ≥90% → 5★. Much harder to earn stars. Evolution score (persona) uses `getRandomModeScore(randomModeStats)`.
-- **Implementation:** In `handleQuizComplete`, level mode updates only level state; random mode updates only `randomModeStats`. Display: when `stats.randomMode` is true, show random stars/score from `randomModeStats`; when false, show level stars from `acquiredStars`/`getStarsFromAccuracy`. See AGENTS.md §9.
+- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars`. Stars from accuracy in that level (10%, 40%, 65%, 80%, 95%). When user switches to random mode, level XP stays in level—it is **not** shown.
+- **Random mode**: Uses **only** `randomModeStats` and `randomModeXp`. XP starts at 0 until user completes at least one random quiz. Stars based on **correct answers out of 3300**: ≥10% → 1★ … ≥90% → 5★. Evolution score uses `getRandomModeScore(randomModeStats)`.
+- **Implementation:** In `handleQuizComplete`, level mode adds XP to `xp` only; random mode adds XP to `randomModeXp` only. Nav display: `randomMode ? stats.randomModeXp ?? 0 : stats.xp`. See AGENTS.md §9.
+
+---
+
+## Question difficulty progression
+
+**Rule:** Level 0 = easiest, Level 10 = hardest. Difficulty must increase across levels. Each level has Beginner (easiest third), Intermediate, Expert (hardest third). See `questionsBank.ts` and `constants.ts` LEVELS. Do not reorder levels or mix difficulty.
 
 ---
 

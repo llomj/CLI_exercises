@@ -15,7 +15,8 @@ import { QUESTIONS_PER_SUBLEVEL } from './constants';
 // GENERATOR ENGINE
 // Assigns BEGINNER for the first third, INTERMEDIATE for the second third, EXPERT for the last third.
 // Each level has 300 questions (100 Beginner + 100 Intermediate + 100 Expert).
-// Total: 3300 questions across 11 levels (0–10). Level 0 = absolute beginner. IDs 1-3300.
+// Total: 3300 questions across 11 levels (0–10). Level 0 = easiest (absolute beginner), Level 10 = hardest.
+// Difficulty must increase: Level 0 < Level 1 < … < Level 10. Do not reorder.
 
 const getSubLevel = (index: number, totalPatterns: number): SubLevel => {
   if (index < totalPatterns / 3) return SubLevel.BEGINNER;
