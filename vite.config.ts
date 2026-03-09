@@ -1,13 +1,32 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({ mode }) => {
   // Use base path for GitHub Pages production build, but '/' for local development
   const repo = process.env.VITE_BASE_REPO || 'CLI_exercises';
   const base = mode === 'production' ? `/${repo}/` : '/';
-  
+
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      VitePWA({
+        base,
+        registerType: 'autoUpdate',
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,ttf,json}'],
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          navigateFallback: base + 'index.html',
+          navigateFallbackDenylist: [/^\/api\//, /\/clear-sw\.html$/],
+          runtimeCaching: [],
+        },
+        manifest: false,
+        injectRegister: null,
+        strategies: 'generateSW',
+        srcDir: 'src',
+        filename: 'sw.js',
+      }),
+    ],
     base,
     build: {
       rollupOptions: {
