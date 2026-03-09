@@ -1,3 +1,5 @@
+import './index.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -8,7 +10,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     if (import.meta.env.PROD) {
       const basePath = import.meta.env.BASE_URL || '/';
-      navigator.serviceWorker.register(`${basePath}sw.js?v=14`, { updateViaCache: 'none' })
+      navigator.serviceWorker.register(`${basePath}sw.js?v=16`, { updateViaCache: 'none' })
         .then(registration => {
           console.log('CLI Exercises Learn SW registered: ', registration);
         })

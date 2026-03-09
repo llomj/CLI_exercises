@@ -1,5 +1,9 @@
 # CLI Exercises Learn - AI Agent Operational Rules
 
+## 0. Offline-First (URGENT)
+- **Goal**: The app must run **fully offline**. If there is no internet, the app must still run. The purpose of this app is to use it offline.
+- **Rule**: No runtime dependency on the network. All assets (HTML, JS, CSS, fonts, icons) must be local or bundled. The service worker must serve the app from cache when offline. Do not add CDN scripts, external fonts, or external images that are required for the app to load or render. Any feature that requires the network must degrade gracefully when offline.
+
 ## 1. Genome Checkpoint (STRICT STATE)
 - **Target**: 3000 Questions (300 per level × 10 levels).
 - **Current Progress**: 3000 / 3000 Questions (CLI content; genome fulfilled)

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="64" fill="#0f172a"/>
+  <rect x="48" y="48" width="416" height="316" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <rect x="64" y="64" width="384" height="32" rx="4" fill="#334155"/>
+  <circle cx="88" cy="80" r="6" fill="#64748b"/>
+  <circle cx="112" cy="80" r="6" fill="#64748b"/>
+  <circle cx="136" cy="80" r="6" fill="#64748b"/>
+  <text x="256" y="220" text-anchor="middle" fill="#10b981" font-family="ui-monospace, monospace" font-size="72" font-weight="bold">CLI</text>
+  <text x="256" y="320" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, monospace" font-size="32">&gt;_</text>
+</svg>

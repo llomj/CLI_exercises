@@ -1,8 +1,8 @@
-const CACHE_NAME = 'cli-exercises-learn-offline-v15';
-// Don't pre-cache index.html — install-time fetch can get stale HTML; we cache it only after network-first fetch
-const STATIC_ASSETS = ['./manifest.json'];
+const CACHE_NAME = 'cli-exercises-learn-offline-v16';
+// Offline-first: pre-cache document and manifest so app works without network
+const STATIC_ASSETS = ['./manifest.json', './icon.svg', './index.html', './'];
 
-// Install: Cache manifest only (index.html cached on first network fetch)
+// Install: Pre-cache document and static assets so the app runs fully offline
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -40,19 +40,17 @@ self.addEventListener('fetch', (event) => {
 
   const isDoc = event.request.mode === 'navigate' || event.request.destination === 'document';
   if (isDoc) {
-    // Dynamic cache-bust: every load gets fresh HTML (browser + PWA, no manual URL changes)
-    const url = new URL(event.request.url);
-    url.searchParams.set('_v', String(Date.now()));
-    const bustedRequest = new Request(url, { cache: 'no-store' });
+    const docCacheKey = new Request(new URL('./index.html', self.location.origin + self.location.pathname).href);
     event.respondWith(
-      fetch(bustedRequest)
+      fetch(event.request, { cache: 'no-store' })
         .then((response) => {
           if (response && response.status === 200 && response.type !== 'opaque') {
-            return response;
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(docCacheKey, clone));
           }
           return response;
         })
-        .catch(() => caches.match('./index.html').then((r) => r || caches.match('./')))
+        .catch(() => caches.match(docCacheKey).then((r) => r || caches.match('./index.html').then((x) => x || caches.match('./'))))
     );
     return;
   }
