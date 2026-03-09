@@ -190,6 +190,10 @@ export const translations = {
       warning: "This will erase all your progress (XP, levels, completed questions, learning log). You will start from zero. This cannot be undone.",
       cancel: "Cancel",
       confirm: "Reset Everything",
+      finalTitle: "This Cannot Be Undone",
+      finalWarning: "This will set the app to zero. All progress, XP, stars, completed questions, and learning history will be permanently erased. There is no way to recover your data.",
+      goBack: "Go Back",
+      finalConfirm: "Yes, Reset Everything",
     },
     
     // Level Selector
@@ -461,6 +465,10 @@ export const translations = {
       warning: "Toute votre progression sera effacée (XP, niveaux, questions complétées, journal). Vous repartirez de zéro. Cette action est irréversible.",
       cancel: "Annuler",
       confirm: "Tout Réinitialiser",
+      finalTitle: "Cette action est irréversible",
+      finalWarning: "L'app sera remise à zéro. Toute la progression, XP, étoiles, questions complétées et historique d'apprentissage seront définitivement effacés. Il n'y a aucun moyen de récupérer vos données.",
+      goBack: "Retour",
+      finalConfirm: "Oui, tout réinitialiser",
     },
     
     // Level Selector
