@@ -20,13 +20,11 @@ export const getStarsFromAccuracy = (correct: number, total: number): number => 
   return stars;
 };
 
-/** Random mode star thresholds: 1★ at 10%, 2★ at 20%, 3★ at 35%, 4★ at 50% of TOTAL_QUESTIONS; 5★ at 90+ correct (harder to earn stars). */
-const RANDOM_MODE_STAR_PCT = [10, 20, 35, 50] as const;
-const RANDOM_MODE_FIVE_STARS_MIN_CORRECT = 90;
+/** Random mode star thresholds: % of TOTAL_QUESTIONS (3300). Over 10% → 1★, over 20% → 2★, over 40% → 3★, over 65% → 4★, over 90% → 5★. Separate from level mode; much harder. */
+const RANDOM_MODE_STAR_PCT = [10, 20, 40, 65, 90] as const;
 
-/** Derive stars (0–5) for Random mode: based on correct vs TOTAL_QUESTIONS. Much harder than level mode; 5 stars at 90+ correct. */
+/** Derive stars (0–5) for Random mode only: correct count vs TOTAL_QUESTIONS. ≥10% = 1★, ≥20% = 2★, ≥40% = 3★, ≥65% = 4★, ≥90% = 5★. Do not mix with level mode stars. */
 export const getStarsFromRandomCorrect = (correct: number): number => {
-  if (correct >= RANDOM_MODE_FIVE_STARS_MIN_CORRECT) return 5;
   const pct = (correct / TOTAL_QUESTIONS) * 100;
   let stars = 0;
   for (const t of RANDOM_MODE_STAR_PCT) {

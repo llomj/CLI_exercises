@@ -1,5 +1,15 @@
 # CLI Exercises Learn — Problem Solving & Debugging Guide
 
+## Level Mode vs Random Mode (separate systems)
+
+**Rule:** Level mode and random mode are **separate**. Points and stars are **not** shared.
+
+- **Level mode**: Progress and stars are per level (`levelProgress`, `correctPerLevel`, `acquiredStars`). Stars from accuracy in that level (10%, 40%, 65%, 80%, 95%). If the user has e.g. 130 progress in level mode, that does **not** apply in random mode.
+- **Random mode**: Uses **only** `randomModeStats` (`totalAnswered`, `totalCorrect`). Stars are based on **correct answers out of 3300 (TOTAL_QUESTIONS)**: ≥10% → 1★, ≥20% → 2★, ≥40% → 3★, ≥65% → 4★, ≥90% → 5★. Much harder to earn stars. Evolution score (persona) uses `getRandomModeScore(randomModeStats)`.
+- **Implementation:** In `handleQuizComplete`, level mode updates only level state; random mode updates only `randomModeStats`. Display: when `stats.randomMode` is true, show random stars/score from `randomModeStats`; when false, show level stars from `acquiredStars`/`getStarsFromAccuracy`. See AGENTS.md §9.
+
+---
+
 ## CRITICAL RULE: Bilingual Parity (EN/FR)
 
 **ABSOLUTE REQUIREMENT**: Whatever exists in English MUST have a French equivalent.
@@ -106,6 +116,25 @@ The workflow (`.github/workflows/deploy.yml`) must match the **last successful r
 - GitHub Actions latest run: `conclusion = success`.
 - Pages deploy points to the commit containing French option fix + missing util file.
 - In quiz view with French selected, A/B/C/D option text appears in French.
+
+---
+
+---
+
+## Offline-first / PWA (URGENT per AGENTS.md §0)
+
+**Goal:** The app must run fully offline. After at least one online visit, it works without network.
+
+**Implementation (March 2026):** Uses `vite-plugin-pwa` with Workbox `generateSW`. At build time, the plugin injects a precache manifest of all built assets (index.html, JS, CSS, fonts, icon, manifest.json) into the service worker. On first visit, the SW installs and precaches everything. Offline reload serves from cache.
+
+**If the app does not work offline:**
+1. **First visit must be online** — The SW needs one successful load to precache. If the user has never visited while online, offline will fail.
+2. **Clear old SW** — If you deployed a new version but still see old behavior, open `https://llomj.github.io/CLI_exercises/clear-sw.html` once, then reopen the app.
+3. **Confirm deploy** — Check GitHub Actions; the latest Pages deploy must be green. Local changes are not deployed until pushed and built.
+4. **Check precache** — DevTools → Application → Cache Storage → look for Workbox precache entries (index.html, assets/*).
+5. **Large assets** — If build fails with "exceeded limit", increase `workbox.maximumFileSizeToCacheInBytes` in `vite.config.ts` (currently 5 MB).
+
+**Build output:** PWA plugin emits `dist/sw.js` and `dist/workbox-*.js`. The app registers `sw.js` from `main.tsx`.
 
 ---
 
