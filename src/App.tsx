@@ -743,8 +743,17 @@ const App: React.FC = () => {
 
       {/* Global Gameplay Information Modal */}
       {showGameInfoModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] flex items-center justify-center p-4">
-          <div className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] flex items-center justify-center p-4"
+          onClick={() => {
+            if (soundEnabled) void playUITapSound();
+            setShowGameInfoModal(false);
+          }}
+        >
+          <div
+            className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30">
