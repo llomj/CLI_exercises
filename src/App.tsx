@@ -457,6 +457,7 @@ const App: React.FC = () => {
         <button
           onClick={() => {
             if (soundEnabled) void playUITapSound();
+            setShowGameInfoModal(false);
             setShowSettingsMenu(!showSettingsMenu);
           }}
           className="w-16 h-16 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all shadow-lg min-w-[64px] min-h-[64px] pointer-events-auto"
@@ -743,17 +744,20 @@ const App: React.FC = () => {
 
       {/* Global Gameplay Information Modal */}
       {showGameInfoModal && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] flex items-center justify-center p-4"
-          onClick={() => {
-            if (soundEnabled) void playUITapSound();
-            setShowGameInfoModal(false);
-          }}
-        >
+        <div className="fixed inset-0 z-[55]" role="dialog" aria-modal="true">
           <div
-            className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10"
-            onClick={(e) => e.stopPropagation()}
-          >
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
+            onClick={() => {
+              if (soundEnabled) void playUITapSound();
+              setShowGameInfoModal(false);
+            }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div
+              className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10 pointer-events-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30">
@@ -840,6 +844,7 @@ const App: React.FC = () => {
               {t('operations.gotIt')}
             </button>
           </div>
+        </div>
         </div>
       )}
 
