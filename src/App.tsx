@@ -755,10 +755,10 @@ const App: React.FC = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
             <div
-              className="glass rounded-3xl pt-10 pb-8 px-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10 pointer-events-auto"
+              className="glass rounded-3xl pt-10 pb-8 px-8 max-w-lg w-full max-h-[90dvh] flex flex-col animate-in zoom-in duration-300 shadow-2xl border border-white/10 pointer-events-auto"
               onClick={(e) => e.stopPropagation()}
             >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-4 flex-shrink-0">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30">
                   <i className="fas fa-gamepad text-emerald-400 text-xs"></i>
@@ -779,7 +779,7 @@ const App: React.FC = () => {
               </button>
             </div>
 
-            <div className="space-y-4 text-sm text-slate-300">
+            <div className="overflow-y-auto flex-1 min-h-0 space-y-4 text-sm text-slate-300 mt-6">
               <div>
                 <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.gameplayTitle')}
@@ -839,7 +839,7 @@ const App: React.FC = () => {
                 if (soundEnabled) void playUITapSound();
                 setShowGameInfoModal(false);
               }}
-              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-bold text-white transition-all shadow-xl shadow-emerald-500/30 active:scale-95 text-sm"
+              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-bold text-white transition-all shadow-xl shadow-emerald-500/30 active:scale-95 text-sm flex-shrink-0 mt-6"
             >
               {t('operations.gotIt')}
             </button>
