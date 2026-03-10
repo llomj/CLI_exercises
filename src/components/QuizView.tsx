@@ -750,8 +750,14 @@ export const QuizView: React.FC<QuizViewProps> = ({
   const [loading, setLoading] = useState(true);
   const [score, setScore] = useState(0);
   const [showDetailedExplanation, setShowDetailedExplanation] = useState(false);
-  const [detailedExplanationLevel, setDetailedExplanationLevel] = useState<DetailedExplanationLevel>('intermediate');
   const [justSavedId, setJustSavedId] = useState<number | null>(null);
+
+  const explanationDepths: DetailedExplanationLevel[] = ['beginner', 'intermediate', 'expert'];
+  const explanationDepthLabels: Record<DetailedExplanationLevel, string> = {
+    beginner: t('subLevels.beginner'),
+    intermediate: t('subLevels.intermediate'),
+    expert: t('subLevels.expert'),
+  };
 
   // We use a ref to capture completedIds at the START of the quiz session.
   // This prevents the quiz from re-fetching if completedIds updates mid-quiz.
@@ -1105,36 +1111,24 @@ export const QuizView: React.FC<QuizViewProps> = ({
                 })()}
                 {showDetailedExplanation && currentQuestion.detailedExplanation && (
                   <div className="animate-in slide-in-from-top-4 duration-300 pt-4 border-t border-emerald-500/20 space-y-6">
-                    <div className="space-y-3">
-                      <div className="flex flex-wrap items-center gap-2">
+                    {explanationDepths.map((depth) => (
+                      <div key={depth} className="space-y-3">
                         <h5 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] flex items-center gap-2">
                           <i className="fas fa-graduation-cap text-xs"></i>
-                          {t('glossary.inDepthDescription')}
+                          {explanationDepthLabels[depth]}
                         </h5>
-                        <label className="flex items-center gap-1.5 text-[10px] text-slate-500 ml-auto">
-                          <span>{t('idSearch.explanationLevel')}:</span>
-                          <select
-                            value={detailedExplanationLevel}
-                            onChange={(e) => setDetailedExplanationLevel(e.target.value as DetailedExplanationLevel)}
-                            className="bg-slate-800 border border-slate-600 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                          >
-                            <option value="beginner">{t('subLevels.beginner')}</option>
-                            <option value="intermediate">{t('subLevels.intermediate')}</option>
-                            <option value="expert">{t('subLevels.expert')}</option>
-                          </select>
-                        </label>
+                        <div className="text-slate-200 leading-relaxed text-sm whitespace-pre-wrap bg-slate-900/50 rounded-xl p-4 border border-white/5">
+                          {getTranslatedDetailedExplanation(
+                            currentQuestion.id,
+                            getDetailedExplanationForLevel(currentQuestion, depth) ?? '',
+                            language,
+                            depth,
+                            currentQuestion.question,
+                            currentQuestion.options[currentQuestion.correct_option_index]
+                          )}
+                        </div>
                       </div>
-                      <div className="text-slate-200 leading-relaxed text-sm whitespace-pre-wrap">
-                        {getTranslatedDetailedExplanation(
-                          currentQuestion.id,
-                          getDetailedExplanationForLevel(currentQuestion, detailedExplanationLevel) ?? '',
-                          language,
-                          detailedExplanationLevel,
-                          currentQuestion.question,
-                          currentQuestion.options[currentQuestion.correct_option_index]
-                        )}
-                      </div>
-                    </div>
+                    ))}
 
                     {/* Code Versatility Section - Enhanced for Level 9 */}
                     {level >= 9 && (() => {
