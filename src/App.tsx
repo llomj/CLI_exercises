@@ -755,7 +755,7 @@ const App: React.FC = () => {
           />
           <div className="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
             <div
-              className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10 pointer-events-auto"
+              className="glass rounded-3xl pt-10 pb-8 px-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10 pointer-events-auto"
               onClick={(e) => e.stopPropagation()}
             >
             <div className="flex items-start justify-between gap-4">
@@ -781,7 +781,7 @@ const App: React.FC = () => {
 
             <div className="space-y-4 text-sm text-slate-300">
               <div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.gameplayTitle')}
                 </h3>
                 <p className="leading-relaxed">
@@ -790,7 +790,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.scoringTitle')}
                 </h3>
                 <p className="leading-relaxed mb-1.5">
@@ -802,7 +802,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.starsTitle')}
                 </h3>
                 <p className="leading-relaxed mb-1.5">
@@ -814,7 +814,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.modesTitle')}
                 </h3>
                 <p className="leading-relaxed">
@@ -823,7 +823,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
                   {t('gameInfo.tipsTitle')}
                 </h3>
                 <ul className="list-disc list-inside space-y-1.5 text-slate-300">
