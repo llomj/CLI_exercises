@@ -1037,6 +1037,14 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
         {isAnswered && (
           <div className="animate-in slide-in-from-bottom-4 duration-500 space-y-6 pt-4">
+            <button
+              onClick={() => { playTapSound(); handleNext(); }}
+              className="w-full py-5 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-black text-lg text-white transition-all transform active:scale-95 shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3"
+            >
+              {currentIndex === questions.length - 1 ? t('quiz.finishEvolution') : t('hub.continueMutation')}
+              <i className="fas fa-arrow-right text-sm"></i>
+            </button>
+
             <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
               {currentQuestion.detailedExplanation ? (
                 <button
@@ -1189,14 +1197,6 @@ export const QuizView: React.FC<QuizViewProps> = ({
                 )}
               </div>
             </div>
-
-            <button
-              onClick={() => { playTapSound(); handleNext(); }}
-              className="w-full py-5 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-black text-lg text-white transition-all transform active:scale-95 shadow-2xl shadow-emerald-500/30 flex items-center justify-center gap-3"
-            >
-              {currentIndex === questions.length - 1 ? t('quiz.finishEvolution') : t('hub.continueMutation')}
-              <i className="fas fa-arrow-right text-sm"></i>
-            </button>
           </div>
         )}
       </div>
