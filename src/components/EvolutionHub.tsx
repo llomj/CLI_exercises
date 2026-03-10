@@ -8,6 +8,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
 import { useTranslatedGlossary } from '../hooks/useTranslatedData';
 import type { GlossaryItem } from '../constants';
+import { getTieredExplanation } from '../utils/glossaryTieredExplanation';
 
 interface EvolutionHubProps {
   stats: UserStats;
@@ -16,7 +17,7 @@ interface EvolutionHubProps {
 
 export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }) => {
   const { playTapSound } = useSound();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const randomMode = stats.randomMode ?? false;
   const rm = stats.randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
   const randomScore = getRandomModeScore(rm);
@@ -237,16 +238,31 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                 </h3>
               </div>
 
-              <div className="space-y-3">
-                <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                  <i className="fas fa-book-open text-emerald-400" /> {t('glossary.inDepthDescription')}
-                </h4>
-                <div className="text-slate-300 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">
-                  {selectedTerm
-                    ? selectedTerm.detailedDescription
-                    : formatTranslation(t('levels.level' + currentLevelInfo.level as any), {})}
-                </div>
-              </div>
+              {(() => {
+                const levelDesc = t(`levels.level${currentLevelInfo.level}` as any);
+                const tiered = selectedTerm
+                  ? getTieredExplanation(selectedTerm.detailedDescription, language === 'fr' ? 'fr' : 'en')
+                  : { beginner: levelDesc, intermediate: levelDesc, expert: levelDesc };
+                const depthLabels = [
+                  { key: 'beginner' as const, label: t('subLevels.beginner') },
+                  { key: 'intermediate' as const, label: t('subLevels.intermediate') },
+                  { key: 'expert' as const, label: t('subLevels.expert') },
+                ];
+                return (
+                  <div className="space-y-4">
+                    {depthLabels.map(({ key, label }) => (
+                      <div key={key} className="space-y-2">
+                        <h4 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
+                          <i className="fas fa-graduation-cap text-emerald-400" /> {label}
+                        </h4>
+                        <div className="text-slate-300 leading-relaxed text-sm sm:text-base whitespace-pre-wrap bg-slate-900/50 rounded-xl p-4 border border-white/5">
+                          {tiered[key]}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
 
               {selectedTerm && (
                 <div className="space-y-3">
