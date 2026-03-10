@@ -162,6 +162,7 @@ export const translations = {
     settings: {
       searchById: "Search by ID",
       idLog: "ID Log",
+      idGroup: "ID",
       selectLevel: "Select Level",
       switchToLevelMode: "Switch to Level Mode",
       switchToRandomMode: "Switch to Random Mode",
@@ -437,6 +438,7 @@ export const translations = {
     settings: {
       searchById: "Rechercher par ID",
       idLog: "Journal ID",
+      idGroup: "ID",
       selectLevel: "Sélectionner le Niveau",
       switchToLevelMode: "Passer en Mode Niveau",
       switchToRandomMode: "Passer en Mode Aléatoire",

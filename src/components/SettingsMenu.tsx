@@ -29,13 +29,13 @@ interface SettingsMenuProps {
 }
 
 interface MenuItem {
-  type: 'item' | 'rules' | 'toggle';
+  type: 'item' | 'rules' | 'toggle' | 'group';
   icon?: string;
   label?: string;
   onClick?: () => void;
   active?: boolean;
   toggled?: boolean;
-  subItems?: Array<{ icon: string; label: string; onClick: () => void }>;
+  subItems?: MenuItem[];
 }
 
 export const SettingsMenu: React.FC<SettingsMenuProps> = ({
@@ -66,9 +66,15 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const { t, language } = useLanguage();
   const { playTapSound } = useSound();
   const [rulesExpanded, setRulesExpanded] = useState(false);
+  const [idGroupExpanded, setIdGroupExpanded] = useState(false);
+  const [settingsExpanded, setSettingsExpanded] = useState(false);
 
   useEffect(() => {
-    if (!isOpen) setRulesExpanded(false);
+    if (!isOpen) {
+      setRulesExpanded(false);
+      setIdGroupExpanded(false);
+      setSettingsExpanded(false);
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -103,9 +109,10 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
 
   // 3. Rules (expandable: Commands, Flags, Flow, Glossary, Operations & Math)
   if (onShowMethods || onShowFlags || onShowFlow || onShowGlossary || onShowOperations) {
-    const rulesSubItems: Array<{ icon: string; label: string; onClick: () => void }> = [];
+    const rulesSubItems: MenuItem[] = [];
     if (onShowMethods) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-code',
         label: t('app.methods'),
         onClick: () => { onShowMethods!(); onClose(); }
@@ -113,6 +120,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowFlags) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-flag',
         label: t('app.flags'),
         onClick: () => { onShowFlags!(); onClose(); }
@@ -120,6 +128,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowFlow) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-diagram-project',
         label: t('app.flow'),
         onClick: () => { onShowFlow(); onClose(); }
@@ -127,6 +136,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowGlossary) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-circle-info',
         label: t('app.glossary'),
         onClick: () => { onShowGlossary(); onClose(); }
@@ -134,6 +144,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowOperations) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-calculator',
         label: t('app.operations'),
         onClick: () => { onShowOperations(); onClose(); }
@@ -141,6 +152,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowPlatform) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-laptop',
         label: t('rules.platform'),
         onClick: () => { onShowPlatform(); onClose(); }
@@ -148,6 +160,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
     if (onShowWeakSpotDrills) {
       rulesSubItems.push({
+        type: 'item',
         icon: 'fa-bullseye',
         label: t('rules.weakSpotDrills'),
         onClick: () => { onShowWeakSpotDrills(); onClose(); }
@@ -164,31 +177,42 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     }
   }
 
-  // Search, ID Log, Learning Log — show in all views for consistent access
-  if (onShowIdSearch) {
-    menuItems.push({
-      type: 'item',
-      icon: 'fa-hashtag',
-      label: t('settings.searchById'),
-      onClick: () => { onShowIdSearch(); onClose(); }
-    });
-  }
-  if (onShowIdLog) {
-    menuItems.push({
-      type: 'item',
-      icon: 'fa-list',
-      label: t('settings.idLog'),
-      onClick: () => { onShowIdLog(); onClose(); }
-    });
-  }
-  if (onShowLearningLog) {
-    menuItems.push({
-      type: 'item',
-      icon: 'fa-book-open',
-      label: t('app.learningLog'),
-      onClick: () => { onShowLearningLog(); onClose(); },
-      active: view === 'log'
-    });
+  // ID group: Search by ID, ID Log, Learning Log — grouped under ID icon
+  if (onShowIdSearch || onShowIdLog || onShowLearningLog) {
+    const idSubItems: MenuItem[] = [];
+    if (onShowIdSearch) {
+      idSubItems.push({
+        type: 'item',
+        icon: 'fa-magnifying-glass',
+        label: t('settings.searchById'),
+        onClick: () => { onShowIdSearch(); onClose(); }
+      });
+    }
+    if (onShowIdLog) {
+      idSubItems.push({
+        type: 'item',
+        icon: 'fa-list',
+        label: t('settings.idLog'),
+        onClick: () => { onShowIdLog(); onClose(); }
+      });
+    }
+    if (onShowLearningLog) {
+      idSubItems.push({
+        type: 'item',
+        icon: 'fa-book-open',
+        label: t('app.learningLog'),
+        onClick: () => { onShowLearningLog(); onClose(); },
+        active: view === 'log'
+      });
+    }
+    if (idSubItems.length > 0) {
+      menuItems.push({
+        type: 'group',
+        icon: 'fa-hashtag',
+        label: t('settings.idGroup'),
+        subItems: idSubItems
+      });
+    }
   }
 
   // Language
@@ -201,9 +225,11 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
     });
   }
 
-  // Sound (under Language)
+  // Settings group: Sound, Haptic, Refresh app
+  const basePath = typeof window !== 'undefined' ? (import.meta.env.BASE_URL || '/') : '/';
+  const settingsSubItems: MenuItem[] = [];
   if (onToggleSound) {
-    menuItems.push({
+    settingsSubItems.push({
       type: 'toggle',
       icon: soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark',
       label: t('settings.sound'),
@@ -211,9 +237,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       onClick: () => { onToggleSound(); }
     });
   }
-  // Haptic (under Sound)
   if (onToggleHaptic) {
-    menuItems.push({
+    settingsSubItems.push({
       type: 'toggle',
       icon: hapticEnabled ? 'fa-hand-pointer' : 'fa-hand',
       label: t('settings.haptic'),
@@ -221,10 +246,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       onClick: () => { onToggleHaptic(); }
     });
   }
-
-  // Refresh app
-  const basePath = typeof window !== 'undefined' ? (import.meta.env.BASE_URL || '/') : '/';
-  menuItems.push({
+  settingsSubItems.push({
     type: 'item',
     icon: 'fa-arrows-rotate',
     label: t('settings.refreshApp'),
@@ -233,8 +255,16 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       window.location.href = `${basePath}clear-sw.html`;
     }
   });
+  if (settingsSubItems.length > 0) {
+    menuItems.push({
+      type: 'group',
+      icon: 'fa-gear',
+      label: t('settings.settings'),
+      subItems: settingsSubItems
+    });
+  }
 
-  const renderItem = (item: MenuItem, index: number) => {
+  const renderItem = (item: MenuItem, index: number, isSubItem: boolean = false) => {
     if (item.type === 'rules' && item.subItems && item.subItems.length > 0) {
       return (
         <div key={index}>
@@ -250,16 +280,34 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
           </button>
           {rulesExpanded && (
             <div className="ml-4 pl-2 border-l border-white/10 mt-1 space-y-0.5">
-              {item.subItems.map((sub, i) => (
-                <button
-                  key={i}
-                  onClick={() => { playTapSound(); sub.onClick(); }}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-slate-400 hover:bg-white/10 hover:text-white"
-                >
-                  <i className={`fas ${sub.icon} text-sm w-5 flex-shrink-0`}></i>
-                  <span className="text-sm font-medium">{sub.label}</span>
-                </button>
-              ))}
+              {item.subItems.map((sub, i) => renderItem(sub, i, true))}
+            </div>
+          )}
+        </div>
+      );
+    }
+    if (item.type === 'group' && item.subItems && item.subItems.length > 0) {
+      const expanded = item.label === t('settings.idGroup') ? idGroupExpanded : settingsExpanded;
+      const setExpanded = item.label === t('settings.idGroup') ? setIdGroupExpanded : setSettingsExpanded;
+      return (
+        <div key={index}>
+          <button
+            onClick={() => { playTapSound(); setExpanded(prev => !prev); }}
+            className={`w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+              isSubItem
+                ? 'text-slate-300 hover:bg-white/10 hover:text-white'
+                : 'text-slate-300 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <i className={`fas ${item.icon} text-sm w-5 flex-shrink-0`}></i>
+              <span className="text-sm font-medium">{item.label}</span>
+            </div>
+            <i className={`fas fa-chevron-down text-xs transition-transform ${expanded ? 'rotate-180' : ''}`}></i>
+          </button>
+          {expanded && (
+            <div className="ml-4 pl-2 border-l border-white/10 mt-1 space-y-0.5">
+              {item.subItems.map((sub, i) => renderItem(sub, i, true))}
             </div>
           )}
         </div>
