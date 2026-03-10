@@ -84,7 +84,7 @@ const ViewLoading: React.FC = () => (
 );
 
 const App: React.FC = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t, tRaw } = useLanguage();
   const [stats, setStats] = useState<UserStats>(INITIAL_STATS);
   const [view, setView] = useState<'hub' | 'quiz' | 'log' | 'glossary'>('hub');
   const [showResult, setShowResult] = useState<{
@@ -120,6 +120,7 @@ const App: React.FC = () => {
     if (typeof window === 'undefined') return true;
     return localStorage.getItem(HAPTIC_STORAGE_KEY) !== 'false';
   });
+  const [showGameInfoModal, setShowGameInfoModal] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(SOUND_STORAGE_KEY, String(soundEnabled));
@@ -427,12 +428,25 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="ml-auto flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
-            title="Answer Count"
-          >
-            <i className="fas fa-hashtag text-slate-400 text-sm"></i>
-            <span className="text-sm font-bold text-slate-200">{(stats.totalAttempts ?? stats.history.length).toLocaleString()}</span>
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                if (soundEnabled) void playUITapSound();
+                setShowGameInfoModal(true);
+              }}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              title={t('gameInfo.navTooltip')}
+            >
+              <i className="fas fa-info"></i>
+            </button>
+            <div
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10"
+              title="Answer Count"
+            >
+              <i className="fas fa-hashtag text-slate-400 text-sm"></i>
+              <span className="text-sm font-bold text-slate-200">{(stats.totalAttempts ?? stats.history.length).toLocaleString()}</span>
+            </div>
           </div>
         </div>
 
@@ -723,6 +737,99 @@ const App: React.FC = () => {
                 {t('resetModal.finalConfirm')}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Global Gameplay Information Modal */}
+      {showGameInfoModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] flex items-center justify-center p-4">
+          <div className="glass rounded-3xl p-8 max-w-lg w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30">
+                  <i className="fas fa-gamepad text-emerald-400 text-xs"></i>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">
+                    {t('app.title')} {t('app.subtitle')}
+                  </span>
+                </div>
+                <h2 className="text-xl font-black text-white">{t('gameInfo.title')}</h2>
+              </div>
+              <button
+                onClick={() => {
+                  if (soundEnabled) void playUITapSound();
+                  setShowGameInfoModal(false);
+                }}
+                className="w-9 h-9 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/10"
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div className="space-y-4 text-sm text-slate-300">
+              <div>
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {t('gameInfo.gameplayTitle')}
+                </h3>
+                <p className="leading-relaxed">
+                  {t('gameInfo.gameplayBody')}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {t('gameInfo.scoringTitle')}
+                </h3>
+                <p className="leading-relaxed mb-1.5">
+                  {t('gameInfo.scoringLevelBody')}
+                </p>
+                <p className="leading-relaxed">
+                  {t('gameInfo.scoringRandomBody')}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {t('gameInfo.starsTitle')}
+                </h3>
+                <p className="leading-relaxed mb-1.5">
+                  {t('gameInfo.starsLevelBody')}
+                </p>
+                <p className="leading-relaxed">
+                  {t('gameInfo.starsRandomBody')}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {t('gameInfo.modesTitle')}
+                </h3>
+                <p className="leading-relaxed">
+                  {t('gameInfo.modesBody')}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                  {t('gameInfo.tipsTitle')}
+                </h3>
+                <ul className="list-disc list-inside space-y-1.5 text-slate-300">
+                  {((tRaw('gameInfo.tips') as string[]) || []).map((tip, idx) => (
+                    <li key={idx}>{tip}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                if (soundEnabled) void playUITapSound();
+                setShowGameInfoModal(false);
+              }}
+              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-bold text-white transition-all shadow-xl shadow-emerald-500/30 active:scale-95 text-sm"
+            >
+              {t('operations.gotIt')}
+            </button>
           </div>
         </div>
       )}

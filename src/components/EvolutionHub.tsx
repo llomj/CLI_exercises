@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserStats, PersonaStage } from '../types';
 import { useSound } from '../contexts/SoundContext';
 import { LEVELS, QUESTIONS_PER_LEVEL, TOTAL_QUESTIONS, getStarsFromAccuracy, getStarsFromRandomCorrect, getRandomModeScore, getPersonaFromRandomScore, getNextRandomModeThreshold } from '../constants';
@@ -6,6 +6,8 @@ import { PersonaBadge } from './PersonaBadge';
 import { ProgressBar } from './ProgressBar';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
+import { useTranslatedGlossary } from '../hooks/useTranslatedData';
+import type { GlossaryItem } from '../constants';
 
 interface EvolutionHubProps {
   stats: UserStats;
@@ -43,6 +45,30 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
         ));
 
   const displayPersona = randomMode ? randomPersona : currentLevelInfo.persona;
+
+  const glossary = useTranslatedGlossary();
+  const [selectedTerm, setSelectedTerm] = useState<GlossaryItem | null>(null);
+  const [fallbackConcept, setFallbackConcept] = useState<string | null>(null);
+
+  const handleConceptClick = (concept: string) => {
+    const lower = concept.toLowerCase();
+    const exact = glossary.find(item => item.term.toLowerCase() === lower);
+    const loose = exact ?? glossary.find(item =>
+      item.term.toLowerCase().includes(lower) || lower.includes(item.term.toLowerCase())
+    );
+    if (loose) {
+      setSelectedTerm(loose);
+      setFallbackConcept(null);
+    } else {
+      setFallbackConcept(concept);
+      setSelectedTerm(null);
+    }
+  };
+
+  const closeConceptModal = () => {
+    setSelectedTerm(null);
+    setFallbackConcept(null);
+  };
 
   const renderStars = () => (
     <div className="flex gap-1.5 sm:gap-2 justify-center mt-3">
@@ -116,9 +142,17 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
           {currentLevelInfo.concepts.map(c => (
-            <span key={c} className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] font-mono border border-emerald-500/20">
+            <button
+              key={c}
+              type="button"
+              onClick={() => {
+                playTapSound();
+                handleConceptClick(c);
+              }}
+              className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] font-mono border border-emerald-500/20 cursor-pointer hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors"
+            >
               {c}
-            </span>
+            </button>
           ))}
         </div>
       </div>
@@ -180,6 +214,68 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
+      {(selectedTerm || fallbackConcept) && (
+        <div className="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl border-emerald-500/30 relative">
+            <button
+              onClick={() => {
+                playTapSound();
+                closeConceptModal();
+              }}
+              className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/10"
+            >
+              <i className="fas fa-times" />
+            </button>
+
+            <div className="space-y-5 pt-2">
+              <div className="space-y-2">
+                <span className="inline-block text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                  {formatTranslation(t('glossary.levelConcept'), { range: selectedTerm?.levelRange ?? String(currentLevelInfo.level) })}
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-white">
+                  {selectedTerm?.term ?? fallbackConcept}
+                </h3>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                  <i className="fas fa-book-open text-emerald-400" /> {t('glossary.inDepthDescription')}
+                </h4>
+                <div className="text-slate-300 leading-relaxed text-sm sm:text-base whitespace-pre-wrap">
+                  {selectedTerm
+                    ? selectedTerm.detailedDescription
+                    : formatTranslation(t('levels.level' + currentLevelInfo.level as any), {})}
+                </div>
+              </div>
+
+              {selectedTerm && (
+                <div className="space-y-3">
+                  <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                    <i className="fas fa-code text-emerald-400" /> {t('glossary.implementationExample')}
+                  </h4>
+                  <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-white/5 shadow-inner overflow-hidden">
+                    <pre className="code-font text-xs sm:text-sm text-emerald-300 leading-relaxed overflow-x-auto p-1">
+                      <code>{selectedTerm.example}</code>
+                    </pre>
+                  </div>
+                </div>
+              )}
+
+              <div className="pt-2">
+                <button
+                  onClick={() => {
+                    playTapSound();
+                    closeConceptModal();
+                  }}
+                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 active:scale-95 text-sm"
+                >
+                  {t('operations.gotIt')}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center gap-1.5 py-1.5 border-b border-white/5 mb-1">
         <PersonaBadge stage={displayPersona} size="md" />
         <div className="text-center space-y-1">

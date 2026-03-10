@@ -40,6 +40,28 @@ export const translations = {
       randomModeDescription: "Questions from all levels. Earn points to evolve through the same 10 personas.",
     },
     
+    // Global gameplay information modal
+    gameInfo: {
+      navTooltip: "How scoring and stars work",
+      title: "How this game works",
+      gameplayTitle: "Gameplay",
+      gameplayBody: "Answer 15 multiple-choice CLI questions per quiz. In level mode, all questions come from your current level. In random mode, they come from all 10 levels.",
+      scoringTitle: "Scoring & XP",
+      scoringLevelBody: "Each correct answer gives XP in level mode and advances your level progress for that stage. Finish 300 questions in a level to unlock the next one.",
+      scoringRandomBody: "In random mode, each quiz adds to your Random XP and your evolution score, which is based on both how many questions you answered correctly and your accuracy.",
+      starsTitle: "Stars",
+      starsLevelBody: "In level mode you earn up to 5 stars per level based on your accuracy: 10%, 40%, 65%, 80% and 95% or higher.",
+      starsRandomBody: "In random mode stars are based on how many questions you have answered correctly out of all 3300; the thresholds are much higher.",
+      modesTitle: "Level vs Random Mode",
+      modesBody: "Level mode and Random mode are completely separate systems. Level mode tracks XP, progress and stars per level. Random mode tracks its own evolution score, answer counts and stars; switching modes never mixes their stats.",
+      tipsTitle: "Tips",
+      tips: [
+        "Start in level mode to learn each topic in order, then use random mode for mixed practice.",
+        "Watch the sub-level labels (BEGINNER, INTERMEDIATE, EXPERT) and stars to see how deep you are in each level.",
+        "Use the glossary, operations and flags panels when you are unsure about a command or concept."
+      ],
+    },
+    
     // Quiz View
     quiz: {
       mutationOf: "MUTATION {current} OF {total}",
@@ -314,6 +336,28 @@ export const translations = {
       pointsToNext: "{points} points vers {persona}",
       randomModeAbsorbText: "Absorbez 15 questions aléatoires de tous les niveaux pour gagner des points d'évolution.",
       randomModeDescription: "Questions de tous les niveaux. Gagnez des points pour évoluer à travers les mêmes 10 personas.",
+      },
+    
+    // Global gameplay information modal
+    gameInfo: {
+      navTooltip: "Comment fonctionnent le score et les étoiles",
+      title: "Comment fonctionne ce jeu",
+      gameplayTitle: "Gameplay",
+      gameplayBody: "Répondez à 15 questions à choix multiples sur le CLI par quiz. En mode Niveau, toutes les questions proviennent de votre niveau actuel. En mode Aléatoire, elles viennent des 10 niveaux.",
+      scoringTitle: "Score et XP",
+      scoringLevelBody: "Chaque bonne réponse donne de l'XP en mode Niveau et fait avancer votre progression pour cette étape. Terminez 300 questions dans un niveau pour débloquer le suivant.",
+      scoringRandomBody: "En mode Aléatoire, chaque quiz augmente votre XP Aléatoire et votre score d'évolution, basé à la fois sur le nombre de bonnes réponses et sur votre précision.",
+      starsTitle: "Étoiles",
+      starsLevelBody: "En mode Niveau vous gagnez jusqu'à 5 étoiles par niveau en fonction de votre précision : 10 %, 40 %, 65 %, 80 % et 95 % ou plus.",
+      starsRandomBody: "En mode Aléatoire les étoiles sont basées sur le nombre de questions que vous avez correctement répondues sur les 3300 au total ; les seuils sont donc beaucoup plus élevés.",
+      modesTitle: "Mode Niveau vs Mode Aléatoire",
+      modesBody: "Le Mode Niveau et le Mode Aléatoire sont deux systèmes complètement séparés. Le Mode Niveau suit l'XP, la progression et les étoiles par niveau. Le Mode Aléatoire suit son propre score d'évolution, ses compteurs de réponses et ses étoiles ; changer de mode ne mélange jamais leurs statistiques.",
+      tipsTitle: "Conseils",
+      tips: [
+        "Commencez en Mode Niveau pour apprendre chaque sujet dans l'ordre, puis utilisez le Mode Aléatoire pour un entraînement mélangé.",
+        "Surveillez les sous-niveaux (DÉBUTANT, INTERMÉDIAIRE, EXPERT) et les étoiles pour voir votre profondeur dans chaque niveau.",
+        "Utilisez le glossaire, les panneaux Opérations et Options quand vous n'êtes pas sûr d'une commande ou d'un concept."
+      ],
     },
 
     // Quiz View
