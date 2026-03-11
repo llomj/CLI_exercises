@@ -194,6 +194,12 @@ export const translations = {
       refreshApp: "Refresh app (get latest)",
       sound: "Sound",
       haptic: "Haptic",
+      theme: "Theme",
+      themeDefault: "Default",
+      themeLight: "Light mode",
+      themeBlue: "Blue",
+      themeOrange: "Orange",
+      themeMagenta: "FF00FF",
     },
 
     // Rules sub-items (Weak Spot Drills, Platform)
@@ -492,6 +498,12 @@ export const translations = {
       refreshApp: "Actualiser l'app (dernière version)",
       sound: "Son",
       haptic: "Haptique",
+      theme: "Thème",
+      themeDefault: "Par défaut",
+      themeLight: "Mode clair",
+      themeBlue: "Bleu",
+      themeOrange: "Orange",
+      themeMagenta: "FF00FF",
     },
 
     // Rules sub-items (Drills de points faibles, Plateforme)

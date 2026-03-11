@@ -121,7 +121,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
       <div className="glass rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-black text-white flex items-center gap-3">
-            <i className="fas fa-list text-emerald-400"></i> {t('idSearch.idLog')}
+            <i className="fas fa-list text-accent"></i> {t('idSearch.idLog')}
           </h2>
           <button
             onClick={() => { playTapSound(); onClose(); }}
@@ -158,7 +158,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
               return (
               <div
                 key={entryKey}
-                className="glass rounded-2xl p-5 border-l-4 border-l-emerald-500 transition-all hover:translate-x-1 cursor-pointer"
+                className="glass rounded-2xl p-5 border-l-4 border-l-[rgb(var(--accent-rgb))] transition-all hover:translate-x-1 cursor-pointer"
                 onClick={() => { playTapSound(); toggleCodonExplanation(entryKey); }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
@@ -173,7 +173,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-bold flex items-center gap-2 group">
+                    <span className="px-3 py-1 bg-accent-10 text-accent rounded-lg text-xs font-bold flex items-center gap-2 group">
                       ID: {entry.id}
                       <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} text-[8px] transition-transform group-hover:scale-110`}></i>
                     </span>
@@ -233,7 +233,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
                 </div>
 
                 <div className="mb-4">
-                  <div className="text-xs p-2 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center gap-2">
+                  <div className="text-xs p-2 rounded-lg bg-accent-10 text-accent flex items-center gap-2">
                     <i className="fas fa-check-circle"></i>
                     <span>{t('quiz.correctAnswer')}: {displayCorrectAnswer}</span>
                   </div>
@@ -241,10 +241,10 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
 
                 {isExpanded && (
                   <div className="pt-3 border-t border-white/5 space-y-4 animate-in slide-in-from-top duration-200">
-                    <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                    <div className="p-6 bg-accent-10 rounded-xl border border-accent-20">
                       <div className="flex items-center gap-2 mb-3">
-                        <i className="fas fa-lightbulb text-emerald-400 text-sm"></i>
-                        <h4 className="font-black text-[10px] uppercase tracking-[0.2em] text-emerald-400">{t('idLog.codonExplanation')}</h4>
+                        <i className="fas fa-lightbulb text-accent text-sm"></i>
+                        <h4 className="font-black text-[10px] uppercase tracking-[0.2em] text-accent">{t('idLog.codonExplanation')}</h4>
                       </div>
                       {shortExplanationLooksLikeCode ? (
                         <div className="overflow-x-auto bg-slate-900 rounded-lg">
@@ -279,10 +279,10 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
                     </div>
 
                     {detailedExplanation && (
-                      <div className="p-6 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                      <div className="p-6 bg-accent-10 rounded-xl border border-accent-20">
                         <div className="space-y-2">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h5 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                            <h5 className="text-[10px] font-black text-accent uppercase tracking-[0.2em] flex items-center gap-2">
                               <i className="fas fa-graduation-cap text-xs"></i>
                               {t('glossary.inDepthDescription')}
                             </h5>
@@ -291,7 +291,7 @@ export const IdLogView: React.FC<IdLogViewProps> = ({ entries, onClose }) => {
                               <select
                                 value={detailedExplanationLevel}
                                 onChange={(e) => setDetailedExplanationLevel(e.target.value as DetailedExplanationLevel)}
-                                className="bg-slate-800 border border-slate-600 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                                className="bg-slate-800 border border-slate-600 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:ring-1 focus:ring-[rgb(var(--accent-rgb))]"
                               >
                                 <option value="beginner">{t('subLevels.beginner')}</option>
                                 <option value="intermediate">{t('subLevels.intermediate')}</option>

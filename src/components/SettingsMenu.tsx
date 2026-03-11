@@ -7,6 +7,7 @@ interface SettingsMenuProps {
   onClose: () => void;
   view: 'hub' | 'quiz' | 'log' | 'glossary';
   randomMode?: boolean;
+  theme?: 'default' | 'light' | 'blue' | 'orange' | 'magenta';
   anchorBottom?: boolean; // When true, menu opens near top-right (mobile-friendly placement)
   onToggleRandomMode?: () => void;
   onShowGlossary?: () => void;
@@ -25,6 +26,7 @@ interface SettingsMenuProps {
   onToggleSound?: () => void;
   hapticEnabled?: boolean;
   onToggleHaptic?: () => void;
+  onSetTheme?: (theme: 'default' | 'light' | 'blue' | 'orange' | 'magenta') => void;
   onResetApp?: () => void;
 }
 
@@ -43,6 +45,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onClose,
   view,
   randomMode = false,
+  theme = 'default',
   anchorBottom = false,
   onToggleRandomMode,
   onShowGlossary,
@@ -61,6 +64,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleSound,
   hapticEnabled = true,
   onToggleHaptic,
+  onSetTheme,
   onResetApp
 }) => {
   const { t, language } = useLanguage();
@@ -68,12 +72,14 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const [rulesExpanded, setRulesExpanded] = useState(false);
   const [idGroupExpanded, setIdGroupExpanded] = useState(false);
   const [settingsExpanded, setSettingsExpanded] = useState(false);
+  const [themeExpanded, setThemeExpanded] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
       setRulesExpanded(false);
       setIdGroupExpanded(false);
       setSettingsExpanded(false);
+      setThemeExpanded(false);
     }
   }, [isOpen]);
 
@@ -246,6 +252,20 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       onClick: () => { onToggleHaptic(); }
     });
   }
+  if (onSetTheme) {
+    settingsSubItems.push({
+      type: 'group',
+      icon: 'fa-palette',
+      label: t('settings.theme'),
+      subItems: [
+        { type: 'item', icon: 'fa-circle', label: t('settings.themeDefault'), active: theme === 'default', onClick: () => { onSetTheme('default'); } },
+        { type: 'item', icon: 'fa-sun', label: t('settings.themeLight'), active: theme === 'light', onClick: () => { onSetTheme('light'); } },
+        { type: 'item', icon: 'fa-droplet', label: t('settings.themeBlue'), active: theme === 'blue', onClick: () => { onSetTheme('blue'); } },
+        { type: 'item', icon: 'fa-fire', label: t('settings.themeOrange'), active: theme === 'orange', onClick: () => { onSetTheme('orange'); } },
+        { type: 'item', icon: 'fa-wand-magic-sparkles', label: t('settings.themeMagenta'), active: theme === 'magenta', onClick: () => { onSetTheme('magenta'); } },
+      ]
+    });
+  }
   settingsSubItems.push({
     type: 'item',
     icon: 'fa-arrows-rotate',
@@ -287,8 +307,22 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
       );
     }
     if (item.type === 'group' && item.subItems && item.subItems.length > 0) {
-      const expanded = item.label === t('settings.idGroup') ? idGroupExpanded : settingsExpanded;
-      const setExpanded = item.label === t('settings.idGroup') ? setIdGroupExpanded : setSettingsExpanded;
+      const expanded =
+        item.label === t('settings.idGroup')
+          ? idGroupExpanded
+          : item.label === t('settings.settings')
+            ? settingsExpanded
+            : item.label === t('settings.theme')
+              ? themeExpanded
+              : settingsExpanded;
+      const setExpanded =
+        item.label === t('settings.idGroup')
+          ? setIdGroupExpanded
+          : item.label === t('settings.settings')
+            ? setSettingsExpanded
+            : item.label === t('settings.theme')
+              ? setThemeExpanded
+              : setSettingsExpanded;
       return (
         <div key={index}>
           <button
@@ -324,7 +358,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
             <i className={`fas ${item.icon} text-sm w-5 flex-shrink-0`}></i>
             <span className="text-sm font-medium">{item.label}</span>
           </div>
-          <div className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${item.toggled ? 'bg-emerald-500' : 'bg-slate-600'}`}>
+          <div className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${item.toggled ? 'bg-accent' : 'bg-slate-600'}`}>
             <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${item.toggled ? 'left-5' : 'left-0.5'}`} />
           </div>
         </button>
@@ -338,7 +372,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({
           className={`
             w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left
             ${item.active
-              ? 'bg-emerald-500/20 text-emerald-400'
+              ? 'bg-accent-20 text-accent'
               : 'text-slate-300 hover:bg-white/10 hover:text-white'
             }
           `}

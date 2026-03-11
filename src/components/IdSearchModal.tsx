@@ -204,7 +204,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
       <div className="glass rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-black text-white flex items-center gap-3">
-            <i className="fas fa-hashtag text-emerald-400"></i> {t('idSearch.searchById')}
+            <i className="fas fa-hashtag text-accent"></i> {t('idSearch.searchById')}
           </h2>
           <button
             onClick={() => { playTapSound(); onClose(); }}
@@ -223,13 +223,13 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
               onChange={(e) => setIdInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t('idSearch.enterId')}
-              className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+              className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[rgb(var(--accent-rgb))] focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)]"
               min="1"
               max="3300"
             />
             <button
               onClick={() => { playTapSound(); handleSearch(); }}
-              className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-all"
+              className="px-6 py-3 bg-accent bg-accent-hover text-white rounded-xl font-bold transition-all"
             >
               <i className="fas fa-search mr-2"></i>{t('idSearch.search')}
             </button>
@@ -245,7 +245,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
             <div className="space-y-4 p-6 bg-white/5 rounded-2xl border border-white/10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-bold">
+                  <span className="px-3 py-1 bg-accent-10 text-accent rounded-lg text-xs font-bold">
                     ID: {question.id}
                   </span>
                   <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs font-bold">
@@ -321,13 +321,13 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                       key={idx}
                       className={`p-3 rounded-lg ${
                         idx === question.correct_option_index
-                          ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+                          ? 'bg-accent-10 border border-accent-20 text-accent'
                           : 'bg-slate-800/50 border border-white/5 text-slate-300'
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         {idx === question.correct_option_index && (
-                          <i className="fas fa-check-circle text-emerald-400"></i>
+                          <i className="fas fa-check-circle text-accent"></i>
                         )}
                         <span className="font-mono text-xs mr-2">{String.fromCharCode(65 + idx)}.</span>
                         <span className={`whitespace-pre-wrap break-words ${showWhitespaceHints ? 'font-mono' : ''}`}>
@@ -348,7 +348,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                   </p>
                   {question.detailedExplanation && (
                     <details className="mt-3">
-                      <summary className="cursor-pointer text-sm text-emerald-400 hover:text-emerald-300 font-bold">
+                      <summary className="cursor-pointer text-sm text-accent hover:text-white font-bold">
                         {t('idSearch.showDetailedExplanation')}
                       </summary>
                       <div className="mt-2 space-y-2">
@@ -357,7 +357,7 @@ export const IdSearchModal: React.FC<IdSearchModalProps> = ({ onClose, onSaveToL
                           <select
                             value={detailedExplanationLevel}
                             onChange={(e) => setDetailedExplanationLevel(e.target.value as DetailedExplanationLevel)}
-                            className="bg-slate-800 border border-slate-600 rounded px-2 py-1 text-slate-300 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                            className="bg-slate-800 border border-slate-600 rounded px-2 py-1 text-slate-300 text-xs focus:outline-none focus:ring-1 focus:ring-[rgb(var(--accent-rgb))]"
                           >
                             <option value="beginner">{t('subLevels.beginner')}</option>
                             <option value="intermediate">{t('subLevels.intermediate')}</option>

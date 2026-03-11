@@ -227,7 +227,7 @@ export const PlatformView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
               onClick={() => { playTapSound(); setExpanded(expanded === idx ? null : idx); }}
               className="w-full flex items-center justify-between p-4 text-left hover:bg-white/5 transition-colors"
             >
-              <code className="text-emerald-400 font-mono text-sm">{diff.command}</code>
+              <code className="text-accent font-mono text-sm">{diff.command}</code>
               <i className={`fas fa-chevron-${expanded === idx ? 'up' : 'down'} text-slate-500 text-xs`}></i>
             </button>
             {expanded === idx && (

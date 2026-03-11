@@ -92,7 +92,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
     <>
       <div>
         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <i className="fas fa-shuffle text-emerald-400"></i> {t('hub.randomModeLabel')}
+          <i className="fas fa-shuffle text-accent"></i> {t('hub.randomModeLabel')}
         </h3>
         <p className="text-slate-400 leading-relaxed text-xs">
           {t('hub.randomModeDescription')}
@@ -106,7 +106,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           </div>
           <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5">
             <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.correct')}</div>
-            <div className="text-lg font-black text-emerald-400">{rm.totalCorrect}</div>
+            <div className="text-lg font-black text-accent">{rm.totalCorrect}</div>
           </div>
           <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
             <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.accuracy')}</div>
@@ -116,7 +116,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           </div>
           <div className="bg-slate-900/50 rounded-2xl p-3 border border-white/5 col-span-2">
             <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">{t('hub.evolutionScore')}</div>
-            <div className="text-lg font-black text-emerald-400">{randomScore}</div>
+            <div className="text-lg font-black text-accent">{randomScore}</div>
           </div>
         </div>
         {nextThreshold && (
@@ -125,7 +125,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
               <span>{formatTranslation(t('hub.pointsToNext'), { points: nextThreshold.minScore - randomScore, persona: nextThreshold.persona })}</span>
               <span>{randomScore} / {nextThreshold.minScore}</span>
             </div>
-            <ProgressBar current={randomScore} total={nextThreshold.minScore} colorClass="bg-emerald-500" />
+            <ProgressBar current={randomScore} total={nextThreshold.minScore} colorClass="bg-accent" />
           </>
         )}
       </div>
@@ -136,7 +136,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
     <>
       <div>
         <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <i className="fas fa-dna text-emerald-400"></i> {t('hub.currentGenome')}
+          <i className="fas fa-dna text-accent"></i> {t('hub.currentGenome')}
         </h3>
         <p className="text-slate-400 leading-relaxed text-xs">
           {t(`levels.level${currentLevelInfo.level}` as any)}
@@ -150,7 +150,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                 playTapSound();
                 handleConceptClick(c);
               }}
-              className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[9px] font-mono border border-emerald-500/20 cursor-pointer hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors"
+              className="px-3 py-1 rounded-full bg-accent-10 text-accent text-[9px] font-mono border border-accent-20 cursor-pointer hover:bg-accent-20 hover:text-white transition-colors"
             >
               {c}
             </button>
@@ -166,7 +166,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           </span>
           <span>{progress} / {QUESTIONS_PER_LEVEL}</span>
         </div>
-        <ProgressBar current={progress} total={QUESTIONS_PER_LEVEL} colorClass="bg-emerald-500" />
+        <ProgressBar current={progress} total={QUESTIONS_PER_LEVEL} colorClass="bg-accent" />
         <div className="flex justify-between text-[8px] text-slate-600 font-black tracking-widest px-1">
           <span>{t('subLevels.beginnerCaps')}</span>
           <span className="ml-4">{t('subLevels.intermediateCaps')}</span>
@@ -180,7 +180,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
     <>
       <div className="space-y-4">
         <h3 className="text-lg font-bold text-white flex items-center gap-2">
-          <i className="fas fa-microchip text-emerald-400"></i> {t('hub.nextMutation')}
+          <i className="fas fa-microchip text-accent"></i> {t('hub.nextMutation')}
         </h3>
 
         <div className="grid grid-cols-2 gap-3">
@@ -206,7 +206,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           playTapSound();
           onStartQuiz();
         }}
-        className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl shadow-emerald-500/40 flex items-center justify-center gap-3"
+        className="w-full py-4 bg-accent bg-accent-hover text-white rounded-2xl font-black text-lg transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl shadow-accent-40 flex items-center justify-center gap-3"
       >
         {t('hub.continueMutation')} <i className="fas fa-chevron-right text-sm"></i>
       </button>
@@ -217,7 +217,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
     <div className="space-y-6 animate-in fade-in duration-700">
       {(selectedTerm || fallbackConcept) && (
         <div className="fixed inset-0 z-[100] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl border-emerald-500/30 relative">
+          <div className="glass w-full max-w-2xl rounded-3xl p-6 sm:p-8 shadow-2xl border border-accent-30 relative">
             <button
               onClick={() => {
                 playTapSound();
@@ -230,7 +230,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
 
             <div className="space-y-5 pt-2">
               <div className="space-y-2">
-                <span className="inline-block text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                <span className="inline-block text-[10px] font-black text-accent uppercase tracking-[0.2em] px-3 py-1 bg-accent-10 rounded-full border border-accent-20">
                   {formatTranslation(t('glossary.levelConcept'), { range: selectedTerm?.levelRange ?? String(currentLevelInfo.level) })}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-white">
@@ -252,8 +252,8 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                   <div className="space-y-4">
                     {depthLabels.map(({ key, label }) => (
                       <div key={key} className="space-y-2">
-                        <h4 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
-                          <i className="fas fa-graduation-cap text-emerald-400" /> {label}
+                        <h4 className="text-[11px] font-black text-accent uppercase tracking-widest flex items-center gap-2">
+                          <i className="fas fa-graduation-cap text-accent" /> {label}
                         </h4>
                         <div className="text-slate-300 leading-relaxed text-sm sm:text-base whitespace-pre-wrap bg-slate-900/50 rounded-xl p-4 border border-white/5">
                           {tiered[key]}
@@ -267,10 +267,10 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
               {selectedTerm && (
                 <div className="space-y-3">
                   <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                    <i className="fas fa-code text-emerald-400" /> {t('glossary.implementationExample')}
+                    <i className="fas fa-code text-accent" /> {t('glossary.implementationExample')}
                   </h4>
                   <div className="bg-slate-900 rounded-2xl p-4 sm:p-5 border border-white/5 shadow-inner overflow-hidden">
-                    <pre className="code-font text-xs sm:text-sm text-emerald-300 leading-relaxed overflow-x-auto p-1">
+                    <pre className="code-font text-xs sm:text-sm text-accent-soft leading-relaxed overflow-x-auto p-1">
                       <code>{selectedTerm.example}</code>
                     </pre>
                   </div>
@@ -283,7 +283,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
                     playTapSound();
                     closeConceptModal();
                   }}
-                  className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 active:scale-95 text-sm"
+                  className="w-full py-3 bg-accent bg-accent-hover text-white rounded-2xl font-black transition-all shadow-xl shadow-accent-20 active:scale-95 text-sm"
                 >
                   {t('operations.gotIt')}
                 </button>
@@ -299,7 +299,7 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
             {randomMode ? t('hub.randomModeLabel') : `${formatTranslation(t('hub.evolutionStage'), { level: stats.currentLevel })} ${stats.currentLevel}`}
           </h1>
           <div className="flex items-center gap-2 justify-center">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
             <span className="text-slate-400 font-bold text-[10px] tracking-widest uppercase">
               {displayPersona} {t('hub.class')}
             </span>
@@ -309,11 +309,11 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className={`glass rounded-3xl p-8 space-y-6 flex flex-col justify-between ${randomMode ? 'border-emerald-500/20 bg-emerald-500/5' : ''}`}>
+        <div className={`glass rounded-3xl p-8 space-y-6 flex flex-col justify-between ${randomMode ? 'border border-accent-20 bg-accent-5' : ''}`}>
           {randomMode ? randomModePanel : nextMutationPanel}
         </div>
 
-        <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between border-emerald-500/20 bg-emerald-500/5">
+        <div className="glass rounded-3xl p-8 space-y-6 flex flex-col justify-between border border-accent-20 bg-accent-5">
           {randomMode ? nextMutationPanel : currentGenomePanel}
         </div>
       </div>
@@ -335,8 +335,8 @@ export const EvolutionHub: React.FC<EvolutionHubProps> = ({ stats, onStartQuiz }
           {LEVELS.map(l => (
             <div
               key={l.level}
-              className={`w-1.5 h-6 rounded-full transition-all duration-500 ${l.level < stats.currentLevel ? 'bg-emerald-500' :
-                  l.level === stats.currentLevel ? 'bg-emerald-500/40 animate-pulse' : 'bg-slate-800'
+              className={`w-1.5 h-6 rounded-full transition-all duration-500 ${l.level < stats.currentLevel ? 'bg-accent' :
+                  l.level === stats.currentLevel ? 'bg-accent-20 animate-pulse' : 'bg-slate-800'
                 }`}
               title={l.persona}
             />

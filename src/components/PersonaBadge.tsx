@@ -19,7 +19,7 @@ export const PersonaBadge: React.FC<PersonaBadgeProps> = ({ stage, size = 'md' }
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className={`${sizeClasses[size]} rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-white`}>
+      <div className={`${sizeClasses[size]} rounded-full evolution-gradient flex items-center justify-center shadow-lg shadow-accent-20 text-white`}>
         {stage === PersonaStage.TADPOLE ? (
           <TadpoleIcon size={iconSizes[size]} className="fill-current" />
         ) : (

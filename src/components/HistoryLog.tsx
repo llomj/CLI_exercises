@@ -25,7 +25,7 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
     <div className="space-y-6 animate-in slide-in-from-right duration-500">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-black text-white flex items-center gap-3">
-          <i className="fas fa-book-open text-emerald-400"></i> {t('history.learningLog')}
+          <i className="fas fa-book-open text-accent"></i> {t('history.learningLog')}
         </h2>
         <button 
           onClick={() => { playTapSound(); onBack(); }}
@@ -48,12 +48,12 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
             <div 
               key={`${attempt.id}-${attempt.timestamp}`}
               className={`glass rounded-2xl p-5 border-l-4 transition-all hover:translate-x-1 ${
-                attempt.isCorrect ? 'border-l-emerald-500' : 'border-l-rose-500'
+                attempt.isCorrect ? 'border-l-[rgb(var(--accent-rgb))]' : 'border-l-rose-500'
               }`}
             >
               <div className="flex justify-between items-start mb-3">
                 <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest ${
-                  attempt.isCorrect ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'
+                  attempt.isCorrect ? 'bg-accent-10 text-accent' : 'bg-rose-500/10 text-rose-500'
                 }`}>
                   {t('history.level')} {attempt.level} • {attempt.isCorrect ? t('history.correct') : t('history.incorrect')}
                 </span>
@@ -101,13 +101,13 @@ export const HistoryLog: React.FC<HistoryLogProps> = ({ history, onBack }) => {
               
               <div className="space-y-2 mb-4">
                 <div className={`text-xs p-2 rounded-lg flex items-center gap-2 ${
-                  attempt.isCorrect ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
+                  attempt.isCorrect ? 'bg-accent-10 text-accent' : 'bg-rose-500/10 text-rose-400'
                 }`}>
                   <i className={`fas ${attempt.isCorrect ? 'fa-check' : 'fa-times'}`}></i>
                   <span>{t('quiz.yourAnswer')}: {attempt.selectedOption}</span>
                 </div>
                 {!attempt.isCorrect && (
-                  <div className="text-xs p-2 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center gap-2">
+                  <div className="text-xs p-2 rounded-lg bg-accent-10 text-accent flex items-center gap-2">
                     <i className="fas fa-check"></i>
                     <span>{t('quiz.correctAnswer')}: {attempt.correctOption}</span>
                   </div>

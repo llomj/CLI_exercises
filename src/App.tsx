@@ -14,6 +14,9 @@ const LOCAL_STORAGE_KEY = 'cli_exercises_learn_stats_v1';
 const RANDOM_DEFAULT_MIGRATED_KEY = 'cli_random_default_migrated_v1';
 const SOUND_STORAGE_KEY = 'cli_exercises_sound_v1';
 const HAPTIC_STORAGE_KEY = 'cli_exercises_haptic_v1';
+const THEME_STORAGE_KEY = 'cli_exercises_theme_v1';
+
+type AppTheme = 'default' | 'light' | 'blue' | 'orange' | 'magenta';
 
 /** Falling stars celebration: many=true for 5-star (many stars + happier melody), many=false for 1–4 stars. */
 const FallingStars: React.FC<{ many?: boolean }> = ({ many = false }) => {
@@ -120,6 +123,11 @@ const App: React.FC = () => {
     if (typeof window === 'undefined') return true;
     return localStorage.getItem(HAPTIC_STORAGE_KEY) !== 'false';
   });
+  const [theme, setTheme] = useState<AppTheme>(() => {
+    if (typeof window === 'undefined') return 'default';
+    const saved = localStorage.getItem(THEME_STORAGE_KEY) as AppTheme | null;
+    return saved ?? 'default';
+  });
   const [showGameInfoModal, setShowGameInfoModal] = useState(false);
 
   useEffect(() => {
@@ -128,9 +136,17 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem(HAPTIC_STORAGE_KEY, String(hapticEnabled));
   }, [hapticEnabled]);
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const next = theme === 'default' ? '' : theme;
+    if (next) document.documentElement.dataset.theme = next;
+    else delete (document.documentElement as any).dataset.theme;
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   const toggleSound = () => setSoundEnabled((prev) => !prev);
   const toggleHaptic = () => setHapticEnabled((prev) => !prev);
+  const setAppTheme = (next: AppTheme) => setTheme(next);
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'fr' : 'en');
@@ -397,21 +413,21 @@ const App: React.FC = () => {
 
   return (
     <SoundProvider soundEnabled={soundEnabled} onPlay={() => void playUITapSound()}>
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-emerald-500/30 pb-28">
+    <div className="min-h-screen selection:bg-[rgba(var(--accent-rgb),0.30)] pb-28">
       <nav className="pt-[env(safe-area-inset-top)] px-2 pb-1.5 flex items-center justify-between border-b border-white/5 sticky top-0 z-50 glass">
         <div className="flex w-full items-center gap-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => { if (soundEnabled) void playUITapSound(); setView('hub'); }}>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shadow-lg shadow-accent-20">
               <i className="fas fa-terminal text-white text-xs"></i>
             </div>
-            <span className="font-bold text-lg tracking-tight hidden sm:inline">{t('app.title')}<span className="text-emerald-400">{t('app.subtitle')}</span></span>
+            <span className="font-bold text-lg tracking-tight hidden sm:inline">{t('app.title')}<span className="text-accent">{t('app.subtitle')}</span></span>
           </div>
 
           <div className="h-8 w-[1px] bg-white/10 mx-2 hidden sm:block"></div>
 
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-3 bg-white/5 px-3 py-1.5 rounded-2xl border border-white/10">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-sm text-white">
+              <div className="w-8 h-8 rounded-full evolution-gradient flex items-center justify-center text-sm text-white">
                 {currentPersona === PersonaStage.TADPOLE
                   ? <TadpoleIcon size={22} className="fill-current" />
                   : <span>{PERSONA_EMOJI[currentPersona] ?? '🐟'}</span>}
@@ -424,7 +440,7 @@ const App: React.FC = () => {
 
             <div className="flex items-center gap-2">
               <i className="fas fa-bolt text-amber-400 text-sm"></i>
-              <span className="text-sm font-bold text-emerald-400">{(randomMode ? (stats.randomModeXp ?? 0) : stats.xp).toLocaleString()}</span>
+              <span className="text-sm font-bold text-accent">{(randomMode ? (stats.randomModeXp ?? 0) : stats.xp).toLocaleString()}</span>
             </div>
           </div>
 
@@ -471,25 +487,27 @@ const App: React.FC = () => {
         onClose={() => setShowSettingsMenu(false)}
         view={view}
         anchorBottom
-          randomMode={randomMode}
-          onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
-          onShowGlossary={() => setView('glossary')}
-          onShowMethods={() => setShowMethods(true)}
-          onShowFlags={() => setShowFlags(true)}
-          onShowFlow={() => setShowFlow(true)}
-          onShowIdSearch={() => setShowIdSearch(true)}
-          onShowIdLog={() => setShowIdLog(true)}
-          onShowLearningLog={() => setView('log')}
-          onShowOperations={() => setShowOperations(true)}
-          onShowLevelSelector={() => setShowLevelSelector(true)}
-          onShowWeakSpotDrills={() => setShowWeakSpotDrills(true)}
-          onShowPlatform={() => setShowPlatform(true)}
-          onToggleLanguage={toggleLanguage}
-          soundEnabled={soundEnabled}
-          onToggleSound={toggleSound}
-          hapticEnabled={hapticEnabled}
-          onToggleHaptic={toggleHaptic}
-          onResetApp={() => setShowResetModal(true)}
+        theme={theme}
+        randomMode={randomMode}
+        onToggleRandomMode={view === 'hub' || view === 'quiz' ? handleRandomModeToggle : undefined}
+        onShowGlossary={() => setView('glossary')}
+        onShowMethods={() => setShowMethods(true)}
+        onShowFlags={() => setShowFlags(true)}
+        onShowFlow={() => setShowFlow(true)}
+        onShowIdSearch={() => setShowIdSearch(true)}
+        onShowIdLog={() => setShowIdLog(true)}
+        onShowLearningLog={() => setView('log')}
+        onShowOperations={() => setShowOperations(true)}
+        onShowLevelSelector={() => setShowLevelSelector(true)}
+        onShowWeakSpotDrills={() => setShowWeakSpotDrills(true)}
+        onShowPlatform={() => setShowPlatform(true)}
+        onToggleLanguage={toggleLanguage}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
+        hapticEnabled={hapticEnabled}
+        onToggleHaptic={toggleHaptic}
+        onSetTheme={setAppTheme}
+        onResetApp={() => setShowResetModal(true)}
       />
 
       <main className="container mx-auto px-4 py-1 max-w-4xl min-h-[calc(100dvh-160px)]">
@@ -543,7 +561,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="w-24 h-24 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-5xl mx-auto shadow-2xl shadow-emerald-500/20 border border-emerald-500/30">
+              <div className="w-24 h-24 rounded-full bg-accent-20 text-accent flex items-center justify-center text-5xl mx-auto shadow-2xl shadow-accent-20 border border-accent-30">
                 <i className="fas fa-arrow-up-right-dots"></i>
               </div>
             )}
@@ -576,7 +594,7 @@ const App: React.FC = () => {
               {showResult.randomMode && showResult.prevScore !== undefined && showResult.newScore !== undefined && showResult.newPersona && (
                 <div className="w-full mt-2 pt-2 border-t border-white/10">
                   <div className="text-xs text-slate-500 uppercase font-bold mb-1 tracking-wider">{t('result.evolutionScore')}</div>
-                  <div className="text-lg font-black text-emerald-400">
+                  <div className="text-lg font-black text-accent">
                     {showResult.prevScore} → {showResult.newScore} <span className="text-slate-400 font-normal">({showResult.newPersona})</span>
                   </div>
                 </div>
@@ -587,7 +605,7 @@ const App: React.FC = () => {
               onClick={() => { if (soundEnabled) void playUITapSound(); setShowResult(null); }}
               className={`w-full py-4 rounded-2xl font-bold text-white transition-all transform active:scale-95 shadow-xl relative z-10 ${showResult.starEarned
                   ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-950 text-lg'
-                  : 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/30'
+                  : 'bg-accent bg-accent-hover shadow-accent-40'
                 }`}
             >
               {showResult.starEarned ? t('subLevels.continueEvolution') : t('result.backToHub')}
@@ -760,9 +778,9 @@ const App: React.FC = () => {
             >
             <div className="flex items-start justify-between gap-4 flex-shrink-0">
               <div className="space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30">
-                  <i className="fas fa-gamepad text-emerald-400 text-xs"></i>
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-10 border border-accent-30">
+                  <i className="fas fa-gamepad text-accent text-xs"></i>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-accent">
                     {t('app.title')} {t('app.subtitle')}
                   </span>
                 </div>
@@ -781,7 +799,7 @@ const App: React.FC = () => {
 
             <div className="overflow-y-auto flex-1 min-h-0 space-y-4 text-sm text-slate-300 mt-6">
               <div>
-                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-accent uppercase tracking-widest mb-1">
                   {t('gameInfo.gameplayTitle')}
                 </h3>
                 <p className="leading-relaxed">
@@ -790,7 +808,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-accent uppercase tracking-widest mb-1">
                   {t('gameInfo.scoringTitle')}
                 </h3>
                 <p className="leading-relaxed mb-1.5">
@@ -802,7 +820,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-accent uppercase tracking-widest mb-1">
                   {t('gameInfo.starsTitle')}
                 </h3>
                 <p className="leading-relaxed mb-1.5">
@@ -814,7 +832,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-accent uppercase tracking-widest mb-1">
                   {t('gameInfo.modesTitle')}
                 </h3>
                 <p className="leading-relaxed">
@@ -823,7 +841,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-[11px] font-black text-emerald-400 uppercase tracking-widest mb-1">
+                <h3 className="text-[11px] font-black text-accent uppercase tracking-widest mb-1">
                   {t('gameInfo.tipsTitle')}
                 </h3>
                 <ul className="list-disc list-inside space-y-1.5 text-slate-300">
@@ -839,7 +857,7 @@ const App: React.FC = () => {
                 if (soundEnabled) void playUITapSound();
                 setShowGameInfoModal(false);
               }}
-              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 rounded-2xl font-bold text-white transition-all shadow-xl shadow-emerald-500/30 active:scale-95 text-sm flex-shrink-0 mt-6"
+              className="w-full py-3 bg-accent bg-accent-hover rounded-2xl font-bold text-white transition-all shadow-xl shadow-accent-40 active:scale-95 text-sm flex-shrink-0 mt-6"
             >
               {t('operations.gotIt')}
             </button>
@@ -853,8 +871,7 @@ const App: React.FC = () => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="glass rounded-3xl p-8 max-w-md w-full space-y-6 animate-in zoom-in duration-300 shadow-2xl border border-white/10">
             <div className="text-center space-y-4">
-              <div className={`w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl ${randomMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-green-500/20 text-green-400'
-                }`}>
+              <div className="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl bg-accent-20 text-accent">
                 <i className={`fas ${randomMode ? 'fa-layer-group' : 'fa-shuffle'}`}></i>
               </div>
               <h2 className="text-2xl font-black text-white">
@@ -873,10 +890,7 @@ const App: React.FC = () => {
               </button>
               <button
                 onClick={() => { if (soundEnabled) void playUITapSound(); (randomMode ? confirmLevelMode : confirmRandomMode)(); }}
-                className={`flex-1 py-3 rounded-xl font-bold text-white transition-all ${randomMode
-                  ? 'bg-emerald-500 hover:bg-emerald-600 shadow-xl shadow-emerald-500/30'
-                  : 'bg-green-500 hover:bg-green-600 shadow-xl shadow-green-500/30'
-                  }`}
+                className="flex-1 py-3 rounded-xl font-bold text-white transition-all bg-accent bg-accent-hover shadow-xl shadow-accent-40"
               >
                 {randomMode ? t('randomMode.levelMode') : t('randomMode.randomMode')}
               </button>

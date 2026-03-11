@@ -55,7 +55,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
           ></div>
           
           {/* Content Box */}
-          <div className="glass w-full max-w-2xl my-4 sm:my-8 rounded-3xl p-6 sm:p-10 shadow-2xl relative z-10 border-emerald-500/30 animate-in fade-in zoom-in duration-300">
+          <div className="glass w-full max-w-2xl my-4 sm:my-8 rounded-3xl p-6 sm:p-10 shadow-2xl relative z-10 border border-accent-30 animate-in fade-in zoom-in duration-300">
             <button 
               onClick={() => { playTapSound(); setSelectedTerm(null); }}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-colors border border-white/10"
@@ -65,7 +65,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
 
             <div className="space-y-6 sm:space-y-8">
               <div className="space-y-3 pt-2">
-                <span className="inline-block text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+                <span className="inline-block text-[10px] font-black text-accent uppercase tracking-[0.2em] px-3 py-1 bg-accent-10 rounded-full border border-accent-20">
                   {formatTranslation(t('glossary.levelConcept'), { range: selectedTerm.levelRange })}
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-black text-white">{selectedTerm.term}</h3>
@@ -73,7 +73,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
 
               <div className="space-y-4">
                 <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                  <i className="fas fa-book-open text-emerald-400"></i> {t('glossary.inDepthDescription')}
+                  <i className="fas fa-book-open text-accent"></i> {t('glossary.inDepthDescription')}
                 </h4>
                 <div className="text-slate-300 leading-relaxed font-medium text-sm sm:text-base whitespace-pre-wrap">
                   {selectedTerm.detailedDescription}
@@ -82,10 +82,10 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
 
               <div className="space-y-4">
                 <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                  <i className="fas fa-code text-emerald-400"></i> {t('glossary.implementationExample')}
+                  <i className="fas fa-code text-accent"></i> {t('glossary.implementationExample')}
                 </h4>
                 <div className="bg-slate-900 rounded-2xl p-4 sm:p-6 border border-white/5 shadow-inner overflow-hidden">
-                  <pre className="code-font text-xs sm:text-sm text-emerald-300 leading-relaxed overflow-x-auto p-1">
+                  <pre className="code-font text-xs sm:text-sm text-accent-soft leading-relaxed overflow-x-auto p-1">
                     <code>{selectedTerm.example}</code>
                   </pre>
                 </div>
@@ -95,7 +95,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
               <div className="pt-4 pb-2">
                 <button 
                   onClick={() => { playTapSound(); setSelectedTerm(null); }}
-                  className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black transition-all shadow-xl shadow-emerald-500/20 active:scale-95"
+                  className="w-full py-4 bg-accent bg-accent-hover text-white rounded-2xl font-black transition-all shadow-xl shadow-accent-20 active:scale-95"
                 >
                   {t('operations.gotIt')}
                 </button>
@@ -107,7 +107,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
 
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-black text-white flex items-center gap-3">
-          <i className="fas fa-circle-info text-emerald-400"></i> {t('glossary.title')}
+          <i className="fas fa-circle-info text-accent"></i> {t('glossary.title')}
         </h2>
         <button 
           onClick={() => { playTapSound(); onBack(); }}
@@ -126,7 +126,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
           placeholder={t('glossary.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-4 bg-slate-900 border border-white/5 rounded-2xl text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/50 transition-colors"
+          className="w-full pl-12 pr-4 py-4 bg-slate-900 border border-white/5 rounded-2xl text-white placeholder:text-slate-600 focus:outline-none focus:border-[rgba(var(--accent-rgb),0.50)] transition-colors"
         />
       </div>
 
@@ -138,7 +138,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
             return (
               <div key={level} className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <h3 className="text-xs font-black text-emerald-400 uppercase tracking-[0.2em]">
+                  <h3 className="text-xs font-black text-accent uppercase tracking-[0.2em]">
                     {formatTranslation(t('glossary.levelSection'), { level })}
                   </h3>
                   <div className="h-[1px] flex-1 bg-white/5"></div>
@@ -148,11 +148,11 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
                     <div 
                       key={item.term} 
                       onClick={() => { playTapSound(); setSelectedTerm(item); }}
-                      className="glass p-5 rounded-2xl space-y-2 hover:border-emerald-500/40 hover:bg-slate-800/80 transition-all cursor-pointer group active:scale-[0.98]"
+                      className="glass p-5 rounded-2xl space-y-2 hover:border-[rgba(var(--accent-rgb),0.40)] hover:bg-slate-800/80 transition-all cursor-pointer group active:scale-[0.98]"
                     >
                       <div className="flex justify-between items-start">
                         <h4 className="font-bold text-slate-100 group-hover:text-white transition-colors">{item.term}</h4>
-                        <i className="fas fa-chevron-right text-[10px] text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+                        <i className="fas fa-chevron-right text-[10px] text-slate-600 group-hover:text-accent group-hover:translate-x-1 transition-all"></i>
                       </div>
                       <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2">{item.definition}</p>
                     </div>
@@ -168,7 +168,7 @@ export const GlossaryView: React.FC<GlossaryViewProps> = ({ onBack }) => {
             <div 
               key={item.term} 
               onClick={() => { playTapSound(); setSelectedTerm(item); }}
-              className="glass p-5 rounded-2xl space-y-2 animate-in fade-in duration-300 hover:border-emerald-500/40 cursor-pointer group active:scale-[0.98]"
+              className="glass p-5 rounded-2xl space-y-2 animate-in fade-in duration-300 hover:border-[rgba(var(--accent-rgb),0.40)] cursor-pointer group active:scale-[0.98]"
             >
               <div className="flex justify-between items-start">
                 <h4 className="font-bold text-slate-100 group-hover:text-white">{item.term}</h4>

@@ -13,7 +13,7 @@ const Section: React.FC<{
   children: React.ReactNode;
 }> = ({ title, children }) => (
   <div className="mb-10">
-    <h3 className="text-lg font-bold text-emerald-400 mb-3 pb-2 border-b border-emerald-500/30">{title}</h3>
+    <h3 className="text-lg font-bold text-accent mb-3 pb-2 border-b border-[rgba(var(--accent-rgb),0.30)]">{title}</h3>
     <div className="text-slate-300 text-sm leading-relaxed space-y-2">{children}</div>
   </div>
 );
@@ -55,7 +55,7 @@ export const FlowView: React.FC<FlowViewProps> = ({ onBack }) => {
     <div className="relative min-h-[600px] animate-in slide-in-from-left duration-500 pb-12">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-black text-white flex items-center gap-3">
-          <i className="fas fa-diagram-project text-emerald-400"></i>
+          <i className="fas fa-diagram-project text-accent"></i>
           {isFr ? 'Flux shell et pipelines' : 'Shell Flow & Pipelines'}
         </h2>
         <button
