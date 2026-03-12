@@ -990,7 +990,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
           <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden bg-slate-800 rounded-lg">
             {/* Questions use dynamic syntax highlighting for commands, flags, etc. using HighlightedText */}
             <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 py-4 whitespace-pre-wrap break-words">
-              <HighlightedText text={displayQuestion} />
+              <HighlightedText text={displayQuestion} language={language} />
             </h2>
           </div>
         </div>
@@ -1027,7 +1027,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                     {String.fromCharCode(65 + idx)}
                   </div>
                   <span className={`font-semibold text-sm md:text-base whitespace-pre-wrap break-words ${showWhitespaceHints ? 'font-mono' : ''}`}>
-                    {showWhitespaceHints ? visualizeWhitespace(option) : <HighlightedText text={option} />}
+                    {showWhitespaceHints ? visualizeWhitespace(option) : <HighlightedText text={option} language={language} />}
                   </span>
                 </div>
                 {isAnswered && idx === currentQuestion.correct_option_index && (

@@ -22,6 +22,8 @@ export const translateQuestionText = (text: string, language: string): string =>
     'What happens here': 'Que se passe-t-il ici',
     'What happens?': 'Que se passe-t-il ?',
     'What happens': 'Que se passe-t-il',
+    'What should you do if': 'Que devez-vous faire si',
+    'What should you do': 'Que devez-vous faire',
     'Result of': 'Résultat de',
     'Output of': 'Sortie de',
     'Value of': 'Valeur de',
