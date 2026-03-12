@@ -59,8 +59,8 @@
 
 ## 9. Level Mode vs Random Mode (SEPARATE SYSTEMS)
 - **Separation**: Level mode and Random mode are **fully separate**. When the user is in level mode they have level progress, level stars, and level points; when they switch to random mode they have **separate** random-mode stats. Example: if in level mode the user has 130 (e.g. progress or points), switching to random does **not** use that—random mode has its own point and star system.
-- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars` per level. Stars from accuracy in that level: 10%, 40%, 65%, 80%, 95%. When user switches to random mode, level XP is **not** shown—random has its own.
-- **Random mode**: Uses `randomModeXp` and `randomModeStats` only (`totalAnswered`, `totalCorrect`). XP starts at 0 until user completes a random quiz. **Stars**: ≥10% correct (of 3300) → 1★ … ≥90% → 5★. Do not use level `xp`, `acquiredStars`, or `levelProgress` for random mode.
+- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars` per level. Stars from accuracy in that level use percentage bands: >10% and <20% → 1★, ≥20% and <40% → 2★, ≥40% and <60% → 3★, ≥60% and <90% → 4★, ≥90% → 5★. When user switches to random mode, level XP is **not** shown—random has its own.
+- **Random mode**: Uses `randomModeXp` and `randomModeStats` only (`totalAnswered`, `totalCorrect`). XP starts at 0 until user completes a random quiz. **Stars**: same percentage bands as level mode, but computed against all 3300 questions (correct out of 3300), so progression is much harder. Do not use level `xp`, `acquiredStars`, or `levelProgress` for random mode.
 - **Implementation**: Level mode adds XP to `xp`; random mode adds XP to `randomModeXp`. Nav displays the XP for the current mode. See `ps.md`.
 
 ## 10. Scope and Restraint
