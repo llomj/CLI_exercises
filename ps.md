@@ -4,8 +4,8 @@
 
 **Rule:** Level mode and random mode are **separate**. Points (XP), stars, and progress are **not** shared.
 
-- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars`. Stars from accuracy in that level use percentage bands: >10% and <20% → 1★, ≥20% and <40% → 2★, ≥40% and <60% → 3★, ≥60% and <90% → 4★, ≥90% → 5★. When user switches to random mode, level XP stays in level—it is **not** shown.
-- **Random mode**: Uses **only** `randomModeStats` and `randomModeXp`. XP starts at 0 until user completes at least one random quiz. Stars use the same percentage bands but are based on **correct answers out of 3300** (correct vs TOTAL_QUESTIONS), so progression is much harder. Evolution score uses `getRandomModeScore(randomModeStats)`.
+- **Level mode**: Uses `xp` (level XP), `levelProgress`, `correctPerLevel`, `acquiredStars`. Stars depend on how many questions you have answered correctly out of the full 300 questions in that level, using these percentage bands: >10% and <20% → 1★, ≥20% and <40% → 2★, ≥40% and <60% → 3★, ≥60% and <80% → 4★, ≥90% and ≤100% → 5★. When user switches to random mode, level XP stays in level—it is **not** shown.
+- **Random mode**: Uses **only** `randomModeStats` and `randomModeXp`. XP starts at 0 until user completes at least one random quiz. Stars use the same percentage bands but are based on **correct answers out of 3300** (correct vs TOTAL_QUESTIONS across the whole app), so progression is much harder. Evolution score uses `getRandomModeScore(randomModeStats)`.
 - **Implementation:** In `handleQuizComplete`, level mode adds XP to `xp` only; random mode adds XP to `randomModeXp` only. Nav display: `randomMode ? stats.randomModeXp ?? 0 : stats.xp`. See AGENTS.md §9.
 
 ---

@@ -7,24 +7,34 @@ export const QUESTIONS_PER_LEVEL = QUESTIONS_PER_SUBLEVEL * SUBLEVELS_PER_LEVEL;
 export const TOTAL_QUESTIONS = 3300; // 11 levels (0–10) × 300 questions
 
 /**
- * Star thresholds for level mode (accuracy-based):
- *  - >10% and <20% → 1★
+ * Star thresholds for level mode:
+ *  - >10% and <20% of the 300 questions in that level → 1★
  *  - ≥20% and <40% → 2★
  *  - ≥40% and <60% → 3★
- *  - ≥60% and <90% → 4★
- *  - ≥90% → 5★
+ *  - ≥60% and <80% → 4★
+ *  - ≥90% and ≤100% → 5★
+ *
+ * NOTE: Percent is always computed against QUESTIONS_PER_LEVEL (300),
+ * not just the questions the user has already seen.
  */
-export const STAR_PERCENTAGE_THRESHOLDS = [10, 20, 40, 60, 90] as const;
+export const STAR_PERCENTAGE_THRESHOLDS = [10, 20, 40, 60, 80, 90] as const;
 
-/** Derive stars (0–5) from accuracy (correct / total). Used for level mode. */
-export const getStarsFromAccuracy = (correct: number, total: number): number => {
-  if (total === 0) return 0;
-  const pct = (correct / total) * 100;
-  let stars = 0;
-  for (const t of STAR_PERCENTAGE_THRESHOLDS) {
-    if (pct >= t) stars += 1;
-  }
-  return stars;
+/**
+ * Derive stars (0–5) for level mode based on how many questions in the
+ * level (out of 300) the user has answered correctly, ignoring how many
+ * they have seen so far.
+ */
+export const getStarsFromAccuracy = (correct: number, _total: number): number => {
+  if (correct <= 0) return 0;
+  const pct = (correct / QUESTIONS_PER_LEVEL) * 100;
+
+  if (pct > 10 && pct < 20) return 1;
+  if (pct >= 20 && pct < 40) return 2;
+  if (pct >= 40 && pct < 60) return 3;
+  if (pct >= 60 && pct < 80) return 4;
+  if (pct >= 90 && pct <= 100) return 5;
+
+  return 0;
 };
 
 /**
@@ -33,19 +43,22 @@ export const getStarsFromAccuracy = (correct: number, total: number): number => 
  *  - >10% and <20% of 3300 → 1★
  *  - ≥20% and <40% → 2★
  *  - ≥40% and <60% → 3★
- *  - ≥60% and <90% → 4★
- *  - ≥90% → 5★
+ *  - ≥60% and <80% → 4★
+ *  - ≥90% and ≤100% → 5★
  */
-const RANDOM_MODE_STAR_PCT = [10, 20, 40, 60, 90] as const;
 
 /** Derive stars (0–5) for Random mode only: correct count vs TOTAL_QUESTIONS. Do not mix with level mode stars. */
 export const getStarsFromRandomCorrect = (correct: number): number => {
+  if (correct <= 0) return 0;
   const pct = (correct / TOTAL_QUESTIONS) * 100;
-  let stars = 0;
-  for (const t of RANDOM_MODE_STAR_PCT) {
-    if (pct >= t) stars += 1;
-  }
-  return stars;
+
+  if (pct > 10 && pct < 20) return 1;
+  if (pct >= 20 && pct < 40) return 2;
+  if (pct >= 40 && pct < 60) return 3;
+  if (pct >= 60 && pct < 80) return 4;
+  if (pct >= 90 && pct <= 100) return 5;
+
+  return 0;
 };
 
 /** Legacy: derive stars from progress (for migration). */
