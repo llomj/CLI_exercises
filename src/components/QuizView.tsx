@@ -5,6 +5,7 @@ import { ProgressBar } from './ProgressBar';
 import { LEVELS, getRandomModeScore } from '../constants';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { HighlightedText } from './HighlightedText';
 import { useLanguage } from '../contexts/LanguageContext';
 import { formatTranslation } from '../translations';
 import { getTranslatedDetailedExplanation } from '../data/detailedExplanationsTranslations';
@@ -921,9 +922,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
   const base = randomModeStats ?? { totalAnswered: 0, totalCorrect: 0 };
   const liveRandomStats = randomMode
     ? {
-        totalAnswered: base.totalAnswered + sessionAnswered,
-        totalCorrect: base.totalCorrect + sessionCorrect
-      }
+      totalAnswered: base.totalAnswered + sessionAnswered,
+      totalCorrect: base.totalCorrect + sessionCorrect
+    }
     : null;
   const liveEvolutionScore = liveRandomStats ? getRandomModeScore(liveRandomStats) : null;
 
@@ -973,11 +974,10 @@ export const QuizView: React.FC<QuizViewProps> = ({
           </div>
           <button
             onClick={() => { playTapSound(); handleSaveCurrentId(); }}
-            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border transition-colors ${
-              isIdSaved
+            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border transition-colors ${isIdSaved
                 ? 'bg-accent-20 text-white border-accent-30'
                 : 'bg-slate-700/50 text-slate-300 border-slate-600/50 hover:bg-slate-700/70'
-            }`}
+              }`}
             title={isIdSaved ? t('idSearch.saved') : t('idSearch.saveToLog')}
             type="button"
           >
@@ -988,9 +988,9 @@ export const QuizView: React.FC<QuizViewProps> = ({
 
         <div className="space-y-4 pt-8">
           <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden bg-slate-800 rounded-lg">
-            {/* Questions always plain white text—no syntax highlighting (per AGENTS.md / user preference) */}
+            {/* Questions use dynamic syntax highlighting for commands, flags, etc. using HighlightedText */}
             <h2 className="text-xl md:text-2xl font-bold leading-tight text-white px-4 py-4 whitespace-pre-wrap break-words">
-              {displayQuestion}
+              <HighlightedText text={displayQuestion} />
             </h2>
           </div>
         </div>
@@ -1027,7 +1027,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                     {String.fromCharCode(65 + idx)}
                   </div>
                   <span className={`font-semibold text-sm md:text-base whitespace-pre-wrap break-words ${showWhitespaceHints ? 'font-mono' : ''}`}>
-                    {showWhitespaceHints ? visualizeWhitespace(option) : option}
+                    {showWhitespaceHints ? visualizeWhitespace(option) : <HighlightedText text={option} />}
                   </span>
                 </div>
                 {isAnswered && idx === currentQuestion.correct_option_index && (

@@ -1,3 +1,5 @@
+import { LEVEL0_FR_OPTIONS } from '../data/fr_level0_options';
+
 /**
  * Translates question text to French when language is 'fr'.
  * Used by IdSearchModal, QuizView, and IdLogView.
@@ -453,6 +455,11 @@ export const translateQuestionText = (text: string, language: string): string =>
  */
 export const translateOptionText = (text: string, language: string): string => {
   if (language !== 'fr') return text;
+
+  // Level 0 specific exhaustive translations to avoid partial matching
+  if (LEVEL0_FR_OPTIONS[text]) {
+    return LEVEL0_FR_OPTIONS[text];
+  }
 
   const optionTranslations: Array<[RegExp, string]> = [
     [/\bA window where you type text commands for the computer\b/gi, "Une fenêtre où vous tapez des commandes texte pour l'ordinateur"],
